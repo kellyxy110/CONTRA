@@ -1,0 +1,115 @@
+{
+  "consoleErrors": [],
+  "checks": [
+    {
+      "name": "desktop viewport",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop graph and inspector visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop horizontal overflow",
+      "pass": true,
+      "detail": "1200px document width"
+    },
+    {
+      "name": "node selection updates inspector",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "search filters graph",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "evidence filter",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "zoom in",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fit resets zoom",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "list mode",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "keyboard list navigation",
+      "pass": true,
+      "detail": "scan to scanLimit"
+    },
+    {
+      "name": "challenge path selection",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet horizontal overflow",
+      "pass": true,
+      "detail": "768px document width"
+    },
+    {
+      "name": "tablet inspector visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet challenge action reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile horizontal overflow",
+      "pass": true,
+      "detail": "390px document width"
+    },
+    {
+      "name": "mobile critical controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile list fallback",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile challenge action reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile case question input reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion media query",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion removes transition",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser console errors",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

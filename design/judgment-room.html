@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>CONTRA Judgment Room</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%2300ec97' d='M16 2 30 16 16 30 2 16Zm0 7-7 7 7 7 7-7Z'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="tokens.css">
+  <style>.graph svg{pointer-events:none}</style>
+</head>
+<body>
+<a class="skip" href="#case-list">Skip to case list</a>
+<div class="atmosphere" aria-hidden="true"></div>
+<header>
+  <div class="brand"><button id="menu" class="icon" aria-label="Open case menu" aria-expanded="false">☰</button><b class="mark">◇</b><span><strong>CONTRA</strong><small>Built on NEAR</small></span></div>
+  <nav aria-label="Graph controls">
+    <button id="graph-view" class="active" aria-pressed="true">Graph</button><button id="list-view" aria-pressed="false">List</button>
+    <button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button><button id="fit">Fit</button>
+    <button id="filter" aria-pressed="false">Evidence only</button>
+    <label><span class="sr-only">Search graph</span><input id="search" type="search" placeholder="Search graph"><kbd>/</kbd></label>
+  </nav>
+  <div class="actions"><span class="network"><i></i> Testnet · Simulated</span><button id="new-case">+ New case</button></div>
+</header>
+<aside class="case-menu" id="case-menu" hidden><small>LOCAL FIXTURES</small><button>CASE-0042 <span>Accessibility delivery</span></button></aside>
+<main>
+  <section class="canvas" aria-label="Case provenance graph">
+    <div class="context"><span>CASE-0042 · JUDGMENT ROOM</span><small>Challenge review · Round 2 · Testnet fixture</small></div>
+    <div class="graph" id="graph"><svg id="edges" viewBox="0 0 800 900" preserveAspectRatio="none" aria-hidden="true"><defs><filter id="edge-glow"><feGaussianBlur stdDeviation="2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg><div id="nodes"></div></div>
+    <section class="list" id="case-list" hidden><div class="list-head"><div><small>ACCESSIBLE PROVENANCE VIEW</small><h1>Case graph as a list</h1></div><span>Use arrow keys to move</span></div><div id="list-items" role="listbox" aria-label="Case entities"></div></section>
+    <div class="legend"><span><i class="supports"></i>supports</span><span><i class="contradicts"></i>contradicts</span><span><i></i>requires or resolves</span></div><output id="zoom">100%</output>
+  </section>
+  <aside class="inspector" aria-label="Selected entity inspector">
+    <div class="panel-context"><span>CONTRA CASE · 0042</span><b>Challenge review</b></div>
+    <div class="inspector-head"><div><small id="type"></small><h1 id="title"></h1></div><span id="status" class="status"></span></div>
+    <p id="summary" class="summary"></p><div class="signal" aria-label="Fixture review signal"><div><small>REVIEW SIGNAL</small><strong>Provisional</strong></div><svg viewBox="0 0 150 36" aria-hidden="true"><path d="M2 29 L14 27 L24 28 L36 20 L48 24 L59 18 L70 21 L82 12 L94 17 L105 9 L117 13 L129 5 L146 8"/></svg></div><div id="meta" class="meta"></div>
+    <div class="metrics"><div><small>Escrow</small><strong>5.00 <em>NEAR</em></strong><span>Fixture, not funded</span></div><div><small>Evidence</small><strong>3</strong><span>2 support, 1 contradicts</span></div><div><small>Review quorum</small><strong>2 / 3</strong><span>Fresh panel required</span></div><div><small>Challenge</small><strong>18h 42m</strong><span>Fixture countdown</span></div></div>
+    <section class="finding"><div class="section-label"><span>CONTRADICTION DETAIL</span><b>Provisional</b></div><h2>Automated pass does not establish keyboard access</h2><p>The scan covers machine-detectable failures. It does not reproduce focus behavior at the agreed 390px viewport.</p><div class="source"><b>E3</b><span><strong>Manual test · 390px viewport</strong><small>Fixture digest: sha256:7c11…9a24</small></span></div></section>
+    <section class="next"><small>NEXT PERMITTED ACTION</small><strong>Await independent challenge review</strong><p>The provisional accept cannot settle while this challenge is unresolved.</p><button id="challenge">Inspect challenge path</button></section>
+  </aside>
+</main>
+<form id="assistant" class="assistant"><label for="question">Case questions <span>local fixture</span></label><div><input id="question" placeholder="Ask about evidence or status…"><button aria-label="Ask">↗</button></div><p id="answer" aria-live="polite">No live inference. Answers use this fixture only.</p></form>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const data={nodes:[
+{id:'agreement',kind:'root',type:'Agreement',label:'Accessible web delivery',status:'Funded fixture',tone:'mint',x:5,y:52,summary:'Frozen requirements and a sample 5.00 NEAR escrow define this simulated case.',actor:'payer.demo.near',digest:'terms:91a4…ef20'},
+{id:'criterion',kind:'group',type:'Acceptance criteria',label:'2 frozen criteria',status:'Under review',tone:'amber',x:36,y:35,summary:'Keyboard access and the agreed automated accessibility check are frozen terms.',actor:'Frozen terms',digest:'criterion:a403…3c11'},
+{id:'evidence',kind:'group',type:'Evidence collection',label:'3 evidence artifacts',status:'Bound to case',tone:'mint',x:36,y:45,summary:'Source, automated scan and a manual counterexample are bound to this case.',actor:'builder.demo.near',digest:'manifest:3de1…129b'},
+{id:'review',kind:'group',type:'Review state',label:'Primary review',status:'AI proposed',tone:'amber',x:36,y:55,summary:'Two fixture reviewers proposed acceptance from overlapping evidence.',actor:'review-panel-a',digest:'round:1:778b…c012'},
+{id:'settlement',kind:'group',type:'Settlement state',label:'Escrow blocked',status:'Challenge active',tone:'coral',x:36,y:65,summary:'No transfer may begin until challenge review reaches deterministic finality.',actor:'CONTRA contract',digest:'No receipt exists'},
+{id:'desktop',kind:'leaf',type:'Criterion detail',label:'Desktop keyboard',status:'Required',tone:'amber',x:76,y:18,summary:'The frozen keyboard criterion applies to desktop navigation.',actor:'Frozen term A',digest:'criterion:a403…3c11'},
+{id:'mobile',kind:'leaf',type:'Criterion detail',label:'Mobile keyboard',status:'Required',tone:'amber',x:77,y:23,summary:'The frozen keyboard criterion also applies at the mobile viewport.',actor:'Frozen term A',digest:'criterion:a403…3c11'},
+{id:'automated',kind:'leaf',type:'Criterion detail',label:'Automated check',status:'Required',tone:'amber',x:78,y:28,summary:'The agreed automated accessibility check is a separate criterion.',actor:'Frozen term B',digest:'criterion:b22c…1a07'},
+{id:'source',kind:'leaf',type:'Evidence artifact',label:'Source revision',status:'Supports',tone:'mint',x:79,y:34,summary:'A fixture source revision is linked as the claimed deliverable.',actor:'builder.demo.near',digest:'sha256:25dd…a814'},
+{id:'sourceDigest',kind:'leaf',type:'Fixture field',label:'Source digest',status:'Recorded',tone:'mint',x:80,y:39,summary:'The fixture binds the source revision to its displayed digest.',actor:'builder.demo.near',digest:'sha256:25dd…a814'},
+{id:'scan',kind:'leaf',type:'Evidence artifact',label:'Automated scan',status:'Supports',tone:'mint',x:79,y:44,summary:'The submitted automated accessibility scan reports passing results.',actor:'ci.demo',digest:'sha256:bc21…0d77'},
+{id:'scanLimit',kind:'leaf',type:'Validation limit',label:'Interaction not tested',status:'Incomplete',tone:'amber',x:80,y:49,summary:'The automated scan does not test the contested keyboard interaction.',actor:'ci.demo',digest:'sha256:bc21…0d77'},
+{id:'recording',kind:'leaf',type:'Evidence artifact',label:'Mobile keyboard recording',status:'Contradicts',tone:'coral',x:79,y:54,summary:'A narrow-viewport recording shows focus leaving the visible navigation drawer.',actor:'challenger.demo.near',digest:'sha256:7c11…9a24'},
+{id:'viewport',kind:'leaf',type:'Fixture field',label:'390px viewport',status:'Reproduced',tone:'coral',x:80,y:59,summary:'The counterexample is scoped to the agreed 390px fixture viewport.',actor:'challenger.demo.near',digest:'sha256:7c11…9a24'},
+{id:'finding',kind:'leaf',type:'Evaluator finding',label:'Provisional accept',status:'AI proposed',tone:'amber',x:79,y:64,summary:'The first review proposed acceptance without testing the contested interaction.',actor:'reviewer-1.demo.near',digest:'finding:92c0…40e5'},
+{id:'overlap',kind:'leaf',type:'Review basis',label:'Overlapping evidence',status:'Limited',tone:'amber',x:80,y:69,summary:'The two positive fixture reviews rely on overlapping evidence.',actor:'review-panel-a',digest:'round:1:778b…c012'},
+{id:'challenge',kind:'leaf',type:'Challenge',label:'Focus trap challenge',status:'Challenged',tone:'coral',x:79,y:74,summary:'A structured counterexample blocks settlement and starts a fresh review.',actor:'payer.demo.near',digest:'challenge:44ae…5f01'},
+{id:'fresh',kind:'leaf',type:'Review round',label:'Fresh review',status:'Unresolved',tone:'amber',x:78,y:79,summary:'A disjoint reviewer panel must evaluate the contested criterion.',actor:'review-panel-b',digest:'round:2:pending'},
+{id:'payout',kind:'leaf',type:'Settlement guard',label:'Transfer blocked',status:'No transaction',tone:'coral',x:77,y:84,summary:'The fixture has no payout intent or confirmed NEAR receipt.',actor:'CONTRA contract',digest:'No receipt exists'}],
+edges:[['agreement','criterion','requires'],['agreement','evidence','requires'],['agreement','review','requires'],['agreement','settlement','requires'],['criterion','desktop','requires'],['criterion','mobile','requires'],['criterion','automated','requires'],['evidence','source','supports'],['evidence','sourceDigest','supports'],['evidence','scan','supports'],['evidence','scanLimit','requires'],['evidence','recording','contradicts'],['evidence','viewport','contradicts'],['review','finding','supports'],['review','overlap','requires'],['review','challenge','contradicts'],['settlement','challenge','contradicts'],['settlement','fresh','requires'],['settlement','payout','requires']]};
+const $=id=>document.getElementById(id);let selected='recording',scale=1,evidenceOnly=false,view='graph';
+function render(){data.nodes.forEach((n,i)=>{const b=document.createElement('button');b.className=`node ${n.kind} ${n.tone}`;b.dataset.id=n.id;b.style.left=n.x+'%';b.style.top=n.y+'%';b.setAttribute('aria-label',`${n.type}: ${n.label}. ${n.status}`);b.innerHTML=`<i></i><span><small>${n.type}</small><strong>${n.label}</strong><em>${n.status}</em></span>`;b.onclick=()=>select(n.id);$('nodes').append(b);const l=document.createElement('button');l.className='list-item';l.dataset.id=n.id;l.setAttribute('role','option');l.innerHTML=`<b>${String(i+1).padStart(2,'0')}</b><span><small>${n.type}</small><strong>${n.label}</strong><em>${n.summary}</em></span><i class="status ${n.tone}">${n.status}</i>`;l.onclick=()=>select(n.id);$('list-items').append(l)});select(selected);filter();requestAnimationFrame(draw)}
+function draw(){const stage=$('graph').getBoundingClientRect();if(!stage.width||!stage.height)return;const svg=$('edges'),defs=svg.querySelector('defs');svg.innerHTML='';svg.append(defs);data.edges.forEach(([a,b,t])=>{const x=document.querySelector(`.node[data-id="${a}"]`),y=document.querySelector(`.node[data-id="${b}"]`);if(!x||!y||x.hidden||y.hidden)return;const ar=x.getBoundingClientRect(),br=y.getBoundingClientRect(),x1=(ar.right-stage.left)/stage.width*800,y1=(ar.top+ar.height/2-stage.top)/stage.height*900,x2=(br.left-stage.left)/stage.width*800,y2=(br.top+br.height/2-stage.top)/stage.height*900,c=Math.max(48,(x2-x1)*.55),p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',`M${x1} ${y1} C${x1+c} ${y1},${x2-c} ${y2},${x2} ${y2}`);p.setAttribute('class',t+(selected===a||selected===b?' active':''));svg.append(p)})}
+function select(id,focus=false){selected=id;const n=data.nodes.find(x=>x.id===id);document.querySelectorAll('.node,.list-item').forEach(x=>{const on=x.dataset.id===id;x.classList.toggle('selected',on);if(x.classList.contains('list-item')){x.tabIndex=on?0:-1;x.setAttribute('aria-selected',on)}});$('type').textContent=n.type.toUpperCase();$('title').textContent=n.label;$('status').textContent=n.status;$('status').className='status '+n.tone;$('summary').textContent=n.summary;$('meta').innerHTML=`<div><small>ACTOR / SOURCE</small><strong>${n.actor}</strong></div><div><small>DIGEST / RECEIPT</small><strong>${n.digest}</strong></div>`;requestAnimationFrame(draw);if(focus)document.querySelector(`.${view==='graph'?'node':'list-item'}[data-id="${id}"]`)?.focus()}
+function filter(){const q=$('search').value.toLowerCase(),evidenceIds=new Set(['evidence','source','scan','recording']);data.nodes.forEach(n=>{const show=(!evidenceOnly||evidenceIds.has(n.id))&&(!q||`${n.type} ${n.label} ${n.status} ${n.summary}`.toLowerCase().includes(q));document.querySelector(`.node[data-id="${n.id}"]`).hidden=!show;document.querySelector(`.list-item[data-id="${n.id}"]`).hidden=!show});requestAnimationFrame(draw)}
+function setView(next){view=next;const graph=next==='graph';$('graph').hidden=!graph;$('case-list').hidden=graph;document.querySelector('.legend').hidden=!graph;$('zoom').hidden=!graph;['graph','list'].forEach(x=>{$(x+'-view').classList.toggle('active',x===next);$(x+'-view').setAttribute('aria-pressed',x===next)})}
+function setZoom(n){scale=Math.max(.72,Math.min(1.35,n));$('nodes').style.transform=`scale(${scale})`;$('edges').style.transform=`scale(${scale})`;$('zoom').value=Math.round(scale*100)+'%'}
+function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),2400)}
+$('graph-view').onclick=()=>setView('graph');$('list-view').onclick=()=>setView('list');$('zoom-in').onclick=()=>setZoom(scale+.1);$('zoom-out').onclick=()=>setZoom(scale-.1);$('fit').onclick=()=>setZoom(1);$('filter').onclick=e=>{evidenceOnly=!evidenceOnly;e.currentTarget.classList.toggle('active',evidenceOnly);e.currentTarget.setAttribute('aria-pressed',evidenceOnly);filter()};$('search').oninput=filter;$('menu').onclick=e=>{const m=$('case-menu');m.hidden=!m.hidden;e.currentTarget.setAttribute('aria-expanded',!m.hidden)};$('new-case').onclick=()=>toast('Agreement Builder is outside this checkpoint.');$('challenge').onclick=()=>{select('challenge',true);toast('Challenge path selected. Settlement remains blocked.')};$('assistant').onsubmit=e=>{e.preventDefault();const q=$('question').value.toLowerCase();$('answer').textContent=q.includes('settle')?'Settlement is blocked until fresh review resolves the challenge. [Fixture]':q.includes('evidence')?'Three fixture artifacts are linked. E3 contradicts criterion A. [E1, E2, E3]':'This local tool answers evidence and settlement questions only. No model was called.'};$('list-items').onkeydown=e=>{if(!['ArrowDown','ArrowUp'].includes(e.key))return;e.preventDefault();const a=[...document.querySelectorAll('.list-item:not([hidden])')];let i=a.findIndex(x=>x.dataset.id===selected);i=(i+(e.key==='ArrowDown'?1:-1)+a.length)%a.length;select(a[i].dataset.id,true)};document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault();$('search').focus()}});window.onresize=draw;render();setZoom(1);
+</script>
+</body>
+</html>
