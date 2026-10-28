@@ -27,3 +27,9 @@ Initialize the chosen repository and Rust NEAR contract; write case creation, fu
 ## Handoff v1.2 clarification
 
 Agent starts from `HANDOFF_TO_CODING_AGENT.md`. SHA-256 verify original image before starting, and after any package/build changes. Do not edit the source image even to apply NEAR colors. NEAR color adaptation belongs exclusively to the new coded UI. Keep every feature tied to actual case state or a clearly marked fixture. Deliver a high-fidelity working design study for owner acceptance before claiming the UI is ready.
+
+
+## Current task supersession | UX3A
+
+The owner's 2026-10-28 UX3A instruction supplies the dashboard composition and overrides the earlier graph-first layout for this design study. The contract blueprint, safety requirements, historical study and event timing gate remain intact. Review project/artifacts/ux3a/comparison.jpg and design/ux3a/index.html. Owner approval has not been given. Resolve remaining fidelity concerns before freezing the screen as accepted.
+

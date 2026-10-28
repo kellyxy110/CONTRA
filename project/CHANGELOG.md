@@ -1,5 +1,7 @@
 # Change log
 
+
+UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
 ## v1.0 | 2026-10-27 | Preparation baseline
 
 - Authored initial product, protocol, UX, security and benchmark specifications.
@@ -75,3 +77,15 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Added repository ignore rules for local tooling, secrets and generated output.
 - Product redesign is the next design milestone. No deployment, paid API use or smart contract work was authorized by this decision.
 - Created private GitHub repository `kellyxy110/CONTRA`, set `main` as the default branch and pushed baseline commit `351e90d73c93577f8798e45c2e8bb45bff3e082a`.
+
+
+## v1.3 | 2026-10-28 | UX3A dashboard reference implementation
+
+- Added separate source-faithful dashboard study, immutable new reference, local server and screenshot comparison page.
+- Preserved graph study, older source, all protocol requirements and historical logs.
+- New study uses approved colors and CONTRA fixture records within the source panel geometry, plus original sector radar and avatar images.
+- Inter font and Lucide icon assets are local; no runtime external font or API requests.
+- Browser verification and screenshot comparisons completed. Owner acceptance pending; exact pixel identity is not claimed.
+- Source files: package.json, server.mjs, design/ux3a/*, design/reference/IMG_7409.jpeg, project/artifacts/ux3a/*, design-qa.md, project logs.
+- Spending $0; transactions and deployments none. Next: visual corrections from owner review.
+

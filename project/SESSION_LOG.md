@@ -1,5 +1,7 @@
 # CONTRA session log
 
+
+UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
 ## 2026-10-27 | VH1 | Immutable-image blueprint handoff
 
 - Request: Agent handoff for full CONTRA blueprint, including exact supplied design image with no alteration.
@@ -57,3 +59,18 @@
 - Deployment, repository secrets, paid APIs and smart contract implementation remain outside this authorization.
 - Next: establish the product redesign brief from the preserved baseline.
 - Verified result: private repository `https://github.com/kellyxy110/CONTRA` created, `main` pushed and local branch configured to track `origin/main`.
+
+
+## 2026-10-28 | UX3A | Exact dashboard reference study
+
+- Read existing agent/handoff instructions, status, decisions, logs and product/protocol/UX blueprint through GitHub.
+- Direct git clone lacked credentials; used authorized GitHub connector reads and a separate design/ux3a branch based on 828bca32ab882dc7687dccd53c91d79842b538de. Existing remote files remain intact.
+- The attached AdobeExpressPhotos JPG is the supplied dashboard reference, copied unchanged as IMG_7409.jpeg. SHA-256 before/after: 1d4b982d638e86829387c87bef61d7b121f59b1e87913d4606b73142e0e15480.
+- Implemented fixture-backed functional dashboard and source-resolution capture/comparison pages.
+- Verified in cloud Chromium: actual DOM geometry, Inter loaded, record search, evidence/review material tabs, radar tab, both pagers, challenge inspector and session-only note saving. JavaScript parse checks passed.
+- Compared combined screenshot against original; corrected radar sector, compact-card wrapping, material card offset, task vertical rhythm and font loading. Refined original mark and backdrop grain.
+- No application console errors observed. Browser-extension metadata errors are outside application output.
+- Full-page screenshot API timed out; used successful viewport capture of a 1200 x 900 iframe and lossless crop to that exact content region. Side-by-side comparison places the unchanged reference at left and browser render at right.
+- Exact font identification and every icon glyph are not proven pixel-identical. No owner acceptance is claimed. Narrow screens retain the desktop composition with scrolling; historical responsive graph study remains preserved.
+- No model calls, paid services, wallet connection, blockchain transaction, deployment or smart contract implementation. Spend $0.
+

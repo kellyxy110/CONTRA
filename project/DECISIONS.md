@@ -68,3 +68,13 @@ D-017 clarifies D-015. Palette adaptations apply to the newly coded UI ONLY, not
 | --- | --- | --- | --- | --- |
 | D-023 | ACCEPTED | Create private GitHub repository `kellyxy110/CONTRA`, initialize the current workspace and push the redesign baseline. | Owner explicitly authorized repository creation | 2026-10-28 |
 | D-024 | ACCEPTED | Product redesign will follow repository creation. UX2C remains historical visual evidence, not an accepted final design. | Owner rejected the current implementation and stated the product will be redesigned | 2026-10-28 |
+
+
+## UX3A exact dashboard reference | 2026-10-28
+
+| ID | Status | Decision | Reason | Date |
+| --- | --- | --- | --- | --- |
+| D-025 | ACCEPTED | Owner's new attached dashboard is the definitive UX3A composition. Preserve sidebar, three columns, sector radar, panels and cards. Only approved palette and CONTRA content may change. | Explicit UX3A owner instruction supersedes graph-first composition for this study | 2026-10-28 |
+| D-026 | ACCEPTED | Preserve earlier references, functional blueprint and logs. New source lives at design/reference/IMG_7409.jpeg without replacing the graph reference. | Historical integrity | 2026-10-28 |
+| D-027 | ACCEPTED | Owner approval is mandatory. Browser QA does not imply owner acceptance. | Explicit owner acceptance requirement | 2026-10-28 |
+

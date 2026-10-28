@@ -1,5 +1,7 @@
 # CONTRA status checkpoint
 
+
+UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
 Checkpoint ID: CONTRA-2026-10-28-UX2C
 Date: 2026-10-28
 Phase: Pre-hackathon visual fidelity recovery
@@ -105,3 +107,17 @@ Repository safeguard: GitHub owner is `kellyxy110`. Remote name and URL remain u
 - Restored delicate luminous cubic branches, compact controls, restrained case metadata, cinematic negative space, a bounded analytics-style inspector and an independent assistant dock.
 - Added only truthful subnodes derived from existing criteria, digests, validation limits, viewport fixture, review basis and settlement guard data.
 - Fresh Chromium screenshots are stored in `project/artifacts/ux2c/`. Owner acceptance remains pending.
+
+
+## Latest checkpoint | CONTRA-2026-10-28-UX3A
+
+- Implemented separate HTML/CSS/JavaScript dashboard study at design/ux3a/index.html on branch design/ux3a.
+- Source is the newly supplied 1200 x 900 dashboard, SHA-256 1d4b982d638e86829387c87bef61d7b121f59b1e87913d4606b73142e0e15480. It is distinct from the earlier graph image.
+- Browser measured shell x=60, y=45, width=1080, height=810; sidebar=53; columns=255/472/299. Captured at a 1200 x 900 iframe viewport.
+- Retained eight-sector radar, source avatar assets, four reviewer cards, three material cards, three task cards and three activity cards.
+- Browser-verified search, chart/material tabs, pagination, challenge details and session-only counterexample note. No application console errors; browser extension metadata errors excluded explicitly.
+- Fixed asset base paths, one radar radius, compact-card overflow, filtering pagination bounds and typography loading.
+- Exact pixel identity is not claimed: icon glyphs and microtypographic rasterization remain approximations. Owner acceptance remains PENDING.
+- Existing graph study and protocol files are preserved on the base branch. No deployment, NEAR transaction, smart contract or paid API work occurred. Spend $0.
+- Next: owner reviews UX3A comparison and identifies any remaining fidelity corrections. Do not freeze acceptance on the owner's behalf.
+
