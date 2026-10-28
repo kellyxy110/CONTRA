@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current implementation checkpoint | CONTRA-2026-10-28-IMPL-M02
+
+Actual implementation start: October 28, 2026 UTC, pre-event, explicitly owner-authorized. Branch implementation/oct28. M01 source saved at 5401cbfd4e0309cf9f15cd70ff246aaa419f75e8; final M02 commit is reported in the delivery. Historical date gates below no longer prevent development. UX3A reference is unchanged by this implementation branch; The Bench is the active name.
+
+Implemented Rust escrow, registry, consent, evidence-bound commit/reveal, challenge/fresh-review and callback-safe intent/retry logic; API/evidence/authentication/cost ledger; approved-layout frontend workflows and gated wallet/provider adapters. Verification: 20 Rust SDK mocked-environment tests, 16 service/encoding tests, production/fault Wasm export separation and wallet bundle build. Fifteen measured 1200x900 rectangles equal the approved reference. Screenshots show truthful chain-unavailable mode, not a fabricated successful journey. See docs/IMPLEMENTATION_OCT28.md and project/artifacts/implementation/verification.json.
+
+Financial milestone remains BLOCKED: stock NEAR Sandbox requires 65535 file descriptors; host hard limit is 16384. Authored Sandbox scenarios have not run. No real transfer, live independent AI adjudication or external wallet journey is verified. AC01-AC33 are not fully accepted; I1-I10 have partial unit evidence only. No testnet deployment, paid calls, production secrets or mainnet actions. UNKNOWN payouts remain locked without retry; Meta $3/Baseten $3/Modal $5 caps unchanged. Owner acceptance remains pending. First next action is real Sandbox financial proof on a compatible host.
+
 ## Current implementation checkpoint | CONTRA-2026-10-28-IMPL-M01
 
 Owner authorized implementation beginning October 28 UTC, superseding the earlier November 1 gate. Work branch: implementation/oct28, based on UX3C e57cc94 plus preserved naming commit e875a58. This is pre-event code and must not be claimed as competition-window implementation. UX3A remains frozen; active product name is The Bench.

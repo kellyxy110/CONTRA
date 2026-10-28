@@ -1,0 +1,76 @@
+{
+  "checkpoint": "CONTRA-2026-10-28-IMPL-M02",
+  "implementation_start": "2026-10-28",
+  "pre_event": true,
+  "observed_at": "2026-10-28T11:04:14.314Z",
+  "checks": [
+    {
+      "name": "rust-sdk",
+      "exit_code": 0,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "services",
+      "exit_code": 0,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "wallet-build",
+      "exit_code": 0,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "sandbox-preflight",
+      "exit_code": 2,
+      "passed": false,
+      "error": null
+    }
+  ],
+  "wasm": {
+    "sha256": "b5f999f1144e3d9866ea286d83711c3de21f36253645700328c3faf98ab22159",
+    "bytes": 628255,
+    "exports": [
+      "memory",
+      "accept_terms",
+      "advance_round",
+      "cancel_case",
+      "commit_vote",
+      "confirm_reviewer",
+      "contract_source_metadata",
+      "create_case",
+      "file_challenge",
+      "finalize_case",
+      "fund_case",
+      "get_case",
+      "get_committee",
+      "get_config",
+      "get_creation",
+      "get_events",
+      "get_payout",
+      "get_reviewer",
+      "get_round",
+      "list_cases",
+      "list_reviewers",
+      "new",
+      "on_payout_complete",
+      "preview_case",
+      "retry_payout",
+      "reveal_vote",
+      "set_reviewer",
+      "sponsor_storage",
+      "submit_evidence"
+    ],
+    "financial_execution_verified": false
+  },
+  "rust_source_sha256": "39ef8211f354e805e4a3e2d2dbd86c9f40d6809b5bbc4e66ffb4efdab567b28b",
+  "sdk_tests": "Mocked NEAR environment; not real receipts or balance transfers",
+  "service_tests": "Temporary local storage and explicit test transport fixtures; no live provider calls",
+  "sandbox": "BLOCKED by host hard open-file limit 16384 versus required 65535",
+  "testnet_deployed": false,
+  "paid_calls_performed": false,
+  "external_wallet_flow_verified": false,
+  "owner_acceptance": false
+}

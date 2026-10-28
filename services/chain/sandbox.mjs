@@ -3,18 +3,23 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash,randomBytes} from 'node:crypto';
 import {voteCommitment} from '../../packages/protocol/encoding.mjs';
+import fs from 'node:fs';
+import {execFileSync} from 'node:child_process';
 export const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 export const GAS=100_000_000_000_000n;
 export const ONE=1n;
 export const NEAR=10n**24n;
 export const sha=s=>createHash('sha256').update(s).digest('hex');
 export async function startSandbox({faults=false}={}){
+ const hard=Number(execFileSync('bash',['-c','ulimit -Hn'],{encoding:'utf8'}).trim());if(hard<65535)throw Error('NEAR Sandbox blocked: host hard open-file limit '+hard+' is below 65535.');
+ const bin=path.join(ROOT,'.tools/Linux-x86_64');if(!fs.existsSync(path.join(bin,'near-sandbox')))throw Error('Run node scripts/setup-sandbox.mjs to install pinned NEAR Sandbox 2.13.4.');
+ process.env.NEAR_SANDBOX_BIN_PATH=path.join(bin,'near-sandbox');process.env.NEAR_SANDBOX_BINARY_PATH=bin;
  const worker=await Worker.init({network:'sandbox'});try{
  const root=worker.rootAccount;
  const creator=await root.createSubAccount('creator',{initialBalance:100n*NEAR});
  const beneficiary=await root.createSubAccount('beneficiary',{initialBalance:100n*NEAR});
  const outsider=await root.createSubAccount('outsider',{initialBalance:100n*NEAR});
- const contract=await root.devDeploy(path.join(ROOT,'contracts/adjudication/target/wasm32-unknown-unknown',faults?'faults.wasm':'release/contra_adjudication.wasm'));
+ const contract=await root.devDeploy(path.join(ROOT,'contracts/adjudication/target/wasm32-unknown-unknown',faults?'faults.wasm':'release/contra_adjudication.wasm'),{initialBalance:100n*NEAR});
  await contract.call(contract,'new',{owner_id:creator.accountId,chain_id:'testnet',creator_allowlist:[creator.accountId]},{gas:GAS});
  const reviewers=[];for(let i=0;i<6;i++){const r=await root.createSubAccount('reviewer'+i,{initialBalance:10n*NEAR});reviewers.push(r);const disclosure=sha('Sandbox controlled operator '+i);await creator.call(contract,'set_reviewer',{reviewer_id:r.accountId,operator_id:sha('sandbox-operator-'+i),disclosure_digest:disclosure,active:true},{gas:GAS,attachedDeposit:ONE});await r.call(contract,'confirm_reviewer',{revision:'1',disclosure_digest:disclosure},{gas:GAS,attachedDeposit:ONE});}
  const accounts=[creator,beneficiary,...reviewers,outsider];const byId=new Map(accounts.map(a=>[a.accountId,a]));

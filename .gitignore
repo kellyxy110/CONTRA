@@ -8,3 +8,10 @@ node_modules/
 apps/web/wallet.bundle.js
 *.pem
 *.key
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+coverage/
+dist/

@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-10-28 UTC | CONTRA-2026-10-28-IMPL-M02
+
+Continued implementation from M01 commit 5401cbf without reopening design. Added callback/registry/storage/serialization negative tests, fixed persistent case capacity, and implemented API/auth/evidence/provider controls plus approved-layout workflows. Result: 20 Rust SDK tests and 16 service/encoding tests pass; production/fault Wasm and gated wallet adapter build. Browser review measured all 15 desktop rectangles equal to frozen reference and inspected responsive agreement form; fixed source icon routing and close-button validation. Saved comparison and test evidence. Sandbox preflight fails (host hard limit 16384, required 65535), so no financial Sandbox or live adjudication proof is claimed. No paid calls, deployment, production secrets or mainnet. All work remains disclosed October 28 pre-event implementation; owner acceptance and AC01-AC33 completion remain open.
+
 ## 2026-10-28 UTC | CONTRA-2026-10-28-IMPL-M01
 
 Owner explicitly authorized coding October 28. Continued from UX3C plus naming continuation on implementation/oct28. Authored Rust escrow and adjudication, canonical encoding, Sandbox tests and backend foundation. Fourteen Rust SDK mocked-environment tests pass; production Wasm compiles. Stock Sandbox fails host precondition: 65535 required file descriptors versus hard limit 16384. No real chain test claimed, no deployment, no paid inference, no production secrets. Unknown transfer retries remain prohibited. This is pre-event implementation.

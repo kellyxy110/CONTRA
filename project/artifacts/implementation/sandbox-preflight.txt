@@ -1,0 +1,1 @@
+BLOCKED: NEAR Sandbox requires 65535 file descriptors; host hard limit is 16384. Run on a compatible host. No Sandbox test or receipt has been verified.

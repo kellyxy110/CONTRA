@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-043 — Preserve financial execution gate and truthful integration states
+
+Accepted 2026-10-28: continue owner-authorized source implementation while Sandbox is blocked by the host hard descriptor limit. SDK tests, Wasm builds and browser geometry do not authorize financial acceptance. No alternate runtime result, fixture receipt or blind UNKNOWN payout retry may substitute for real Sandbox proof. Frontend source reuses frozen UX3A geometry/assets with disclosed October 28 pre-event provenance; reference files remain unchanged. Missing chain/service/per-criterion evidence is unavailable/N/A. External wallets and paid providers remain gated and unverified, with initial credit ceilings unchanged.
+
 ## D-042 — Owner authorizes October 28 implementation
 
 Accepted 2026-10-28: remove the internal November 1 implementation restriction. Start actual engineering now against frozen UX3C and approved UX3A, retaining The Bench naming and historical records. All October 28 implementation is pre-event work. Sandbox only; testnet deployment, paid inference and production secrets still require separate authorization. Credit ceilings remain Meta $3, Baseten $3, Modal $5. SDK tests do not establish Sandbox financial correctness; UNKNOWN payouts remain non-retryable.

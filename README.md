@@ -2,7 +2,7 @@
 
 ![Stage: pre-event implementation](https://img.shields.io/badge/stage-pre--event%20implementation-00EC97?style=flat-square&labelColor=0B1110)
 ![Network: NEAR testnet planned](https://img.shields.io/badge/network-NEAR%20testnet%20(planned)-0B1110?style=flat-square)
-![Artifact: blueprint v1.2](https://img.shields.io/badge/blueprint-v1.2-FF8678?style=flat-square&labelColor=0B1110)
+![Protocol: UX3C frozen](https://img.shields.io/badge/protocol-UX3C%20frozen-FF8678?style=flat-square&labelColor=0B1110)
 ![GitHub owner: kellyxy110](https://img.shields.io/badge/GitHub%20owner-kellyxy110-F4BD68?style=flat-square&logo=github&labelColor=0B1110)
 ![Deployment: none](https://img.shields.io/badge/deployment-none-9BAAA4?style=flat-square&labelColor=0B1110)
 
@@ -10,9 +10,24 @@
 
 CONTRA is a NEAR adjudication prototype under implementation. Its Rust contract combines escrow, evidence-bound commit/reveal judgments, challenges and callback-safe settlement. Independent live operator adjudication and real Sandbox settlement are not yet verified.
 
-> Actual implementation began October 28, 2026 with owner authorization, before the official competition. Do not claim this code as competition-window work. Approved design/ux3a remains a separate design reference. Fourteen Rust SDK mocked-environment tests pass; Sandbox execution is blocked on this host and no deployment or live AI call has occurred. See docs/IMPLEMENTATION_OCT28.md.
+> Actual implementation began October 28, 2026 with owner authorization, before the official competition. Do not claim this code as competition-window work. Approved design/ux3a remains a separate design reference. Twenty Rust SDK mocked-environment tests and sixteen service/encoding tests pass; Sandbox execution is blocked on this host and no deployment or live AI call has occurred. See docs/IMPLEMENTATION_OCT28.md.
 
 ## Start here
+
+Implementation commands (Node 24+, Rust 1.99.1, wasm32-unknown-unknown):
+
+```sh
+npm ci
+npm test
+npm run test:contract
+node scripts/build-contracts.mjs
+npm run build:wallet
+npm run dev
+```
+
+The dashboard at localhost:4173 preserves approved UX3A geometry and assets. Default mode reports chain unavailable and submits no transactions. On a host with an open-file hard limit of at least 65535, install the pinned official binary with `node scripts/setup-sandbox.mjs`, run `npm run test:sandbox`, then start `CONTRA_SANDBOX=1 npm run dev`. This creates local controlled accounts only. No testnet deployment or paid inference is included. External-wallet adapter compiles but is disabled pending separate testnet authorization; it has not been verified in a funded wallet flow.
+
+Saved checkpoints and test limitations: [October 28 implementation record](docs/IMPLEMENTATION_OCT28.md). SDK tests and build checks are not real NEAR Sandbox transfers, production readiness or owner acceptance.
 
 1. `project/STATUS.md` is the authoritative project checkpoint.
 2. `project/DECISIONS.md` contains accepted decisions and their rationale.
@@ -34,7 +49,7 @@ Repository: [kellyxy110/CONTRA](https://github.com/kellyxy110/CONTRA), private. 
 
 - Official hackathon: starts November 1, 2026 00:00 UTC; ends November 14, 2026 23:59 UTC.
 - Internal target: submit November 13, 2026.
-- All competition implementation begins on or after November 1.
+- Actual product implementation began October 28 with owner authorization. That source is pre-event work; separately record changes authored during the official competition window.
 - Network: NEAR testnet, native NEAR escrow for demonstration.
 - Initial AI usage allocation: Meta $3, Baseten $3, Modal $5, from confirmed user-reported pools of $10, $10, and $30 monthly respectively.
 - No unapproved out-of-pocket spending.

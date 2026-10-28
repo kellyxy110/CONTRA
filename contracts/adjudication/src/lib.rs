@@ -67,7 +67,8 @@ pub struct Payout{pub payout_intent_id:Hash32,pub recipient_id:AccountId,pub amo
 pub struct Case {
  pub case_id:Hash32,pub creator_id:AccountId,pub request_id:Hash32,pub terms:FrozenTerms,pub terms_digest:Hash32,pub beneficiary_accepted:bool,pub funded_principal_yocto:D128,pub principal_bucket:String,
  pub state:State,pub reason:String,pub round_id:Option<u8>,pub phase:Option<Phase>,pub evidence_digest:Option<Hash32>,pub challenge:Option<Challenge>,pub primary_disposition:Option<Disposition>,pub final_disposition:Option<Disposition>,pub resolution_basis:Option<Basis>,pub decision_at_ns:Option<D64>,pub payout:Option<Payout>,pub created_at_ns:D64,pub funded_at_ns:Option<D64>,pub revision:D64,pub last_event_seq:D64,
- pub rounds:[[Vote;3];2],pub events:Vec<String>,
+ #[serde(default,skip_serializing)] pub rounds:[[Vote;3];2],
+ #[serde(default,skip_serializing)] pub events:Vec<String>,
  #[serde(skip)] pub reserved_padding:Vec<u8>,
 }
 
@@ -89,25 +90,31 @@ fn add(a:u128,b:u128)->u128{a.checked_add(b).unwrap_or_else(||env::panic_str("E_
 #[near]
 impl Contract {
  #[init]
+ #[deny_unknown_arguments]
  pub fn new(owner_id:AccountId,chain_id:String,creator_allowlist:Vec<AccountId>)->Self{
   deposit(0);gas(50);require(caller()==env::current_account_id(),"E_AUTH");require(chain_id=="testnet","E_NETWORK");require(!creator_allowlist.is_empty()&&creator_allowlist.len()<=8&&creator_allowlist.windows(2).all(|w|w[0]<w[1]),"E_INPUT");
   let reserve=(env::storage_usage()+GLOBAL_BYTES) as u128*env::storage_byte_cost().as_yoctonear();require(env::account_balance().as_yoctonear()>=add(reserve,FLOOR),"E_STORAGE_RESERVE");
   Self{owner_id,chain_id,creator_allowlist,registry:BTreeMap::new(),cases:LookupMap::new(b"c"),case_ids:vec![],storage_reserved:reserve,held:0,inflight:0,paid:0,sponsor_total:env::account_balance().as_yoctonear(),global_events:vec![],global_seq:0,callback_fault:false}
  }
  #[payable]
+ #[deny_unknown_arguments]
  pub fn sponsor_storage(&mut self)->Value{gas(30);require(caller()==self.owner_id,"E_AUTH");let n=env::attached_deposit().as_yoctonear();require(n>0,"E_DEPOSIT");self.sponsor_total=add(self.sponsor_total,n);self.global("reserve_sponsored",json!({"amount_yocto":n.to_string()}));self.reserves()}
  #[payable]
+ #[deny_unknown_arguments]
  pub fn set_reviewer(&mut self,reviewer_id:AccountId,operator_id:Hash32,disclosure_digest:Hash32,active:bool)->Reviewer{
   gas(30);deposit(1);require(caller()==self.owner_id,"E_AUTH");valid_hash(operator_id);valid_hash(disclosure_digest);
   let rev=if let Some(r)=self.registry.get(&reviewer_id){if r.snapshot.operator_id==operator_id&&r.snapshot.disclosure_digest==disclosure_digest&&r.active==active{return r.clone()}inc(r.snapshot.revision.0)}else{require(self.registry.len()<32,"E_CAPACITY");self.reserve(4096);1};
   let r=Reviewer{snapshot:ReviewerSnapshot{reviewer_id:reviewer_id.clone(),operator_id,revision:D64(rev),disclosure_digest},active,confirmed:false};self.registry.insert(reviewer_id,r.clone());self.global("reviewer_updated",serde_json::to_value(&r).unwrap());r
  }
  #[payable]
+ #[deny_unknown_arguments]
  pub fn confirm_reviewer(&mut self,revision:D64,disclosure_digest:Hash32)->Reviewer{
   gas(30);deposit(1);let id=caller();let mut r=self.registry.get(&id).cloned().unwrap_or_else(||env::panic_str("E_AUTH"));require(r.active&&r.snapshot.revision==revision&&r.snapshot.disclosure_digest==disclosure_digest,"E_COMMITTEE");if !r.confirmed{r.confirmed=true;self.registry.insert(id,r.clone());self.global("reviewer_confirmed",serde_json::to_value(&r).unwrap());}r
  }
+ #[deny_unknown_arguments]
  pub fn preview_case(&self,creator_id:AccountId,request_id:Hash32,terms:TermsInput)->Value{let (id,f)=self.prepare(creator_id,request_id,terms);json!({"case_id":id,"terms_digest":hash(&f),"primary_committee":f.primary_committee,"fresh_committee":f.fresh_committee,"policy_version":1})}
  #[payable]
+ #[deny_unknown_arguments]
  pub fn create_case(&mut self,request_id:Hash32,terms:TermsInput,expected_terms_digest:Hash32)->Value{
   gas(50);deposit(1);let creator=caller();require(self.creator_allowlist.contains(&creator),"E_AUTH");valid_hash(request_id);let id=self.case_key(&creator,request_id);
   if let Some(c)=self.cases.get(&id){require(c.terms.input==terms&&c.terms_digest==expected_terms_digest,"E_REQUEST_CONFLICT");return json!({"case_id":id,"terms_digest":c.terms_digest,"replayed":true})}
@@ -116,57 +123,79 @@ impl Contract {
   Self::event(&mut c,"case_created",json!({"terms_digest":digest}));self.save(&mut c);self.case_ids.push(id);json!({"case_id":id,"terms_digest":digest,"replayed":false})
  }
  #[payable]
+ #[deny_unknown_arguments]
  pub fn accept_terms(&mut self,case_id:Hash32,terms_digest:Hash32)->Case{gas(30);deposit(1);let mut c=self.case(case_id);require(caller()==c.terms.input.beneficiary_id,"E_AUTH");require(c.terms_digest==terms_digest,"E_TERMS");if c.beneficiary_accepted{return c}require(c.state==State::Draft,"E_PHASE");require(now()<c.terms.input.fund_by_ns.0,"E_DEADLINE");c.beneficiary_accepted=true;Self::event(&mut c,"terms_accepted",json!({"terms_digest":terms_digest}));self.save(&mut c);c}
  #[payable]
+ #[deny_unknown_arguments]
  pub fn cancel_case(&mut self,case_id:Hash32)->Case{gas(30);deposit(1);let mut c=self.case(case_id);require(caller()==c.creator_id,"E_AUTH");if c.state==State::Cancelled{return c}require(c.state==State::Draft&&c.funded_principal_yocto.0==0,"E_PHASE");c.state=State::Cancelled;c.reason="CREATOR_CANCELLED".into();let data=json!({"reason":c.reason.clone()});Self::event(&mut c,"case_cancelled",data);self.save(&mut c);c}
  #[payable]
+ #[deny_unknown_arguments]
  pub fn fund_case(&mut self,case_id:Hash32,terms_digest:Hash32)->Case{
   gas(50);let mut c=self.case(case_id);require(caller()==c.creator_id,"E_AUTH");require(c.state==State::Draft,"E_PHASE");require(c.terms_digest==terms_digest,"E_TERMS");require(c.beneficiary_accepted,"E_NOT_ACCEPTED");require(now()<c.terms.input.fund_by_ns.0,"E_DEADLINE");deposit(c.terms.input.amount_yocto.0);
   for s in c.terms.primary_committee.iter().chain(c.terms.fresh_committee.iter()){let r=self.registry.get(&s.reviewer_id).unwrap_or_else(||env::panic_str("E_COMMITTEE"));require(r.active&&r.confirmed&&r.snapshot==*s,"E_COMMITTEE");}
   self.held=add(self.held,c.terms.input.amount_yocto.0);self.liquid();c.funded_principal_yocto=c.terms.input.amount_yocto;c.principal_bucket="HELD".into();c.funded_at_ns=Some(D64(now()));c.state=State::Funded;let data=json!({"amount_yocto":c.funded_principal_yocto});Self::event(&mut c,"case_funded",data);self.save(&mut c);c
  }
  #[payable]
+ #[deny_unknown_arguments]
  pub fn submit_evidence(&mut self,case_id:Hash32,terms_digest:Hash32,manifest_digest:Hash32)->Case{gas(30);deposit(1);valid_hash(manifest_digest);let mut c=self.case(case_id);require(caller()==c.terms.input.beneficiary_id,"E_AUTH");require(c.terms_digest==terms_digest,"E_TERMS");if let Some(h)=c.evidence_digest{require(h==manifest_digest,"E_DUPLICATE_CONFLICT");return c}require(c.state==State::Funded,"E_PHASE");require(now()<c.terms.input.submit_by_ns.0,"E_DEADLINE");c.evidence_digest=Some(manifest_digest);c.state=State::Submitted;Self::event(&mut c,"evidence_submitted",json!({"manifest_digest":manifest_digest}));self.save(&mut c);c}
+ #[deny_unknown_arguments]
  pub fn advance_round(&mut self,case_id:Hash32)->Case{gas(50);deposit(0);let mut c=self.case(case_id);if Self::advance(&mut c){let state=c.state;let phase=c.phase;Self::event(&mut c,"case_resolved",json!({"state":state,"phase":phase}));self.save(&mut c)}c}
+ #[deny_unknown_arguments]
  pub fn commit_vote(&mut self,case_id:Hash32,round_id:u8,commitment:Hash32)->Value{
   gas(30);deposit(0);valid_hash(commitment);let mut c=self.case(case_id);let index=Self::member(&c,round_id);let slot=&c.rounds[round_id as usize][index];if let Some(h)=slot.commitment{require(h==commitment,"E_DUPLICATE_CONFLICT");return Self::round(&c,round_id)}
   Self::phase_check(&c,round_id,Phase::COMMIT);c.rounds[round_id as usize][index].commitment=Some(commitment);Self::event(&mut c,"vote_committed",json!({"round_id":round_id,"reviewer_id":caller(),"commitment":commitment}));self.save(&mut c);Self::round(&c,round_id)
  }
+ #[deny_unknown_arguments]
  pub fn reveal_vote(&mut self,case_id:Hash32,round_id:u8,disposition:Disposition,evidence_digest:Hash32,finding_digest:Hash32,nonce:Hash32)->Value{
   gas(30);deposit(0);valid_hash(finding_digest);let mut c=self.case(case_id);let index=Self::member(&c,round_id);let expected=Self::round_digest(&c,round_id);require(expected==evidence_digest,"E_DIGEST");let h=hash(&("CONTRA:VOTE:v1".to_string(),self.chain_id.clone(),env::current_account_id(),case_id,c.terms_digest,round_id,caller(),disposition,evidence_digest,finding_digest,nonce));let v=&c.rounds[round_id as usize][index];require(v.commitment==Some(h),"E_COMMITMENT");if v.disposition.is_some(){require(v.disposition==Some(disposition)&&v.finding_digest==Some(finding_digest),"E_DUPLICATE_CONFLICT");return Self::round(&c,round_id)}
   Self::phase_check(&c,round_id,Phase::REVEAL);let v=&mut c.rounds[round_id as usize][index];v.disposition=Some(disposition);v.finding_digest=Some(finding_digest);Self::event(&mut c,"vote_revealed",json!({"round_id":round_id,"reviewer_id":caller(),"disposition":disposition,"evidence_digest":evidence_digest,"finding_digest":finding_digest}));self.save(&mut c);Self::round(&c,round_id)
  }
  #[payable]
+ #[deny_unknown_arguments]
  pub fn file_challenge(&mut self,case_id:Hash32,criterion_id:u16,counterexample_digest:Hash32)->Case{
   gas(30);deposit(1);valid_hash(counterexample_digest);let mut c=self.case(case_id);if let Some(q)=&c.challenge{require(q.challenger_id==caller()&&q.criterion_id==criterion_id&&q.counterexample_digest==counterexample_digest,"E_CHALLENGE_USED");return c}
   require(c.state==State::Provisional,"E_PHASE");require(now()<c.terms.input.challenge_end_ns.0,"E_DEADLINE");let primary=c.primary_disposition.unwrap();require((primary==Disposition::ACCEPT&&caller()==c.creator_id)||(primary==Disposition::REJECT&&caller()==c.terms.input.beneficiary_id),"E_AUTH");require(c.terms.input.criteria.iter().any(|x|x.criterion_id==criterion_id),"E_INPUT");require(Some(counterexample_digest)!=c.evidence_digest,"E_DIGEST");
   let digest=hash(&("CONTRA:CHALLENGE:v1".to_string(),self.chain_id.clone(),env::current_account_id(),case_id,c.terms_digest,c.evidence_digest.unwrap(),criterion_id,counterexample_digest));c.challenge=Some(Challenge{challenger_id:caller(),criterion_id,counterexample_digest,round_evidence_digest:digest,submitted_at_ns:D64(now())});c.state=State::Challenged;c.reason="CHALLENGE_PENDING".into();Self::event(&mut c,"challenge_filed",json!({"criterion_id":criterion_id,"counterexample_digest":counterexample_digest,"round_evidence_digest":digest}));self.save(&mut c);c
  }
+ #[deny_unknown_arguments]
  pub fn finalize_case(&mut self,case_id:Hash32)->Value{
   deposit(0);gas(100);let mut c=self.case(case_id);if let Some(p)=&c.payout{return json!({"kind":"EXISTING","payout":p})}Self::advance(&mut c);let t=&c.terms.input;
   match c.state{State::Provisional=>{require(now()>=t.challenge_end_ns.0&&c.challenge.is_none(),"E_NOT_ELIGIBLE");c.final_disposition=c.primary_disposition;c.resolution_basis=Some(Basis::PRIMARY);},State::Resolved|State::Unresolved=>require(now()>=t.fresh_reveal_end_ns.0,"E_NOT_ELIGIBLE"),_=>env::panic_str("E_NOT_ELIGIBLE")}
   let disposition=c.final_disposition.expect("resolved disposition");let basis=c.resolution_basis.unwrap();let recipient=if disposition==Disposition::ACCEPT{c.terms.input.beneficiary_id.clone()}else{c.creator_id.clone()};let amount=c.funded_principal_yocto;let id=hash(&("CONTRA:PAYOUT:v1".to_string(),self.chain_id.clone(),env::current_account_id(),case_id,c.terms_digest,recipient.clone(),amount,disposition,basis));c.payout=Some(Payout{payout_intent_id:id,recipient_id:recipient,amount_yocto:amount,disposition,resolution_basis:basis,decision_reason:c.reason.clone(),status:"AWAITING_RESULT".into(),attempt:0,last_attempt:Attempt{attempt:0,dispatched_at_ns:D64(0),result:"UNKNOWN".into(),completed_at_ns:None}});let d=self.dispatch(&mut c);json!({"kind":"DISPATCHED","dispatch":d})
  }
+ #[deny_unknown_arguments]
  pub fn retry_payout(&mut self,case_id:Hash32,payout_intent_id:Hash32,expected_attempt:u32)->Value{deposit(0);gas(100);let mut c=self.case(case_id);require(c.state==State::TransferFailed,"E_OUTCOME_UNKNOWN");let p=c.payout.as_ref().unwrap();require(p.payout_intent_id==payout_intent_id&&p.attempt==expected_attempt,"E_ATTEMPT");require(p.last_attempt.result=="FAILED","E_OUTCOME_UNKNOWN");self.dispatch(&mut c)}
  #[private]
+ #[deny_unknown_arguments]
  pub fn on_payout_complete(&mut self,case_id:Hash32,payout_intent_id:Hash32,attempt:u32)->Value{
   deposit(0);require(caller()==env::current_account_id(),"E_AUTH");require(env::promise_results_count()==1,"E_AUTH");
   #[cfg(feature="sandbox-faults")] if self.callback_fault{env::panic_str("SANDBOX_ONLY_CALLBACK_FAULT")}
-  let Some(mut c)=self.cases.get(&case_id)else{return json!({"applied":false,"reason":"MISMATCH"})};let Some(p)=c.payout.as_mut()else{return json!({"applied":false,"reason":"MISMATCH"})};if p.payout_intent_id!=payout_intent_id||p.attempt!=attempt||c.state!=State::SettlementPending||p.last_attempt.result!="UNKNOWN"{return json!({"applied":false,"state":c.state,"reason":"STALE"})}
-  let success=match env::promise_result_checked(0,0){Ok(v) if v.is_empty()=>true,Err(PromiseError::Failed)=>false,_=>return json!({"applied":false,"state":c.state,"reason":"UNEXPECTED_RESULT"})};let amount=p.amount_yocto.0;self.inflight=self.inflight.checked_sub(amount).expect("inflight");p.last_attempt.completed_at_ns=Some(D64(now()));if success{self.paid=add(self.paid,amount);p.last_attempt.result="SUCCESS".into();p.status="SUCCESS_VERIFIED".into();c.state=State::Settled;c.reason="CALLBACK_SUCCESS".into();c.principal_bucket="COMPLETED".into()}else{self.held=add(self.held,amount);p.last_attempt.result="FAILED".into();p.status="FAILED_VERIFIED".into();c.state=State::TransferFailed;c.reason="CALLBACK_FAILED".into();c.principal_bucket="HELD".into()}
+  let mut c=self.case(case_id);let Some(p)=c.payout.as_mut()else{return json!({"applied":false,"state":c.state,"payout_intent_id":payout_intent_id,"attempt":attempt,"reason":"MISMATCH"})};if p.payout_intent_id!=payout_intent_id||p.attempt!=attempt||c.state!=State::SettlementPending||p.last_attempt.result!="UNKNOWN"{let reason=if p.payout_intent_id!=payout_intent_id{"MISMATCH"}else if p.attempt==attempt&&p.last_attempt.result!="UNKNOWN"{"DUPLICATE"}else{"STALE"};return json!({"applied":false,"state":c.state,"payout_intent_id":payout_intent_id,"attempt":attempt,"reason":reason})}
+  let success=match env::promise_result_checked(0,0){Ok(v) if v.is_empty()=>true,Err(PromiseError::Failed)=>false,_=>return json!({"applied":false,"state":c.state,"payout_intent_id":payout_intent_id,"attempt":attempt,"reason":"UNEXPECTED_RESULT"})};let amount=p.amount_yocto.0;self.inflight=self.inflight.checked_sub(amount).expect("inflight");p.last_attempt.completed_at_ns=Some(D64(now()));if success{self.paid=add(self.paid,amount);p.last_attempt.result="SUCCESS".into();p.status="SUCCESS_VERIFIED".into();c.state=State::Settled;c.reason="CALLBACK_SUCCESS".into();c.principal_bucket="COMPLETED".into()}else{self.held=add(self.held,amount);p.last_attempt.result="FAILED".into();p.status="FAILED_VERIFIED".into();c.state=State::TransferFailed;c.reason="CALLBACK_FAILED".into();c.principal_bucket="HELD".into()}
   let state=c.state;Self::event(&mut c,"payout_result",json!({"payout_intent_id":payout_intent_id,"attempt":attempt,"result":if success{"SUCCESS"}else{"FAILED"},"state":state}));self.save(&mut c);json!({"applied":true,"state":state,"payout_intent_id":payout_intent_id,"attempt":attempt,"reason":"APPLIED"})
  }
  #[cfg(feature="sandbox-faults")]
+ #[deny_unknown_arguments]
  pub fn set_callback_fault(&mut self,enabled:bool){deposit(0);require(caller()==self.owner_id,"E_AUTH");self.callback_fault=enabled;}
+ #[deny_unknown_arguments]
  pub fn get_config(&self)->Value{json!({"abi_version":"1.0.0","policy_version":1,"chain_id":self.chain_id,"contract_account":env::current_account_id(),"owner_id":self.owner_id,"creator_allowlist":self.creator_allowlist,"limits":{"cases":128,"registry":32,"criteria":16},"gas_policy":{"write_tgas":30,"create_tgas":50,"payout_tgas":100,"callback_tgas":30},"reserve_summary":self.reserves()})}
+ #[deny_unknown_arguments]
  pub fn get_case(&self,case_id:Hash32)->Option<Case>{self.cases.get(&case_id)}
+ #[deny_unknown_arguments]
  pub fn get_creation(&self,creator_id:AccountId,request_id:Hash32)->Value{self.cases.get(&self.case_key(&creator_id,request_id)).map(|c|json!({"case_id":c.case_id,"terms_digest":c.terms_digest})).unwrap_or(Value::Null)}
+ #[deny_unknown_arguments]
  pub fn get_reviewer(&self,reviewer_id:AccountId)->Option<Reviewer>{self.registry.get(&reviewer_id).cloned()}
+ #[deny_unknown_arguments]
  pub fn list_reviewers(&self,from_index:D64,limit:u32)->Value{require(limit>0&&limit<=50,"E_INPUT");let items:Vec<_>=self.registry.values().skip(from_index.0 as usize).take(limit as usize).cloned().collect();let next=from_index.0+items.len() as u64;json!({"items":items,"next_index":if next<self.registry.len() as u64{Some(D64(next))}else{None}})}
+ #[deny_unknown_arguments]
  pub fn list_cases(&self,from_index:D64,limit:u32)->Value{require(limit>0&&limit<=50,"E_INPUT");let items:Vec<_>=self.case_ids.iter().skip(from_index.0 as usize).take(limit as usize).map(|id|self.case(*id)).collect();let next=from_index.0+items.len() as u64;json!({"items":items,"next_index":if next<self.case_ids.len() as u64{Some(D64(next))}else{None}})}
+ #[deny_unknown_arguments]
  pub fn get_committee(&self,case_id:Hash32,round_id:u8)->Value{self.cases.get(&case_id).map(|c|{require(round_id<2,"E_INPUT");json!({"members":if round_id==0{c.terms.primary_committee}else{c.terms.fresh_committee},"threshold":2,"policy_version":1})}).unwrap_or(Value::Null)}
+ #[deny_unknown_arguments]
  pub fn get_round(&self,case_id:Hash32,round_id:u8)->Value{self.cases.get(&case_id).map(|c|Self::round(&c,round_id)).unwrap_or(Value::Null)}
+ #[deny_unknown_arguments]
  pub fn get_payout(&self,case_id:Hash32)->Option<Payout>{self.cases.get(&case_id).and_then(|c|c.payout)}
+ #[deny_unknown_arguments]
  pub fn get_events(&self,case_id:Option<Hash32>,after_seq:D64,limit:u32)->Value{require(limit>0&&limit<=50,"E_INPUT");let events=case_id.map(|id|self.case(id).events).unwrap_or_else(||self.global_events.clone());let all:Vec<Value>=events.iter().map(|s|serde_json::from_str(s).unwrap()).collect();let oldest=all.first().and_then(|v|v["data"][0]["seq"].as_str()).and_then(|s|s.parse::<u64>().ok()).unwrap_or(1);let items:Vec<Value>=all.into_iter().filter(|v|v["data"][0]["seq"].as_str().unwrap().parse::<u64>().unwrap()>after_seq.0).take(limit as usize).collect();let next=items.last().map(|v|v["data"][0]["seq"].clone()).unwrap_or(json!(after_seq));json!({"items":items,"oldest_seq":oldest.to_string(),"next_after_seq":next,"gap":after_seq.0.saturating_add(1)<oldest})}
 }
 
@@ -232,5 +261,11 @@ mod tests {
  #[test]fn fresh_review_overturns_primary(){let(mut k,c)=primary();ctx("creator.testnet",4801*SECOND,1);k.file_challenge(c.case_id,1,Hash32([40;32]));ctx("keeper.testnet",4801*SECOND,0);k.advance_round(c.case_id);vote(&mut k,c.case_id,1,Disposition::REJECT);let q=k.case(c.case_id);assert_eq!(q.state,State::Resolved);assert_eq!(q.final_disposition,Some(Disposition::REJECT));assert_eq!(q.resolution_basis,Some(Basis::FRESH));}
  #[test]fn timeout_challenge_keeps_prior_recipient(){let(mut k,c)=primary();ctx("creator.testnet",4801*SECOND,1);k.file_challenge(c.case_id,1,Hash32([40;32]));ctx("keeper.testnet",8400*SECOND,0);let q=k.advance_round(c.case_id);assert_eq!(q.state,State::Unresolved);assert_eq!(q.final_disposition,Some(Disposition::ACCEPT));assert_eq!(q.resolution_basis,Some(Basis::KEEP_PRIMARY));}
  #[test]fn voting_fixture_matches_golden(){ctx("contra.testnet",0,0);let h=hash(&("CONTRA:VOTE:v1".to_string(),"testnet".to_string(),aid("contra.testnet"),Hash32([0x44;32]),Hash32([0x11;32]),0u8,aid("reviewer-a.testnet"),Disposition::ACCEPT,Hash32([0x22;32]),Hash32([0x33;32]),Hash32(std::array::from_fn(|i|i as u8))));assert_eq!(hex::encode(h.0),"699b4c6db3682d7d671ac420251073d8008bc46fa0fcb4852b4c1f7a79a5a63c");}
+ #[test]fn creation_terms_and_payout_match_shared_golden_vectors(){ctx("contra.testnet",0,0);let doc=include_str!("../../../docs/COMMITMENT_TEST_VECTORS.md");let raw=doc.split("```json\n").nth(2).unwrap().split("\n```").next().unwrap();let g:Value=serde_json::from_str(raw).unwrap();let mut input=g["terms_input"].clone();let m=input.as_object_mut().unwrap();m.insert("domain".into(),json!("CONTRA:TERMS:v1"));for name in ["chain_id","contract_account","request_id","creator_id"]{m.insert(name.into(),g["key"][name].clone());}for name in ["primary_committee","fresh_committee"]{m.insert(name.into(),g[name].clone());}let frozen:FrozenTerms=serde_json::from_value(input).unwrap();assert_eq!(json!(hash(&frozen)),g["payout_intent"]["terms_digest"]);let id=hash(&("CONTRA:CASE:v1".to_string(),frozen.chain_id.clone(),frozen.contract_account.clone(),frozen.creator_id.clone(),frozen.request_id));assert_eq!(json!(id),g["payout_intent"]["case_id"]);let p=&g["payout_intent"];let intent=hash(&("CONTRA:PAYOUT:v1".to_string(),frozen.chain_id.clone(),frozen.contract_account.clone(),id,hash(&frozen),aid(p["recipient_id"].as_str().unwrap()),serde_json::from_value::<D128>(p["amount_yocto"].clone()).unwrap(),serde_json::from_value::<Disposition>(p["disposition"].clone()).unwrap(),serde_json::from_value::<Basis>(p["resolution_basis"].clone()).unwrap()));assert_eq!(hex::encode(intent.0),"124236de5e8e68eb3f366382b4c5b0e8d335ecfc83543cb6e2c647ae9415ba9c");}
  #[test]fn wire_rejects_noncanonical_numbers(){assert!(serde_json::from_str::<D128>("\"01\"").is_err());assert!(serde_json::from_str::<D128>("1").is_err());assert!(serde_json::from_str::<Hash32>(&format!("\"{}\"","AA".repeat(32))).is_err());}
+ #[test]#[should_panic(expected="E_AUTH")]fn forged_callback_is_rejected(){let(mut k,c)=primary();ctx("keeper.testnet",6000*SECOND,0);k.finalize_case(c.case_id);let p=k.case(c.case_id).payout.unwrap();testing_env!(context("outsider.testnet",6001*SECOND,0),near_sdk::test_vm_config(),near_sdk::RuntimeFeesConfig::test(),std::collections::HashMap::default(),vec![PromiseResult::Successful(vec![])]);k.on_payout_complete(c.case_id,p.payout_intent_id,1);}
+ #[test]fn mismatched_callback_preserves_unknown_and_ledger(){let(mut k,c)=primary();ctx("keeper.testnet",6000*SECOND,0);k.finalize_case(c.case_id);testing_env!(context("contra.testnet",6001*SECOND,0),near_sdk::test_vm_config(),near_sdk::RuntimeFeesConfig::test(),std::collections::HashMap::default(),vec![PromiseResult::Successful(vec![])]);let v=k.on_payout_complete(c.case_id,Hash32([99;32]),1);assert_eq!(v["applied"],false);assert_eq!(k.paid,0);assert_eq!(k.inflight,c.terms.input.amount_yocto.0);assert_eq!(k.case(c.case_id).state,State::SettlementPending);}
+ #[test]fn case_storage_is_preallocated_and_callback_cannot_grow_it(){let(mut k,c)=primary();assert_eq!(borsh::to_vec(&k.case(c.case_id)).unwrap().len(),CASE_BYTES as usize);ctx("keeper.testnet",6000*SECOND,0);k.finalize_case(c.case_id);let p=k.case(c.case_id).payout.unwrap();let before=env::storage_usage();testing_env!(context("contra.testnet",6001*SECOND,0),near_sdk::test_vm_config(),near_sdk::RuntimeFeesConfig::test(),std::collections::HashMap::default(),vec![PromiseResult::Successful(vec![])]);let pre=env::storage_usage();k.on_payout_complete(c.case_id,p.payout_intent_id,1);assert_eq!(env::storage_usage(),pre);assert!(before>0);assert_eq!(borsh::to_vec(&k.case(c.case_id)).unwrap().len(),CASE_BYTES as usize);}
+ #[test]#[should_panic(expected="E_AUTH")]fn nonmember_cannot_commit(){let(mut k,c)=funded();ctx("beneficiary.testnet",0,1);k.submit_evidence(c.case_id,c.terms_digest,Hash32([30;32]));ctx("outsider.testnet",0,0);k.advance_round(c.case_id);k.commit_vote(c.case_id,0,Hash32([55;32]));}
+ #[test]#[should_panic(expected="E_COMMITTEE")]fn stale_registry_snapshot_prevents_funding(){let(mut k,c)=fixture();ctx("beneficiary.testnet",0,1);k.accept_terms(c.case_id,c.terms_digest);ctx("creator.testnet",0,1);k.set_reviewer(c.terms.primary_committee[0].reviewer_id.clone(),Hash32([88;32]),Hash32([89;32]),true);ctx("creator.testnet",0,c.terms.input.amount_yocto.0);k.fund_case(c.case_id,c.terms_digest);}
 }
