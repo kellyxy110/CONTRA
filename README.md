@@ -20,10 +20,10 @@ CONTRA is a proposed NEAR-native adjudication protocol. It combines deterministi
 4. `project/NEXT.md` gives the next task and acceptance criteria.
 5. `docs/PRD.md` defines the product and proof of success.
 6. `docs/PROTOCOL.md` defines states, safety rules and reviewer mechanics.
-7. `docs/UX.md` maps the product and Judgment Room interactions.
+7. `docs/UX.md` maps the product and The Bench interactions.
 8. `docs/ARCHITECTURE.md` maps contract and offchain boundaries.
 9. `docs/BENCHMARKS.md` defines fair measurement and experiment guardrails.
-10. `design/judgment-room.html` is the standalone clickable prototype. Open it in a browser.
+10. `design/ux3a/index.html` is the active standalone The Bench design study. `design/judgment-room.html` remains a historical prototype.
 11. `design/tokens.css` contains shared design tokens.
 12. `benchmarks/case-plan.csv` contains 30 benchmark scenario plans, not results.
 13. `AGENTS.md` is the coding agent handoff and guardrail document.

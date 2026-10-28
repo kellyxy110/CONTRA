@@ -107,3 +107,10 @@ Status ACCEPTED below records engineering decisions finalized under the owner's 
 
 All tests above are specifications and NOT RUN in contract. State/method authority is docs/CONTRACT_ABI_V1.md and its linked v1 companions. Credit limits, separate pre-event design and November 1 source-eligibility boundary remain unchanged. No owner-facing visual redesign or new spending/deployment authorization.
 
+## Product naming update | 2026-10-28
+
+| ID | Status | Decision | Reason | Date |
+| --- | --- | --- | --- | --- |
+| D-041 | ACCEPTED | Rename the active product surface from Judgment Room to The Bench in frontend title/header, active navigation references and product documentation. The name-only substitution is explicitly authorized within the UX3A freeze; all layout, typography, colors, components and assets remain unchanged. | Explicit owner naming instruction | 2026-10-28 |
+
+Historical log entries, archived design prototype paths and protocol method names remain unchanged. Earlier product-name references in historical logs describe their original checkpoints. UX3C remains the active protocol checkpoint; G01-G07 decisions, first November 1 Rust/sandbox milestone, credit limits and execution boundaries are unchanged. No redesign or additional feature is authorized by this naming update.

@@ -112,3 +112,9 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Validation: documentation traceability, link/consistency checks, independently reconstructed 16 serialization/hash fixtures. No smart contract testing, Rust implementation, sandbox, live provider use, transaction, deployment, secrets or spending.
 - Next: November 1 fresh Rust escrow implementation and sandbox financial proof, before reviewer/service/frontend integration.
 
+## 2026-10-28 | UX3C naming update | The Bench
+
+- Renamed the active dashboard header/browser title and current product documentation from Judgment Room to The Bench; clarified the current frontend entry in README and the case-dashboard navigation name in the UX3B map.
+- Recorded D-041. Preserved historical log text and archived prototype paths. No contract methods, ABI, state machine, committee/recovery rules, commitment vectors, CSS, JavaScript behavior, reference images or other visual assets changed.
+- UX3A remains approved with this owner-authorized naming-only exception. UX3C protocol work and first November 1 fresh Rust escrow/sandbox milestone continue unchanged.
+- Validation: exact frontend text-substitution comparison and scoped diff inspection; no protocol/sandbox testing claimed. No deployment, provider use, secrets, mainnet action or spending.

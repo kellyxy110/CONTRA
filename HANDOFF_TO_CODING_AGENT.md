@@ -21,7 +21,7 @@ UX3A is APPROVED and FROZEN at bee5a7481d56c86d4c9860280b8367f82af0cb5a. The app
 
 Build CONTRA as a NEAR-native adjudication proof of concept. Conventional NEAR Rust contracts must coordinate escrow, reviewer authentication, votes, disputes, deadlines, appeals and settlement. Independent offchain evaluators generate evidence-bound judgments that can be falsified or challenged. Our research question is whether useful decentralized AI adjudication requires a specialized AI blockchain. Do not assert that this prototype matches GenLayer's full security model.
 
-**Immediate priority:** Turn the owner's exact accepted screenshot into a faithful, functional graph-first CONTRA Judgment Room design, while preserving the supplied image with ZERO modifications. Then use the accepted design as the November 1 engineering reference.
+**Immediate priority:** Turn the owner's exact accepted screenshot into a faithful, functional graph-first CONTRA The Bench design, while preserving the supplied image with ZERO modifications. Then use the accepted design as the November 1 engineering reference.
 
 ## Mandatory first reads
 
@@ -102,7 +102,7 @@ If a milestone slips, cut feature scope, not escrow correctness. The assistant b
 
 ## Required deliverables for the next agent checkpoint
 
-1. A visually faithful desktop CONTRA Judgment Room with real graph selection and dynamic inspector, implemented only as a pre-event design study until Nov 1.
+1. A visually faithful desktop CONTRA The Bench with real graph selection and dynamic inspector, implemented only as a pre-event design study until Nov 1.
 2. A mobile alternative, accessible list fallback and working toolbar interactions.
 3. Source-vs-implementation visual review at 1200 x 900 and two additional responsive sizes. Report layout divergence honestly.
 4. Screenshots or a recording of the working prototype. Do not substitute a static image as evidence of functionality.

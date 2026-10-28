@@ -1,5 +1,8 @@
 # CONTRA UX3B functional integration map
 
+Current product name: The Bench. The case dashboard at /cases/:id uses this name in its heading and browser/navigation titles. This owner-authorized naming change does not change routes, component geometry, workflow behavior or the UX3C protocol freeze.
+
+
 Current ABI/policy authority: UX3C CONTRACT_ABI_V1.md and companion state/committee/recovery/vector/threat documents. UX3B routes and A01-A23 remain integration context; its conceptual signatures, G01-G07 alternatives and any conflicting fallback/recovery assumption are superseded. G01-G07 are RESOLVED AT SPECIFICATION LEVEL, with exact decisions and test mapping in THREAT_MODEL_V1.md. Add accept_terms before funding and restrict create_case to the immutable pilot creator allowlist. No visual code changes. Earlier proposal language below is historical, not an invitation to select another ABI.
 
 

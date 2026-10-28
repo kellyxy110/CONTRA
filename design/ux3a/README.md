@@ -1,4 +1,4 @@
-# CONTRA UX3A
+# CONTRA UX3A | The Bench
 
 Reference-only pre-event design study. Run `npm run dev` from the repository root, then open `/`. No dependencies need installation.
 
@@ -11,3 +11,5 @@ The implementation uses HTML components, CSS, a canvas radar and local fixture d
 The fixed desktop canvas preserves the owner's source composition. Narrow-screen redesign is outside UX3A. Existing graph/list and protocol requirements remain in the historical study and blueprint. This study cannot be represented as eligible hackathon implementation.
 
 Owner visual acceptance is pending. See `design-qa.md` for measured checks and limitations.
+
+Naming update (2026-10-28): The Bench is the current product name. The authorized title/header text substitution is the only frontend change from the approved visual baseline; layout, styling, typography, radar and assets remain frozen. The UX3C protocol milestone and pre-event implementation boundary remain unchanged.
