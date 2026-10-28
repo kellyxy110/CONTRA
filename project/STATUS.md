@@ -4,10 +4,18 @@ Checkpoint ID: CONTRA-2026-10-28-UX2C
 Date: 2026-10-28
 Phase: Pre-hackathon visual fidelity recovery
 Owner acceptance: Current visual implementation rejected; product redesign planned
-Repository: Private `kellyxy110/CONTRA` repository authorized for creation
+Repository: Private `kellyxy110/CONTRA`, created and synchronized on `main`
 Deployment: None
 Onchain code: None
 AI provider spend: None incurred by this package
+
+## Repository baseline | 2026-10-28
+
+- Remote: `https://github.com/kellyxy110/CONTRA`
+- Visibility: Private
+- Default branch: `main`
+- Initial baseline commit: `351e90d73c93577f8798e45c2e8bb45bff3e082a`
+- Deployment and repository secrets: None
 
 ## Visual direction update (v1.1)
 

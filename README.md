@@ -28,7 +28,7 @@ CONTRA is a proposed NEAR-native adjudication protocol. It combines deterministi
 12. `benchmarks/case-plan.csv` contains 30 benchmark scenario plans, not results.
 13. `AGENTS.md` is the coding agent handoff and guardrail document.
 
-GitHub identity is assigned to `kellyxy110`. No remote repository, push, secret or deployment has been created.
+Repository: [kellyxy110/CONTRA](https://github.com/kellyxy110/CONTRA), private. No repository secrets or deployment have been configured.
 
 ## Fixed constraints
 
