@@ -1,6 +1,8 @@
 # Change log
 
 
+- UX3C verification record: project/artifacts/ux3c/spec-validation.json, including six specification SHA-256 values, 33 acceptance/10 invariant/7 gap coverage checks and 16 independent byte/hash fixture results. Contract/sandbox acceptance remains NOT RUN.
+
 UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
 ## v1.0 | 2026-10-27 | Preparation baseline
 
@@ -98,4 +100,15 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Preserved all approved visual code/assets and protocol safety requirements. No implementation expansion, service integration, contract code, transaction, deployment or provider use.
 - Validation: documentation coverage/invariant scans and changed-path inspection, not runtime protocol tests.
 - Next: pin G01-G07 before fresh eligible-window contract and UI engineering. UX3B document delivery is not a workflow implementation or independent security audit.
+
+## v1.5 | 2026-10-28 | UX3C protocol freeze
+
+- Added docs/CONTRACT_ABI_V1.md, STATE_MACHINE_V1.md, COMMITTEE_POLICY_V1.md, SETTLEMENT_RECOVERY_V1.md, COMMITMENT_TEST_VECTORS.md and THREAT_MODEL_V1.md.
+- Closed G01-G07 at specification level with definitive ABI/state/policy decisions and mapped future negative tests.
+- Defined creator-only unfunded cancellation, beneficiary digest consent, immutable admission/committee snapshots, 3+3 distinct operators/2-of-3, exact JSON/Borsh/deposits/gas policy, request idempotency and typed events.
+- Amended challenged fresh-inconclusive fallback to retain original decisive verdict; original undecided review still follows creator refund policy. Explicitly documented remaining delay/collusion/bias risks.
+- Froze safe financial limitation: successful transfer plus failed callback remains pending/UNKNOWN; no authenticated recovery implementation in MVP, no unsafe retry. Verified transfer failure may retry only the same intent/receiver/amount. I7/I10 liveness qualification recorded without weakening I2.
+- Added authoritative notices to old protocol/UX3B/handoff documents; updated project STATUS/DECISIONS/NEXT/SESSION_LOG. UX3A assets unchanged.
+- Validation: documentation traceability, link/consistency checks, independently reconstructed 16 serialization/hash fixtures. No smart contract testing, Rust implementation, sandbox, live provider use, transaction, deployment, secrets or spending.
+- Next: November 1 fresh Rust escrow implementation and sandbox financial proof, before reviewer/service/frontend integration.
 

@@ -89,3 +89,21 @@ D-017 clarifies D-015. Palette adaptations apply to the newly coded UI ONLY, not
 
 Pre-event design remains separate from eligible-window implementation. No new spending, deployment, secrets or mainnet authorization. API routes and ABI refinements in UX3B are proposals, not deployed interfaces.
 
+## UX3C definitive protocol freeze | 2026-10-28
+
+Status ACCEPTED below records engineering decisions finalized under the owner's explicit UX3C instruction, not a claim of deployed/tested code or a new independent security approval. D-031's alternatives are resolved/superseded by this freeze.
+
+| ID | Status | Definitive decision | Engineering test obligation |
+| --- | --- | --- | --- |
+| D-032 | ACCEPTED | G01: creator-only cancel_case in Draft, rejects after funding; beneficiary must accept immutable terms digest before exact funding | ST01/ST08, AC07/23 |
+| D-033 | ACCEPTED | G02: owner-attested and reviewer-confirmed registry; deterministic six eligible distinct declared operators, fixed 3+3, 2-of-3, no funded replacements; insufficient six rejects funding | CM01-CM07, AC12-14/17/18 |
+| D-034 | ACCEPTED | G03: one canonical payout pipeline, no RefundPending; original unresolved -> base creator refund; fresh inconclusive retains primary decisive verdict; decisive fresh result can overturn | ST02-ST08, AC13/16-19 |
+| D-035 | ACCEPTED | G04: creator/request identity persists; immutable Borsh terms digest; exact payload idempotency and successful finalized-receipt typed event streams; immutable creator allowlist for sponsor-funded pilot admission | ID01-ID05/ABI01, AC04-07/24/25/28 |
+| D-036 | ACCEPTED | G05: ABI v1 public/private method/type/deposit/serialization/gas policy and domain-separated SHA-256 with shared vote, bundle, creation, terms and intent vectors frozen in six v1 documents | ABI01-ABI04/CV01-CV08, AC05/12/13/33 |
+| D-037 | ACCEPTED | G06: declared operator identities/control disclosures, account confirmations and operator-disjoint fresh review; permissioned pilot is not Sybil-proof or independently decentralized by account count | CM01-CM08, AC10/14/26/29 |
+| D-038 | ACCEPTED | G07: unique immutable intent/recipient/amount, directly linked self-only native-transfer callback, retry only authentic Failed result; no unknown-outcome recovery or unsafe retry in MVP | SR01-SR13, AC19-22/24 |
+| D-039 | ACCEPTED | Challenge abuse: only losing party, one criterion-bound challenge, fixed preselected fresh jury/deadline and KEEP_PRIMARY_V1 on inconclusive fresh review; no new token/bond. Explicitly supersedes fresh-unresolved automatic refund interpretation | ST05/ST06, AC16-18/32 |
+| D-040 | ACCEPTED | I7 bounds adjudication, not payment under callback uncertainty; I10 recovery is verified-failure only. Callback-unknown may strand payment state/funds indefinitely; I2 never bypassed by admin/manual retry | SR05/SR06/SR08, AC22 |
+
+All tests above are specifications and NOT RUN in contract. State/method authority is docs/CONTRACT_ABI_V1.md and its linked v1 companions. Credit limits, separate pre-event design and November 1 source-eligibility boundary remain unchanged. No owner-facing visual redesign or new spending/deployment authorization.
+

@@ -1,5 +1,8 @@
 # CONTRA UX3B engineering acceptance criteria
 
+UX3C amendment notice: all AC01-AC33 remain NOT RUN until future implementation evidence. CONTRACT_ABI_V1.md and companion freeze documents define their exact behavior. AC05/AC07 include beneficiary consent and immutable pilot creator admission; AC14 requires six distinct declared operators with frozen 3+3 membership. AC17/AC18 now require base unresolved refund but KEEP_PRIMARY_V1 for inconclusive fresh review. AC22 explicitly accepts locked UNKNOWN as the safe MVP limitation when transfer succeeds and callback fails; no unauthenticated recovery/retry. See THREAT_MODEL_V1.md for full AC01-AC33/I1-I10 traceability and SR05/SR06 fault tests. This amendment is recorded in the decision ledger, not a claim tests passed.
+
+
 Checkpoint: CONTRA-2026-10-28-UX3B
 Scope: Acceptance specification, not executed implementation tests.
 Frozen visual reference: bee5a7481d56c86d4c9860280b8367f82af0cb5a.

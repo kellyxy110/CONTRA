@@ -1,5 +1,27 @@
 # Next execution task
 
+Checkpoint: CONTRA-2026-10-28-UX3C
+Date: 2026-10-28
+Starting baseline: plan/ux3b, af0dd97558f134ac9269c7fb58cc7613df6b8202
+Work branch: plan/ux3c
+Approved design: bee5a7481d56c86d4c9860280b8367f82af0cb5a, unchanged
+
+## Current next task
+
+On or after November 1, 2026 UTC, create fresh contracts/adjudication source and a sandbox harness. Pin Rust/SDK/toolchain and implement storage reserves/accounting, immutable creation identity/terms, beneficiary acceptance, creator-only cancel, exact funding, single payout intent, private callback and verified-failure-only retry. Prove I1/I2/I3/I10 using the v1 acceptance plan, especially SR05 successful transfer plus failed callback and SR06 failed transfer plus failed callback. No second transfer from unknown outcome. A harness-only decision fixture may reach settlement for tests, but no production verdict bypass may be exported.
+
+Then integrate frozen committee/reviewer adjudication and evidence/provider services, followed by the approved frontend visual system. Do not implement submission code before November 1. Pre-event design remains separate and cannot be imported as eligible implementation. No deployment, secrets, paid models or mainnet actions are authorized here. Preserve Meta $3, Baseten $3, Modal $5 caps and no unauthorized cash spending.
+
+## Mandatory resume references
+
+STATUS.md, DECISIONS.md, CHANGELOG.md, this file; docs/CONTRACT_ABI_V1.md and its five companion v1 documents; amended UX3B map and AC01-AC33. G01-G07 are RESOLVED AT SPECIFICATION LEVEL, not implemented/proven. Exact gas/storage budgets are frozen assumptions that must pass worst-case sandbox measurement before funding. Unknown payout recovery is deliberately absent, not an open permission to invent a manual workaround.
+
+Registry/operator evidence, separately controlled six-member availability, credit verification, key-control disclosure and testnet deployment authorization remain launch gates. Documented residual fairness/liveness risks remain. Keep design/ux3a and reference assets frozen.
+
+## Historical NEXT record
+
+# Next execution task
+
 Task ID: CONTRA-PREP-UX3B
 Current checkpoint: CONTRA-2026-10-28-UX3B
 Date: 2026-10-28

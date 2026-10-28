@@ -1,0 +1,196 @@
+{
+  "checkpoint": "CONTRA-2026-10-28-UX3C",
+  "baseline": "af0dd97558f134ac9269c7fb58cc7613df6b8202",
+  "approved_design": "bee5a7481d56c86d4c9860280b8367f82af0cb5a",
+  "verification_scope": "Documentation structure, cross-document consistency review and serialization/hash fixtures only. No smart contract, Rust, browser integration, sandbox, deployment or live provider test.",
+  "static_validation": {
+    "checks": {
+      "six_specifications": true,
+      "AC01_AC33_covered": true,
+      "I1_I10_covered": true,
+      "G01_G07_resolved": true,
+      "relative_links_exist": true,
+      "no_em_dash": true,
+      "private_callback_defined": true,
+      "finalize_return_consistent": true,
+      "unknown_outcome_not_retryable": true,
+      "both_failure_faults_specified": true,
+      "beneficiary_consent_defined": true,
+      "creator_admission_defined": true,
+      "budget_limits_preserved": true,
+      "not_claimed_sandbox_tested": true
+    },
+    "counts": {
+      "acceptance_criteria": 33,
+      "invariants": 10,
+      "gaps": 7
+    },
+    "specification_sha256": {
+      "CONTRACT_ABI_V1.md": "aa55ffb85672555b628caeac7f8f895e94d2a53a15f0222e390f677b414e5182",
+      "STATE_MACHINE_V1.md": "7554626b4051dec697d0ad5a72eb904247ea72ca70c1387182f6758c1ca42021",
+      "COMMITTEE_POLICY_V1.md": "1a68f8b05e82d5127d4906c90193c2140756f1a8811e792e29641dd5011022f3",
+      "SETTLEMENT_RECOVERY_V1.md": "39e2db2c58ef8a14dab361f99a2a59c6df882d9e45c60462d3116a5396db7c27",
+      "COMMITMENT_TEST_VECTORS.md": "94e5ae2f631fd9b5ee69375456df321943bee5940fc35d05d8911395c6828482",
+      "THREAT_MODEL_V1.md": "7dc1a57c932508ac37077b0777eccd89df44d941bb0cdd0023103a0fb5b65d6a"
+    }
+  },
+  "independent_node_python_checks": [
+    {
+      "id": "V01",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V02",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V03",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V04",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V05",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V06",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V07",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V08",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V09",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V10",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V11",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "V12",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "BUNDLE",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "C01",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "T01",
+      "bytes_match": true,
+      "hash_match": true
+    },
+    {
+      "id": "P01",
+      "bytes_match": true,
+      "hash_match": true
+    }
+  ],
+  "openssl_checks": [
+    {
+      "id": "V01",
+      "pass": true
+    },
+    {
+      "id": "V02",
+      "pass": true
+    },
+    {
+      "id": "V03",
+      "pass": true
+    },
+    {
+      "id": "V04",
+      "pass": true
+    },
+    {
+      "id": "V05",
+      "pass": true
+    },
+    {
+      "id": "V06",
+      "pass": true
+    },
+    {
+      "id": "V07",
+      "pass": true
+    },
+    {
+      "id": "V08",
+      "pass": true
+    },
+    {
+      "id": "V09",
+      "pass": true
+    },
+    {
+      "id": "V10",
+      "pass": true
+    },
+    {
+      "id": "V11",
+      "pass": true
+    },
+    {
+      "id": "V12",
+      "pass": true
+    },
+    {
+      "id": "BUNDLE",
+      "pass": true
+    },
+    {
+      "id": "C01",
+      "pass": true
+    },
+    {
+      "id": "T01",
+      "pass": true
+    },
+    {
+      "id": "P01",
+      "pass": true
+    }
+  ],
+  "runtime_acceptance_status": "AC01-AC33 NOT RUN for future implementation; no pass inferred from docs",
+  "residual_risks": [
+    "Permissioned registry/declared operator identity and correlated or colluding judgments",
+    "Base unresolved creator bias; wrong prior verdict may be retained if fresh review is inconclusive",
+    "Frivolous challenge delays payout until fixed deadline",
+    "Unknown payout after callback failure locked indefinitely; no MVP authenticated recovery",
+    "Gas/storage and SDK/runtime assumptions require sandbox proof"
+  ],
+  "spending_usd": 0,
+  "transactions": [],
+  "deployments": []
+}

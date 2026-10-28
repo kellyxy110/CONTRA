@@ -1,5 +1,10 @@
 # CONTRA agent handoff: blueprint and exact reference integration
 
+## Authoritative protocol handoff | UX3C
+
+Checkpoint CONTRA-2026-10-28-UX3C freezes G01-G07 at specification level. Start with docs/CONTRACT_ABI_V1.md and its five linked v1 companions, then the amended UX3B acceptance map. Earlier conceptual ABI/fallback/recovery and graph-first design instructions below are historical. UX3A stays approved/frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. No pre-November-1 implementation, deployment, secrets or paid calls. The first November 1 task is fresh Rust escrow/accounting and sandbox financial-invariant proof including successful transfer with failed callback; NEVER retry an unknown transfer. New code is separate from pre-event design. Registry trust, buyer-favored base fallback, retained wrong-primary risk and stranded-unknown payout limitation must be disclosed. No claim of executed contract tests or safe mainnet readiness.
+
+
 ## Current owner direction | UX3B, 2026-10-28
 
 UX3A is APPROVED and FROZEN at bee5a7481d56c86d4c9860280b8367f82af0cb5a. The approved sidebar/three-column dashboard, radar, cards, typography and NEAR colors supersede the older graph-first composition instructions below. Preserve design/ux3a and all original references unchanged. Read docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md and docs/UX3B_ENGINEERING_ACCEPTANCE.md before new engineering. UX3B delivers planning only, not implementation expansion. Keep contract/protocol invariants and pre-November-1 implementation gate. Historical text below is preserved; earlier approval-pending and composition statements are superseded by this explicit owner direction.

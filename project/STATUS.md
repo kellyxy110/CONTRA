@@ -1,5 +1,22 @@
 # CONTRA status checkpoint
 
+## Current authoritative checkpoint | CONTRA-2026-10-28-UX3C
+
+Date: 2026-10-28. Starting baseline plan/ux3b at af0dd97558f134ac9269c7fb58cc7613df6b8202. Current work branch: plan/ux3c. This notice supersedes earlier active NEXT and gap-status text, which remains historical below.
+
+Completed: six authoritative v1 documents (ABI, state machine, committee policy, settlement recovery, commitments, threat model); exact public/private interfaces, JSON/Borsh types, deposits/gas assumptions, deterministic idempotency/events, six-operator 3+3 committee, creator-only unfunded cancel and beneficiary consent, normalized refund/payout lifecycle, single immutable payout intent and callback guards. G01-G07 RESOLVED at specification level with corresponding future acceptance tests. UX3A design and references remain frozen at bee5a74.
+
+Substantive freeze decisions: original undecided review still uses creator-refund fallback; an inconclusive challenged fresh review retains the original decisive verdict to avoid profitable timeout challenges. The losing party may challenge once, within immutable deadlines. Permissioned creator allowlist limits sponsor-storage spam. Unknown payout outcome, including successful transfer with failed callback, stays locked pending with NO MVP recovery or retry. I7/I10 liveness is qualified accordingly; no second transfer is permitted while prior outcome is unknown.
+
+Verification: AC01-AC33/I1-I10 traceability reviewed, method/type/state/deposit consistency and local document-link checks; 12 vote + challenge bundle + case/terms/payout fixtures (16 total) independently byte/hash checked with Node, Python and OpenSSL. These are documentation/serialization checks, NOT Rust, sandbox, browser-integration or smart-contract tests. All future acceptance tests remain NOT RUN.
+
+Remaining execution gates: exact dependency/ABI compilation, worst-case storage/gas measurement, sandbox financial/race/callback-fault tests, separately controlled reviewer evidence, budget/credit verification and deployment/key-control authorization. Known residual risks are in THREAT_MODEL_V1. No unresolved G01-G07 specification alternative remains; callback-unknown liveness is an explicit limitation, not a promised future fix.
+
+Next: on/after November 1 UTC, author fresh contracts/adjudication source and sandbox tests for create/accept/cancel/fund, accounting, payout intent, private callback and verified-failure retry. Prove I1/I2/I3/I10, including SR05 successful transfer + callback failure, before reviewer/service/frontend integration. No deployment, model calls, secrets, mainnet, actual transactions or spending. Meta $3/Baseten $3/Modal $5 caps unchanged.
+
+## Preserved earlier checkpoints (superseded where inconsistent)
+
+
 ## Current authoritative checkpoint | UX3B
 
 The owner approved and froze UX3A at bee5a7481d56c86d4c9860280b8367f82af0cb5a on 2026-10-28. Earlier pending/rejected visual statements below are historical, not the current owner verdict. UX3B delivers protocol workflow mapping and engineering acceptance criteria only. No UX3A source or visual asset was changed.

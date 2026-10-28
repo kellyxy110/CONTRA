@@ -1,6 +1,8 @@
 # CONTRA session log
 
 
+- UX3C verification record: project/artifacts/ux3c/spec-validation.json, including six specification SHA-256 values, 33 acceptance/10 invariant/7 gap coverage checks and 16 independent byte/hash fixture results. Contract/sandbox acceptance remains NOT RUN.
+
 UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
 ## 2026-10-27 | VH1 | Immutable-image blueprint handoff
 
@@ -86,4 +88,16 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - No contract/service implementation, deployment, live API/model call, NEAR transaction or spending. Provider usage $0.
 - Remaining: resolve ABI/state/committee/recovery gaps before dependent implementation; validate actual operator independence and credits before live claims/use.
 - Next: version and review G01-G07 resolutions and canonical ABI/state schemas; then eligible-window sandbox vertical slice.
+
+## 2026-10-28 | UX3C | Protocol freeze handoff
+
+- Verified plan/ux3b head af0dd97558f134ac9269c7fb58cc7613df6b8202 and read governing agent instructions, protocol/UX3B/AC01-AC33 and existing logs. UX3A baseline bee5a74 preserved.
+- Finalized G01-G07 in six authoritative v1 documents, with ABI/state/committee/independence/event/recovery definitions and corresponding future acceptance tests.
+- Explicit decisions include beneficiary consent, permissioned creator admission, preselected 3+3 six-operator jury, fresh-inconclusive keep-primary fallback to limit creator timeout abuse, and no authenticated MVP unknown-outcome recovery. No second transfer while prior result is unknown.
+- Reviewed primary NEAR callback/privacy/failure, serialization, storage, gas, one-yocto, NEP-297 and Borsh documentation. These informed contract constraints; deployment/runtime behavior is not claimed tested.
+- Prepared and independently reconstructed 12 vote vectors, one challenge bundle and creation/terms/payout golden fixtures using Node and Python, then checked all 16 hashes with OpenSSL. Initial hex-decoder tool absence was detected and corrected; final checks agree. This is fixture preparation, not competition contract code or sandbox testing.
+- Reviewed full AC01-AC33/I1-I10 matrix; wrote negative SR05/SR06 cases for transfer/callback split failures and explicit I7/I10 liveness limitations. All future contract/browser/service acceptance tests remain NOT RUN.
+- Updated authoritative notices and five project logs, retaining prior history. No approved visual source changes, production implementation, model calls, live transactions, deployment, secrets or mainnet actions. Actual spending $0; approved $3/$3/$5 provider envelopes unchanged.
+- Remaining: execution gates (ABI compilation, worst-case gas/storage, sandbox invariants, independent operator evidence, credits, deployment/key control). No unresolved G01-G07 specification alternatives; unknown-outcome lock is an explicit residual limitation.
+- Next: first November 1 fresh Rust escrow/accounting/payout sandbox milestone, then reviewer protocol/services and approved frontend.
 
