@@ -14,7 +14,7 @@ Always report checkpoint ID, tasks completed, files changed, tests executed, unr
 
 ## Non-negotiable engineering constraints
 
-- Do not implement hackathon submission code before November 1, 2026 UTC. The October design HTML is a reference-only design study. Rebuild any submitted production UI during the eligible window rather than importing this preliminary prototype as implementation.
+- Owner authorized implementation beginning October 28, 2026. Record that actual date and distinguish pre-November-1 code from official competition-window work. Do not claim pre-event code was written during the event. Keep approved design reference assets separate from production source; preserve the approved visual system and The Bench naming. Sandbox is authorized; testnet deployment, paid provider use and production secrets require separate authorization.
 - Never include em dash characters in source, copy, SEO text or documentation.
 - Use meaningful README badges, verified from reality. Do not invent CI pass or deployment success badges.
 - NEAR testnet only until explicitly approved otherwise. No mainnet assets.

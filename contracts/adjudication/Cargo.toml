@@ -1,0 +1,26 @@
+[package]
+name = "contra-adjudication"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+near-sdk = { version = "=5.29.1", features = ["legacy"] }
+borsh = "1.5"
+hex = "0.4"
+
+[dev-dependencies]
+near-sdk = { version = "=5.29.1", features = ["legacy", "unit-testing"] }
+
+[features]
+sandbox-faults = []
+
+[profile.release]
+codegen-units = 1
+opt-level = "z"
+lto = true
+panic = "abort"
+overflow-checks = true

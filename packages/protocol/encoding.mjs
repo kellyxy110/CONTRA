@@ -1,0 +1,14 @@
+const encoder=new TextEncoder();
+export const hex=bytes=>Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+export function unhex(s){if(typeof s!=='string'||!/^[0-9a-f]{64}$/.test(s))throw Error('Invalid Hash32');return Uint8Array.from(s.match(/../g),b=>parseInt(b,16));}
+export function join(...values){const out=new Uint8Array(values.reduce((n,v)=>n+v.length,0));let at=0;for(const v of values){out.set(v,at);at+=v.length;}return out;}
+export function integer(n,size){if(!/^(0|[1-9][0-9]*)$/.test(String(n)))throw Error('Invalid integer');let v=BigInt(n);const out=new Uint8Array(size);for(let i=0;i<size;i++){out[i]=Number(v&255n);v>>=8n;}if(v)throw Error('Integer overflow');return out;}
+export function str(s){const b=encoder.encode(s);return join(integer(b.length,4),b);}
+export async function digest(bytes){return hex(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)));}
+const disposition=d=>{const v=['ACCEPT','REJECT','UNRESOLVED'].indexOf(d);if(v<0)throw Error('Invalid disposition');return integer(v,1);};
+export function voteBytes(v){return join(str('CONTRA:VOTE:v1'),str(v.chain_id),str(v.contract_account),unhex(v.case_id),unhex(v.terms_digest),integer(v.round_id,1),str(v.reviewer_account),disposition(v.disposition),unhex(v.evidence_digest),unhex(v.finding_digest),unhex(v.nonce));}
+export const voteCommitment=v=>digest(voteBytes(v));
+export function termsBytes(t){const snapshot=r=>join(str(r.reviewer_id),unhex(r.operator_id),integer(r.revision,8),unhex(r.disclosure_digest));return join(str('CONTRA:TERMS:v1'),str(t.chain_id),str(t.contract_account),unhex(t.request_id),str(t.creator_id),str(t.beneficiary_id),unhex(t.creator_operator_id),unhex(t.beneficiary_operator_id),integer(t.amount_yocto,16),...['fund_by_ns','submit_by_ns','primary_commit_end_ns','primary_reveal_end_ns','challenge_end_ns','fresh_commit_end_ns','fresh_reveal_end_ns'].map(k=>integer(t[k],8)),integer(t.criteria.length,4),...t.criteria.map(c=>join(integer(c.criterion_id,2),integer(c.kind==='GENERAL'?0:1,1),unhex(c.requirement_digest))),unhex(t.evidence_policy_digest),integer(t.policy_version,2),integer(0,1),integer(0,1),...t.primary_committee.map(snapshot),...t.fresh_committee.map(snapshot));}
+export function caseBytes(k){return join(str('CONTRA:CASE:v1'),str(k.chain_id),str(k.contract_account),str(k.creator_id),unhex(k.request_id));}
+export function challengeBytes(q){return join(str('CONTRA:CHALLENGE:v1'),str(q.chain_id),str(q.contract_account),unhex(q.case_id),unhex(q.terms_digest),unhex(q.original_manifest_digest),integer(q.criterion_id,2),unhex(q.counterexample_digest));}
+export function payoutBytes(p){return join(str('CONTRA:PAYOUT:v1'),str(p.chain_id),str(p.contract_account),unhex(p.case_id),unhex(p.terms_digest),str(p.recipient_id),integer(p.amount_yocto,16),disposition(p.disposition),integer(['PRIMARY','FRESH','BASE_REFUND','KEEP_PRIMARY'].indexOf(p.resolution_basis),1));}

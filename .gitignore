@@ -1,11 +1,10 @@
 node_modules/
+.data/
+.tools/
+**/target/
 .env
 .env.*
 !.env.example
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-*.log
-coverage/
-dist/
+apps/web/wallet.bundle.js
+*.pem
+*.key

@@ -1,5 +1,9 @@
 # CONTRA agent handoff: blueprint and exact reference integration
 
+## Current owner authorization — 2026-10-28 implementation
+
+The owner has removed the internal November 1 coding gate. Implement now on implementation/oct28 using frozen UX3C and UX3A, with The Bench naming. October 28 code is pre-event and must be disclosed. Sandbox is authorized; testnet deployment, paid usage and production secrets still need separate authorization. Earlier date restrictions below are preserved history and no longer govern implementation. See project/STATUS.md and docs/IMPLEMENTATION_OCT28.md for actual tests and blockers. Never retry an UNKNOWN payout.
+
 ## Authoritative protocol handoff | UX3C
 
 Checkpoint CONTRA-2026-10-28-UX3C freezes G01-G07 at specification level. Start with docs/CONTRACT_ABI_V1.md and its five linked v1 companions, then the amended UX3B acceptance map. Earlier conceptual ABI/fallback/recovery and graph-first design instructions below are historical. UX3A stays approved/frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. No pre-November-1 implementation, deployment, secrets or paid calls. The first November 1 task is fresh Rust escrow/accounting and sandbox financial-invariant proof including successful transfer with failed callback; NEVER retry an unknown transfer. New code is separate from pre-event design. Registry trust, buyer-favored base fallback, retained wrong-primary risk and stranded-unknown payout limitation must be disclosed. No claim of executed contract tests or safe mainnet readiness.

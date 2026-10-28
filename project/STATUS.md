@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current implementation checkpoint | CONTRA-2026-10-28-IMPL-M01
+
+Owner authorized implementation beginning October 28 UTC, superseding the earlier November 1 gate. Work branch: implementation/oct28, based on UX3C e57cc94 plus preserved naming commit e875a58. This is pre-event code and must not be claimed as competition-window implementation. UX3A remains frozen; active product name is The Bench.
+
+Escrow/reviewer Rust source and production Wasm build exist. Fourteen Rust SDK mocked-environment tests pass; real Sandbox tests are BLOCKED by host hard file-descriptor limit 16384 versus Sandbox requirement 65535. No real transfer or callback recovery is verified. Unknown payout outcomes remain locked with no retry. See docs/IMPLEMENTATION_OCT28.md for limits and remaining acceptance work. Backend/frontend integration is in progress. Paid inference, testnet deployment and production secrets remain separately gated; budgets unchanged.
+
+Earlier checkpoint sections below are historical and superseded where inconsistent with this authorization.
+
 ## Current authoritative checkpoint | CONTRA-2026-10-28-UX3C
 
 Date: 2026-10-28. Starting baseline plan/ux3b at af0dd97558f134ac9269c7fb58cc7613df6b8202. Current work branch: plan/ux3c. This notice supersedes earlier active NEXT and gap-status text, which remains historical below.

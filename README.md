@@ -1,6 +1,6 @@
 # CONTRA
 
-![Stage: pre-hackathon planning](https://img.shields.io/badge/stage-pre--hackathon%20planning-00EC97?style=flat-square&labelColor=0B1110)
+![Stage: pre-event implementation](https://img.shields.io/badge/stage-pre--event%20implementation-00EC97?style=flat-square&labelColor=0B1110)
 ![Network: NEAR testnet planned](https://img.shields.io/badge/network-NEAR%20testnet%20(planned)-0B1110?style=flat-square)
 ![Artifact: blueprint v1.2](https://img.shields.io/badge/blueprint-v1.2-FF8678?style=flat-square&labelColor=0B1110)
 ![GitHub owner: kellyxy110](https://img.shields.io/badge/GitHub%20owner-kellyxy110-F4BD68?style=flat-square&logo=github&labelColor=0B1110)
@@ -8,9 +8,9 @@
 
 **Every judgment can be challenged.**
 
-CONTRA is a proposed NEAR-native adjudication protocol. It combines deterministic onchain case and escrow rules with independent offchain AI evaluation, evidence-bound challenges, and enforceable settlement. The research hypothesis is that existing smart contract infrastructure can support useful decentralized adjudication without a specialized consensus blockchain.
+CONTRA is a NEAR adjudication prototype under implementation. Its Rust contract combines escrow, evidence-bound commit/reveal judgments, challenges and callback-safe settlement. Independent live operator adjudication and real Sandbox settlement are not yet verified.
 
-> Status: Preparation blueprint, October 27, 2026. This package is not deployed production software. The prototype HTML uses simulated case data and makes no blockchain transactions. It is a pre-event DESIGN REFERENCE ONLY. Do not treat it as hackathon implementation code or submit its source as work created during the official build window. Reimplement any production UI after the hackathon opens.
+> Actual implementation began October 28, 2026 with owner authorization, before the official competition. Do not claim this code as competition-window work. Approved design/ux3a remains a separate design reference. Fourteen Rust SDK mocked-environment tests pass; Sandbox execution is blocked on this host and no deployment or live AI call has occurred. See docs/IMPLEMENTATION_OCT28.md.
 
 ## Start here
 

@@ -1,0 +1,6 @@
+import {PublicKey} from '@near-js/crypto';
+import {createHash} from 'node:crypto';
+import {integer,str,join} from '../../packages/protocol/encoding.mjs';
+import {ApiError} from './store.mjs';
+export function nep413Bytes({message,nonce,recipient,callbackUrl}){const b=Buffer.from(nonce,'base64');if(b.length!==32)throw new ApiError(400,'Invalid nonce');return join(integer(2147484061,4),str(message),b,str(recipient),callbackUrl?join(integer(1,1),str(callbackUrl)):integer(0,1));}
+export async function verifySession(store,body,hasAccessKey){const row=store.db.prepare('SELECT * FROM challenges WHERE id=?').get(body.challenge_id);if(!row||row.used||row.expires<Date.now()||row.account!==body.accountId)throw new ApiError(401,'Expired, used or mismatched challenge');const bytes=nep413Bytes(row),hash=createHash('sha256').update(bytes).digest();let valid=false;try{valid=PublicKey.fromString(body.publicKey).verify(hash,Buffer.from(body.signature,'base64'));}catch{}if(!valid||!await hasAccessKey(body.accountId,body.publicKey))throw new ApiError(401,'Signature or account ownership invalid');const changed=store.db.prepare('UPDATE challenges SET used=1 WHERE id=? AND used=0 AND expires>?').run(row.id,Date.now());if(changed.changes!==1)throw new ApiError(401,'Challenge replay');return store.session(body.accountId);}

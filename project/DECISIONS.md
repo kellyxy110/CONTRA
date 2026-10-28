@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-042 — Owner authorizes October 28 implementation
+
+Accepted 2026-10-28: remove the internal November 1 implementation restriction. Start actual engineering now against frozen UX3C and approved UX3A, retaining The Bench naming and historical records. All October 28 implementation is pre-event work. Sandbox only; testnet deployment, paid inference and production secrets still require separate authorization. Credit ceilings remain Meta $3, Baseten $3, Modal $5. SDK tests do not establish Sandbox financial correctness; UNKNOWN payouts remain non-retryable.
+
 Use ACCEPTED, PROPOSED or BLOCKED as the status. Do not silently change an accepted decision. Supersede it by appending a new decision entry.
 
 | ID | Status | Decision | Reason | Date |
@@ -114,3 +118,4 @@ All tests above are specifications and NOT RUN in contract. State/method authori
 | D-041 | ACCEPTED | Rename the active product surface from Judgment Room to The Bench in frontend title/header, active navigation references and product documentation. The name-only substitution is explicitly authorized within the UX3A freeze; all layout, typography, colors, components and assets remain unchanged. | Explicit owner naming instruction | 2026-10-28 |
 
 Historical log entries, archived design prototype paths and protocol method names remain unchanged. Earlier product-name references in historical logs describe their original checkpoints. UX3C remains the active protocol checkpoint; G01-G07 decisions, first November 1 Rust/sandbox milestone, credit limits and execution boundaries are unchanged. No redesign or additional feature is authorized by this naming update.
+

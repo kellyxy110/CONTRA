@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active task — October 28 owner authorization (supersedes former date gate)
+
+Continue backend/frontend integration and tests now. Run authored escrow Sandbox scenarios on a host permitting 65535 open files; current host hard limit is 16384. Prove balance deltas, callback-fault non-retry, concurrent accounting and worst-case gas/storage before financial acceptance. Do not deploy testnet or use paid providers without separate authorization. Record all work before November 1 as pre-event. Approved UX3A remains frozen, product name The Bench.
+
 Checkpoint: CONTRA-2026-10-28-UX3C
 Date: 2026-10-28
 Starting baseline: plan/ux3b, af0dd97558f134ac9269c7fb58cc7613df6b8202

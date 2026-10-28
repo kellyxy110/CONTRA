@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-10-28 | IMPL-M01 — Actual implementation begins before event
+
+Owner removed November 1 implementation gate (D-042). Added Rust escrow/adjudication contract, canonical commitment encoding, Sandbox scenarios, immutable evidence/cost-ledger services and API foundation. Production Wasm builds; 14 Rust SDK tests pass. Sandbox execution blocked by host open-file hard limit. No deployment or paid calls. The Bench naming and frozen UX3A preserved. No claim of competition-window authorship or proven real settlement.
+
 
 - UX3C verification record: project/artifacts/ux3c/spec-validation.json, including six specification SHA-256 values, 33 acceptance/10 invariant/7 gap coverage checks and 16 independent byte/hash fixture results. Contract/sandbox acceptance remains NOT RUN.
 
@@ -118,3 +122,4 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Recorded D-041. Preserved historical log text and archived prototype paths. No contract methods, ABI, state machine, committee/recovery rules, commitment vectors, CSS, JavaScript behavior, reference images or other visual assets changed.
 - UX3A remains approved with this owner-authorized naming-only exception. UX3C protocol work and first November 1 fresh Rust escrow/sandbox milestone continue unchanged.
 - Validation: exact frontend text-substitution comparison and scoped diff inspection; no protocol/sandbox testing claimed. No deployment, provider use, secrets, mainnet action or spending.
+
