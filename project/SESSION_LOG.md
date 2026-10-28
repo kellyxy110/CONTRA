@@ -74,3 +74,16 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - Exact font identification and every icon glyph are not proven pixel-identical. No owner acceptance is claimed. Narrow screens retain the desktop composition with scrolling; historical responsive graph study remains preserved.
 - No model calls, paid services, wallet connection, blockchain transaction, deployment or smart contract implementation. Spend $0.
 
+## 2026-10-28 | UX3B | Functional integration planning
+
+- Owner explicitly approved and froze UX3A at bee5a7481d56c86d4c9860280b8367f82af0cb5a. No further visual approval is requested for the frozen study.
+- Read frozen branch instructions, logs and product/protocol/UX/architecture blueprint; verified design/ux3a branch points to that exact commit.
+- Delivered component/navigation map, actions A01-A23, proposed API contracts, transaction and source-of-truth rules, deterministic radar coverage, live integration phases and explicit gaps G01-G07.
+- Delivered AC01-AC33 including full unchallenged and challenged/fresh-review/settlement proof packages. Future tests are NOT RUN, not claimed passed.
+- Updated current status/next task and appended decisions/changelog without deleting historical records. Added handoff precedence notice.
+- Documentation checks verify action/acceptance coverage, invariant identifiers, no em dash and no changes to design/ux3a or reference assets. No new browser rendering was needed for a documentation-only change.
+- Existing pre-event design stays frozen. Fresh eligible implementation begins no earlier than November 1, 2026 UTC in separate source directories.
+- No contract/service implementation, deployment, live API/model call, NEAR transaction or spending. Provider usage $0.
+- Remaining: resolve ABI/state/committee/recovery gaps before dependent implementation; validate actual operator independence and credits before live claims/use.
+- Next: version and review G01-G07 resolutions and canonical ABI/state schemas; then eligible-window sandbox vertical slice.
+

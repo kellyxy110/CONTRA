@@ -78,3 +78,14 @@ D-017 clarifies D-015. Palette adaptations apply to the newly coded UI ONLY, not
 | D-026 | ACCEPTED | Preserve earlier references, functional blueprint and logs. New source lives at design/reference/IMG_7409.jpeg without replacing the graph reference. | Historical integrity | 2026-10-28 |
 | D-027 | ACCEPTED | Owner approval is mandatory. Browser QA does not imply owner acceptance. | Explicit owner acceptance requirement | 2026-10-28 |
 
+## UX3B owner approval and integration mapping | 2026-10-28
+
+| ID | Status | Decision | Reason | Date |
+| --- | --- | --- | --- | --- |
+| D-028 | ACCEPTED | UX3A visual design is owner-approved and frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. Preserve its sidebar, three-column layout, radar, cards, typography and NEAR colors. | Explicit owner statement in UX3B request supersedes pending approval records | 2026-10-28 |
+| D-029 | ACCEPTED | UX3B first delivers functional integration map and engineering acceptance criteria before implementation expands. Complete case-to-settlement journey takes priority; navigation, drawers and workflow screens use frozen visual system. | Explicit owner scope | 2026-10-28 |
+| D-030 | ACCEPTED | Protocol UI must distinguish local/service work, AI proposed findings, contract provisional/challenged states and callback-confirmed settlement. Replace fixtures only as verified live sources become available. | Truthful state requirement | 2026-10-28 |
+| D-031 | PROPOSED | Resolve G01-G07 in the UX3B map: cancellation ABI, committee assignment, refund-state normalization, creation idempotency/events, serialization/deposits, operator independence and callback reconciliation. | Exposes blueprint gaps before dependent implementation without silently changing protocol | 2026-10-28 |
+
+Pre-event design remains separate from eligible-window implementation. No new spending, deployment, secrets or mainnet authorization. API routes and ABI refinements in UX3B are proposals, not deployed interfaces.
+

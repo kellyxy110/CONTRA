@@ -1,5 +1,27 @@
 # Next execution task
 
+Task ID: CONTRA-PREP-UX3B
+Current checkpoint: CONTRA-2026-10-28-UX3B
+Date: 2026-10-28
+UX3A owner acceptance: APPROVED, frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a.
+UX3B: Integration map and engineering acceptance criteria delivered; implementation not expanded.
+
+## Resume sequence
+
+Read STATUS.md, DECISIONS.md, CHANGELOG.md, this file, docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md, docs/UX3B_ENGINEERING_ACCEPTANCE.md, then docs/PROTOCOL.md and docs/ARCHITECTURE.md. The UX3B owner direction supersedes older graph-first composition instructions and prior approval-pending statements.
+
+## Precise next task
+
+Resolve and pin G01-G07 in a versioned ABI/state/committee/recovery specification and shared commitment vectors. Do not invent completed interfaces. Before November 1, 2026 UTC, keep work to planning/design; eligible code must be freshly authored in separate apps/web, contracts/adjudication and service directories during the eligible window. Do not import the pre-event runnable study as competition implementation.
+
+The first eligible engineering slice is create/fund and callback-safe payout/refund sandbox safety, then authorized testnet proof. Follow with evidence, primary/adversarial evaluation, authenticated reviewer commit/reveal, confirmed challenge, fresh review and callback-confirmed settlement. Use AC01-AC33 as release gates. Deliver both AC31 unchallenged and AC32 challenged case-to-settlement evidence before unrelated features.
+
+Keep approved design/ux3a unchanged. Map functional navigation/drawers/workflow screens through the integration specification, preserving desktop composition. Every live field must identify source/freshness, unknowns stay unknown and service failure must not silently fall back to fixture values. Contract and provider integrations currently remain unavailable. No deployment, secrets, paid calls or mainnet actions are authorized by this checkpoint.
+
+## Historical NEXT record (superseded)
+
+# Next execution task
+
 Task ID: CONTRA-PREP-UX-02
 Current checkpoint: CONTRA-2026-10-28-UX2C
 Timing: Complete before November 1, 2026

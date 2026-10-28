@@ -1,0 +1,63 @@
+# CONTRA UX3B engineering acceptance criteria
+
+Checkpoint: CONTRA-2026-10-28-UX3B
+Scope: Acceptance specification, not executed implementation tests.
+Frozen visual reference: bee5a7481d56c86d4c9860280b8367f82af0cb5a.
+Integration map: docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md.
+
+UX3A visual approval is recorded. UX3B planning delivery does not assert implemented contract/service behavior, deployed infrastructure or successful transactions. Every criterion below starts NOT RUN for the future eligible implementation. Pass/fail requires named commit, environment, inputs, expected/observed results and retained evidence. No inherited UX3A browser result counts as a protocol pass.
+
+## Acceptance matrix
+
+| ID | Scenario and required observable outcome | Verification / retained evidence | Actions / invariants |
+| --- | --- | --- | --- |
+| AC01 | Every UX3A design asset stays byte-identical to frozen commit; 1200 x 900 dashboard retains shell, column geometry, typography, chart/card structure and NEAR colors | Git tree comparison; source-resolution side-by-side screenshot with the frozen approved implementation; owner review for any intentional deviation | A22; visual freeze |
+| AC02 | Every sidebar item routes to its specified screen/drawer; case/tab/round selection and browser Back survive navigation; no nav automatically signs or mutates | Browser route and keyboard trace; return restores focus and case selection | A01, A22, A23 |
+| AC03 | New production source is authored in eligible-window commits and separate app/contract directories; pre-event design remains reference-only | Source provenance audit, commit timestamps and import/dependency scan | Eligibility boundary |
+| AC04 | Disconnected/wrong-network observer can inspect allowed data; signing stays unavailable until correct network/account/contract and role are known | Browser + unauthorized contract tests; no transaction request on connect | A01; I5 |
+| AC05 | Creator validates complete terms, parties, exact native amount, dates, fallback and committee policy; invalid/zero/negative/excess precision values cannot reach signing | Form tests + contract input-boundary tests; reviewed canonical terms digest | A02, A03; I1, I3 |
+| AC06 | create_case yields real Draft/case ID after confirmed receipt; rejected wallet preserves draft; uncertain result reconciles rather than creating duplicate agreements | Sandbox/testnet receipt, reload/timeout/duplicate-create tests with same request key | A03, G04 |
+| AC07 | Exact funding amount creates reserved escrow only after confirmation; wrong deposit, unauthorized fund, duplicate fund or changed post-funding terms fail safely | Sandbox balance/authorization tests; genuine testnet deposit receipt when authorized | A04; I1, I3 |
+| AC08 | Uploaded evidence has canonical manifest bytes, immutable digest and provenance; failed upload/hash/auth/size checks never display Submitted; private bytes/secrets never enter chain/logs | Service integration tests, manifest rehash, storage/auth negative tests | A05, A06; I3, I9 |
+| AC09 | Only eligible beneficiary submits before deadline; contract records intended digest; old evidence or stale round never overwrites frozen evidence | Unauthorized, late, duplicate and digest mismatch tests | A06; I3, I7 |
+| AC10 | Evaluation job binds case/round/criteria/evidence digest and role; primary and adversarial results include model/version/citations/limitations/operator provenance; both remain AI proposed | Saved actual request/job/finding envelopes; evidence injection and schema-invalid response tests | A08, A09; I8, I9 |
+| AC11 | Budget reservation is atomic, persistent and idempotent; duplicate requests cannot double-authorize spend; exhaustion/provider failure shows unavailable and never fabricates outcome | Concurrent job tests, ledger reconciliation, max-runtime/token/retry tests; redacted provider records when real use authorized | A08; spending policy |
+| AC12 | Appointed reviewers commit domain-separated hashes; shared canonical serialization vectors match; secrets/nonces are not exposed before reveal | Contract vectors and cross-chain/contract/case/round replay tests; redacted logs | A10, G05; I5 |
+| AC13 | Wrong/late/duplicate reveal fails; only valid appointed reveals count; two matching votes of three yield defined provisional result; no quorum yields unresolved at deadline | Sandbox positive and negative commit/reveal/quorum tests | A07, A11, A12; I5, I7 |
+| AC14 | Different accounts/models under same operator are labelled correctly; fresh review uses contract-authorized disjoint membership; missing committee has bounded documented fallback | Operator provenance review plus membership/disjointness and no-committee tests | A15, A16, G02, G06 |
+| AC15 | Eligible party can draft, upload and sign evidence-bound challenge inside window; local note/upload/pending tx alone never shows confirmed challenge | Browser journey + challenged receipt and get_case read; bad criterion, unauthorized, duplicate and deadline-boundary tests | A13, A14; I6 |
+| AC16 | Confirmed challenge prevents finalize; concurrent challenge/finalize ordering follows exact contract deadlines and receipt order, never local clock | Concurrent sandbox calls at deadline boundaries; state/receipt assertions | A14, A18; I4, I6 |
+| AC17 | Fresh review uses new round and correct counterexample digest; old votes cannot count; fresh outcome can overturn initial finding; split/timeout follows frozen unresolved policy | Sandbox challenge-review replay; authenticated finding/reveal records | A15, A16; I5-I8 |
+| AC18 | Submission, commit, reveal and fresh-review timeouts advance only by contract deadlines; refund follows frozen fallback using pinned G03 schema | Boundary tests before/at/after deadlines, missing evidence/quorum/committee scenarios | A07, A17, G03; I7 |
+| AC19 | Premature/open-challenge finalize rejects; valid finalize records immutable intent before transfer, shows SettlementPending, and does not prematurely show paid/Settled | Contract ordering assertions and UI receipt/state comparison | A18; I1, I2, I4, I6 |
+| AC20 | Only authenticated private callback can mark exact payout intent Settled; success records actual paid/refunded receiver/amount and callback receipt; spoofed/wrong-intent callbacks fail | Sandbox callback tests; receipt lineage and confirmed read snapshot | A19; I2, I10 |
+| AC21 | Verified failed transfer becomes TransferFailed; permitted retry retains exact intent/receiver/amount; duplicate/concurrent retries cannot double-pay | Failed receiver/transfer, repeated retry and balance reconciliation tests | A20; I1, I2, I10 |
+| AC22 | Lost/delayed/failed callback or RPC timeout never triggers blind payout retry; if transfer outcome is unknown it remains pending/reconciliation required until authenticated recovery proves result | Fault injection separating transfer success from callback failure; recovery evidence | A19, A20, G07; I2, I10 |
+| AC23 | Draft cancellation is creator-only and impossible after funding; cancel never implies a refund | G01 ABI tests and UI state trace | A21; I1, I3 |
+| AC24 | Signing states distinguish rejection, broadcast, pending, confirmed, failed and unknown; app reload/wallet redirect/drawer close preserves submitted attempt and resumes reconciliation | Browser failure/reload tests + stored transaction identity comparison | A03-A21 |
+| AC25 | Every live field records its source and observed block/service time; stale reads, index lag, offline and missing data are visible; delayed old-case response cannot overwrite new case | Adapter tests with injected lag/out-of-order responses; browser evidence | A09, A12, A22 |
+| AC26 | Live mode never silently uses fixtures after RPC/provider failure; unavailable integration leaves actions unavailable; no fake receipts, identities, badge counts, findings or amounts | Disable every backend in turn and inspect dashboard/screens/drawers | All actions; truth contract |
+| AC27 | Eight-sector radar retains frozen visual anatomy and deterministic coverage definitions; show numerator/denominator and sources; zero differs from N/A; no score authorizes settlement or proves truth | Unit vectors for each sector/tab, absent keyboard criterion and zero denominator; accessible detail and screenshot | Radar map; I8 |
+| AC28 | Material/reviewer/task/activity cards use same canonical selected case/round; counts, pagination and UTC labels remain consistent; empty cards do not invent records | Browser case-switch/filter/pagination tests, duplicate event IDs and empty datasets | A09, A12, A22 |
+| AC29 | Evidence/AI strings are untrusted, cannot inject scripts or signing operations; private API sessions reject replay, expired credentials and cross-case unauthorized access | Security tests for malicious content, signature nonce replay, object authorization and signed URL leakage | A01, A05, A08, A09; I9 |
+| AC30 | Keyboard-only workflow reaches all critical actions, drawer focus/Escape/return work, status is textual, reduced motion works, and 320px/200% form usage remains possible while desktop freeze is preserved | Browser accessibility checks and manual keyboard/screen-reader review at stated viewports | All screens |
+| AC31 | Complete unchallenged case: create -> fund -> evidence -> primary/adversarial findings -> commit/reveal -> provisional -> expired challenge window -> finalize -> callback success | One reproducible authorized NEAR testnet case with real linked receipts, manifests and service records; no fixture evidence | A03-A12, A18-A19; I1-I10 |
+| AC32 | Complete challenged case: create -> fund -> evidence -> provisional -> confirmed challenge -> fresh review overturns outcome -> correct payout/refund -> successful callback | One reproducible authorized testnet case with both rounds and actual provider records; verify blocked ordinary finalize and final balance reconciliation | A03-A20; I1-I10 |
+| AC33 | All actions A01-A23 have contract/API/no-op mapping, allowed role/state, receipt or job linkage, error/retry path and accessible UI entry | Traceability review of map and implemented API/ABI, recorded against release commit | Scope completeness |
+
+## Required vertical-slice evidence package
+
+For AC31 and AC32 retain network/contract and code version; creator/beneficiary accounts with control disclosures; frozen terms and fallback; deposit amount and actual receipt; canonical evidence/counterexample manifests and hashes; primary/adversarial/fresh reviewer operator provenance; job IDs and real cost ledger; both rounds' committee/commit/reveal/quorum records; challenge deadline and confirmation; immutable payout intent and all transfer/callback attempts; final balance reconciliation; browser recording/screenshots with source and last-observed timestamps. Redact private evidence and secret nonces. Every claim must be reproducible from its referenced records.
+
+Sandbox/fault tests may use labelled mocks. End-to-end testnet/provider evidence must not be replaced by mock output while claiming live success. If access, credits or independent participants are missing, record BLOCKED for the affected live criteria rather than silently substituting fixtures.
+
+## Implementation order and gates
+
+1. Resolve G01-G07 with explicit ABI, event/state schema, committee policy, recovery rules and shared commitment vectors. Keep proposal versus accepted decision visible.
+2. During the eligible window, build a fresh contract thin slice and adapter boundary. Pass escrow/authorization/callback safety in sandbox before authorized testnet funding.
+3. Wire agreement/funding/evidence screens and canonical read model into the approved visual system. Verify signing and truthful unavailable states.
+4. Integrate budget-controlled primary/adversarial evaluation and authenticated reviewer commit/reveal. Verify actual independence claims before presenting them.
+5. Complete challenge, fresh review, settlement/refund and failed-transfer recovery. Run AC31/AC32 before expanding secondary surfaces.
+6. Execute full acceptance suite, freeze proof package, update logs with observed results. No unrelated features or design experiments enter the critical path.
+
+Current UX3B delivery checks: documentation traceability, preserved protocol invariants, explicit integration gaps, frozen-source comparison and updated project logs. Future engineering criteria AC01-AC33 are NOT RUN at this planning checkpoint. Visual approval applies to UX3A, not to unimplemented workflows or future integration behavior.

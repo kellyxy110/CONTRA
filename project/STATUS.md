@@ -1,11 +1,22 @@
 # CONTRA status checkpoint
 
+## Current authoritative checkpoint | UX3B
+
+The owner approved and froze UX3A at bee5a7481d56c86d4c9860280b8367f82af0cb5a on 2026-10-28. Earlier pending/rejected visual statements below are historical, not the current owner verdict. UX3B delivers protocol workflow mapping and engineering acceptance criteria only. No UX3A source or visual asset was changed.
+
+Deliverables: docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md and docs/UX3B_ENGINEERING_ACCEPTANCE.md. These map all dashboard controls and actions A01-A23 to conceptual contract methods, proposed APIs, roles, transaction states and failure recovery. AC01-AC33 specify future verification and are NOT RUN. G01-G07 record unresolved ABI/state/committee/recovery decisions explicitly.
+
+Next: resolve and pin G01-G07, then begin fresh eligible-window engineering on or after November 1, 2026 UTC. Do not expand implementation at this checkpoint. Keep approved design/ux3a reference-only and separate from future apps/web and contracts/adjudication source. No deployment, transactions, live service integration or provider spending occurred. Branch: plan/ux3b.
+
+## Preserved prior checkpoint record
+
+
 
 UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
-Checkpoint ID: CONTRA-2026-10-28-UX2C
+Checkpoint ID: CONTRA-2026-10-28-UX3B
 Date: 2026-10-28
-Phase: Pre-hackathon visual fidelity recovery
-Owner acceptance: Current visual implementation rejected; product redesign planned
+Phase: Pre-hackathon functional integration specification
+Owner acceptance: UX3A approved and frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a; UX3B planning delivered
 Repository: Private `kellyxy110/CONTRA`, created and synchronized on `main`
 Deployment: None
 Onchain code: None

@@ -1,5 +1,10 @@
 # CONTRA agent handoff: blueprint and exact reference integration
 
+## Current owner direction | UX3B, 2026-10-28
+
+UX3A is APPROVED and FROZEN at bee5a7481d56c86d4c9860280b8367f82af0cb5a. The approved sidebar/three-column dashboard, radar, cards, typography and NEAR colors supersede the older graph-first composition instructions below. Preserve design/ux3a and all original references unchanged. Read docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md and docs/UX3B_ENGINEERING_ACCEPTANCE.md before new engineering. UX3B delivers planning only, not implementation expansion. Keep contract/protocol invariants and pre-November-1 implementation gate. Historical text below is preserved; earlier approval-pending and composition statements are superseded by this explicit owner direction.
+
+
 **Handoff ID:** CONTRA-HO-2026-10-27-V12  
 **Project checkpoint:** CONTRA-2026-10-27-VH1  
 **Status:** Blueprint handoff prepared. Source visual approved. New visual prototype NOT built or accepted. Contract NOT built.  

@@ -89,3 +89,13 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Source files: package.json, server.mjs, design/ux3a/*, design/reference/IMG_7409.jpeg, project/artifacts/ux3a/*, design-qa.md, project logs.
 - Spending $0; transactions and deployments none. Next: visual corrections from owner review.
 
+## v1.4 | 2026-10-28 | UX3B functional integration specification
+
+- Recorded owner's explicit approval/freeze of UX3A at bee5a7481d56c86d4c9860280b8367f82af0cb5a. Historical pending statements are superseded, preserved for audit.
+- Added docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md with frozen-component/navigation mapping, A01-A23 contract/API/transaction/failure traceability, truthful data sources, radar coverage, integration rollout and G01-G07 gap register.
+- Added docs/UX3B_ENGINEERING_ACCEPTANCE.md with AC01-AC33 and reproducible unchallenged/challenged vertical-slice evidence requirements. These future engineering tests are NOT RUN.
+- Updated project STATUS, DECISIONS, NEXT and SESSION_LOG and added a current-scope notice to HANDOFF_TO_CODING_AGENT.md.
+- Preserved all approved visual code/assets and protocol safety requirements. No implementation expansion, service integration, contract code, transaction, deployment or provider use.
+- Validation: documentation coverage/invariant scans and changed-path inspection, not runtime protocol tests.
+- Next: pin G01-G07 before fresh eligible-window contract and UI engineering. UX3B document delivery is not a workflow implementation or independent security audit.
+
