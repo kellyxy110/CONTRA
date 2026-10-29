@@ -1,10 +1,10 @@
 # Decision ledger
 
-## D-043 — Preserve financial execution gate and truthful integration states
+## D-043 - Preserve financial execution gate and truthful integration states
 
 Accepted 2026-10-28: continue owner-authorized source implementation while Sandbox is blocked by the host hard descriptor limit. SDK tests, Wasm builds and browser geometry do not authorize financial acceptance. No alternate runtime result, fixture receipt or blind UNKNOWN payout retry may substitute for real Sandbox proof. Frontend source reuses frozen UX3A geometry/assets with disclosed October 28 pre-event provenance; reference files remain unchanged. Missing chain/service/per-criterion evidence is unavailable/N/A. External wallets and paid providers remain gated and unverified, with initial credit ceilings unchanged.
 
-## D-042 — Owner authorizes October 28 implementation
+## D-042 - Owner authorizes October 28 implementation
 
 Accepted 2026-10-28: remove the internal November 1 implementation restriction. Start actual engineering now against frozen UX3C and approved UX3A, retaining The Bench naming and historical records. All October 28 implementation is pre-event work. Sandbox only; testnet deployment, paid inference and production secrets still require separate authorization. Credit ceilings remain Meta $3, Baseten $3, Modal $5. SDK tests do not establish Sandbox financial correctness; UNKNOWN payouts remain non-retryable.
 
@@ -122,4 +122,11 @@ All tests above are specifications and NOT RUN in contract. State/method authori
 | D-041 | ACCEPTED | Rename the active product surface from Judgment Room to The Bench in frontend title/header, active navigation references and product documentation. The name-only substitution is explicitly authorized within the UX3A freeze; all layout, typography, colors, components and assets remain unchanged. | Explicit owner naming instruction | 2026-10-28 |
 
 Historical log entries, archived design prototype paths and protocol method names remain unchanged. Earlier product-name references in historical logs describe their original checkpoints. UX3C remains the active protocol checkpoint; G01-G07 decisions, first November 1 Rust/sandbox milestone, credit limits and execution boundaries are unchanged. No redesign or additional feature is authorized by this naming update.
+
+## IMPL-M03 Sandbox execution | 2026-10-29
+
+| ID | Status | Decision | Reason | Date |
+| --- | --- | --- | --- | --- |
+| D-043 | ACCEPTED | Pin the implementation toolchain to Rust 1.98.0. | The prior 1.99.1 channel did not provide Cargo in the execution environment, while current NEAR dependencies require Rust 1.95 or newer. Rust 1.98.0 builds and passes all 20 contract tests. | 2026-10-29 |
+| D-044 | ACCEPTED | Sandbox deadline tests use 610-second intervals and bounded, timestamp-checked block advancement. | Protocol validation requires at least 600 seconds. Directly converting seconds to block counts caused deadline overshoot, and large single jumps caused expired transaction hashes. | 2026-10-29 |
 

@@ -1,0 +1,114 @@
+Receipt: 3rdx2b2q9Gyn6B7qeGw29WUZZsnTKbZpBxwBuV9c18dp
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer0.test.near","operator_id":"4b112ae31ca7a88936c7795f563eff5ce95cc8a34b3ddd34ed5441c19f5be576","revision":"1","disclosure_digest":"82495527bfdf099739b094ee00e80e96cf3ffe1ba7e86e1e4daf79b2eb54a382","active":true,"confirmed":false,"seq":"1","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243773194410081","block_height":"24","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.set_reviewer({"reviewer_id":"reviewer0.test.near","operator_id":"4b112ae31ca7a88936c7795f563eff5ce95cc8a34b3ddd34ed5441c19f5be576","disclosure_digest":"82495527bfdf099739b094ee00e80e96cf3ffe1ba7e86e1e4daf79b2eb54a382","active":true}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer0.test.near","operator_id":"4b112ae31ca7a88936c7795f563eff5ce95cc8a34b3ddd34ed5441c19f5be576","revision":"1","disclosure_digest":"82495527bfdf099739b094ee00e80e96cf3ffe1ba7e86e1e4daf79b2eb54a382","active":true,"confirmed":false,"seq":"1","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243773194410081","block_height":"24","case_revision":null}]}'
+]
+Receipt: 9MmxikYo5cEcbcWBVzZaD9xLVJga4YtBnv2do8GXmnb8
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer0.test.near","operator_id":"4b112ae31ca7a88936c7795f563eff5ce95cc8a34b3ddd34ed5441c19f5be576","revision":"1","disclosure_digest":"82495527bfdf099739b094ee00e80e96cf3ffe1ba7e86e1e4daf79b2eb54a382","active":true,"confirmed":true,"seq":"2","case_id":null,"actor_id":"reviewer0.test.near","at_ns":"1793243775001684092","block_height":"27","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.confirm_reviewer({"revision":"1","disclosure_digest":"82495527bfdf099739b094ee00e80e96cf3ffe1ba7e86e1e4daf79b2eb54a382"}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer0.test.near","operator_id":"4b112ae31ca7a88936c7795f563eff5ce95cc8a34b3ddd34ed5441c19f5be576","revision":"1","disclosure_digest":"82495527bfdf099739b094ee00e80e96cf3ffe1ba7e86e1e4daf79b2eb54a382","active":true,"confirmed":true,"seq":"2","case_id":null,"actor_id":"reviewer0.test.near","at_ns":"1793243775001684092","block_height":"27","case_revision":null}]}'
+]
+Receipt: FWEmQ3WMExmcGWw62kLKYaWAgYPzYwqAirqMyYLAwerF
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer1.test.near","operator_id":"1efc5c1a45eaa545a1490898a06ed7912814ca5c83e91869a34a62390742604c","revision":"1","disclosure_digest":"ccdb12869cc037886b310ef7aa2aaf76f71a89e6c415dd4b1721a9bdb6d116b7","active":true,"confirmed":false,"seq":"3","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243778648202435","block_height":"33","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.set_reviewer({"reviewer_id":"reviewer1.test.near","operator_id":"1efc5c1a45eaa545a1490898a06ed7912814ca5c83e91869a34a62390742604c","disclosure_digest":"ccdb12869cc037886b310ef7aa2aaf76f71a89e6c415dd4b1721a9bdb6d116b7","active":true}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer1.test.near","operator_id":"1efc5c1a45eaa545a1490898a06ed7912814ca5c83e91869a34a62390742604c","revision":"1","disclosure_digest":"ccdb12869cc037886b310ef7aa2aaf76f71a89e6c415dd4b1721a9bdb6d116b7","active":true,"confirmed":false,"seq":"3","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243778648202435","block_height":"33","case_revision":null}]}'
+]
+Receipt: DecPGQKxCAui3qPebQUVzCKt1sVLTgmDTEGuTchbpkXP
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer1.test.near","operator_id":"1efc5c1a45eaa545a1490898a06ed7912814ca5c83e91869a34a62390742604c","revision":"1","disclosure_digest":"ccdb12869cc037886b310ef7aa2aaf76f71a89e6c415dd4b1721a9bdb6d116b7","active":true,"confirmed":true,"seq":"4","case_id":null,"actor_id":"reviewer1.test.near","at_ns":"1793243782498633821","block_height":"36","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.confirm_reviewer({"revision":"1","disclosure_digest":"ccdb12869cc037886b310ef7aa2aaf76f71a89e6c415dd4b1721a9bdb6d116b7"}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer1.test.near","operator_id":"1efc5c1a45eaa545a1490898a06ed7912814ca5c83e91869a34a62390742604c","revision":"1","disclosure_digest":"ccdb12869cc037886b310ef7aa2aaf76f71a89e6c415dd4b1721a9bdb6d116b7","active":true,"confirmed":true,"seq":"4","case_id":null,"actor_id":"reviewer1.test.near","at_ns":"1793243782498633821","block_height":"36","case_revision":null}]}'
+]
+Receipt: 4rw3BvBZpnZvdkXkX2TWiQ8BRtCV9xM9EZgxWdwBFSyn
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer2.test.near","operator_id":"5b449e8564d3236416ef47693afafa29fcef73dd34ee55d3f9790acd4d8e6a25","revision":"1","disclosure_digest":"b070a5cb777704d29fc54b5ff6e7c12891b518791a38b35f9bfa3bc327337479","active":true,"confirmed":false,"seq":"5","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243786149884381","block_height":"42","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.set_reviewer({"reviewer_id":"reviewer2.test.near","operator_id":"5b449e8564d3236416ef47693afafa29fcef73dd34ee55d3f9790acd4d8e6a25","disclosure_digest":"b070a5cb777704d29fc54b5ff6e7c12891b518791a38b35f9bfa3bc327337479","active":true}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer2.test.near","operator_id":"5b449e8564d3236416ef47693afafa29fcef73dd34ee55d3f9790acd4d8e6a25","revision":"1","disclosure_digest":"b070a5cb777704d29fc54b5ff6e7c12891b518791a38b35f9bfa3bc327337479","active":true,"confirmed":false,"seq":"5","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243786149884381","block_height":"42","case_revision":null}]}'
+]
+Receipt: 3LQTK5eriA5UDCwq8qHgqxDfQTzoED6P9oXYNhdtWs3t
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer2.test.near","operator_id":"5b449e8564d3236416ef47693afafa29fcef73dd34ee55d3f9790acd4d8e6a25","revision":"1","disclosure_digest":"b070a5cb777704d29fc54b5ff6e7c12891b518791a38b35f9bfa3bc327337479","active":true,"confirmed":true,"seq":"6","case_id":null,"actor_id":"reviewer2.test.near","at_ns":"1793243787966406769","block_height":"45","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.confirm_reviewer({"revision":"1","disclosure_digest":"b070a5cb777704d29fc54b5ff6e7c12891b518791a38b35f9bfa3bc327337479"}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer2.test.near","operator_id":"5b449e8564d3236416ef47693afafa29fcef73dd34ee55d3f9790acd4d8e6a25","revision":"1","disclosure_digest":"b070a5cb777704d29fc54b5ff6e7c12891b518791a38b35f9bfa3bc327337479","active":true,"confirmed":true,"seq":"6","case_id":null,"actor_id":"reviewer2.test.near","at_ns":"1793243787966406769","block_height":"45","case_revision":null}]}'
+]
+Receipt: FkYuo6nUxEFPhTF4b4P1Ax665nVf5a1AA4XHpXq3cwsT
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer3.test.near","operator_id":"4c9507b579a36afbb4e902730b021c27865b0262a8baa343f14828b67f847844","revision":"1","disclosure_digest":"a09847d826ae4ce0fb71a0192f14c232b4b43cfb20eff9c32e9a5e1e556e4a37","active":true,"confirmed":false,"seq":"7","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243791597844311","block_height":"51","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.set_reviewer({"reviewer_id":"reviewer3.test.near","operator_id":"4c9507b579a36afbb4e902730b021c27865b0262a8baa343f14828b67f847844","disclosure_digest":"a09847d826ae4ce0fb71a0192f14c232b4b43cfb20eff9c32e9a5e1e556e4a37","active":true}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer3.test.near","operator_id":"4c9507b579a36afbb4e902730b021c27865b0262a8baa343f14828b67f847844","revision":"1","disclosure_digest":"a09847d826ae4ce0fb71a0192f14c232b4b43cfb20eff9c32e9a5e1e556e4a37","active":true,"confirmed":false,"seq":"7","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243791597844311","block_height":"51","case_revision":null}]}'
+]
+Receipt: HVXKcr5k8H6ZEqDrDEuutDc22c3uL59VtBa2iiZ2EQYN
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer3.test.near","operator_id":"4c9507b579a36afbb4e902730b021c27865b0262a8baa343f14828b67f847844","revision":"1","disclosure_digest":"a09847d826ae4ce0fb71a0192f14c232b4b43cfb20eff9c32e9a5e1e556e4a37","active":true,"confirmed":true,"seq":"8","case_id":null,"actor_id":"reviewer3.test.near","at_ns":"1793243793404938991","block_height":"54","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.confirm_reviewer({"revision":"1","disclosure_digest":"a09847d826ae4ce0fb71a0192f14c232b4b43cfb20eff9c32e9a5e1e556e4a37"}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer3.test.near","operator_id":"4c9507b579a36afbb4e902730b021c27865b0262a8baa343f14828b67f847844","revision":"1","disclosure_digest":"a09847d826ae4ce0fb71a0192f14c232b4b43cfb20eff9c32e9a5e1e556e4a37","active":true,"confirmed":true,"seq":"8","case_id":null,"actor_id":"reviewer3.test.near","at_ns":"1793243793404938991","block_height":"54","case_revision":null}]}'
+]
+Receipt: 56o5B5CeHAJK2J7QWFedmA9MxQ5peNTx2yoic7BBB7kw
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer4.test.near","operator_id":"58838e89d2f28babad8ba5b81dcefbc2d07132843f947835adbadeb313a51835","revision":"1","disclosure_digest":"e56577233a035ede8b16d4b57741c79600628a5e2ac1e3145fd25059815aa115","active":true,"confirmed":false,"seq":"9","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243797049554196","block_height":"60","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.set_reviewer({"reviewer_id":"reviewer4.test.near","operator_id":"58838e89d2f28babad8ba5b81dcefbc2d07132843f947835adbadeb313a51835","disclosure_digest":"e56577233a035ede8b16d4b57741c79600628a5e2ac1e3145fd25059815aa115","active":true}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer4.test.near","operator_id":"58838e89d2f28babad8ba5b81dcefbc2d07132843f947835adbadeb313a51835","revision":"1","disclosure_digest":"e56577233a035ede8b16d4b57741c79600628a5e2ac1e3145fd25059815aa115","active":true,"confirmed":false,"seq":"9","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243797049554196","block_height":"60","case_revision":null}]}'
+]
+Receipt: CpgdRLD36ZDZ8XxgGc5kNwrzRkUEcxJ1RmVHHXfnk7UW
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer4.test.near","operator_id":"58838e89d2f28babad8ba5b81dcefbc2d07132843f947835adbadeb313a51835","revision":"1","disclosure_digest":"e56577233a035ede8b16d4b57741c79600628a5e2ac1e3145fd25059815aa115","active":true,"confirmed":true,"seq":"10","case_id":null,"actor_id":"reviewer4.test.near","at_ns":"1793243798875217418","block_height":"63","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.confirm_reviewer({"revision":"1","disclosure_digest":"e56577233a035ede8b16d4b57741c79600628a5e2ac1e3145fd25059815aa115"}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer4.test.near","operator_id":"58838e89d2f28babad8ba5b81dcefbc2d07132843f947835adbadeb313a51835","revision":"1","disclosure_digest":"e56577233a035ede8b16d4b57741c79600628a5e2ac1e3145fd25059815aa115","active":true,"confirmed":true,"seq":"10","case_id":null,"actor_id":"reviewer4.test.near","at_ns":"1793243798875217418","block_height":"63","case_revision":null}]}'
+]
+Receipt: BkCnoYKxKHTy3yLMQGfVW1c8FcF5ZupK5jxYFScCHuxh
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer5.test.near","operator_id":"475a34f585fe5677271fa04043a2e1225ff3ee852ec139e2994bc61ae3258b97","revision":"1","disclosure_digest":"0afa8515e2937dfb066cd5822397c85c25f5301884c7737b70044d68f150dcf1","active":true,"confirmed":false,"seq":"11","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243803127976285","block_height":"70","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.set_reviewer({"reviewer_id":"reviewer5.test.near","operator_id":"475a34f585fe5677271fa04043a2e1225ff3ee852ec139e2994bc61ae3258b97","disclosure_digest":"0afa8515e2937dfb066cd5822397c85c25f5301884c7737b70044d68f150dcf1","active":true}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_updated","data":[{"reviewer_id":"reviewer5.test.near","operator_id":"475a34f585fe5677271fa04043a2e1225ff3ee852ec139e2994bc61ae3258b97","revision":"1","disclosure_digest":"0afa8515e2937dfb066cd5822397c85c25f5301884c7737b70044d68f150dcf1","active":true,"confirmed":false,"seq":"11","case_id":null,"actor_id":"creator.test.near","at_ns":"1793243803127976285","block_height":"70","case_revision":null}]}'
+]
+Receipt: BgQFBND8ao6M87bGkZ6n2vNazwsbzD2doHNpP3FetYbc
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer5.test.near","operator_id":"475a34f585fe5677271fa04043a2e1225ff3ee852ec139e2994bc61ae3258b97","revision":"1","disclosure_digest":"0afa8515e2937dfb066cd5822397c85c25f5301884c7737b70044d68f150dcf1","active":true,"confirmed":true,"seq":"12","case_id":null,"actor_id":"reviewer5.test.near","at_ns":"1793243804919338355","block_height":"73","case_revision":null}]}
+Contract logs from dev-65242-76928.test.near.confirm_reviewer({"revision":"1","disclosure_digest":"0afa8515e2937dfb066cd5822397c85c25f5301884c7737b70044d68f150dcf1"}) call: [
+  'EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"reviewer_confirmed","data":[{"reviewer_id":"reviewer5.test.near","operator_id":"475a34f585fe5677271fa04043a2e1225ff3ee852ec139e2994bc61ae3258b97","revision":"1","disclosure_digest":"0afa8515e2937dfb066cd5822397c85c25f5301884c7737b70044d68f150dcf1","active":true,"confirmed":true,"seq":"12","case_id":null,"actor_id":"reviewer5.test.near","at_ns":"1793243804919338355","block_height":"73","case_revision":null}]}'
+]
+Receipt: 4WjVP54ssHYhyNewnQfwjkxeq1ioTimFY3SJ24CQBRz8
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"case_created","data":[{"terms_digest":"a15c5707d60a0b9fb6b379e2d8e132d4bf4c0cffb83ee18d6d0f78d435d88a9e","seq":"1","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"creator.test.near","at_ns":"1793243806734146154","block_height":"76","case_revision":"1"}]}
+Receipt: HVgbLyuGfqnUN8PEzjMCm9pgN14fYnxWt7pW756eWptZ
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"terms_accepted","data":[{"terms_digest":"a15c5707d60a0b9fb6b379e2d8e132d4bf4c0cffb83ee18d6d0f78d435d88a9e","seq":"2","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"beneficiary.test.near","at_ns":"1793243808594886789","block_height":"79","case_revision":"2"}]}
+Receipt: 4jWreCiLAUUBoNrMSWcp8AbRMFB9LKuxJE8Wu7Uu5ozN
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"case_funded","data":[{"amount_yocto":"1000000000000000000000000","seq":"3","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"creator.test.near","at_ns":"1793243811033602969","block_height":"83","case_revision":"3"}]}
+Receipt: ByjmuUx85KvGyHKAJx7MzJ1CQrZRQDgTPzWqjwSSYxhP
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"evidence_submitted","data":[{"manifest_digest":"7a916756ee9f8daffb8967a618fd79e808243a4e39472cc64060d651f715c78c","seq":"4","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"beneficiary.test.near","at_ns":"1793243813677399598","block_height":"86","case_revision":"4"}]}
+Receipt: CvQ5vLheLaMDNKC5C7co43Nq8QKeum3xFH6TxPUmSqQ
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"case_resolved","data":[{"state":"ReviewCommit","phase":"COMMIT","seq":"5","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"outsider.test.near","at_ns":"1793243817550835802","block_height":"89","case_revision":"5"}]}
+Receipt: DnCqE9D4LWV4ySx5GgGMbnyCrWSbhXa4amyGUDgmsgoT
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"vote_committed","data":[{"round_id":0,"reviewer_id":"reviewer0.test.near","commitment":"c2ee8e10144911805cbdcdf1937e2c94402b2bacc7dc81fd973ce8161a8a95fa","seq":"6","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"reviewer0.test.near","at_ns":"1793243819329454754","block_height":"92","case_revision":"6"}]}
+Receipt: CKtbqKZwwSTdGfQrCbg3iymG5KxmKtgceRcE8h6qEURi
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"vote_committed","data":[{"round_id":0,"reviewer_id":"reviewer1.test.near","commitment":"733417e7f7561006d57c406096df2afe735e79d96b5689a267b7dc352be93b62","seq":"7","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"reviewer1.test.near","at_ns":"1793243821183276160","block_height":"95","case_revision":"7"}]}
+Receipt: AK92jcz9sZitsysBhM1Vh6i7nNi1xs2kDYLMT58gwNc
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"case_resolved","data":[{"state":"ReviewReveal","phase":"REVEAL","seq":"8","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"outsider.test.near","at_ns":"1793245793531358768","block_height":"1669","case_revision":"8"}]}
+Receipt: 4NCuZjRg9BdQfs2WmcW2u3gzRSMh9eHeGskABU9bXbXk
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"vote_revealed","data":[{"round_id":0,"reviewer_id":"reviewer0.test.near","disposition":"ACCEPT","evidence_digest":"7a916756ee9f8daffb8967a618fd79e808243a4e39472cc64060d651f715c78c","finding_digest":"49376be6a0e3636c13d3282b10bdf81511cfb7183fa905aad8f7516b651a5e07","seq":"9","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"reviewer0.test.near","at_ns":"1793245795339458376","block_height":"1672","case_revision":"9"}]}
+Receipt: 4cLeqpnuwitauQejone21gEYzT8eCR4qPFuprmFwaxxD
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"vote_revealed","data":[{"round_id":0,"reviewer_id":"reviewer1.test.near","disposition":"ACCEPT","evidence_digest":"7a916756ee9f8daffb8967a618fd79e808243a4e39472cc64060d651f715c78c","finding_digest":"49376be6a0e3636c13d3282b10bdf81511cfb7183fa905aad8f7516b651a5e07","seq":"10","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"reviewer1.test.near","at_ns":"1793245797995742683","block_height":"1675","case_revision":"10"}]}
+Receipt: 86VmePpKdgPbNsjpnfNa16WWJFGsqjug5a611TGJovh4
+	Log [dev-65242-76928.test.near]: EVENT_JSON:{"standard":"contra","version":"1.0.0","event":"case_resolved","data":[{"state":"Provisional","phase":"CLOSED","seq":"11","case_id":"e2f5e26aa0eb20f59cd3c2cd53e63a9eb198aba557e771785b0693b75c71ce38","actor_id":"outsider.test.near","at_ns":"1793246933070533006","block_height":"2507","case_revision":"11"}]}
+Receipts: HBLC9otdUo5jt5amvG3a45wRXaqVo2YwJBebbJTo3JhM, Xv537TSMX95tEo3S3LYS6yPmJVDc7NmsEGeDvFxPs1u
+	Failure [dev-65242-76928.test.near]: Error: {"index":0,"kind":{"index":0,"kind":{"FunctionCallError":{"ExecutionError":"WebAssembly trap: An `unreachable` opcode was executed."}}}}
+✖ creator cannot profit by forcing challenged fresh-review timeout (512486.069197ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 518432.029519
+
+✖ failing tests:
+
+test at tests/escrow.sandbox.test.mjs:17:1
+✖ creator cannot profit by forcing challenged fresh-review timeout (512486.069197ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Provisional'
+  - 'Unresolved'
+  
+      at TestContext.<anonymous> (file:///home/luch91/contra-sandbox-m03/tests/escrow.sandbox.test.mjs:17:405)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1069:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Provisional',
+    expected: 'Unresolved',
+    operator: 'strictEqual'
+  }

@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current implementation checkpoint | CONTRA-2026-10-29-IMPL-M03-IN-PROGRESS
+
+Real NEAR Sandbox execution is unblocked in WSL Ubuntu x86_64 with glibc 2.39 and hard open-file limit 1048576. Rust 1.98.0, the checksum-pinned NEAR Sandbox 2.13.4 binary, production Wasm and fault Wasm are verified. The 20 Rust SDK tests pass. Live Sandbox receipts now prove creation, consent, cancellation, exact funding, immutable terms, evidence-bound primary commit/reveal, callback-confirmed native payout with a beneficiary balance increase of exactly 1 NEAR, challenge blocking, and a decisive fresh review that reverses ACCEPT to REJECT and settles to the creator. A targeted fresh-review timeout test also passes and settles the original ACCEPT verdict to the beneficiary with `KEEP_PRIMARY`.
+
+The first live run exposed a harness defect: block fast-forward was interpreted as seconds and overshot contractual deadlines. A second run exposed expired transaction hashes after very large block jumps. The corrected harness advances conservatively in bounded chunks and uses valid 610-second protocol intervals. Failure and passing logs are preserved under `project/artifacts/implementation/`. This checkpoint is not P0 completion: all 18 requested financial categories, multi-case conservation, callback split failures, concurrency, overflow, storage and gas measurements still require live coverage. AC01-AC33 remain unaccepted. No testnet deployment, paid provider use or secrets occurred.
+
 ## Current implementation checkpoint | CONTRA-2026-10-28-IMPL-M02
 
 Actual implementation start: October 28, 2026 UTC, pre-event, explicitly owner-authorized. Branch implementation/oct28. M01 source saved at 5401cbfd4e0309cf9f15cd70ff246aaa419f75e8; final M02 commit is reported in the delivery. Historical date gates below no longer prevent development. UX3A reference is unchanged by this implementation branch; The Bench is the active name.

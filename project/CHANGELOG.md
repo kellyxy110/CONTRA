@@ -1,10 +1,14 @@
 # Change log
 
-## 2026-10-28 | IMPL-M02 — Functional integration source and verification evidence
+## 2026-10-29 | IMPL-M03 in progress - Real Sandbox financial execution
+
+Moved execution to compatible Ubuntu x86_64 with glibc 2.39 and hard open-file limit 1048576. Pinned Rust 1.98.0, passed all 20 Rust tests, rebuilt production and fault Wasm, installed checksum-pinned NEAR Sandbox 2.13.4 and executed real transactions. Verified exact 1 NEAR balance transfer and callback-confirmed settlement, plus a challenged case whose fresh committee reversed the original verdict. Corrected the Sandbox clock helper after real receipts proved deadline overshoot and expired block-hash behavior. Targeted `KEEP_PRIMARY` timeout now passes. Saved raw failure and passing evidence. P0 remains incomplete pending the rest of the 18-category matrix, gas/storage measurement and full rerun.
+
+## 2026-10-28 | IMPL-M02 - Functional integration source and verification evidence
 
 Extended M01 with preallocated case storage, strict ABI argument handling, complete RoundView slots, callback mismatch/duplicate handling, shared Rust creation/terms/payout vectors and 20 SDK tests. Added participant-authenticated immutable evidence and criteria retrieval, durable UNKNOWN transaction operations, NEP-413 verification, capped idempotent provider proposals and 16 service/encoding tests. Added The Bench functional workflows in separate apps/web source, gated external wallet adapter, coverage/N/A counters, responsive forms, pinned Sandbox setup and reproducible verification scripts. Production/fault Wasm and wallet bundles build. Saved source-resolution side-by-side, mobile form, geometry and test evidence. Financial execution remains BLOCKED by host file limit; no deployment/live providers/real paid settlement claimed. UX3A reference and historical logs preserved.
 
-## 2026-10-28 | IMPL-M01 — Actual implementation begins before event
+## 2026-10-28 | IMPL-M01 - Actual implementation begins before event
 
 Owner removed November 1 implementation gate (D-042). Added Rust escrow/adjudication contract, canonical commitment encoding, Sandbox scenarios, immutable evidence/cost-ledger services and API foundation. Production Wasm builds; 14 Rust SDK tests pass. Sandbox execution blocked by host open-file hard limit. No deployment or paid calls. The Bench naming and frozen UX3A preserved. No claim of competition-window authorship or proven real settlement.
 

@@ -4,9 +4,9 @@
 
 On a Linux x86_64 host allowing 65535 open files, run node scripts/setup-sandbox.mjs, node scripts/build-contracts.mjs and npm run test:sandbox. Fix real Wasm/runtime failures; prove native balance deltas, SR05 successful-transfer/failed-callback lock, verified-failure liquidity timing, concurrent-case conservation and worst-case gas/storage. Current host cannot run Sandbox; source/services/UI are saved without financial acceptance. Then finish structured per-criterion manifests, external wallet redirects, source block/timestamp envelopes and independently controlled reviewer/provider integration. Testnet deployment, paid usage and production secrets still need separate authorization. If financial proof is still outstanding November 1, it is the first event-window engineering task; record only new changes as event-window work.
 
-## Active task — October 28 owner authorization (supersedes former date gate)
+## Active task - October 28 owner authorization (supersedes former date gate)
 
-Continue backend/frontend integration and tests now. Run authored escrow Sandbox scenarios on a host permitting 65535 open files; current host hard limit is 16384. Prove balance deltas, callback-fault non-retry, concurrent accounting and worst-case gas/storage before financial acceptance. Do not deploy testnet or use paid providers without separate authorization. Record all work before November 1 as pre-event. Approved UX3A remains frozen, product name The Bench.
+Continue IMPL-M03 from the compatible Ubuntu Sandbox host. Rerun the complete corrected Sandbox suite, then expand it to the full 18-category financial matrix. Prioritize failed-transfer callback combinations, SR05, duplicate and concurrent finalization, multi-case reserve conservation, deadline boundaries, overflow, wrong-intent callbacks, and worst-case storage and gas. Save structured receipts, exact balance deltas, environment metadata and gas totals. Do not accept AC01-AC33, deploy testnet or use paid providers until all required evidence is verified. Approved UX3A remains frozen and the product name remains The Bench.
 
 Checkpoint: CONTRA-2026-10-28-UX3C
 Date: 2026-10-28

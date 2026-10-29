@@ -1,6 +1,6 @@
 # CONTRA agent handoff: blueprint and exact reference integration
 
-## Current owner authorization — 2026-10-28 implementation
+## Current owner authorization - 2026-10-28 implementation
 
 The owner has removed the internal November 1 coding gate. Implement now on implementation/oct28 using frozen UX3C and UX3A, with The Bench naming. October 28 code is pre-event and must be disclosed. Sandbox is authorized; testnet deployment, paid usage and production secrets still need separate authorization. Earlier date restrictions below are preserved history and no longer govern implementation. See project/STATUS.md and docs/IMPLEMENTATION_OCT28.md for actual tests and blockers. Never retry an UNKNOWN payout.
 

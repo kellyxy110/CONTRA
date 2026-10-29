@@ -70,6 +70,19 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - Next: establish the product redesign brief from the preserved baseline.
 - Verified result: private repository `https://github.com/kellyxy110/CONTRA` created, `main` pushed and local branch configured to track `origin/main`.
 
+## 2026-10-29 | IMPL-M03 | Real NEAR Sandbox execution in progress
+
+- Verified branch `implementation/oct28` started clean at `1614cc642267d30b01d97865b79bc3da2d961236` and preserved the frozen visual and protocol baselines.
+- Selected Ubuntu x86_64 with glibc 2.39 and hard open-file limit 1048576. Installed exact Rust 1.98.0 and the wasm target.
+- `npm ci --ignore-scripts` completed in a native ext4 execution copy. The install reported 17 dependency audit findings and a deprecated transitive tar package; these remain a dependency-maintenance item.
+- `npm run test:contract` passed 20 of 20. Production and fault Wasm rebuilt with export separation. The SHA-256 pinned NEAR Sandbox 2.13.4 binary launched successfully.
+- Real receipts verified creation, consent, creator cancellation, exact funding, immutable funded terms, evidence submission, primary commit/reveal, ordinary finality rejection before deadline, payout dispatch and callback-confirmed settlement. Beneficiary balance increased by exactly 1 NEAR.
+- Real challenged execution verified an unauthorized challenge rejection, creator challenge acceptance, ordinary settlement blocking, fresh committee commit/reveal, original ACCEPT reversal to fresh REJECT, and creator settlement with `FRESH` resolution basis.
+- Diagnosed false live-test failures from treating forwarded blocks as seconds. A later run proved that large jumps can also expire transaction hashes. Replaced this with bounded timestamp-checked advancement and valid 610-second test intervals.
+- Targeted fresh-review timeout then passed with `KEEP_PRIMARY`, beneficiary payout and callback-confirmed settlement.
+- Preserved raw logs as `sandbox-test-attempt-2026-10-29.txt`, `sandbox-timeout-attempt-2026-10-29.txt` and `sandbox-timeout-pass-2026-10-29.txt` under the implementation artifact directory.
+- No testnet deployment, paid provider call, secret use or remote push occurred. P0 remains in progress because the complete 18-category matrix and worst-case gas/storage proof are not yet complete.
+
 
 ## 2026-10-28 | UX3A | Exact dashboard reference study
 
