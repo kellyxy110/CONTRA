@@ -1,5 +1,11 @@
 # Next execution task
 
+## Active next task | M03 financial matrix
+
+Run npm run test:p0 on the compatible WSL Ubuntu host from the next implementation/oct28 commit. The old M02 global Sandbox blocker is superseded; this cloud session has its own local hard limit of 16384 and cannot execute Sandbox. The runner rebuilds and verifies source, reruns the corrected nine-test suite, runs all eighteen financial categories and saves raw receipts, balances, gas, storage and failures. Fix any actual failures and rerun affected tests plus the final full gate. Do not mark P0 complete from the 28 SDK/19 service passes or authored tests alone. Keep AC01-AC33 acceptance separate. Only after financial verification continue Priority 2 wallet/manifests/providers/reviewer/end-to-end work. No testnet deployment, paid APIs or production secrets; preserve UNKNOWN locks and approved credit limits.
+
+Older task sections below are historical and superseded where inconsistent.
+
 ## Active next task | IMPL-M02
 
 On a Linux x86_64 host allowing 65535 open files, run node scripts/setup-sandbox.mjs, node scripts/build-contracts.mjs and npm run test:sandbox. Fix real Wasm/runtime failures; prove native balance deltas, SR05 successful-transfer/failed-callback lock, verified-failure liquidity timing, concurrent-case conservation and worst-case gas/storage. Current host cannot run Sandbox; source/services/UI are saved without financial acceptance. Then finish structured per-criterion manifests, external wallet redirects, source block/timestamp envelopes and independently controlled reviewer/provider integration. Testnet deployment, paid usage and production secrets still need separate authorization. If financial proof is still outstanding November 1, it is the first event-window engineering task; record only new changes as event-window work.

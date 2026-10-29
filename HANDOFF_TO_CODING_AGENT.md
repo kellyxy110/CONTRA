@@ -1,5 +1,9 @@
 # CONTRA agent handoff: blueprint and exact reference integration
 
+## Latest execution handoff | M03, October 29
+
+Resume implementation/oct28 using docs/FINANCIAL_VERIFICATION_M03.md and the refreshed verification report. WSL Sandbox successes at c0800c8 supersede the older global blocker; this separate cloud host's local descriptor preflight still fails. Run npm run test:p0 on the compatible host and complete all eighteen financial categories before Priority 2 integration. SDK/build and neutral-avatar geometry passes do not accept AC01-AC33 or P0. Never retry UNKNOWN. No testnet deployment, paid provider or production-secret authorization has been granted.
+
 ## Current owner authorization - 2026-10-28 implementation
 
 The owner has removed the internal November 1 coding gate. Implement now on implementation/oct28 using frozen UX3C and UX3A, with The Bench naming. October 28 code is pre-event and must be disclosed. Sandbox is authorized; testnet deployment, paid usage and production secrets still need separate authorization. Earlier date restrictions below are preserved history and no longer govern implementation. See project/STATUS.md and docs/IMPLEMENTATION_OCT28.md for actual tests and blockers. Never retry an UNKNOWN payout.

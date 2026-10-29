@@ -1,8 +1,20 @@
 {
-  "checkpoint": "CONTRA-2026-10-28-IMPL-M02",
+  "checkpoint": "CONTRA-2026-10-29-IMPL-M03",
+  "base_commit": "c0800c8",
   "implementation_start": "2026-10-28",
   "pre_event": true,
-  "observed_at": "2026-10-28T11:04:14.314Z",
+  "observed_at_utc": "2026-10-29T04:04:14.993Z",
+  "p0_complete": false,
+  "ac01_ac33_accepted": false,
+  "testnet_deployed": false,
+  "paid_calls": false,
+  "environment": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v24.22.1",
+    "open_file_limit": "16384",
+    "rust": "rustc 1.98.0 (88d9e12ae 2026-08-18)"
+  },
   "checks": [
     {
       "name": "rust-sdk",
@@ -12,6 +24,12 @@
     },
     {
       "name": "services",
+      "exit_code": 0,
+      "passed": true,
+      "error": null
+    },
+    {
+      "name": "wasm-build",
       "exit_code": 0,
       "passed": true,
       "error": null
@@ -29,48 +47,283 @@
       "error": null
     }
   ],
-  "wasm": {
-    "sha256": "b5f999f1144e3d9866ea286d83711c3de21f36253645700328c3faf98ab22159",
-    "bytes": 628255,
-    "exports": [
-      "memory",
-      "accept_terms",
-      "advance_round",
-      "cancel_case",
-      "commit_vote",
-      "confirm_reviewer",
-      "contract_source_metadata",
-      "create_case",
-      "file_challenge",
-      "finalize_case",
-      "fund_case",
-      "get_case",
-      "get_committee",
-      "get_config",
-      "get_creation",
-      "get_events",
-      "get_payout",
-      "get_reviewer",
-      "get_round",
-      "list_cases",
-      "list_reviewers",
-      "new",
-      "on_payout_complete",
-      "preview_case",
-      "retry_payout",
-      "reveal_vote",
-      "set_reviewer",
-      "sponsor_storage",
-      "submit_evidence"
-    ],
-    "financial_execution_verified": false
+  "categories": [
+    {
+      "id": "F01",
+      "label": "Creation identity, immutable terms and beneficiary consent",
+      "requirements": [
+        "I3"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F02",
+      "label": "Exact principal, unauthorized and duplicate funding",
+      "requirements": [
+        "I1",
+        "I3"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F03",
+      "label": "Creator-only unfunded cancellation and expiry",
+      "requirements": [
+        "I3"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F04",
+      "label": "Unchallenged ACCEPT, exact beneficiary balance and callback",
+      "requirements": [
+        "SR03"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F05",
+      "label": "Decisive REJECT, exact creator refund",
+      "requirements": [
+        "I1",
+        "I4"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F06",
+      "label": "Missing evidence and no-quorum base refunds",
+      "requirements": [
+        "I7"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F07",
+      "label": "Challenge lock and disjoint fresh reversal",
+      "requirements": [
+        "I5",
+        "I6"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F08",
+      "label": "Fresh timeout retains primary, cannot profit from challenge",
+      "requirements": [
+        "I7",
+        "I8"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F09",
+      "label": "Concurrent finalize and duplicate successful payment guards",
+      "requirements": [
+        "SR03"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F10",
+      "label": "Verified failed native transfer and concurrent same-intent retry",
+      "requirements": [
+        "SR04"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F11",
+      "label": "Successful transfer plus failed callback locks UNKNOWN",
+      "requirements": [
+        "SR05",
+        "SR08"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F12",
+      "label": "Failed transfer plus failed callback locks UNKNOWN",
+      "requirements": [
+        "SR06"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F13",
+      "label": "Callback authorization, wrong/stale attempt, multiple results, redeploy",
+      "requirements": [
+        "SR01",
+        "SR02",
+        "SR07",
+        "SR09",
+        "SR10",
+        "SR12"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F14",
+      "label": "Multiple funded cases and independent principal reserves",
+      "requirements": [
+        "SR13"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F15",
+      "label": "Sponsor top-ups and unsolicited donations are not escrow",
+      "requirements": [
+        "SR13"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F16",
+      "label": "Gas and liquidity rejection roll back without dispatch",
+      "requirements": [
+        "SR11"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F17",
+      "label": "Before/at/after funding, submission, review and challenge boundaries",
+      "requirements": [
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    },
+    {
+      "id": "F18",
+      "label": "Counter/wire overflow, capacity and maximum bounded state",
+      "requirements": [
+        "SR11"
+      ],
+      "status": "BLOCKED",
+      "reason": "Sandbox host preflight failed; no category was executed"
+    }
+  ],
+  "measurements": {
+    "scope": "Observed finite bounds, not a formal universal gas proof",
+    "max_transaction_gas": null,
+    "max_root_receipt_gas_by_method": {},
+    "max_callback_gas": null,
+    "storage_snapshots": [],
+    "balance_observations": [],
+    "gas_budget_violations": []
   },
-  "rust_source_sha256": "39ef8211f354e805e4a3e2d2dbd86c9f40d6809b5bbc4e66ffb4efdab567b28b",
-  "sdk_tests": "Mocked NEAR environment; not real receipts or balance transfers",
-  "service_tests": "Temporary local storage and explicit test transport fixtures; no live provider calls",
-  "sandbox": "BLOCKED by host hard open-file limit 16384 versus required 65535",
-  "testnet_deployed": false,
-  "paid_calls_performed": false,
-  "external_wallet_flow_verified": false,
-  "owner_acceptance": false
+  "sdk_required_passed": true,
+  "sdk_test_count": 28,
+  "service_test_count": 19,
+  "rust_source_sha256": "3e1496d21f995f865d9006c1d671e6a6d7a6e446bcae6dbcefcc572d6b2ce99c",
+  "prior_compatible_host_evidence": {
+    "commit": "c0800c8",
+    "status": "Recorded WSL Sandbox execution; older global M02 blocker superseded",
+    "logs": [
+      "sandbox-test-attempt-2026-10-29.txt",
+      "sandbox-timeout-attempt-2026-10-29.txt",
+      "sandbox-timeout-pass-2026-10-29.txt"
+    ]
+  },
+  "artifacts": {
+    "production": {
+      "sha256": "c607adf597dfbf898d8e442fd71b3b75e7032ad47fd808fb50e89e0573fd3ef8",
+      "bytes": 631042,
+      "exports": [
+        "memory",
+        "accept_terms",
+        "advance_round",
+        "cancel_case",
+        "commit_vote",
+        "confirm_reviewer",
+        "contract_source_metadata",
+        "create_case",
+        "file_challenge",
+        "finalize_case",
+        "fund_case",
+        "get_case",
+        "get_committee",
+        "get_config",
+        "get_creation",
+        "get_events",
+        "get_payout",
+        "get_reviewer",
+        "get_round",
+        "list_cases",
+        "list_reviewers",
+        "new",
+        "on_payout_complete",
+        "preview_case",
+        "retry_payout",
+        "reveal_vote",
+        "set_reviewer",
+        "sponsor_storage",
+        "submit_evidence"
+      ]
+    },
+    "fault": {
+      "sha256": "37e7dd23218db4e426362739c81e3ffdff8332ac67c8fa662b8160c4c34ff90a",
+      "bytes": 651010,
+      "exports": [
+        "memory",
+        "accept_terms",
+        "advance_round",
+        "cancel_case",
+        "commit_vote",
+        "confirm_reviewer",
+        "contract_source_metadata",
+        "create_case",
+        "file_challenge",
+        "finalize_case",
+        "fund_case",
+        "get_case",
+        "get_committee",
+        "get_config",
+        "get_creation",
+        "get_events",
+        "get_payout",
+        "get_reviewer",
+        "get_round",
+        "list_cases",
+        "list_reviewers",
+        "new",
+        "on_payout_complete",
+        "preview_case",
+        "retry_payout",
+        "reveal_vote",
+        "sandbox_probe_callback",
+        "sandbox_probe_value",
+        "sandbox_set_counters",
+        "set_callback_fault",
+        "set_reviewer",
+        "sponsor_storage",
+        "submit_evidence"
+      ]
+    }
+  },
+  "local_execution_blocker": "This session cannot start Sandbox. Prior WSL run evidence in c0800c8 is retained and is not invalidated.",
+  "full_corrected_suite": {
+    "status": "BLOCKED",
+    "passed": 0
+  }
 }

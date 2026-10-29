@@ -1,9 +1,2 @@
-import {spawnSync} from 'node:child_process';
-import fs from 'node:fs';
-import path from 'node:path';
-import {createHash} from 'node:crypto';
-const root=path.resolve(import.meta.dirname,'..'),out=path.join(root,'project/artifacts/implementation');fs.mkdirSync(out,{recursive:true});
-const checks=[['rust-sdk','cargo',['test','--manifest-path','contracts/adjudication/Cargo.toml','--lib','--','--test-threads=1']],['services','node',['--test','tests/service.test.mjs']],['wallet-build','npm',['run','build:wallet']],['sandbox-preflight','node',['scripts/sandbox-preflight.mjs']]];
-const results=[];for(const [name,bin,args]of checks){const run=spawnSync(bin,args,{cwd:root,encoding:'utf8',maxBuffer:4000000});fs.writeFileSync(path.join(out,name+'.txt'),(run.stdout||'')+(run.stderr||''));results.push({name,exit_code:run.status,passed:run.status===0,error:run.error?.message||null});console.log(name+': '+(run.status===0?'PASS':name==='sandbox-preflight'?'BLOCKED':'FAIL'));}
-const wasmPath=path.join(root,'contracts/adjudication/target/wasm32-unknown-unknown/release/contra_adjudication.wasm'),wasm=fs.readFileSync(wasmPath),exports=WebAssembly.Module.exports(new WebAssembly.Module(wasm)).map(v=>v.name);if(exports.includes('set_callback_fault'))throw Error('Fault export found in production Wasm');const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
-const report={checkpoint:'CONTRA-2026-10-28-IMPL-M02',implementation_start:'2026-10-28',pre_event:true,observed_at:new Date().toISOString(),checks:results,wasm:{sha256:sha(wasm),bytes:wasm.length,exports,financial_execution_verified:false},rust_source_sha256:sha(fs.readFileSync(path.join(root,'contracts/adjudication/src/lib.rs'))),sdk_tests:'Mocked NEAR environment; not real receipts or balance transfers',service_tests:'Temporary local storage and explicit test transport fixtures; no live provider calls',sandbox:'BLOCKED by host hard open-file limit 16384 versus required 65535',testnet_deployed:false,paid_calls_performed:false,external_wallet_flow_verified:false,owner_acceptance:false};fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify(report,null,2));process.exitCode=results.every(r=>r.passed)?0:2;
+// M03 supersedes the M02 report generator. Incomplete Sandbox coverage exits nonzero.
+await import("./run-p0.mjs");

@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-10-29 | IMPL-M03 financial matrix and neutral avatars
+
+Resumed c0800c8. Preserved its successful WSL evidence and explicitly superseded M02's global blocker. Authored eighteen isolated financial categories, SDK exact-deadline/overflow/unexpected-result tests, fault-only counter/callback probes, root/callback gas and account/storage capture, complete helper receipt journaling and a nonzero incomplete P0 gate. Twenty-eight SDK tests pass in each build; nineteen service/report tests and both Wasm/wallet builds pass. This host's rerun stopped at descriptor preflight: eighteen categories remain BLOCKED, P0 incomplete, no new financial measurements claimed. Replaced all active human photographs with neutral SVG; reference assets unchanged and fifteen desktop rectangles preserved. Refreshed verification and handoff. No deployment, paid call or production secret configuration.
+
 ## 2026-10-29 | IMPL-M03 in progress - Real Sandbox financial execution
 
 Moved execution to compatible Ubuntu x86_64 with glibc 2.39 and hard open-file limit 1048576. Pinned Rust 1.98.0, passed all 20 Rust tests, rebuilt production and fault Wasm, installed checksum-pinned NEAR Sandbox 2.13.4 and executed real transactions. Verified exact 1 NEAR balance transfer and callback-confirmed settlement, plus a challenged case whose fresh committee reversed the original verdict. Corrected the Sandbox clock helper after real receipts proved deadline overshoot and expired block-hash behavior. Targeted `KEEP_PRIMARY` timeout now passes. Saved raw failure and passing evidence. P0 remains incomplete pending the rest of the 18-category matrix, gas/storage measurement and full rerun.

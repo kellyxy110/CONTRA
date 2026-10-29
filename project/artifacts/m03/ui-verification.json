@@ -1,0 +1,11 @@
+{
+  "resolution": [
+    1200,
+    900
+  ],
+  "rectangles": 15,
+  "geometry_matches_reference": true,
+  "active_photograph_references": 0,
+  "neutral_asset": "apps/web/avatar.svg",
+  "financial_state_shown": "Chain unavailable on this host"
+}

@@ -1,0 +1,36 @@
+   Compiling contra-adjudication v0.1.0 (/workspace/scratch/4994fe94765f/CONTRA/contracts/adjudication)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.97s
+     Running unittests src/lib.rs (contracts/adjudication/target/debug/deps/contra_adjudication-af3788ea52599606)
+
+running 28 tests
+test tests::authentic_failed_result_allows_same_intent_retry ... ok
+test tests::cancel_only_unfunded ... ok
+test tests::cannot_cancel_funded - should panic ... ok
+test tests::cannot_fund_without_consent - should panic ... ok
+test tests::case_storage_is_preallocated_and_callback_cannot_grow_it ... ok
+test tests::challenge_at_exact_deadline_rejects - should panic ... ok
+test tests::commit_at_exact_deadline_rejects - should panic ... ok
+test tests::consent_funding_and_unique_creation ... ok
+test tests::creation_terms_and_payout_match_shared_golden_vectors ... ok
+test tests::forged_callback_is_rejected - should panic ... ok
+test tests::fresh_review_overturns_primary ... ok
+test tests::funding_at_exact_deadline_rejects - should panic ... ok
+test tests::ledger_overflow_rejects - should panic ... ok
+test tests::mismatched_callback_preserves_unknown_and_ledger ... ok
+test tests::nonmember_cannot_commit - should panic ... ok
+test tests::quorum_and_callback_success_are_distinct ... ok
+test tests::reveal_at_exact_deadline_rejects - should panic ... ok
+test tests::sequence_overflow_rejects - should panic ... ok
+test tests::stale_registry_snapshot_prevents_funding - should panic ... ok
+test tests::submission_at_exact_deadline_rejects - should panic ... ok
+test tests::timeout_challenge_keeps_prior_recipient ... ok
+test tests::unauthorized_cancel - should panic ... ok
+test tests::unexpected_promise_payload_remains_unknown ... ok
+test tests::unknown_payout_cannot_dispatch_twice ... ok
+test tests::unknown_payout_retry_rejected - should panic ... ok
+test tests::voting_fixture_matches_golden ... ok
+test tests::wire_rejects_noncanonical_numbers ... ok
+test tests::wrong_funding_amount - should panic ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.52s
+

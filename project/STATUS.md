@@ -1,5 +1,15 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-10-29-IMPL-M03
+
+Resumed c0800c8 on implementation/oct28. The compatible WSL Sandbox successes recorded there supersede the old global M02 blocker. This session's separate host still has a 16384 hard descriptor limit; a full corrected-suite rerun stopped at preflight. Existing WSL evidence remains valid, but no new Sandbox receipt, gas, storage or balance measurement is claimed here.
+
+Authored all eighteen financial categories and a strict P0 report gate, continuous raw receipt/snapshot capture, concurrency and SR05/SR06 cases, bounded-capacity/overflow stress, and fault-only probes excluded from production. Twenty-eight Rust SDK tests pass in default and fault builds; nineteen service/report tests pass; production/fault Wasm and wallet bundle build. P0 is NOT COMPLETE: all eighteen categories are BLOCKED in this current run. AC01-AC33 remain unaccepted. See docs/FINANCIAL_VERIFICATION_M03.md and refreshed project/artifacts/implementation/verification.json.
+
+Active frontend human photographs are removed, replaced by neutral SVG avatars. Browser geometry matches all fifteen UX3A rectangles; frozen reference assets remain untouched. Priority 2 integration remains pending P0. No testnet deployment, paid calls, production secrets or mainnet operations. UNKNOWN still prohibits another transfer. Actual implementation start remains October 28, pre-event. Next: npm run test:p0 on the already compatible WSL host, fix confirmed failures and rerun the required matrix.
+
+All older status sections below are preserved historical checkpoints; their global M02 blocker and active-next-task language are superseded by this notice.
+
 ## Current implementation checkpoint | CONTRA-2026-10-29-IMPL-M03-IN-PROGRESS
 
 Real NEAR Sandbox execution is unblocked in WSL Ubuntu x86_64 with glibc 2.39 and hard open-file limit 1048576. Rust 1.98.0, the checksum-pinned NEAR Sandbox 2.13.4 binary, production Wasm and fault Wasm are verified. The 20 Rust SDK tests pass. Live Sandbox receipts now prove creation, consent, cancellation, exact funding, immutable terms, evidence-bound primary commit/reveal, callback-confirmed native payout with a beneficiary balance increase of exactly 1 NEAR, challenge blocking, and a decisive fresh review that reverses ACCEPT to REJECT and settles to the creator. A targeted fresh-review timeout test also passes and settles the original ACCEPT verdict to the beneficiary with `KEEP_PRIMARY`.

@@ -1,5 +1,13 @@
 # Decision ledger
 
+## D-045 | M03 financial gate and execution evidence | 2026-10-29
+
+The WSL Sandbox runs at c0800c8 supersede the old global M02 blocker; distinguish this session's local descriptor limit from project-wide capability. P0 completion requires the full corrected baseline, all eighteen named categories, actual receipts/balance observations, SDK exact-boundary/overflow proofs, measured callback gas and zero budget violations. Blocked, missing, duplicated or unexecuted tests cannot pass the gate. Fault-only probes are absent from production; no matching fabricated single payout result or UNKNOWN counter mutation is allowed. Do not advance Priority 2 integration or AC acceptance from unit/build success alone. Existing pre-event disclosure and financial/spending safeguards remain unchanged.
+
+## D-046 | Neutral active avatars | 2026-10-29
+
+Owner explicitly requested removal of hardcoded human photographs from active frontend. Use a neutral SVG with the approved NEAR palette and existing image dimensions. Preserve UX3A geometry, The Bench naming, original JPEG and frozen reference photographs unchanged. No design cycle or new product feature is introduced.
+
 ## D-043 - Preserve financial execution gate and truthful integration states
 
 Accepted 2026-10-28: continue owner-authorized source implementation while Sandbox is blocked by the host hard descriptor limit. SDK tests, Wasm builds and browser geometry do not authorize financial acceptance. No alternate runtime result, fixture receipt or blind UNKNOWN payout retry may substitute for real Sandbox proof. Frontend source reuses frozen UX3A geometry/assets with disclosed October 28 pre-event provenance; reference files remain unchanged. Missing chain/service/per-criterion evidence is unavailable/N/A. External wallets and paid providers remain gated and unverified, with initial credit ceilings unchanged.

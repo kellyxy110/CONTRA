@@ -1,0 +1,5 @@
+Production/fault Wasm feature separation verified. This is not a Sandbox execution.
+   Compiling contra-adjudication v0.1.0 (/workspace/scratch/4994fe94765f/CONTRA/contracts/adjudication)
+    Finished `release` profile [optimized] target(s) in 3.42s
+   Compiling contra-adjudication v0.1.0 (/workspace/scratch/4994fe94765f/CONTRA/contracts/adjudication)
+    Finished `release` profile [optimized] target(s) in 3.20s

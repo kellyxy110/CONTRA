@@ -1,5 +1,7 @@
 # CONTRA
 
+> M03: real Sandbox runs on the compatible WSL host are recorded at c0800c8; the older global M02 blocker is superseded. This cloud session has its own descriptor limit and the refreshed P0 report remains incomplete. Run `npm run test:p0` on WSL for the corrected nine-test suite plus eighteen financial categories. Current local proof is 28 Rust SDK tests, 19 service/report tests and successful builds, not completion of the financial matrix. See [M03 handoff](docs/FINANCIAL_VERIFICATION_M03.md). Active avatars are neutral; frozen reference assets remain unchanged.
+
 ![Stage: pre-event implementation](https://img.shields.io/badge/stage-pre--event%20implementation-00EC97?style=flat-square&labelColor=0B1110)
 ![Network: NEAR testnet planned](https://img.shields.io/badge/network-NEAR%20testnet%20(planned)-0B1110?style=flat-square)
 ![Protocol: UX3C frozen](https://img.shields.io/badge/protocol-UX3C%20frozen-FF8678?style=flat-square&labelColor=0B1110)
