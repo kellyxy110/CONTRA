@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | IMPL-M04.1 Phase 3 end-to-end UX acceptance
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P2. Make browser tooling portable, then verify account connection, case selection, all tabs, search, pagination, dialogs, Back, Escape, focus restoration, stale and unavailable states, permission errors, keyboard navigation, reduced motion, 125 and 200 percent zoom, 320px effective width, chart semantics and contrast. Reuse the retained genuine Sandbox cases for complete unchallenged and challenged workflow evidence, rerun relevant financial and service regression gates, and update AC01-AC33 only where new evidence satisfies the frozen text. Produce final screenshots, browser and accessibility reports, and an unresolved-issues register for explicit owner visual acceptance. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.
+
 ## Active next task | IMPL-M04.1 Phase 2 radar and interface refinement
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P1. Correct the full-coverage radar so rings, spokes and eight sector boundaries remain distinct, implement responsive device-pixel-ratio rendering, and capture zero, partial and full coverage close-ups. Refine exact NEAR amount disclosure, compact case identity, human-readable status text, completed review-window state, materials, reviewer details and event history using genuine case records. Preserve the approved 1200 hierarchy, neutral avatars, UX3C invariants and Phase 1 responsive matrix. Pass the Phase 2 visual and information-accuracy gate before Phase 3. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.

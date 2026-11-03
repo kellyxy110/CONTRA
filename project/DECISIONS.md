@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-053 | Radar coverage remains a sourced segmented measurement | 2026-11-03
+
+ACCEPTED: render each radar sector from the existing numerator and denominator definitions, with separate low-opacity fills and persistent rings, spokes and boundaries. Denominator zero remains N/A and is never painted as measured zero. Full coverage may fill every sector only when the genuine case metrics are complete, but the chart grid must remain visually dominant enough to preserve segmentation. Canvas pixels follow the rendered size and device pixel ratio. Coverage remains descriptive UI state and never authorizes judgment or settlement.
+
 ## D-052 | Preserve 1200 geometry and adapt outside it | 2026-11-03
 
 ACCEPTED: keep the approved 1200 x 900 UX3A shell geometry exact while allowing proportional desktop growth, bounded column scrolling on short screens, an ordered tablet flow and a full-width phone flow. On phones, preserve all navigation by placing the existing controls in a horizontally scrollable top rail instead of compressing content beside a 53px sidebar. Responsive acceptance requires both empty and genuine populated state checks, no page horizontal overflow or clipped sections, and 44px coarse-pointer targets. This is an implementation adaptation outside the frozen reference viewport, not a visual redesign.

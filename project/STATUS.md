@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.1-P2
+
+M04.1 Phase 2 radar and interface refinement is COMPLETE. The radar now renders eight separately bounded sectors with low-opacity genuine-data fills, high-contrast concentric rings and spokes, responsive geometry and a device-pixel-ratio-aware canvas buffer. Zero coverage remains N/A with denominator zero. The retained challenged case proves partial Overall coverage at Review 2/3 and Challenge 6/8, while the Criteria view proves full coverage without hiding the grid. Zero, partial, full and 320px close-ups are in `project/artifacts/m041/phase2/`.
+
+The Bench now displays 1 NEAR while retaining the exact `1000000000000000000000000 yoctoNEAR` in element details, uses a meaningful short case identifier with the full digest available, translates technical state and payout codes, closes completed review windows using the callback completion time, and improves materials, reviewer-control and event-history labels. The approved 1200 shell and hierarchy remain unchanged. A direct UX3A comparison is saved as `ux3a-refined-comparison.png`.
+
+Verification passes 15/15 interface checks, 26/26 empty responsive checks, 29/29 populated responsive checks and 29/29 service tests, with zero console error. The reference hash remains exact. No protocol, contract, Sandbox invariant, deployment, paid provider, secret, testnet or mainnet change occurred. Phase 3 end-to-end UX and accessibility testing is next. Owner visual acceptance remains pending.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.1-P1
 
 M04.1 Phase 1 responsive layout engineering is COMPLETE. The approved 1200 x 900 shell remains exactly 1080 x 810 at x 60, y 45. Wider desktops use proportional three-column growth, short desktop screens use intentional per-column scrolling, tablets use an ordered full-width content flow with the sidebar preserved, and 390px plus 320px phones use a full-width flow with a horizontally scrollable navigation strip. Fixed content heights no longer clip populated reviewers, materials, tasks or activity cards. Coarse-pointer navigation, tabs, disclosure links and pagers meet a measured 44px minimum target.
