@@ -1,0 +1,71 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04.2-P2",
+  "checks": [
+    {
+      "name": "zero state reports eight N/A sectors",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"},{\"label\":\"Provenance\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"},{\"label\":\"Review\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"},{\"label\":\"Finality\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"},{\"label\":\"Challenge\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"},{\"label\":\"Quorum\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"},{\"label\":\"Criteria\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"No selected chain case\"}]"
+    },
+    {
+      "name": "radar exposes 25, 50, 75 and 100 percent markers",
+      "pass": true,
+      "detail": "25,50,75,100"
+    },
+    {
+      "name": "genuine unchallenged case is not a solid full circle",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Frozen criteria with a selected manifest record whose linked source digests are retrievable\"},{\"label\":\"Provenance\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance\"},{\"label\":\"Review\",\"numerator\":2,\"denominator\":3,\"ratio\":0.6666666666666666,\"source\":\"Completed reviewer reveals in selected round 0\"},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Completed final disposition, payout intent, observed callback result and settled-state milestones\"},{\"label\":\"Challenge\",\"numerator\":0,\"denominator\":0,\"ratio\":0,\"source\":\"Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones; N/A without a challenge\"},{\"label\":\"Quorum\",\"numerator\":2,\"denominator\":2,\"ratio\":1,\"source\":\"Largest matching disposition count in selected round 0 against the policy threshold\"},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":1,\"ratio\":0,\"source\":\"Keyboard criteria with an independently recorded and verified FULFILLED evaluation; N/A when evaluation records are unavailable\"},{\"label\":\"Criteria\",\"numerator\":1,\"denominator\":2,\"ratio\":0.5,\"source\":\"Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation\"}]"
+    },
+    {
+      "name": "unchallenged case marks challenge N/A",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "genuine evidence uses retrievable source linkage",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case switching changes challenge measurement",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Frozen criteria with a selected manifest record whose linked source digests are retrievable\"},{\"label\":\"Provenance\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance\"},{\"label\":\"Review\",\"numerator\":2,\"denominator\":3,\"ratio\":0.6666666666666666,\"source\":\"Completed reviewer reveals in selected round 1\"},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Completed final disposition, payout intent, observed callback result and settled-state milestones\"},{\"label\":\"Challenge\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones; N/A without a challenge\"},{\"label\":\"Quorum\",\"numerator\":2,\"denominator\":2,\"ratio\":1,\"source\":\"Largest matching disposition count in selected round 1 against the policy threshold\"},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":1,\"ratio\":0,\"source\":\"Keyboard criteria with an independently recorded and verified FULFILLED evaluation; N/A when evaluation records are unavailable\"},{\"label\":\"Criteria\",\"numerator\":1,\"denominator\":2,\"ratio\":0.5,\"source\":\"Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation\"}]"
+    },
+    {
+      "name": "fresh review remains actual two of three participation",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Frozen criteria with a selected manifest record whose linked source digests are retrievable\"},{\"label\":\"Provenance\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance\"},{\"label\":\"Review\",\"numerator\":2,\"denominator\":3,\"ratio\":0.6666666666666666,\"source\":\"Completed reviewer reveals in selected round 1\"},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Completed final disposition, payout intent, observed callback result and settled-state milestones\"},{\"label\":\"Challenge\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones; N/A without a challenge\"},{\"label\":\"Quorum\",\"numerator\":2,\"denominator\":2,\"ratio\":1,\"source\":\"Largest matching disposition count in selected round 1 against the policy threshold\"},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":1,\"ratio\":0,\"source\":\"Keyboard criteria with an independently recorded and verified FULFILLED evaluation; N/A when evaluation records are unavailable\"},{\"label\":\"Criteria\",\"numerator\":1,\"denominator\":2,\"ratio\":0.5,\"source\":\"Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation\"}]"
+    },
+    {
+      "name": "criteria remains partial without an independent evaluation record",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Frozen criteria with a selected manifest record whose linked source digests are retrievable\"},{\"label\":\"Provenance\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance\"},{\"label\":\"Review\",\"numerator\":2,\"denominator\":3,\"ratio\":0.6666666666666666,\"source\":\"Completed reviewer reveals in selected round 1\"},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Completed final disposition, payout intent, observed callback result and settled-state milestones\"},{\"label\":\"Challenge\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones; N/A without a challenge\"},{\"label\":\"Quorum\",\"numerator\":2,\"denominator\":2,\"ratio\":1,\"source\":\"Largest matching disposition count in selected round 1 against the policy threshold\"},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":1,\"ratio\":0,\"source\":\"Keyboard criteria with an independently recorded and verified FULFILLED evaluation; N/A when evaluation records are unavailable\"},{\"label\":\"Criteria\",\"numerator\":1,\"denominator\":2,\"ratio\":0.5,\"source\":\"Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation\"}]"
+    },
+    {
+      "name": "Criteria tab preserves operational measurements",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Evidence tab preserves operational measurements",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Overall tab preserves operational measurements",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "deterministic full fixture renders every sector at full depth",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":2,\"denominator\":2,\"ratio\":1,\"source\":\"Frozen criteria with a selected manifest record whose linked source digests are retrievable\"},{\"label\":\"Provenance\",\"numerator\":2,\"denominator\":2,\"ratio\":1,\"source\":\"Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance\"},{\"label\":\"Review\",\"numerator\":3,\"denominator\":3,\"ratio\":1,\"source\":\"Completed reviewer reveals in selected round 1\"},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Completed final disposition, payout intent, observed callback result and settled-state milestones\"},{\"label\":\"Challenge\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones; N/A without a challenge\"},{\"label\":\"Quorum\",\"numerator\":2,\"denominator\":2,\"ratio\":1,\"source\":\"Largest matching disposition count in selected round 1 against the policy threshold\"},{\"label\":\"Keyboard\",\"numerator\":1,\"denominator\":1,\"ratio\":1,\"source\":\"Keyboard criteria with an independently recorded and verified FULFILLED evaluation; N/A when evaluation records are unavailable\"},{\"label\":\"Criteria\",\"numerator\":4,\"denominator\":4,\"ratio\":1,\"source\":\"Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation\"}]"
+    },
+    {
+      "name": "browser console remains error-free",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "console_errors": []
+}

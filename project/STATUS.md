@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.2-P2
+
+M04.2 Phase 2 operational radar correction is COMPLETE. All eight sectors now derive from actual evidence retrieval, provenance, selected-round reveals, settlement milestones, confirmed challenge lifecycle, matching quorum, verified keyboard evaluation records and independent criterion evidence/evaluation records. Configuration fields no longer count as completion. Denominator zero remains N/A. The canvas uses 25, 50, 75 and 100 percent rings and independent radial sector depths.
+
+Deterministic tests cover eight progressive states and exact numerator, denominator, source and render depth behavior. Results: 3/3 coverage subtests, 13/13 browser information checks, 46/46 empty responsive checks and 46/46 genuine populated responsive checks. The challenged genuine case is visibly partial at Review 2/3, Keyboard 0/1 and Criteria 1/2 while preserving its actual completed challenge, finality and quorum records. Zero, genuine partial and deterministic full screenshots are under `project/artifacts/m042/phase2/`. Phase 3 navigation and full UX verification is active. Owner visual acceptance remains pending.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.2-P1
 
 M04.2 Phase 1 responsive shell correction is COMPLETE. Desktop columns no longer own independent scroll regions or reserve scrollbar gutters. Short screens at 1536 x 676 and 1366 x 768 now use one coherent document scrollbar, while 1200 x 900 retains the approved shell origin, width, column hierarchy and visual system. The minimum reading scale is raised, the empty heading no longer truncates, and the radar label and legend spacing is corrected.

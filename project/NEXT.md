@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | M04.2 Phase 3 navigation and complete UX verification
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P2. Audit every visible component and replace major workflow dialogs with stable navigable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement/history, Lab and Settings. Preserve focused dialogs only for focused actions. Verify browser Back, direct navigation, selected-case context, focus restoration and accurate loading, empty, partial, challenged, settlement-pending, settled and failure states. Run Windows Chrome, Linux Chromium and another available engine where practical, keyboard and accessibility checks, 125 and 200 percent zoom, both genuine Sandbox journeys and the full responsive matrix. Record manual screen-reader coverage as PARTIAL unless actually performed. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.
+
 ## Active next task | M04.2 Phase 2 operational radar semantics
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P1. Replace configuration-derived radar completion with operational measurements for Evidence, Provenance, Review, Finality, Challenge, Quorum, Keyboard and Criteria. Each sector must expose its exact numerator, denominator and source, render an independent radial depth and report N/A when evidence is insufficient. Add deterministic tests for all eight sectors across zero, partial and full case states, then capture the required close-ups and rerun the responsive matrix. Preserve the Phase 1 document-scroll correction, UX3A hierarchy, frozen UX3C protocol and P0 safeguards. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.

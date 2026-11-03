@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-03 | IMPL-M04.2-P2 operational radar measurements
+
+Replaced configuration-derived radar completion with eight operational numerator and denominator rules. Added source retrieval checks for manifest sources, explicit criterion evaluation metadata, selected-round review and quorum calculations, actual settlement and challenge milestones, and an exported render-depth function shared by browser rendering and tests. Replaced eleven-percent rings with 25, 50, 75 and 100 percent markers. Added deterministic eight-state coverage tests and browser checks for zero, genuine partial, case switching, tabs and deterministic full coverage. Results: 3/3 coverage subtests, 13/13 interface checks and 92/92 responsive checks across empty and genuine populated states. Saved close-ups and reports under `project/artifacts/m042/phase2/`. No contract, protocol, deployment, paid call, production secret, testnet or mainnet operation occurred. Phase 3 navigation and complete UX verification is next.
+
 ## 2026-11-03 | IMPL-M04.2-P1 coherent responsive shell
 
 Removed independent desktop overflow and stable scrollbar gutters from the three content columns. Made the shell grow with content so 1536 x 676 and 1366 x 768 use one document scrollbar. Raised the reading scale, restored the complete empty heading, separated lower radar labels from its legend, and retained the existing tablet and phone flows. Added a portable M04.2 responsive test and package command covering eight viewports, exact scroll ownership, clipping, page overflow, minimum text size, heading visibility and console errors. Empty and genuine populated states each pass 46/46 checks. Saved before and after screenshots and measurements under `project/artifacts/m042/phase1/`. Reference checksum and em dash scans pass. No protocol, contract, deployment, paid inference, production secret, testnet or mainnet action occurred. Phase 2 radar semantics is next.

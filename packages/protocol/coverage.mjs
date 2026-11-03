@@ -1,7 +1,136 @@
-// Fixed policy v1 counters. N/A is represented by denominator 0, never an invented score.
-export function coverage(c,tab='Overall',availability=null){const names=['Evidence','Provenance','Review','Finality','Challenge','Quorum','Keyboard','Criteria'];if(!c)return names.map(label=>({label,numerator:0,denominator:0,source:'Chain unavailable'}));const t=c.terms,round=c.challenge?1:0,slots=c.rounds?.[round]||[],keyboard=t.criteria.filter(x=>x.kind==='KEYBOARD'),known=availability!==null,available=h=>known&&availability[h]===true,manifest=availability?.__manifest||null;const count=xs=>xs.filter(Boolean).length,entry=(label,n,d,source)=>({label,numerator:n,denominator:d,source});
- if(tab==='Criteria'){const criteria=t.criteria,manifestCriteria=manifest?.criteria||[],sources=manifest?.sources||[];return [entry('Evidence',manifest?criteria.filter(v=>manifestCriteria.some(e=>e.criterion_id===v.criterion_id&&e.source_ids?.length)).length:0,manifest?criteria.length:0,'Onchain-selected structured manifest coverage by frozen criterion'),entry('Provenance',manifest?sources.filter(v=>v.digest&&v.provenance?.origin&&v.provenance?.captured_at&&v.provenance?.submitted_by).length:0,manifest?sources.length:0,'Digest-bound source records with provenance'),entry('Review',count([...t.primary_committee.map(r=>r.reviewer_id),...t.fresh_committee.map(r=>r.reviewer_id)])+1,7,'Frozen 3+3 membership and policy-v1 threshold'),entry('Finality',count([t.amount_yocto,t.beneficiary_id,t.base_fallback,t.challenge_fallback]),4,'Four immutable settlement fields'),entry('Challenge',count([t.challenge_end_ns,t.fresh_commit_end_ns,t.fresh_reveal_end_ns,t.challenge_fallback]),4,'Four immutable challenge fields'),entry('Quorum',t.primary_committee.length+1,4,'Three primary slots plus policy-v1 threshold'),entry('Keyboard',keyboard.reduce((n,x)=>n+count([x.criterion_id,x.kind,x.requirement_digest]),0),keyboard.length*3,'Frozen keyboard criterion fields'),entry('Criteria',criteria.reduce((n,x)=>n+count([x.criterion_id,x.kind,x.requirement_digest]),0),criteria.length*3,'Three required fields per frozen criterion')];}
- const manifests=[c.evidence_digest,...t.criteria.map(x=>x.requirement_digest)],findings=slots.filter(v=>v.finding_digest&&available(v.finding_digest)),counts=['ACCEPT','REJECT','UNRESOLVED'].map(d=>slots.filter(v=>v.disposition===d).length),na=label=>entry(label,0,0,'Source-linked per-criterion artifact policy not available');
- if(tab==='Evidence')return [entry('Evidence',+available(c.evidence_digest),known?1:0,'Immutable delivery artifact retrieval and digest check'),entry('Provenance',manifests.filter(available).length,known?manifests.length:0,'Delivery and frozen requirement source objects'),entry('Review',findings.length,known?3:0,'Retrievable source-linked findings for selected round'),entry('Finality',c.payout?.last_attempt.result==='SUCCESS'?1:0,c.payout?1:0,'Contract native-transfer callback record'),entry('Challenge',+available(c.challenge?.counterexample_digest),c.challenge&&known?1:0,'Immutable counterexample artifact'),entry('Quorum',findings.length,known?3:0,'Artifacts referenced by authenticated contract reveals'),na('Keyboard'),na('Criteria')];
- const gates=[c.funded_principal_yocto!=='0',!!c.evidence_digest,['ACCEPT','REJECT'].includes(c.primary_disposition),!!c.final_disposition,!!c.payout,c.state==='Settled'];return [entry('Evidence',+available(c.evidence_digest),known?1:0,'Digest-valid delivery artifact / one required delivery'),entry('Provenance',manifests.filter(available).length,known?manifests.length:0,'Delivery plus frozen requirement source objects'),entry('Review',slots.filter(v=>v.disposition).length,3,'Valid contract reveals / three appointed reviewers'),entry('Finality',count(gates),6,'G01 funded; G02 evidence; G03 decisive primary; G04 final disposition; G05 payout intent; G06 callback success. Display only; never authorizes payout.'),entry('Challenge',c.challenge?count([!!c.challenge,...slots.map(v=>!!v.commitment),...slots.map(v=>!!v.disposition),c.phase==='CLOSED']):0,c.challenge?8:0,'Confirmed challenge, three commits, three reveals and closed fresh round'),entry('Quorum',Math.min(2,Math.max(...counts)),2,'Largest matching valid reveal count / threshold; not truth'),na('Keyboard'),na('Criteria')];
+const LABELS = ['Evidence', 'Provenance', 'Review', 'Finality', 'Challenge', 'Quorum', 'Keyboard', 'Criteria'];
+const DECISIVE = new Set(['ACCEPT', 'REJECT']);
+const COMPLETED_EVALUATIONS = new Set(['FULFILLED', 'NOT_FULFILLED', 'INCONCLUSIVE']);
+
+const entry = (label, numerator, denominator, source) => ({label, numerator, denominator, source});
+const count = values => values.filter(Boolean).length;
+
+export function coverageDepth(metric) {
+  if (!metric.denominator) return 0;
+  return Math.max(0, Math.min(1, metric.numerator / metric.denominator));
+}
+
+function selectedRound(c) {
+  const roundId = c.challenge ? 1 : 0;
+  return {roundId, slots: c.rounds?.[roundId] || []};
+}
+
+function evidenceState(c, availability) {
+  const known = availability !== null;
+  const manifest = availability?.__manifest || null;
+  const sources = manifest?.sources || [];
+  const manifestCriteria = manifest?.criteria || [];
+  const sourceById = new Map(sources.map(source => [source.source_id, source]));
+  const available = digest => known && availability?.[digest] === true;
+  const validEvidence = new Set();
+
+  for (const criterion of c.terms.criteria) {
+    const record = manifestCriteria.find(item => item.criterion_id === criterion.criterion_id);
+    if (!record?.source_ids?.length) continue;
+    const linked = record.source_ids.map(id => sourceById.get(id));
+    if (linked.every(source => source?.digest && available(source.digest))) validEvidence.add(criterion.criterion_id);
+  }
+
+  const validProvenance = sources.filter(source =>
+    source.digest &&
+    available(source.digest) &&
+    source.provenance?.origin &&
+    source.provenance?.captured_at &&
+    source.provenance?.submitted_by
+  );
+  const evaluations = Array.isArray(availability?.__criterion_evaluations)
+    ? availability.__criterion_evaluations
+    : null;
+  const completed = new Set((evaluations || [])
+    .filter(item => COMPLETED_EVALUATIONS.has(item.result) && item.recorded === true)
+    .map(item => item.criterion_id));
+  const fulfilled = new Set((evaluations || [])
+    .filter(item => item.result === 'FULFILLED' && item.recorded === true && item.verified === true)
+    .map(item => item.criterion_id));
+
+  return {known, manifest, sources, validEvidence, validProvenance, evaluations, completed, fulfilled};
+}
+
+export function coverage(c, tab = 'Overall', availability = null) {
+  if (!c) return LABELS.map(label => entry(label, 0, 0, 'No selected chain case'));
+
+  const criteria = c.terms.criteria || [];
+  const keyboard = criteria.filter(item => item.kind === 'KEYBOARD');
+  const {roundId, slots} = selectedRound(c);
+  const evidence = evidenceState(c, availability);
+  const revealed = slots.filter(slot => slot?.disposition);
+  const dispositionCounts = ['ACCEPT', 'REJECT', 'UNRESOLVED'].map(disposition =>
+    revealed.filter(slot => slot.disposition === disposition).length
+  );
+  const threshold = 2;
+  const finalityMilestones = [
+    DECISIVE.has(c.final_disposition) || c.resolution_basis === 'BASE_REFUND',
+    Boolean(c.payout?.payout_intent_id),
+    ['SUCCESS', 'FAILED'].includes(c.payout?.last_attempt?.result),
+    c.state === 'Settled'
+  ];
+  const freshSlots = c.rounds?.[1] || [];
+  const challengeMilestones = c.challenge ? [
+    Boolean(c.challenge.counterexample_digest),
+    freshSlots.some(slot => slot?.commitment),
+    freshSlots.some(slot => slot?.disposition),
+    ['FRESH', 'KEEP_PRIMARY'].includes(c.resolution_basis)
+  ] : [];
+  const criteriaDenominator = evidence.known ? criteria.length * 2 : 0;
+  const criteriaNumerator = evidence.known
+    ? criteria.reduce((total, criterion) => total + Number(evidence.validEvidence.has(criterion.criterion_id)) + Number(evidence.completed.has(criterion.criterion_id)), 0)
+    : 0;
+
+  const metrics = [
+    entry(
+      'Evidence',
+      evidence.known ? evidence.validEvidence.size : 0,
+      evidence.known ? criteria.length : 0,
+      'Frozen criteria with a selected manifest record whose linked source digests are retrievable'
+    ),
+    entry(
+      'Provenance',
+      evidence.manifest ? evidence.validProvenance.length : 0,
+      evidence.manifest ? evidence.sources.length : 0,
+      'Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance'
+    ),
+    entry(
+      'Review',
+      revealed.length,
+      slots.length,
+      `Completed reviewer reveals in selected round ${roundId}`
+    ),
+    entry(
+      'Finality',
+      count(finalityMilestones),
+      finalityMilestones.length,
+      'Completed final disposition, payout intent, observed callback result and settled-state milestones'
+    ),
+    entry(
+      'Challenge',
+      c.challenge ? count(challengeMilestones) : 0,
+      c.challenge ? challengeMilestones.length : 0,
+      'Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones; N/A without a challenge'
+    ),
+    entry(
+      'Quorum',
+      Math.min(threshold, Math.max(0, ...dispositionCounts)),
+      slots.length ? threshold : 0,
+      `Largest matching disposition count in selected round ${roundId} against the policy threshold`
+    ),
+    entry(
+      'Keyboard',
+      evidence.evaluations ? keyboard.filter(criterion => evidence.fulfilled.has(criterion.criterion_id)).length : 0,
+      evidence.evaluations ? keyboard.length : 0,
+      'Keyboard criteria with an independently recorded and verified FULFILLED evaluation; N/A when evaluation records are unavailable'
+    ),
+    entry(
+      'Criteria',
+      criteriaNumerator,
+      criteriaDenominator,
+      'Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation'
+    )
+  ];
+
+  return metrics.map(metric => ({...metric, lens: tab}));
 }

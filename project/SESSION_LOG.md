@@ -1,5 +1,11 @@
 # CONTRA session log
 
+## 2026-11-03 UTC | IMPL-M04.2-P2 operational radar measurements
+
+Continued from Phase 1 commit `dd23956975e4fb6a1e7aa8de4b219fa39335a009`. Replaced radar counters based on frozen committee or settlement configuration fields with operational evidence, provenance, selected-round review, finality, challenge, quorum, keyboard and criterion measurements. Added source retrieval verification, explicit absence of criterion evaluations, exact source descriptions and a shared depth calculation. The current genuine cases correctly remain partial because only two reviewers revealed and no independent per-criterion evaluation record exists.
+
+Added eight-state deterministic tests with exact numerator, denominator, source and depth assertions. Added browser fixtures for zero and full visual bounds while using both genuine cases for partial and case-switch checks. Final results: 3/3 coverage subtests, 13/13 browser information checks, 46/46 empty responsive checks and 46/46 populated responsive checks. Visual inspection confirms visible sector boundaries and 25, 50, 75 and 100 percent markers. No paid provider, deployment, secret, testnet, mainnet, Rust contract or financial safeguard changed. Phase 3 navigation and full UX verification is next; owner acceptance remains pending.
+
 ## 2026-11-03 UTC | IMPL-M04.2-P1 coherent responsive shell
 
 Resumed `implementation/oct28` at `c33813fe52aa1ab18994e1831f5fb7fbcbf70fd1` under the owner correction handoff. Captured the reported 1536 x 676 and 1366 x 768 baseline before editing. The baseline confirmed a viewport-height shell, three independent `overflow-y:auto` columns, stable scrollbar gutters, an 8px material count and a truncated empty heading.
