@@ -1,0 +1,87 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04-V01",
+  "case_id": "c077294c1d8b9d306707536dec6ce473fc69d5f21f79b8535b346a14903adb11",
+  "console_errors": [],
+  "checks": [
+    {
+      "name": "desktop populated challenged case",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop settled state",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop final block source visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop no horizontal overflow",
+      "pass": true,
+      "detail": "1200"
+    },
+    {
+      "name": "all buttons have accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "criteria material uses submitted sources",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "signal details open",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "search filters actions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "keyboard focus is visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet no horizontal overflow",
+      "pass": true,
+      "detail": "768"
+    },
+    {
+      "name": "tablet materials reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile no horizontal overflow",
+      "pass": true,
+      "detail": "390"
+    },
+    {
+      "name": "mobile cards not clipped",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile navigation reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion preference observed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser console errors",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

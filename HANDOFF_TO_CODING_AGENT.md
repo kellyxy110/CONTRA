@@ -139,4 +139,4 @@ Avoid em dash characters in code, copy, documentation, metadata and commits. Pre
 
 
 ## Repository identity
-The owner assigned GitHub account `kellyxy110` and authorized creation of private repository `CONTRA` on 2026-10-28. Do not set repository secrets or deploy until separately approved.
+The owner assigned GitHub account `kellyxy110` and authorized repository `CONTRA` on 2026-10-28. GitHub verified its current visibility as public on 2026-11-03. Do not change repository visibility, set repository secrets or deploy until separately approved.

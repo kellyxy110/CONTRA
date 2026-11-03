@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-03 | IMPL-M04 full local product integration
+
+Completed structured evidence manifests, source provenance, corrections, participant access, transaction lifecycle and final-read metadata, reviewer control disclosures, human finding/counterexample artifacts, and Meta/Baseten/Modal non-billable adapter validation. Added a reproducible API-backed Sandbox journey runner. Two journeys passed with 44 confirmed operations and receipts: unchallenged ACCEPT to beneficiary and challenged primary ACCEPT to fresh REJECT to creator. Each receiver gained exactly 1 NEAR and each payout callback recorded SUCCESS. Added genuine populated-case desktop, tablet and mobile captures plus 16 passing Chromium checks. Corrected the verified tablet overflow/radar clipping defect without changing desktop geometry. Added the individual AC01-AC33 matrix at 20 PASS, 11 PARTIAL and 2 BLOCKED. Corrected README Rust and repository visibility facts and added truthful M04 badges. Final gates: 29 service tests, 28 Rust tests, wallet build, checksum and em dash scan pass. No testnet, paid call, production secret, deployment or mainnet action occurred.
+
 ## 2026-11-03 | IMPL-M04-R01 reviewer disclosures and provider fixtures
 
 Added canonical reviewer control disclosures with stable operator identifiers and exact registry digest joins. Connected The Bench registry operations to disclosure creation and added explicit one-process Sandbox control warnings. Split Meta, Baseten and Modal request/response normalization, added structured source citations and prompt-injection boundaries, and retained response, idempotency and budget enforcement. Added Meta primary/fresh, Baseten adversarial and Modal verifier fixture tests. `npm test` passes 28/28. No live provider call, paid usage, transaction, deployment or secret occurred. Next: integrated Sandbox journeys, populated screenshots, accessibility and AC matrix.

@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-051 | M04 local integration complete, external acceptance gates remain | 2026-11-03
+
+ACCEPTED: complete M04 Priority 2 at the authorized local scope because both required Sandbox journeys pass through the integrated API with structured evidence, authenticated reviewer operations, persisted transaction histories, exact balance deltas and callback-confirmed settlement. The challenged journey produces a different final verdict. Keep AC01-AC33 statuses separate: 20 PASS, 11 PARTIAL and 2 BLOCKED. Do not mark AC31 or AC32 passed because their frozen text requires authorized testnet and actual provider records. Do not claim the six local reviewer accounts are independent. Repository visibility is a verified public fact, not a setting changed by this milestone. Owner visual acceptance remains separate.
+
 ## D-050 | Reviewer control is disclosed separately from account count | 2026-11-03
 
 ACCEPTED: reviewer registry records are joined to canonical disclosure artifacts only by their exact onchain digest. Stable operator identifiers derive from the declared controlling operator label, while each attestation binds account control, custody, procedure, conflicts, sources and limitations. Account count or distinct fixture operator values are not evidence of independent control. Local Sandbox signers remain explicitly disclosed as one-process fixtures. Provider outputs remain proposed findings and cannot register reviewers, sign votes, determine contract finality or authorize settlement.

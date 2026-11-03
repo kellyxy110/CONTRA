@@ -1,23 +1,26 @@
 # CONTRA
 
-> M03 P0 financial verification passed on the compatible WSL host. The clean gate completed 28 Rust SDK tests, 19 service/report tests, 9 baseline Sandbox tests and all 18 financial categories. Raw receipts, balances, gas and storage evidence are under `project/artifacts/m03/p0-run/`. AC01-AC33 acceptance remains separate. See [M03 handoff](docs/FINANCIAL_VERIFICATION_M03.md). Active avatars are neutral; frozen reference assets remain unchanged.
+> M03 P0 financial verification passed on the compatible WSL host. M04 adds structured evidence, transaction reconciliation, reviewer control disclosures, non-billable provider fixtures and two passing local Sandbox journeys. The challenged case reverses ACCEPT to REJECT and both payouts change the intended receiver balance by exactly 1 NEAR. See [M04 acceptance](docs/M04_ACCEPTANCE.md). Active avatars are neutral; frozen reference assets remain unchanged.
 
 ![Stage: mixed provenance](https://img.shields.io/badge/stage-mixed%20provenance-00EC97?style=flat-square&labelColor=0B1110)
 ![Network: NEAR testnet planned](https://img.shields.io/badge/network-NEAR%20testnet%20(planned)-0B1110?style=flat-square)
 ![Protocol: UX3C frozen](https://img.shields.io/badge/protocol-UX3C%20frozen-FF8678?style=flat-square&labelColor=0B1110)
 ![P0 Sandbox: passed](https://img.shields.io/badge/P0%20Sandbox-passed-00EC97?style=flat-square&labelColor=0B1110)
+![M04 local journeys: 2 passed](https://img.shields.io/badge/M04%20local%20journeys-2%20passed-00EC97?style=flat-square&labelColor=0B1110)
+![Service tests: 29 passed](https://img.shields.io/badge/service%20tests-29%20passed-00EC97?style=flat-square&labelColor=0B1110)
 ![GitHub owner: kellyxy110](https://img.shields.io/badge/GitHub%20owner-kellyxy110-F4BD68?style=flat-square&logo=github&labelColor=0B1110)
+![Repository: public](https://img.shields.io/badge/repository-public-F4BD68?style=flat-square&logo=github&labelColor=0B1110)
 ![Deployment: none](https://img.shields.io/badge/deployment-none-9BAAA4?style=flat-square&labelColor=0B1110)
 
 **Every judgment can be challenged.**
 
-CONTRA is a NEAR adjudication prototype under implementation. Its Rust contract combines escrow, evidence-bound commit/reveal judgments, challenges and callback-safe settlement. Real local Sandbox settlement is verified. Independent live operator adjudication, external-wallet settlement and testnet deployment are not yet verified.
+CONTRA is a NEAR adjudication prototype under implementation. Its Rust contract combines escrow, evidence-bound commit/reveal judgments, challenges and callback-safe settlement. Two complete local Sandbox settlements are verified through the integrated application. Independent live operator adjudication, paid-provider interoperability, external-wallet settlement and testnet deployment are not yet verified.
 
 > Actual implementation began October 28, 2026 with owner authorization, before the official competition. Do not claim that baseline as competition-window work. The F17 harness timeout correction and final P0 verification completed November 3 during the official window. Approved design/ux3a remains separate. No deployment or live paid AI call has occurred. See docs/IMPLEMENTATION_OCT28.md.
 
 ## Start here
 
-Implementation commands (Node 24+, Rust 1.99.1, wasm32-unknown-unknown):
+Implementation commands (Node 24+, Rust 1.98.0, wasm32-unknown-unknown):
 
 ```sh
 npm ci
@@ -25,12 +28,13 @@ npm test
 npm run test:contract
 node scripts/build-contracts.mjs
 npm run build:wallet
+npm run test:m04:journeys
 npm run dev
 ```
 
 The dashboard at localhost:4173 preserves approved UX3A geometry and assets. Default mode reports chain unavailable and submits no transactions. On a host with an open-file hard limit of at least 65535, install the pinned official binary with `node scripts/setup-sandbox.mjs`, run `npm run test:sandbox`, then start `CONTRA_SANDBOX=1 npm run dev`. This creates local controlled accounts only. No testnet deployment or paid inference is included. External-wallet adapter compiles but is disabled pending separate testnet authorization; it has not been verified in a funded wallet flow.
 
-Saved checkpoints and test limitations: [October 28 implementation record](docs/IMPLEMENTATION_OCT28.md). SDK tests and build checks are not real NEAR Sandbox transfers, production readiness or owner acceptance.
+Saved checkpoints and test limitations: [October 28 implementation record](docs/IMPLEMENTATION_OCT28.md), [M03 financial verification](docs/FINANCIAL_VERIFICATION_M03.md), and [M04 acceptance matrix](docs/M04_ACCEPTANCE.md). Local Sandbox proof is not testnet deployment, independent operator proof, live provider verification, production readiness or owner visual acceptance.
 
 1. `project/STATUS.md` is the authoritative project checkpoint.
 2. `project/DECISIONS.md` contains accepted decisions and their rationale.
@@ -46,7 +50,7 @@ Saved checkpoints and test limitations: [October 28 implementation record](docs/
 12. `benchmarks/case-plan.csv` contains 30 benchmark scenario plans, not results.
 13. `AGENTS.md` is the coding agent handoff and guardrail document.
 
-Repository: [kellyxy110/CONTRA](https://github.com/kellyxy110/CONTRA), private. No repository secrets or deployment have been configured.
+Repository: [kellyxy110/CONTRA](https://github.com/kellyxy110/CONTRA), verified public on November 3, 2026. No repository secrets or deployment have been configured.
 
 ## Fixed constraints
 

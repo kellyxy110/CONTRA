@@ -1,0 +1,63 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04-J01",
+  "generated_at": "2026-11-03T08:36:49.924Z",
+  "environment": {
+    "network": "sandbox",
+    "contract_account": "dev-65216-38144.test.near",
+    "reviewer_control": "All six reviewer accounts are controlled by one local process; no independence claim.",
+    "paid_inference": false
+  },
+  "counts": {
+    "operations": 44,
+    "receipts": 44,
+    "manifests": 2
+  },
+  "unchallenged": {
+    "case_id": "b1ed7f3fb15ac752e3836df5e37b73fff906ba6045b2d2cce32b95e6f8a0c830",
+    "manifest_digest": "af1746823aaafe9d35ae3ed8641c0227fcc5cb9bb46df1369a7b912ec00682ba",
+    "final_disposition": "ACCEPT",
+    "resolution_basis": "PRIMARY",
+    "payout": {
+      "payout_intent_id": "a0fc105909e8fda17a4baf18d66e6170e98e4ba65528a589dca671721ee49460",
+      "recipient_id": "beneficiary.test.near",
+      "amount_yocto": "1000000000000000000000000",
+      "disposition": "ACCEPT",
+      "resolution_basis": "PRIMARY",
+      "decision_reason": "PRIMARY_DECISIVE",
+      "status": "SUCCESS_VERIFIED",
+      "attempt": 1,
+      "last_attempt": {
+        "attempt": 1,
+        "dispatched_at_ns": "1793696777091290714",
+        "result": "SUCCESS",
+        "completed_at_ns": "1793696778302461888"
+      }
+    },
+    "receiver_balance_delta_yocto": "1000000000000000000000000"
+  },
+  "challenged": {
+    "case_id": "c077294c1d8b9d306707536dec6ce473fc69d5f21f79b8535b346a14903adb11",
+    "manifest_digest": "33754063362ef6ed8e6787f5f04a882f9ee4f9de6a57199ead531d26f92c5517",
+    "counterexample_digest": "47b7d42ceacf3872c14434846176ec3456b28bf6917f2713797ff044079b73c1",
+    "primary_disposition": "ACCEPT",
+    "final_disposition": "REJECT",
+    "resolution_basis": "FRESH",
+    "payout": {
+      "payout_intent_id": "ff34d36de3e5ba2e1dc7dbe9c95249d6dcff04eecb55eae7a6c6db3ae8d28106",
+      "recipient_id": "creator.test.near",
+      "amount_yocto": "1000000000000000000000000",
+      "disposition": "REJECT",
+      "resolution_basis": "FRESH",
+      "decision_reason": "FRESH_DECISIVE",
+      "status": "SUCCESS_VERIFIED",
+      "attempt": 1,
+      "last_attempt": {
+        "attempt": 1,
+        "dispatched_at_ns": "1793701052968730871",
+        "result": "SUCCESS",
+        "completed_at_ns": "1793701054188649372"
+      }
+    },
+    "receiver_balance_delta_yocto": "1000000000000000000000000"
+  }
+}

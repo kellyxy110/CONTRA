@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | External authorization and acceptance gates
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04. Owner reviews the three populated local screenshots and gives explicit visual acceptance or precise corrections. AC31 and AC32 cannot pass their frozen exact scope until the owner separately authorizes testnet deployment and live provider use, credits and pricing are reverified, six genuinely independently controlled reviewer operators are available, and actual provider/testnet records reproduce both journeys. Remaining partial checks include browser Back/focus restoration, external wallet rejection/redirect, injected index lag, full pagination/case-switch matrices and 320px at 200 percent screen-reader review. Do not perform testnet, paid inference, production-secret or mainnet work without authorization.
+
 ## Active next task | IMPL-M04 integrated local journeys and acceptance
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04-R01. On the compatible WSL host, execute two complete API-backed local Sandbox journeys using structured evidence and persisted transaction records: one unchallenged callback-confirmed settlement and one criterion-bound challenge with a decisive fresh reversal and correct settlement. Save receipt and evidence linkage, balances, final states and screenshots from real populated cases. Then run desktop/mobile accessibility and navigation checks, evaluate AC01-AC33 individually, correct README badges and environment/visibility statements, and update all five logs. Do not enable testnet or paid inference.

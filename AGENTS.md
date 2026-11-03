@@ -43,4 +43,4 @@ Next task:
 Read `HANDOFF_TO_CODING_AGENT.md` before making design or implementation changes. The exact user-supplied image at `design/reference/control-ai-policy-dashboard.jpeg` is read-only, with SHA-256 `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`. Never alter or regenerate it. Preserve its composition in a coded working frontend using CONTRA/NEAR tokens, without faking functionality by displaying a static screenshot.
 
 ## Repository ownership safeguard
-The owner assigned GitHub account `kellyxy110` and authorized creation of private repository `CONTRA` on 2026-10-28. Remote pushes must target that repository. Repository secrets and deployment remain unauthorized until separately approved.
+The owner assigned GitHub account `kellyxy110` and authorized repository `CONTRA` on 2026-10-28. GitHub verified its current visibility as public on 2026-11-03. Remote pushes must target that repository. Do not change repository visibility, set repository secrets or deploy without separate owner approval.
