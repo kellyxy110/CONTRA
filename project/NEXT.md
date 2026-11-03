@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | IMPL-M04 wallet and receipt reconciliation
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04-E01. Implement durable transaction states for preparing, awaiting signature, broadcast, pending, confirmed, failed and unknown. Persist transaction hashes and receipt observations, reconcile safe reloads, expose source block and fetch timestamps on chain reads, detect stale snapshots and keep UNKNOWN payout attempts locked. Verify local Sandbox signing and recovery without enabling external testnet transactions. Then continue reviewer disclosure and fixture-only provider integration.
+
 ## Active next task | Priority 2 functional integration
 
 P0 financial verification passed on November 3, 2026. Continue with structured per-criterion evidence manifests and content-addressed artifacts, wallet reconciliation and transaction freshness, independently controlled reviewer operations, provider adapters within the approved Meta $3, Baseten $3 and Modal $5 envelopes, and two complete local case-to-settlement journeys. One journey must settle an unchallenged agreement. The second must confirm a challenge and reach a different fresh-review verdict before settlement.

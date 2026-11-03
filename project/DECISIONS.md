@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-048 | Structured evidence manifests are append-only case records | 2026-11-03
+
+ACCEPTED: `CONTRA_EVIDENCE_V1` is the Priority 2 evidence envelope. Every manifest covers each frozen criterion exactly once and cites one or more immutable source objects. Source bytes, media type, size, origin, capture time and submitting participant are digest-bound in canonical JSON. Access is limited to authenticated case participants. A correction creates a new digest and references an earlier manifest for the same case with a reason; it never replaces prior bytes. The Bench must distinguish stored records from the exact digest selected onchain. This evidence coverage is observable state, not a judgment or payout authority.
+
 ## D-047 | P0 financial gate complete, AC acceptance remains separate | 2026-11-03
 
 The clean compatible-host `npm run test:p0` execution exited 0 with the nine-test baseline at 9/9 and F01-F18 at 18/18. Accept this as completion of the M03 P0 financial verification gate, supported by raw receipts, account snapshots, gas and storage measurements. Do not treat it as automatic AC01-AC33 acceptance, testnet authorization, independent reviewer proof or provider readiness. Preserve UNKNOWN payout locks and production/fault export separation. Priority 2 may begin under existing wallet, reviewer, provider, secret and spending restrictions. October 28 implementation remains pre-event; the F17 timeout correction and final verification are November 3 competition-window work.

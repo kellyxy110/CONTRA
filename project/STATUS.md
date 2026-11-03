@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04-E01
+
+Priority 2 evidence integration is complete and verified. The API now accepts canonical `CONTRA_EVIDENCE_V1` manifests that cover every frozen criterion exactly once, bind uploaded source bytes to SHA-256 digests, record bounded provenance and enforce participant-only retrieval. Corrections are append-only records that reference an earlier same-case manifest and preserve the original bytes. The Bench lists stored manifests, distinguishes the exact onchain-selected digest from offchain records, displays per-criterion source coverage, and derives the Evidence and Provenance radar sectors from the selected manifest rather than inferred verdict state.
+
+`npm test` passes 22/22 tests, including structured validation, forged digest rejection, cross-case correction rejection, immutable history, access control and exact onchain linkage. Syntax checks and the repository-wide em dash scan pass. No Sandbox transaction, deployment, paid provider call, production secret or mainnet operation occurred in this milestone. P0 evidence and the Rust contract are unchanged. AC01-AC33 remain individually unaccepted pending the full M04 matrix and both local journeys. Next: durable wallet transaction states, receipt reconciliation, reload recovery and stale-read envelopes.
+
 ## Current checkpoint | CONTRA-2026-10-29-IMPL-M03
 
 P0 financial verification is COMPLETE on the compatible WSL Ubuntu x86_64 host. The clean `npm run test:p0` gate exited 0 after the nine-test baseline passed 9/9 and financial categories F01-F18 passed 18/18. The run recorded 454 transactions, 753 receipt outcomes and 46 balance/storage snapshots. Maximum observed transaction gas was 35,923,793,821,747; maximum callback gas was 17,000,817,633,275; no configured gas-budget violation occurred. Maximum observed contract storage was 17,470,225 bytes. Independent snapshot review found no reserve-coverage violation.
