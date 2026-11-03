@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-03 | IMPL-M04-W01 wallet lifecycle and read freshness
+
+Replaced the single initial UNKNOWN operation state with persisted PREPARING, AWAITING_SIGNATURE, BROADCAST, PENDING and terminal state transitions. Added ordered transition history, transaction hashes, receipt/error timestamps, duplicate dispatch protection and automatic reload reconciliation. Added final-block metadata envelopes for Sandbox and testnet RPC reads and visible stale-read state in The Bench. `npm test` passes 24/24; syntax, whitespace and em dash checks pass. No new Sandbox transaction was executed in this milestone, so the two M04 journeys remain open. External testnet use remains gated.
+
 ## 2026-11-03 | IMPL-M04-E01 structured evidence integration
 
 Added canonical per-criterion evidence manifests, exact source hashes, bounded provenance, participant-only access and append-only same-case corrections. Added manifest persistence and listing without altering immutable blobs. Connected The Bench evidence records, criteria cards and Evidence/Provenance radar values to the exact onchain-selected manifest. Added validation and HTTP tests for complete criterion coverage, hash mismatch, immutable corrections, cross-case rejection, participant authorization and onchain linkage. `npm test` passes 22/22; syntax and em dash checks pass. No contract change, transaction, deployment, paid call, secret or spending occurred. Next: wallet transaction lifecycle and stale-read reconciliation.

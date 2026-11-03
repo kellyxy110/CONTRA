@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | IMPL-M04 reviewer and evaluator operations
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04-W01. Complete reviewer disclosure manifests, registry and frozen committee inspection, explicit common-control warnings, independent commit/reveal packages, challenge and fresh-review operations. Complete Meta primary/fresh, Baseten adversarial and Modal verifier response normalization with non-billable fixtures for citations, prompt injection, idempotency and all cost gates. Do not claim Sandbox accounts controlled by this process are independent. Do not enable paid calls.
+
 ## Active next task | IMPL-M04 wallet and receipt reconciliation
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04-E01. Implement durable transaction states for preparing, awaiting signature, broadcast, pending, confirmed, failed and unknown. Persist transaction hashes and receipt observations, reconcile safe reloads, expose source block and fetch timestamps on chain reads, detect stale snapshots and keep UNKNOWN payout attempts locked. Verify local Sandbox signing and recovery without enabling external testnet transactions. Then continue reviewer disclosure and fixture-only provider integration.

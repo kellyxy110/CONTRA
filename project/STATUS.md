@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04-W01
+
+Priority 2 wallet persistence and freshness integration is complete at service level. Local Sandbox operations now persist PREPARING, AWAITING_SIGNATURE, BROADCAST, PENDING and terminal CONFIRMED, FAILED or UNKNOWN transitions with an ordered audit history, transaction hash, receipt, observation error and timestamps. Duplicate operation IDs cannot dispatch twice. Reload recovery reconciles the saved operation from the server ledger. Final chain reads include network, finality, block height, block hash, block timestamp where available and fetch time; The Bench exposes the final block and stale state. External testnet signing remains gated.
+
+`npm test` passes 24/24. Tests verify lifecycle history, hash persistence, duplicate blocking, UNKNOWN locking and final-block read envelopes. Syntax, whitespace and repository-wide em dash checks pass. This milestone did not execute a new Sandbox transaction; the complete M04 local journeys remain pending and must exercise this path before M04 acceptance. No deployment, paid call, production secret, testnet or mainnet action occurred. Next: reviewer disclosures and non-billable evaluator fixtures.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04-E01
 
 Priority 2 evidence integration is complete and verified. The API now accepts canonical `CONTRA_EVIDENCE_V1` manifests that cover every frozen criterion exactly once, bind uploaded source bytes to SHA-256 digests, record bounded provenance and enforce participant-only retrieval. Corrections are append-only records that reference an earlier same-case manifest and preserve the original bytes. The Bench lists stored manifests, distinguishes the exact onchain-selected digest from offchain records, displays per-criterion source coverage, and derives the Evidence and Provenance radar sectors from the selected manifest rather than inferred verdict state.

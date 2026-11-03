@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-03 UTC | IMPL-M04-W01 wallet lifecycle and read freshness
+
+Continued from evidence checkpoint `34a1da7`. Added durable local transaction state transitions, ordered audit history, operation payload idempotency, transaction hash and receipt linkage, UNKNOWN observation errors and automatic browser reload reconciliation. Added final chain-read envelopes with block and fetch provenance and exposed final/stale state in The Bench. `npm test` passed 24/24, including lifecycle, duplicate, UNKNOWN and read-source cases. No new Sandbox transaction, external wallet use, deployment, paid inference, production secret, testnet or mainnet action occurred. Next is reviewer disclosure and non-billable provider fixture integration before the two full local journeys.
+
 ## 2026-11-03 UTC | IMPL-M04-E01 structured evidence integration
 
 Resumed `implementation/oct28` at accepted P0 commit `bbae5c3f168726a62d704f8bbd3555b679bd5778`. Added canonical structured manifests that bind every frozen criterion to immutable source bytes and provenance, participant-only retrieval and append-only corrections that cannot cross cases or erase history. Wired The Bench manifest, criteria and radar displays to the exact selected onchain digest. `npm test` passed 22/22. JavaScript syntax, diff whitespace and repository-wide em dash checks passed. The Rust contract and all M03 evidence remain unchanged. No transaction, deployment, paid inference, production secret, testnet or mainnet action occurred. AC01-AC33 remain open pending the full M04 evidence matrix. Exact next step is durable wallet transaction and read-freshness reconciliation.

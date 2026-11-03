@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-049 | Persist transaction lifecycle and final-read provenance | 2026-11-03
+
+ACCEPTED: every local signed operation records an ordered lifecycle from preparation through a terminal or unknown state. Operation ID and payload hash enforce idempotency; transaction hash and receipt remain linked to the initiating account. Reload reconciliation reads the durable server record. UNKNOWN remains locked and is never translated into failure or retry permission. Contract views used by The Bench carry finality, block identity and observation time so stale data can be disclosed. External testnet signing remains disabled without separate authorization.
+
 ## D-048 | Structured evidence manifests are append-only case records | 2026-11-03
 
 ACCEPTED: `CONTRA_EVIDENCE_V1` is the Priority 2 evidence envelope. Every manifest covers each frozen criterion exactly once and cites one or more immutable source objects. Source bytes, media type, size, origin, capture time and submitting participant are digest-bound in canonical JSON. Access is limited to authenticated case participants. A correction creates a new digest and references an earlier manifest for the same case with a reason; it never replaces prior bytes. The Bench must distinguish stored records from the exact digest selected onchain. This evidence coverage is observable state, not a judgment or payout authority.
