@@ -1,0 +1,4228 @@
+[
+  {
+    "id": "F01",
+    "label": "Creation identity, immutable terms and beneficiary consent",
+    "requirements": [
+      "I3"
+    ],
+    "status": "PASS",
+    "transactions": 7,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793678590910366828",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+          "block_height": 69,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "3FMnMWvj7x98BUVzAFBHKdA3GLJntoZ51Rf7ozMShEKi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793678608120321592",
+        "contract": {
+          "amount": "100001585519864195400000015",
+          "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+          "block_height": 94,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+          "block_height": 94,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99996026438558596699999992",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "99898667109186791399999999",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99999587265614721200000000",
+            "block_hash": "3RVNrnkNU6RbnGhNh3nTKqsFJ93hkPvAKaBHzZFuw1wG",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F02",
+    "label": "Exact principal, unauthorized and duplicate funding",
+    "requirements": [
+      "I1",
+      "I3"
+    ],
+    "status": "PASS",
+    "transactions": 7,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793678657910338138",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+          "block_height": 69,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "24YbQjfAKhjBrberAPNhceC5w7nAm8x8soDtcV3fQidZ",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793678675276313493",
+        "contract": {
+          "amount": "101001949284318957400000014",
+          "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+          "block_height": 94,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+          "block_height": 94,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "1000000000000000000000000",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98994409848750349099999993",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "99998288328293480299999999",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99999587422070385500000000",
+            "block_hash": "FjXbJYYbGtpJzZqTUGCpLTwzPKeshsA6CRNWhLPZv6RP",
+            "block_height": 94,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F03",
+    "label": "Creator-only unfunded cancellation and expiry",
+    "requirements": [
+      "I3"
+    ],
+    "status": "PASS",
+    "transactions": 7,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793678725410020051",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+          "block_height": 70,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+          "block_height": 70,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "GRMQHH3fQLFYoCX8AquCpmNcmQqWdq2M1EtBsD8f4kC1",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793678741619239638",
+        "contract": {
+          "amount": "101002506793793032000000016",
+          "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+          "block_height": 93,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 900035
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+          "block_height": 93,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "10490160000000000000000000",
+          "held_escrow_yocto": "1000000000000000000000000",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98992547802790370099999991",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "99998287558728862699999999",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99999588558016706300000000",
+            "block_hash": "6HDkG2W6pzbP9ztzjB9HD7A5EBiLTYikDDPneek3jTov",
+            "block_height": 93,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F04",
+    "label": "Unchallenged ACCEPT, exact beneficiary balance and callback",
+    "requirements": [
+      "SR03"
+    ],
+    "status": "PASS",
+    "transactions": 12,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793678789852156632",
+        "contract": {
+          "amount": "100000387024511764600000012",
+          "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+          "block_height": 69,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "GcMphWGdahDxeRrTY6j5Eh2Rmgeu4A9HEiVLHkreSJ46",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793681844304884372",
+        "contract": {
+          "amount": "100006393936745708600000015",
+          "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+          "block_height": 2837,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+          "block_height": 2837,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "1000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98995648845329648899999993",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100996572717238655799999998",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996303377560884899999999",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996289791877008299999999",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99962189056564433100000000",
+            "block_hash": "D1rnfzq3qQJmTkZTstFT39JYzYrqknm39LQ5rqhAP5KT",
+            "block_height": 2837,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F05",
+    "label": "Decisive REJECT, exact creator refund",
+    "requirements": [
+      "I1",
+      "I4"
+    ],
+    "status": "PASS",
+    "transactions": 12,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793679382977890869",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+          "block_height": 68,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+          "block_height": 68,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "QtdRpYV2B1r8d3yesRJYWNTh1Ke3zESgwDeMQ8G3zpA",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793682438313160430",
+        "contract": {
+          "amount": "100006393895111925500000015",
+          "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+          "block_height": 2831,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+          "block_height": 2831,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "1000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99995648795333143799999993",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "99996572690808401999999998",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996303393764993099999999",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996289820833834499999999",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99962189213493839400000000",
+            "block_hash": "52moRmXBGaZmZuYYryZyX6WeGycLhFp3fGapjw4YA2jV",
+            "block_height": 2831,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F06",
+    "label": "Missing evidence and no-quorum base refunds",
+    "requirements": [
+      "I7"
+    ],
+    "status": "PASS",
+    "transactions": 11,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793679976551717579",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+          "block_height": 69,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "D5ibaZjgkmsXosjaMwTc1Q9HdPVT8rdnAidctkuBEWAi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793684265129815579",
+        "contract": {
+          "amount": "100006168864165299000000017",
+          "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+          "block_height": 3605,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 900035
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+          "block_height": 3605,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "10490160000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "2000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99992954673048282299999992",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "99994859479972647099999997",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99960464686339332300000000",
+            "block_hash": "77LuawprNV9nyDUGzcCv9MS1xzfPtup5wmbGFFPsvw1a",
+            "block_height": 3605,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F07",
+    "label": "Challenge lock and disjoint fresh reversal",
+    "requirements": [
+      "I5",
+      "I6"
+    ],
+    "status": "PASS",
+    "transactions": 22,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793680343231185670",
+        "contract": {
+          "amount": "100000387024511764600000012",
+          "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+          "block_height": 69,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "CU7RtFNnFmrvDrie1mkDVN1tSpUXnfhND9e9gJ9Uhzmz",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793684620109680692",
+        "contract": {
+          "amount": "100010418670634849100000016",
+          "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+          "block_height": 3935,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+          "block_height": 3935,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "1000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99993918102397562799999992",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "99996157440947779299999998",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996303378712743299999999",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996289792946591099999999",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9996267847832956799999999",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9996252367484370999999999",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99956615071915423900000000",
+            "block_hash": "7yE8QUViE8Fmib3N3FbHkpp7bvuB7bz2wKQcw5cRsoH8",
+            "block_height": 3935,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F08",
+    "label": "Fresh timeout retains primary, cannot profit from challenge",
+    "requirements": [
+      "I7",
+      "I8"
+    ],
+    "status": "PASS",
+    "transactions": 14,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793681151195607995",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+          "block_height": 71,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+          "block_height": 71,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "28NGkajgUeCYeG4KdS9Shx6w1Nao9AwkFCA376HEiDve",
+            "block_height": 71,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793685426257328668",
+        "contract": {
+          "amount": "100007357095830002300000016",
+          "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+          "block_height": 3825,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+          "block_height": 3825,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "1000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98993918026840405799999992",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100996572688833787599999998",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996303398043324299999999",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996289826099472899999999",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99960469418494113100000000",
+            "block_hash": "FE5jogz4PnwdCESohrPYR9cnuSp4oJQStCiXSoLAzEgQ",
+            "block_height": 3825,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F09",
+    "label": "Concurrent finalize and duplicate successful payment guards",
+    "requirements": [
+      "SR03"
+    ],
+    "status": "PASS",
+    "transactions": 15,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793681796862233711",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+          "block_height": 69,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "CRB3jYPdTwrSvJdNmEAyzUzPm4xx52jjnpdPoZxP2rYb",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793684855823639379",
+        "contract": {
+          "amount": "100006699212806875100000015",
+          "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+          "block_height": 2849,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+          "block_height": 2849,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "1000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98992208242978996199999993",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100996572690314748399999998",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996303398701529099999999",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996289825688094899999999",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99892979374269750700000000",
+            "block_hash": "DyXMah4ZRuYJiHmuLMKGAWhxXLmZQ5VKLgAHYAvny7Qu",
+            "block_height": 2849,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F10",
+    "label": "Verified failed native transfer and concurrent same-intent retry",
+    "requirements": [
+      "SR04"
+    ],
+    "status": "PASS",
+    "transactions": 14,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793682396569837420",
+        "contract": {
+          "amount": "100000393326894513600000012",
+          "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+          "block_height": 72,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 657649
+        },
+        "root": {
+          "amount": "999999539921505130717441000000000",
+          "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+          "block_height": 72,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "8068400000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998327815751274899999994",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999743710413944799999999",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999733130577411099999999",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "BWxSb5MSDLTpkfCxBtv2iHPoxvr1k5xEca5ixt1KRjUT",
+            "block_height": 72,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793685456681392622",
+        "contract": {
+          "amount": "100007461144228431100000015",
+          "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+          "block_height": 2852,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 788826
+        },
+        "root": {
+          "amount": "999999529914390141179941000000000",
+          "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+          "block_height": 2852,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9379120000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "1000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "198991500957865687299999991",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "11000000000000000000000000",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996296873059658699999999",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996283300539878099999999",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999691332029049199999999",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99958737669593749600000000",
+            "block_hash": "3qVDUjKLr8Cw6Z97s5S5qXxyk9hYHD3Bop29Rxac3rT8",
+            "block_height": 2852,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F11",
+    "label": "Successful transfer plus failed callback locks UNKNOWN",
+    "requirements": [
+      "SR05",
+      "SR08"
+    ],
+    "status": "PASS",
+    "transactions": 17,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793682991207033532",
+        "contract": {
+          "amount": "100000393332314107000000012",
+          "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+          "block_height": 69,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 657649
+        },
+        "root": {
+          "amount": "999999539921505130717441000000000",
+          "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "8068400000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998327815751274899999994",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999743710413944799999999",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999733130577411099999999",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "Dow9QYWeyN8TtMW2EB26YqJKTS4P4nfGT4HZ3L9i5xvi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793686052197639509",
+        "contract": {
+          "amount": "100006391296275387200000015",
+          "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+          "block_height": 2851,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 788826
+        },
+        "root": {
+          "amount": "999999539921505130717441000000000",
+          "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+          "block_height": 2851,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9379120000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "1000000000000000000000000",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98994522080187042799999993",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100996568367852899799999998",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996296852741770499999999",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996283267304720699999999",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999691332029049199999999",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99891542412552968500000000",
+            "block_hash": "4noFj2Dh9ydhaN6Z9C9XYrMWNaJxDnUQLaemNt7BYBe8",
+            "block_height": 2851,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F12",
+    "label": "Failed transfer plus failed callback locks UNKNOWN",
+    "requirements": [
+      "SR06"
+    ],
+    "status": "PASS",
+    "transactions": 17,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793683595374364688",
+        "contract": {
+          "amount": "100000393326894513600000012",
+          "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+          "block_height": 68,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 657649
+        },
+        "root": {
+          "amount": "999999539921505130717441000000000",
+          "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+          "block_height": 68,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "8068400000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998327815751274899999994",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999743710413944799999999",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999733130577411099999999",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "HVMvY5Z3PinHfX7RFZdowcaNs81pYy7K6j937onT61tE",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793686658862930259",
+        "contract": {
+          "amount": "101006391341086077800000015",
+          "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+          "block_height": 2853,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 788826
+        },
+        "root": {
+          "amount": "999999539921505130717441000000000",
+          "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+          "block_height": 2853,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9379120000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "1000000000000000000000000",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "198990809253535851299999991",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": null,
+          "reviewer0.test.near": {
+            "amount": "9996296871496422299999999",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996283299388019699999999",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999691332029049199999999",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99891542290700467600000000",
+            "block_hash": "8VQWcwM3TzMMBveR6m5qNXjXGVZ9hpy8pZQXsvNdTvXB",
+            "block_height": 2853,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F13",
+    "label": "Callback authorization, wrong/stale attempt, multiple results, redeploy",
+    "requirements": [
+      "SR01",
+      "SR02",
+      "SR07",
+      "SR09",
+      "SR10",
+      "SR12"
+    ],
+    "status": "PASS",
+    "transactions": 25,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793684198617234090",
+        "contract": {
+          "amount": "100000393326894513600000012",
+          "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+          "block_height": 68,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 657649
+        },
+        "root": {
+          "amount": "999999539921505130717441000000000",
+          "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+          "block_height": 68,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "8068400000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998327815751274899999994",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999743710413944799999999",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999733130577411099999999",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "J3trMhsrVZpz5ggDtTfKfyvpzWCh8UvSgLkpyg4cKDxT",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793687287348254172",
+        "contract": {
+          "amount": "100003320219612544800000015",
+          "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+          "block_height": 2885,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999529914390141179941000000000",
+          "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+          "block_height": 2885,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9379120000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "1000000000000000000000000",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "198886652732419990399999991",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "11000000000000000000000000",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996296872154627099999999",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996283299717122099999999",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999722792795692599999999",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999712055154558099999999",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999701676614804599999999",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999691332029049199999999",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99988149847233588700000000",
+            "block_hash": "93AC8BaLzjAdXWwA6tr8Dk1csd6eQNNyhyXAVnANw5fg",
+            "block_height": 2885,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F14",
+    "label": "Multiple funded cases and independent principal reserves",
+    "requirements": [
+      "SR13"
+    ],
+    "status": "PASS",
+    "transactions": 16,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793684827430064974",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+          "block_height": 68,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+          "block_height": 68,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "C5UrEs6dzGtNTaQhUsacq64Ns6x5wdts5sTcnYAcmGSy",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793691545145610336",
+        "contract": {
+          "amount": "100008568711383871400000017",
+          "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+          "block_height": 5869,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 900035
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+          "block_height": 5869,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "10490160000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "3000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98992954537686079099999992",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100994860187738868499999997",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996303396726914699999999",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996289824947614499999999",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99958748169155046700000000",
+            "block_hash": "H3mBHpFbh4nbLFA2ejEhUhGgJiWzSqSGFnTq5YGQCgLw",
+            "block_height": 5869,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F15",
+    "label": "Sponsor top-ups and unsolicited donations are not escrow",
+    "requirements": [
+      "SR13"
+    ],
+    "status": "PASS",
+    "transactions": 4,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793685691785920811",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+          "block_height": 68,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+          "block_height": 68,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "CJaKxyKt5uTa7Q6N34yYEc1iR5eQT86QnoeQUptPaBkL",
+            "block_height": 68,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793685700866476150",
+        "contract": {
+          "amount": "103001651174535055800000014",
+          "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+          "block_height": 83,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 769111
+        },
+        "root": {
+          "amount": "999999538921684648301632200000000",
+          "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+          "block_height": 83,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "100899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "1000000000000000000000000",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "97894729809658091899999993",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "99998288327882102299999999",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "9yhG7GtWiNSSXsuxcUBudqTegd4zwRZBsWTzjbsG9RoV",
+            "block_height": 83,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F16",
+    "label": "Gas and liquidity rejection roll back without dispatch",
+    "requirements": [
+      "SR11"
+    ],
+    "status": "PASS",
+    "transactions": 14,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793685748599817082",
+        "contract": {
+          "amount": "100000387019092171200000012",
+          "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+          "block_height": 69,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "7oGcCqzjveagLj6Rh7a14MGagK1JWnFHM7Lo6sfaJgG8",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793688813763176237",
+        "contract": {
+          "amount": "101006466784487176900000015",
+          "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+          "block_height": 2862,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 768858
+        },
+        "root": {
+          "amount": "999999538921684648301632200000000",
+          "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+          "block_height": 2862,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "9179440000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "1000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "98995648794510387799999993",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100996572690150197199999998",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9996303397467395099999999",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9996289825194441299999999",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99961557362999634800000000",
+            "block_hash": "42BQhWkT1bvweD17zzY8pyhk13pHqKKDFfrehiUKuc1L",
+            "block_height": 2862,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F17",
+    "label": "Before/at/after funding, submission, review and challenge boundaries",
+    "requirements": [
+      "I5",
+      "I6",
+      "I7"
+    ],
+    "status": "PASS",
+    "transactions": 32,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793686343166022896",
+        "contract": {
+          "amount": "100000387024511764600000012",
+          "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+          "block_height": 70,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 637681
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+          "block_height": 70,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "7868720000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "99998340866376810899999994",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9999745885518200799999999",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9999735305681667099999999",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "HU4z7QyBzRPX7vB4AjoQ4tKCfAS1ozDYuXaS1T5zLbvy",
+            "block_height": 70,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793696732549556727",
+        "contract": {
+          "amount": "101013438039195779000000021",
+          "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+          "block_height": 9273,
+          "code_hash": "EL2Wvj71AVL5t7MCbgWpt6SN9nekPPoyQr2QSK5dcHeX",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 1162389
+        },
+        "root": {
+          "amount": "999999539921729284814132200000000",
+          "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+          "block_height": 9273,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080893516314800000000",
+          "storage_reserved_yocto": "13111600000000000000000000",
+          "held_escrow_yocto": "1000000000000000000000000",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "2000000000000000000000000"
+        },
+        "accounts": {
+          "creator.test.near": {
+            "amount": "97988862554719797099999990",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary.test.near": {
+            "amount": "100990600072683626399999995",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0.test.near": {
+            "amount": "9893665602048134299999999",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1.test.near": {
+            "amount": "9995873262832668399999999",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2.test.near": {
+            "amount": "9999724967899948599999999",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3.test.near": {
+            "amount": "9999714230258814099999999",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4.test.near": {
+            "amount": "9999703851719060599999999",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5.test.near": {
+            "amount": "9999693507133305199999999",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider.test.near": {
+            "amount": "99980721272397832700000000",
+            "block_hash": "6HMNyaqUP4QnqCwoW2gChmD63Ke8qeAyJrNoQ35HtV3W",
+            "block_height": 9273,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "F18",
+    "label": "Counter/wire overflow, capacity and maximum bounded state",
+    "requirements": [
+      "SR11"
+    ],
+    "status": "PASS",
+    "transactions": 208,
+    "observations": [
+      {
+        "label": "initial",
+        "chain_time_ns": "1793687919470871419",
+        "contract": {
+          "amount": "100000441872602725000000012",
+          "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+          "block_height": 69,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 659375
+        },
+        "root": {
+          "amount": "999999539921505130717441000000000",
+          "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+          "block_height": 69,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000000000000000000000000000000",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "99899080662320739200000000",
+          "storage_reserved_yocto": "8068400000000000000000000",
+          "held_escrow_yocto": "0",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "99998248570597011999999994",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999736252673098299999999",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999722937191704199999999",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999709503973926499999999",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999696454900429399999999",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999683352975239299999999",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9899080301037645499999999",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "100000000000000000000000000",
+            "block_hash": "588o5gExSJc1Ly7j3M1AuqSEDyx5rFVKjCS68minTizi",
+            "block_height": 69,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      },
+      {
+        "label": "final",
+        "chain_time_ns": "1793691397559666875",
+        "contract": {
+          "amount": "301079112184753884700000168",
+          "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+          "block_height": 3511,
+          "code_hash": "4mEV8FD7oQMnkkqhztQQSnUJD6CfhEdgYJFHNvAcrfeR",
+          "locked": "0",
+          "storage_paid_at": 0,
+          "storage_usage": 17470225
+        },
+        "root": {
+          "amount": "999999239921460494204941000000000",
+          "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+          "block_height": 3511,
+          "code_hash": "11111111111111111111111111111111",
+          "locked": "50000092425182081469892667592418",
+          "storage_paid_at": 0,
+          "storage_usage": 182
+        },
+        "reserves": {
+          "sponsor_total_yocto": "299899080662320739200000000",
+          "storage_reserved_yocto": "176905520000000000000000000",
+          "held_escrow_yocto": "1000000000000000000000000",
+          "inflight_or_unknown_yocto": "0",
+          "paid_yocto": "0"
+        },
+        "accounts": {
+          "creator-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "298837923299815714999999838",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "beneficiary-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": null,
+          "reviewer0-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9996231396739880999999999",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer1-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9996215239386414799999999",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer2-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999709503973926499999999",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer3-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999696454900429399999999",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer4-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999683352975239299999999",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "reviewer5-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "9999670302281536699999999",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          },
+          "outsider-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.test.near": {
+            "amount": "99874150922954275500000000",
+            "block_hash": "mFcxCxG6EuoEpNSpREvr2nAAjwsB7NXZ3vBLRa6i46T",
+            "block_height": 3511,
+            "code_hash": "11111111111111111111111111111111",
+            "locked": "0",
+            "storage_paid_at": 0,
+            "storage_usage": 182
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-047 | P0 financial gate complete, AC acceptance remains separate | 2026-11-03
+
+The clean compatible-host `npm run test:p0` execution exited 0 with the nine-test baseline at 9/9 and F01-F18 at 18/18. Accept this as completion of the M03 P0 financial verification gate, supported by raw receipts, account snapshots, gas and storage measurements. Do not treat it as automatic AC01-AC33 acceptance, testnet authorization, independent reviewer proof or provider readiness. Preserve UNKNOWN payout locks and production/fault export separation. Priority 2 may begin under existing wallet, reviewer, provider, secret and spending restrictions. October 28 implementation remains pre-event; the F17 timeout correction and final verification are November 3 competition-window work.
+
 ## D-045 | M03 financial gate and execution evidence | 2026-10-29
 
 The WSL Sandbox runs at c0800c8 supersede the old global M02 blocker; distinguish this session's local descriptor limit from project-wide capability. P0 completion requires the full corrected baseline, all eighteen named categories, actual receipts/balance observations, SDK exact-boundary/overflow proofs, measured callback gas and zero budget violations. Blocked, missing, duplicated or unexecuted tests cannot pass the gate. Fault-only probes are absent from production; no matching fabricated single payout result or UNKNOWN counter mutation is allowed. Do not advance Priority 2 integration or AC acceptance from unit/build success alone. Existing pre-event disclosure and financial/spending safeguards remain unchanged.

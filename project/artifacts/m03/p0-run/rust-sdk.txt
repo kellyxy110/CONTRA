@@ -29,7 +29,7 @@ test tests::voting_fixture_matches_golden ... ok
 test tests::wire_rejects_noncanonical_numbers ... ok
 test tests::wrong_funding_amount - should panic ... ok
 
-test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.87s
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 43.95s
 
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.32s
      Running unittests src/lib.rs (contracts/adjudication/target/debug/deps/contra_adjudication-9ae06b93e4364dd9)

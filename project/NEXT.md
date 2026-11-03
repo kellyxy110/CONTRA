@@ -1,8 +1,10 @@
 # Next execution task
 
-## Active next task | M03 financial matrix
+## Active next task | Priority 2 functional integration
 
-Run npm run test:p0 on the compatible WSL Ubuntu host from the next implementation/oct28 commit. The old M02 global Sandbox blocker is superseded; this cloud session has its own local hard limit of 16384 and cannot execute Sandbox. The runner rebuilds and verifies source, reruns the corrected nine-test suite, runs all eighteen financial categories and saves raw receipts, balances, gas, storage and failures. Fix any actual failures and rerun affected tests plus the final full gate. Do not mark P0 complete from the 28 SDK/19 service passes or authored tests alone. Keep AC01-AC33 acceptance separate. Only after financial verification continue Priority 2 wallet/manifests/providers/reviewer/end-to-end work. No testnet deployment, paid APIs or production secrets; preserve UNKNOWN locks and approved credit limits.
+P0 financial verification passed on November 3, 2026. Continue with structured per-criterion evidence manifests and content-addressed artifacts, wallet reconciliation and transaction freshness, independently controlled reviewer operations, provider adapters within the approved Meta $3, Baseten $3 and Modal $5 envelopes, and two complete local case-to-settlement journeys. One journey must settle an unchallenged agreement. The second must confirm a challenge and reach a different fresh-review verdict before settlement.
+
+Keep AC01-AC33 acceptance evidence explicit and separate. Do not claim local reviewer accounts are independent operators. No testnet deployment, paid provider call, production secret or mainnet operation is authorized. Preserve UNKNOWN payout locks, UX3A geometry, The Bench naming and the immutable design reference.
 
 Older task sections below are historical and superseded where inconsistent.
 

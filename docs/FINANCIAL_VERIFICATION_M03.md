@@ -1,12 +1,16 @@
 # M03 financial verification handoff
 
-Checkpoint: CONTRA-2026-10-29-IMPL-M03. Resume baseline: c0800c816e55ffa61a03b1f1876de3a82fde960f, implementation/oct28. Actual implementation began October 28; these changes are also pre-event work. Governing financial behavior remains the frozen UX3C ABI/state/recovery specifications. No production financial method or recovery policy was changed.
+Checkpoint: CONTRA-2026-10-29-IMPL-M03. Authorized baseline: a98216cda22501ee112c68a7d336952f8b7967ff, implementation/oct28. Actual implementation began October 28 as pre-event work. The F17 timeout correction and final verification completed November 3 during the official competition window. Governing financial behavior remains the frozen UX3C ABI/state/recovery specifications. No production financial method or recovery policy was changed.
 
-## Current evidence and host distinction
+## Verified result
 
-The successful compatible WSL runs recorded at c0800c8 supersede the old M02 claim that real Sandbox execution is globally blocked. Preserve those logs. This session is a different Linux host with glibc 2.39 but a hard open-file limit of 16384. Stock NEAR Sandbox requires 65535. The full corrected suite rerun was attempted and stopped at preflight; no new Sandbox transaction was executed in this session. No measured gas, storage growth or account balance delta is invented.
+The clean compatible-host `npm run test:p0` run exited 0 and set `p0_complete=true`. The nine-test corrected baseline passed 9/9. Financial categories F01-F18 passed 18/18. The run captured 454 transaction records, 753 receipt outcomes and 46 balance/storage snapshots. Independent review of all snapshots found no instance where contract balance was below storage reserve plus held and inflight or unknown principal.
 
-Current results: 28 default Rust SDK tests pass; the same 28 pass with sandbox-faults enabled. Nineteen service/report tests pass. Production and fault Wasm compile with Rust 1.98.0; default exports exclude all four fault hooks. The wallet bundle builds without network/provider usage. These are build/unit results, not financial Sandbox passes. Machine report: project/artifacts/implementation/verification.json, with run-specific files under project/artifacts/m03/p0-run. p0_complete=false; all eighteen current-run categories are BLOCKED. AC01-AC33 acceptance remains separate and unaccepted.
+Observed maximum transaction gas was 35,923,793,821,747. Maximum callback gas was 17,000,817,633,275. The report recorded zero gas-budget violations. Maximum observed contract storage was 17,470,225 bytes in the bounded F18 stress case. These are measured finite bounds, not a universal formal proof.
+
+Production Wasm is 631,042 bytes with SHA-256 `c607adf597dfbf898d8e442fd71b3b75e7032ad47fd808fb50e89e0573fd3ef8`. It exports none of `set_callback_fault`, `sandbox_set_counters`, `sandbox_probe_callback` or `sandbox_probe_value`. Fault Wasm remains separate. Exact native receiver balance changes and callback outcomes are asserted by the passing financial tests. Machine report: `project/artifacts/implementation/verification.json`. Complete raw evidence: `project/artifacts/m03/p0-run/`.
+
+AC01-AC33 acceptance remains separate and unaccepted. This gate does not prove independent operator control, live provider readiness, external-wallet settlement or authorized testnet deployment.
 
 ## Reproducible execution
 
@@ -48,10 +52,10 @@ SR07's unexpected nonempty promise-result branch is tested precisely in the SDK.
 
 Only the sandbox-faults build exports set_callback_fault, sandbox_set_counters, sandbox_probe_callback and sandbox_probe_value. Counter seeding rejects SettlementPending/Settled; changing an attempt requires TransferFailed with authentic stored FAILED. The callback probe only uses stale/wrong identities or multiple results, and cannot synthesize a matching single authoritative result. Production exports none of these hooks. Default business logic and receiver/amount/intent remain unchanged.
 
-F16 deliberately uses a disposable contract's full-access test key to create an insolvent account fixture, then restores it. This is not a production withdrawal API or a claim that ordinary callers can drain escrow. F18 seeds maximum counters only in the fault artifact; overflow rollback must still be demonstrated in real Wasm before P0 completion. Worst-case stress intentionally may reveal gas/view/storage failures; no passing result is promised before execution.
+F16 deliberately uses a disposable contract's full-access test key to create an insolvent account fixture, then restores it. This is not a production withdrawal API or a claim that ordinary callers can drain escrow. F18 seeds maximum counters only in the fault artifact and passed its real Wasm overflow rollback, 16-criterion, 64-byte identifier, event-ring, 128-case and 32-reviewer capacity checks. Production still exposes no counter-seeding method.
 
 ## Product controls and next task
 
-All active frontend photograph references were replaced by one neutral palette-matched SVG. All fifteen measured desktop rectangles remain equal to UX3A; original photographs, JPEG and frozen design assets are unchanged. This explicitly requested photo cleanup does not advance the gated wallet/provider/manifests milestone. Priority 2 remains pending financial verification.
+All active frontend photograph references use one neutral palette-matched SVG. All fifteen measured desktop rectangles remain equal to UX3A; original photographs, JPEG and frozen design assets are unchanged. The empty-state text is shortened to `No records` without geometry changes.
 
-Exact next task: run npm run test:p0 on the compatible WSL host, inspect every failed category and gas/storage/balance record, fix confirmed failures, then rerun the full required matrix. Only after the gate passes continue structured manifests, reviewer operations, wallet reconciliation and real challenged/unchallenged product journeys. Testnet deployment, paid provider usage and production secrets still require separate authorization. Meta $3, Baseten $3 and Modal $5 limits remain unchanged; no new spend occurred.
+Exact next task: continue Priority 2 with structured evidence manifests, wallet reconciliation, independently controlled reviewer operations, provider integration within approved credits, and two complete local case-to-settlement journeys, including a challenged case with a different final verdict. Testnet deployment, paid provider usage and production secrets still require separate authorization. Meta $3, Baseten $3 and Modal $5 limits remain unchanged; no spend occurred.
