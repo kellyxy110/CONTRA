@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-03 | IMPL-M04-R01 reviewer disclosures and provider fixtures
+
+Added canonical reviewer control disclosures with stable operator identifiers and exact registry digest joins. Connected The Bench registry operations to disclosure creation and added explicit one-process Sandbox control warnings. Split Meta, Baseten and Modal request/response normalization, added structured source citations and prompt-injection boundaries, and retained response, idempotency and budget enforcement. Added Meta primary/fresh, Baseten adversarial and Modal verifier fixture tests. `npm test` passes 28/28. No live provider call, paid usage, transaction, deployment or secret occurred. Next: integrated Sandbox journeys, populated screenshots, accessibility and AC matrix.
+
 ## 2026-11-03 | IMPL-M04-W01 wallet lifecycle and read freshness
 
 Replaced the single initial UNKNOWN operation state with persisted PREPARING, AWAITING_SIGNATURE, BROADCAST, PENDING and terminal state transitions. Added ordered transition history, transaction hashes, receipt/error timestamps, duplicate dispatch protection and automatic reload reconciliation. Added final-block metadata envelopes for Sandbox and testnet RPC reads and visible stale-read state in The Bench. `npm test` passes 24/24; syntax, whitespace and em dash checks pass. No new Sandbox transaction was executed in this milestone, so the two M04 journeys remain open. External testnet use remains gated.

@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04-R01
+
+Priority 2 reviewer disclosure and evaluator fixture integration is complete. Reviewer operators can store canonical control disclosures covering common control, key custody, signer control, provider/model or human procedure, conflicts, limitations, verification sources and attestation time. The disclosure digest and stable operator identifier are ready for the existing owner registration and reviewer confirmation transactions. Registry inspection joins only exact onchain disclosure digests. Local Sandbox screens explicitly state that all fixture signers are controlled by one process and are not proof of independent operators.
+
+Meta primary/fresh, Baseten adversarial and Modal verifier request and response adapters now have distinct normalized fixture paths. Evaluations bind trusted case, round, terms, role and prompt version; accept only allowed requirement, manifest, source and counterexample citations; quote source content as untrusted data; reject invalid responses; preserve idempotency; retain ambiguous cost reservations and enforce the existing $3/$3/$5 caps. `npm test` passes 28/28 with no live or paid provider call. Syntax, whitespace and em dash checks pass. No transaction or deployment occurred. Next: execute both populated local Sandbox journeys through the integrated API, capture screenshots, and finish UI accessibility plus AC01-AC33 evidence.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04-W01
 
 Priority 2 wallet persistence and freshness integration is complete at service level. Local Sandbox operations now persist PREPARING, AWAITING_SIGNATURE, BROADCAST, PENDING and terminal CONFIRMED, FAILED or UNKNOWN transitions with an ordered audit history, transaction hash, receipt, observation error and timestamps. Duplicate operation IDs cannot dispatch twice. Reload recovery reconciles the saved operation from the server ledger. Final chain reads include network, finality, block height, block hash, block timestamp where available and fetch time; The Bench exposes the final block and stale state. External testnet signing remains gated.

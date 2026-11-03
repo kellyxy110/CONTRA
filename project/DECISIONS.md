@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-050 | Reviewer control is disclosed separately from account count | 2026-11-03
+
+ACCEPTED: reviewer registry records are joined to canonical disclosure artifacts only by their exact onchain digest. Stable operator identifiers derive from the declared controlling operator label, while each attestation binds account control, custody, procedure, conflicts, sources and limitations. Account count or distinct fixture operator values are not evidence of independent control. Local Sandbox signers remain explicitly disclosed as one-process fixtures. Provider outputs remain proposed findings and cannot register reviewers, sign votes, determine contract finality or authorize settlement.
+
 ## D-049 | Persist transaction lifecycle and final-read provenance | 2026-11-03
 
 ACCEPTED: every local signed operation records an ordered lifecycle from preparation through a terminal or unknown state. Operation ID and payload hash enforce idempotency; transaction hash and receipt remain linked to the initiating account. Reload reconciliation reads the durable server record. UNKNOWN remains locked and is never translated into failure or retry permission. Contract views used by The Bench carry finality, block identity and observation time so stale data can be disclosed. External testnet signing remains disabled without separate authorization.

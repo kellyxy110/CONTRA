@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-03 UTC | IMPL-M04-R01 reviewer disclosures and provider fixtures
+
+Continued from wallet checkpoint `35616ed`. Added canonical reviewer control disclosures, stable operator identifiers and exact onchain registry joins. The Bench now captures and displays control, custody, procedure, conflict, limitation and verification statements while warning that all local Sandbox signers share one process. Added distinct Meta, Baseten and Modal request/response fixture handling, source-level manifest citations, prompt-injection boundaries and Meta fresh-review coverage. `npm test` passed 28/28. No live provider call, spend, transaction, deployment, production secret, testnet or mainnet operation occurred. Next is the two API-backed local Sandbox journeys, populated screenshots, accessibility checks and AC01-AC33 matrix.
+
 ## 2026-11-03 UTC | IMPL-M04-W01 wallet lifecycle and read freshness
 
 Continued from evidence checkpoint `34a1da7`. Added durable local transaction state transitions, ordered audit history, operation payload idempotency, transaction hash and receipt linkage, UNKNOWN observation errors and automatic browser reload reconciliation. Added final chain-read envelopes with block and fetch provenance and exposed final/stale state in The Bench. `npm test` passed 24/24, including lifecycle, duplicate, UNKNOWN and read-source cases. No new Sandbox transaction, external wallet use, deployment, paid inference, production secret, testnet or mainnet action occurred. Next is reviewer disclosure and non-billable provider fixture integration before the two full local journeys.

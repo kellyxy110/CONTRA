@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | IMPL-M04 integrated local journeys and acceptance
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04-R01. On the compatible WSL host, execute two complete API-backed local Sandbox journeys using structured evidence and persisted transaction records: one unchallenged callback-confirmed settlement and one criterion-bound challenge with a decisive fresh reversal and correct settlement. Save receipt and evidence linkage, balances, final states and screenshots from real populated cases. Then run desktop/mobile accessibility and navigation checks, evaluate AC01-AC33 individually, correct README badges and environment/visibility statements, and update all five logs. Do not enable testnet or paid inference.
+
 ## Active next task | IMPL-M04 reviewer and evaluator operations
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04-W01. Complete reviewer disclosure manifests, registry and frozen committee inspection, explicit common-control warnings, independent commit/reveal packages, challenge and fresh-review operations. Complete Meta primary/fresh, Baseten adversarial and Modal verifier response normalization with non-billable fixtures for citations, prompt injection, idempotency and all cost gates. Do not claim Sandbox accounts controlled by this process are independent. Do not enable paid calls.
