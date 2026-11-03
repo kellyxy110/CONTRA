@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | IMPL-M04.1 Phase 2 radar and interface refinement
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P1. Correct the full-coverage radar so rings, spokes and eight sector boundaries remain distinct, implement responsive device-pixel-ratio rendering, and capture zero, partial and full coverage close-ups. Refine exact NEAR amount disclosure, compact case identity, human-readable status text, completed review-window state, materials, reviewer details and event history using genuine case records. Preserve the approved 1200 hierarchy, neutral avatars, UX3C invariants and Phase 1 responsive matrix. Pass the Phase 2 visual and information-accuracy gate before Phase 3. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.
+
 ## Active next task | External authorization and acceptance gates
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04. Owner reviews the three populated local screenshots and gives explicit visual acceptance or precise corrections. AC31 and AC32 cannot pass their frozen exact scope until the owner separately authorizes testnet deployment and live provider use, credits and pricing are reverified, six genuinely independently controlled reviewer operators are available, and actual provider/testnet records reproduce both journeys. Remaining partial checks include browser Back/focus restoration, external wallet rejection/redirect, injected index lag, full pagination/case-switch matrices and 320px at 200 percent screen-reader review. Do not perform testnet, paid inference, production-secret or mainnet work without authorization.

@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.1-P1
+
+M04.1 Phase 1 responsive layout engineering is COMPLETE. The approved 1200 x 900 shell remains exactly 1080 x 810 at x 60, y 45. Wider desktops use proportional three-column growth, short desktop screens use intentional per-column scrolling, tablets use an ordered full-width content flow with the sidebar preserved, and 390px plus 320px phones use a full-width flow with a horizontally scrollable navigation strip. Fixed content heights no longer clip populated reviewers, materials, tasks or activity cards. Coarse-pointer navigation, tabs, disclosure links and pagers meet a measured 44px minimum target.
+
+Empty and genuine populated states passed the seven-viewport Chromium matrix at 1200 x 900, 1366 x 768, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320 x 844. Final results: 26/26 empty-state checks and 29/29 populated-state checks, with no page horizontal overflow, viewport-clipped section or browser console error. A real accessibility failure in the first populated run exposed undersized disclosure, radar-tab, pager and brand targets; the controls were corrected and the full matrix reran cleanly. Screenshots and measurements are in `project/artifacts/m041/phase1/`.
+
+The retained local Sandbox run also reconfirmed both M04 journeys with 44 confirmed operations and receipts. No protocol, Rust contract, financial safeguard, testnet state, paid provider, production secret or mainnet operation changed. The immutable reference SHA-256 remains `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`. Phase 2 radar and information refinement is next. Owner visual acceptance remains pending.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04
 
 M04 Priority 2 local product integration is COMPLETE. Structured per-criterion evidence, append-only corrections, provenance and participant access controls are connected to The Bench. Local transaction lifecycle, receipt linkage, reload recovery and final-block freshness are durable. Reviewer control disclosures join exact onchain registry digests and explicitly state that all local signers share one process. Meta primary/fresh, Baseten adversarial and Modal verifier adapters pass non-billable schema, citation, injection, idempotency and budget tests. Human finding and counterexample artifacts are immutable and case-bound.

@@ -1,9 +1,9 @@
 {
   "checkpoint": "CONTRA-2026-11-03-IMPL-M04-J01",
-  "generated_at": "2026-11-03T08:36:49.924Z",
+  "generated_at": "2026-11-03T13:35:24.388Z",
   "environment": {
     "network": "sandbox",
-    "contract_account": "dev-65216-38144.test.near",
+    "contract_account": "dev-61872-46784.test.near",
     "reviewer_control": "All six reviewer accounts are controlled by one local process; no independence claim.",
     "paid_inference": false
   },
@@ -13,12 +13,12 @@
     "manifests": 2
   },
   "unchallenged": {
-    "case_id": "b1ed7f3fb15ac752e3836df5e37b73fff906ba6045b2d2cce32b95e6f8a0c830",
-    "manifest_digest": "af1746823aaafe9d35ae3ed8641c0227fcc5cb9bb46df1369a7b912ec00682ba",
+    "case_id": "09006893b15ef0827d69fa080166091ffef49bd1f2a695bcbcb729a7a133f3c9",
+    "manifest_digest": "2895d6c8c2bae4408553d319de9f39b56ffa405447d21ba7786e5777581df41a",
     "final_disposition": "ACCEPT",
     "resolution_basis": "PRIMARY",
     "payout": {
-      "payout_intent_id": "a0fc105909e8fda17a4baf18d66e6170e98e4ba65528a589dca671721ee49460",
+      "payout_intent_id": "8c345a93c13d22cf8380dc2f3c89f8d0cecb523882c4cbe5e060f9531b8ab851",
       "recipient_id": "beneficiary.test.near",
       "amount_yocto": "1000000000000000000000000",
       "disposition": "ACCEPT",
@@ -28,22 +28,22 @@
       "attempt": 1,
       "last_attempt": {
         "attempt": 1,
-        "dispatched_at_ns": "1793696777091290714",
+        "dispatched_at_ns": "1793714680155466276",
         "result": "SUCCESS",
-        "completed_at_ns": "1793696778302461888"
+        "completed_at_ns": "1793714681364065794"
       }
     },
     "receiver_balance_delta_yocto": "1000000000000000000000000"
   },
   "challenged": {
-    "case_id": "c077294c1d8b9d306707536dec6ce473fc69d5f21f79b8535b346a14903adb11",
-    "manifest_digest": "33754063362ef6ed8e6787f5f04a882f9ee4f9de6a57199ead531d26f92c5517",
-    "counterexample_digest": "47b7d42ceacf3872c14434846176ec3456b28bf6917f2713797ff044079b73c1",
+    "case_id": "d3b67258309c992880dfa38dceae0163551ce1ebc350d981e7667e0514440ef3",
+    "manifest_digest": "d1771d2172f3253e06e147b02c5675a2f664ac54f977caacf8f361a5dc7e244d",
+    "counterexample_digest": "bac6fa9df83814a32c5d2486df2c99c62f64c6cce403fb0cf98a83a90a3f0bfd",
     "primary_disposition": "ACCEPT",
     "final_disposition": "REJECT",
     "resolution_basis": "FRESH",
     "payout": {
-      "payout_intent_id": "ff34d36de3e5ba2e1dc7dbe9c95249d6dcff04eecb55eae7a6c6db3ae8d28106",
+      "payout_intent_id": "04ca9bdbe681cd8c07c6268e3655adad7fcb480a2f2ddfc728ba3ec7767c11ec",
       "recipient_id": "creator.test.near",
       "amount_yocto": "1000000000000000000000000",
       "disposition": "REJECT",
@@ -53,9 +53,9 @@
       "attempt": 1,
       "last_attempt": {
         "attempt": 1,
-        "dispatched_at_ns": "1793701052968730871",
+        "dispatched_at_ns": "1793718955833276760",
         "result": "SUCCESS",
-        "completed_at_ns": "1793701054188649372"
+        "completed_at_ns": "1793718957046414359"
       }
     },
     "receiver_balance_delta_yocto": "1000000000000000000000000"

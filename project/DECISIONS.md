@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-052 | Preserve 1200 geometry and adapt outside it | 2026-11-03
+
+ACCEPTED: keep the approved 1200 x 900 UX3A shell geometry exact while allowing proportional desktop growth, bounded column scrolling on short screens, an ordered tablet flow and a full-width phone flow. On phones, preserve all navigation by placing the existing controls in a horizontally scrollable top rail instead of compressing content beside a 53px sidebar. Responsive acceptance requires both empty and genuine populated state checks, no page horizontal overflow or clipped sections, and 44px coarse-pointer targets. This is an implementation adaptation outside the frozen reference viewport, not a visual redesign.
+
 ## D-051 | M04 local integration complete, external acceptance gates remain | 2026-11-03
 
 ACCEPTED: complete M04 Priority 2 at the authorized local scope because both required Sandbox journeys pass through the integrated API with structured evidence, authenticated reviewer operations, persisted transaction histories, exact balance deltas and callback-confirmed settlement. The challenged journey produces a different final verdict. Keep AC01-AC33 statuses separate: 20 PASS, 11 PARTIAL and 2 BLOCKED. Do not mark AC31 or AC32 passed because their frozen text requires authorized testnet and actual provider records. Do not claim the six local reviewer accounts are independent. Repository visibility is a verified public fact, not a setting changed by this milestone. Owner visual acceptance remains separate.

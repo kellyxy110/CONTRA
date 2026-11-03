@@ -1,5 +1,11 @@
 # CONTRA session log
 
+## 2026-11-03 UTC | IMPL-M04.1-P1 responsive layout gate
+
+Resumed `implementation/oct28` at `533506063ea60d65b742dd7ce15b61f89d069c6a`. Audited the fixed 1080 x 810 shell, fixed section heights, 900px stacked breakpoint and mobile sidebar compression. Added responsive wide-desktop columns, bounded short-screen panel scrolling, height-safe tablet stacking and a full-width phone flow with scrollable navigation. Preserved the exact approved 1200 x 900 shell rectangle. Added an environment-configured Chromium matrix for seven target viewports and both empty and real populated case states.
+
+The empty matrix passed 26/26. The first populated run found undersized reviewer disclosure, signal tab, pager and tablet brand controls. Raised those controls to a measured 44px minimum and reran the full populated matrix at 29/29, with zero page horizontal overflow, clipped sections or console errors. Saved fourteen screenshots and exact layout measurements in `project/artifacts/m041/phase1/`. Reexecuted the two authorized local Sandbox journeys to retain genuine records: 44 confirmed operations, 44 successful receipts, unchallenged ACCEPT settlement to beneficiary and challenged fresh REJECT settlement to creator, each with an exact 1 NEAR receiver delta. No paid inference, external transaction, deployment, secret, testnet or mainnet action occurred. Phase 2 radar and information refinement is next.
+
 ## 2026-11-03 UTC | IMPL-M04 full local product integration
 
 Continued from reviewer/provider checkpoint `d970f85`. Added authenticated human findings and counterexamples, a reproducible integrated journey runner and populated browser QA. The first journey attempt on Ubuntu 22.04 stopped before Sandbox startup because the pinned binary requires glibc 2.38/2.39. The first compatible-host run then exposed a runner sequencing defect: commit was attempted before `advance_round`; the contract rejected it and the persisted lifecycle correctly ended FAILED. Added the required state transition and guaranteed failure cleanup, then reran from a fresh chain.
