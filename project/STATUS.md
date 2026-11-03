@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.2-P1
+
+M04.2 Phase 1 responsive shell correction is COMPLETE. Desktop columns no longer own independent scroll regions or reserve scrollbar gutters. Short screens at 1536 x 676 and 1366 x 768 now use one coherent document scrollbar, while 1200 x 900 retains the approved shell origin, width, column hierarchy and visual system. The minimum reading scale is raised, the empty heading no longer truncates, and the radar label and legend spacing is corrected.
+
+Empty and genuine populated states each pass 46/46 Chromium checks across eight viewports: 1200 x 900, 1366 x 768, 1536 x 676, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320 x 844. The checks cover page overflow, clipped sections, independent column scrolling, text below 10px, heading truncation, short-screen document ownership and console errors. Before and after screenshots and measurement reports are under `project/artifacts/m042/phase1/`. The reference SHA-256 remains exact. Phase 2 radar measurement semantics is now active. Owner visual acceptance remains pending.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.1-P3
 
 M04.1 Phase 3 and the three-phase frontend implementation are COMPLETE at the authorized local scope. Playwright is a pinned repository dependency, browser installation and test commands are portable, and no test contains a user-specific module or Chromium path. The final browser run passes 58/58 assertions covering connect/disconnect, two genuine case records, all navigation entries and tabs, search, activity pagination, Back, Escape, focus restoration, reload reconciliation, stale data, service failure, permission denial, reduced motion, semantics, contrast, 125 percent and 200 percent effective zoom, 320px width and final screenshots. The legacy populated browser regression passes 16/16.

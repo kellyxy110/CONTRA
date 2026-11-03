@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-055 | One document scroll supersedes bounded desktop column scrolling | 2026-11-03
+
+ACCEPTED: the owner rejected the three independently scrolling desktop columns introduced by D-052. Preserve the responsive column hierarchy but let the shell grow with content and assign short-screen vertical scrolling to the document. Do not set desktop `.left`, `.middle` or `.right` to `overflow-y:auto`, and do not reserve three scrollbar gutters. Retain intentional bounded scrolling only inside focused components such as dialogs or horizontal tab rails. Raise ordinary dashboard copy to a readable scale and verify both empty and genuine populated states at the owner-reported 1536 x 676 size. This decision supersedes only the bounded desktop column-scroll portion of D-052.
+
 ## D-054 | M04.1 local frontend gate complete with external acceptance separate | 2026-11-03
 
 ACCEPTED: complete M04.1 at the local frontend scope because all three sequential gates pass against empty and genuine populated states, browser tooling is portable, the approved 1200 geometry is exact, responsive and radar acceptance matrices pass, and the complete local journeys remain valid. Keep owner visual acceptance, manual assistive-technology review, external wallet behavior, testnet cases, paid providers and independent reviewer operators separate. Do not convert the failed Cargo dependency-fetch attempt into a contract test result; preserve the accepted M03 evidence because no contract source changed. Record unresolved upstream NEAR Sandbox dependency audit findings without applying breaking downgrades that weaken the verified environment.

@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | M04.2 Phase 2 operational radar semantics
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P1. Replace configuration-derived radar completion with operational measurements for Evidence, Provenance, Review, Finality, Challenge, Quorum, Keyboard and Criteria. Each sector must expose its exact numerator, denominator and source, render an independent radial depth and report N/A when evidence is insufficient. Add deterministic tests for all eight sectors across zero, partial and full case states, then capture the required close-ups and rerun the responsive matrix. Preserve the Phase 1 document-scroll correction, UX3A hierarchy, frozen UX3C protocol and P0 safeguards. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.
+
 ## Active next task | M04.1 owner acceptance and authorized external gates
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P3. The owner reviews the final desktop, tablet, mobile, zoom and UX3A comparison screenshots and gives explicit visual acceptance or precise corrections. A manual assistive-technology screen-reader session remains open. Separately resolve the crates.io DNS or use a Cargo-equipped verified host before claiming a fresh Rust rerun, and review the upstream `near-sandbox` dependency advisories without breaking the accepted P0 environment. AC31 and AC32 remain blocked until testnet and paid provider use are separately authorized, credits are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without that authorization.

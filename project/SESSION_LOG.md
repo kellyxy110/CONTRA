@@ -1,5 +1,11 @@
 # CONTRA session log
 
+## 2026-11-03 UTC | IMPL-M04.2-P1 coherent responsive shell
+
+Resumed `implementation/oct28` at `c33813fe52aa1ab18994e1831f5fb7fbcbf70fd1` under the owner correction handoff. Captured the reported 1536 x 676 and 1366 x 768 baseline before editing. The baseline confirmed a viewport-height shell, three independent `overflow-y:auto` columns, stable scrollbar gutters, an 8px material count and a truncated empty heading.
+
+Removed desktop column scroll ownership and changed the shell to content-driven height with document scrolling. Raised the base type and secondary labels, allowed the empty heading to wrap, and increased radar space after visual inspection found crowded bottom labels at 1366 x 768. Added `tests/m042-responsive-qa.mjs` and a portable package command. Empty and settled genuine Sandbox case states each passed 46/46 checks across eight target viewports, with no horizontal overflow, clipped section, independent column scroll, sub-10px text, heading truncation or console error. Saved before and after evidence under `project/artifacts/m042/phase1/`. The reference hash remains exact. No contract, protocol, paid call, deployment, secret, testnet or mainnet operation occurred. Phase 2 operational radar measurement is next; owner acceptance remains pending.
+
 ## 2026-11-03 UTC | IMPL-M04.1-P3 complete frontend UX gate
 
 Continued from Phase 2 commit `879edf984a7265184045f0bdf10a8fd05b9f938b`. Installed pinned Playwright, added portable setup and test scripts and removed all machine-specific browser imports and executable paths. The browser matrix found and corrected missing disconnect, unavailable reconciliation in the account dialog, async navigation close races and lost dialog opener focus. Implemented serialized handlers, dialog history state, Back close, Escape close and focus return.

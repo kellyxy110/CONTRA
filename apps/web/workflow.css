@@ -9,7 +9,7 @@ dialog{width:min(620px,calc(100vw - 32px));max-height:90vh;overflow:auto}dialog 
 @media(max-width:900px){.shell{width:calc(100% - 16px);margin:8px;min-height:100vh;padding-bottom:20px}main{display:flex;flex-direction:column;margin-left:65px;width:calc(100% - 80px);gap:16px}main>.left,main>.middle,main>.right{width:100%;border:0}.signals{overflow:hidden}.signals canvas{width:100%;height:auto;left:0}.mini{left:auto;right:10px}.chartlegend{left:20px}.materials .tabs{max-width:100%}header{margin-left:65px;width:calc(100% - 80px)}header .search{width:130px}.left section,.middle section,.right section{width:100%}#materials{grid-template-columns:1fr 1fr}.material strong{font-size:10px}.profile{min-height:310px}.feedback{height:auto}.signals{height:340px}nav{position:absolute;top:0;bottom:0}dialog{padding:16px}.search input{width:100%}}
 @media(min-width:501px) and (max-width:900px){.signals{height:570px}}
 
-/* M04.1 responsive shell. Keep 1200 x 900 identical to the approved UX3A frame. */
+/* M04.1 responsive shell. Preserve the approved UX3A hierarchy at 1200 x 900. */
 @media (min-width:1201px){
  body{min-height:100vh;padding:20px 0;background-size:cover}
  .shell{width:min(calc(100vw - 120px),1560px);height:min(810px,calc(100vh - 40px));margin:0 auto}
@@ -94,4 +94,61 @@ dialog{width:min(620px,calc(100vw - 32px));max-height:90vh;overflow:auto}dialog 
  .signals{height:365px}
  .signals canvas{top:82px;max-height:255px}
  .reviewer footer{align-items:flex-end;gap:6px}
+}
+
+/* M04.2 Phase 1 desktop flow and readable type. */
+body{font-size:13px;line-height:1.45}
+h2{font-size:16px;line-height:21px}
+p{line-height:18px}
+small{font-size:11px;line-height:15px}
+.search input{font-size:12px}
+.person p,.creator{font-size:11px}
+.profile .person>div{min-width:0}
+.profile .person h2{max-width:none;white-space:normal;overflow:visible;text-overflow:clip;line-height:22px}
+.profile small{margin-top:9px}
+.tags span{font-size:10px;line-height:16px}
+.legend,.reviewer footer,.chartlegend,.pager{font-size:11px}
+.reviewer p{font-size:12px;line-height:17px}
+.reviewer small{font-size:11px}
+.tabs button{font-size:11px}
+.tabs em{font-size:10px}
+.mini button{font-size:10px}
+.material strong{font-size:12px}
+.material small{font-size:10px}
+.status{font-size:10px}
+.tasks>small{font-size:11px}
+.task p,.event p{font-size:11px;line-height:16px}
+.task .tags span{font-size:10px}
+.event time{font-size:10px}
+
+@media (min-width:901px){
+ body{min-height:100vh}
+ .shell{height:auto;min-height:810px;max-height:none;overflow:hidden}
+ main{height:auto;min-height:756px;align-items:stretch}
+ .left,.middle,.right{min-height:756px;overflow:visible;scrollbar-gutter:auto}
+ .left,.middle,.right{display:flex;flex-direction:column}
+ .profile{height:auto;min-height:271px}
+ .time{height:auto;min-height:120px}
+ .feedback{height:auto;min-height:365px;flex:1}
+ .path{height:auto;min-height:105px}
+ .signals{height:auto;min-height:410px}
+ .materials{height:auto;min-height:272px;flex:1}
+ .tasks{height:auto;min-height:410px}
+ .activity{height:auto;min-height:346px;flex:1}
+ .task,.task.compact{height:auto;min-height:88px}
+ .event,.event:nth-child(2),.event:nth-child(3){height:auto;min-height:72px}
+}
+
+@media (min-width:1201px){
+ .shell{height:auto;min-height:810px}
+}
+
+@media (min-width:901px) and (max-width:1200px){
+ .shell{max-height:none}
+}
+
+@media (max-width:900px){
+ body{font-size:13px}
+ .profile .person h2{max-width:none;white-space:normal}
+ .task p,.event p{font-size:12px;line-height:18px}
 }
