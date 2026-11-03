@@ -1,11 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const playwright = await import(process.env.CONTRA_PLAYWRIGHT_MODULE || 'playwright');
-const {chromium} = playwright;
+import {chromium} from 'playwright';
 const root = process.env.CONTRA_QA_ROOT || 'http://127.0.0.1:4174';
 const output = path.resolve(process.env.CONTRA_QA_OUTPUT || 'project/artifacts/m041/phase1');
-const executablePath = process.env.CONTRA_CHROMIUM_PATH || undefined;
 const populatedCase = process.env.CONTRA_QA_CASE_ID || '';
 const viewports = [
   ['desktop-1200x900', 1200, 900],
@@ -23,7 +21,7 @@ const check = (name, pass, detail='') => {
 };
 
 await fs.mkdir(output,{recursive:true});
-const browser = await chromium.launch({headless:true,...(executablePath?{executablePath}:{})});
+const browser = await chromium.launch({headless:true});
 
 for (const [name,width,height] of viewports) {
   const context = await browser.newContext({viewport:{width,height},hasTouch:width<=900});

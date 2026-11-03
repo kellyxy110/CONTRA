@@ -1,8 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const {chromium}=await import(process.env.CONTRA_PLAYWRIGHT_MODULE||'playwright');
-const executablePath=process.env.CONTRA_CHROMIUM_PATH||undefined;
+import {chromium} from 'playwright';
 const emptyRoot=process.env.CONTRA_EMPTY_ROOT||'http://127.0.0.1:4174';
 const populatedRoot=process.env.CONTRA_QA_ROOT;
 const caseId=process.env.CONTRA_QA_CASE_ID;
@@ -11,7 +10,7 @@ const output=path.resolve(process.env.CONTRA_QA_OUTPUT||'project/artifacts/m041/
 await fs.mkdir(output,{recursive:true});
 const report={checkpoint:'CONTRA-2026-11-03-IMPL-M04.1-P2',checks:[],console_errors:[]};
 const check=(name,pass,detail='')=>{report.checks.push({name,pass,detail});if(!pass)process.exitCode=1;};
-const browser=await chromium.launch({headless:true,...(executablePath?{executablePath}:{})});
+const browser=await chromium.launch({headless:true});
 async function pageAt(root,options={}){const context=await browser.newContext({viewport:{width:1200,height:900},...options}),page=await context.newPage();page.on('console',message=>{if(message.type()==='error')report.console_errors.push(message.text());});page.on('pageerror',error=>report.console_errors.push(error.message));await page.goto(root,{waitUntil:'networkidle'});return {context,page};}
 async function selectCase(page){await page.locator('[data-action="account"]').first().click();await page.locator('#account-choice').selectOption({label:'creator.test.near'});await page.locator('[data-action="connect"]').click();await page.locator('dialog').evaluate(dialog=>dialog.close());await page.locator('[data-action="refresh"]').click();await page.waitForTimeout(300);await page.locator('[data-nav="Cases"]').click();await page.locator(`[data-case="${caseId}"]`).click();await page.locator('#dialog-title').filter({hasText:'Agreement & escrow'}).waitFor();await page.locator('dialog').evaluate(dialog=>dialog.close());await page.waitForTimeout(150);}
 const radarData=page=>page.locator('#radar').evaluate(canvas=>({metrics:JSON.parse(canvas.dataset.metrics),dpr:Number(canvas.dataset.dpr),renderSize:canvas.dataset.renderSize,pixels:{width:canvas.width,height:canvas.height},css:{width:canvas.getBoundingClientRect().width,height:canvas.getBoundingClientRect().height},label:canvas.getAttribute('aria-label')}));

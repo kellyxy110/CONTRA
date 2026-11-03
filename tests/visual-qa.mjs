@@ -1,14 +1,13 @@
-import { chromium } from 'file:///C:/Users/user/AppData/Local/Temp/contra-playwright-ux2b/node_modules/playwright/index.mjs';
+import { chromium } from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.env.CONTRA_QA_ROOT || 'http://127.0.0.1:4173';
 const app = `${root}/design/judgment-room.html`;
 const output = path.resolve(process.env.CONTRA_QA_OUTPUT || 'project/artifacts/ux2b');
-const executablePath = 'C:/Users/user/AppData/Local/ms-playwright/chromium-1148/chrome-win/chrome.exe';
 await fs.mkdir(output, { recursive: true });
 
-const browser = await chromium.launch({ headless: true, executablePath });
+const browser = await chromium.launch({ headless: true });
 const report = { consoleErrors: [], checks: [] };
 const check = (name, pass, detail = '') => {
   report.checks.push({ name, pass, detail });

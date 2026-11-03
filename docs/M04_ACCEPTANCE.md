@@ -12,8 +12,8 @@ The reproducible command is `npm run test:m04:journeys`. It executed 44 API-back
 
 | Journey | Case | Evidence linkage | Result | Exact receiver balance delta |
 | --- | --- | --- | --- | --- |
-| Unchallenged | `b1ed7f3fb15ac752e3836df5e37b73fff906ba6045b2d2cce32b95e6f8a0c830` | Manifest `af1746823aaafe9d35ae3ed8641c0227fcc5cb9bb46df1369a7b912ec00682ba` | ACCEPT, PRIMARY, callback SUCCESS to beneficiary | 1,000,000,000,000,000,000,000,000 yoctoNEAR |
-| Challenged | `c077294c1d8b9d306707536dec6ce473fc69d5f21f79b8535b346a14903adb11` | Manifest `33754063362ef6ed8e6787f5f04a882f9ee4f9de6a57199ead531d26f92c5517`; counterexample `47b7d42ceacf3872c14434846176ec3456b28bf6917f2713797ff044079b73c1` | Primary ACCEPT, fresh REJECT, FRESH, callback SUCCESS to creator | 1,000,000,000,000,000,000,000,000 yoctoNEAR |
+| Unchallenged | `09006893b15ef0827d69fa080166091ffef49bd1f2a695bcbcb729a7a133f3c9` | Manifest `2895d6c8c2bae4408553d319de9f39b56ffa405447d21ba7786e5777581df41a` | ACCEPT, PRIMARY, callback SUCCESS to beneficiary | 1,000,000,000,000,000,000,000 yoctoNEAR |
+| Challenged | `d3b67258309c992880dfa38dceae0163551ce1ebc350d981e7667e0514440ef3` | Manifest `d1771d2172f3253e06e147b02c5675a2f664ac54f977caacf8f361a5dc7e244d`; counterexample `bac6fa9df83814a32c5d2486df2c99c62f64c6cce403fb0cf98a83a90a3f0bfd` | Primary ACCEPT, fresh REJECT, FRESH, callback SUCCESS to creator | 1,000,000,000,000,000,000,000,000 yoctoNEAR |
 
 Raw evidence:
 
@@ -32,7 +32,7 @@ All six Sandbox reviewer accounts were controlled by one local process. Their di
 | AC | Status | Evidence and remaining requirement |
 | --- | --- | --- |
 | AC01 | PARTIAL | Immutable JPEG SHA-256 remains `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`; desktop populated screenshot preserves the approved coded UX3A composition and NEAR palette. Explicit owner visual acceptance is still pending. |
-| AC02 | PARTIAL | All sidebar controls open their mapped view or modal without mutation and browser QA exercises case selection, tabs, search and keyboard focus. URL routing, browser Back restoration and explicit focus return are not fully implemented. |
+| AC02 | PASS | Every sidebar control opens its mapped view without mutation. M04.1 verifies genuine case switching, tabs, search, browser Back closing the active dialog without leaving the case, Escape and explicit focus return. |
 | AC03 | PASS | Pre-event October 28 implementation and November 3 competition-window changes are separated in commits and logs. Reference assets remain outside production source. |
 | AC04 | PASS | Chain reads are available without a signing session; mutations require authentication and role checks. External testnet wallet use remains gated and cannot sign. |
 | AC05 | PASS | Frozen terms preview, canonical digest, consent and contract input bounds are covered by the Rust SDK and P0 Sandbox evidence. The Bench shows exact native amount, parties, deadlines, criteria and fallback terms before creation. |
@@ -55,18 +55,20 @@ All six Sandbox reviewer accounts were controlled by one local process. Their di
 | AC22 | PASS | P0 SR05 and UNKNOWN tests prove no blind retry after ambiguous callback or RPC state. The service keeps UNKNOWN operations locked and idempotent. |
 | AC23 | PASS | Creator-only unfunded cancellation and post-funding prohibition pass contract and Sandbox tests. The UI does not describe cancellation as a refund. |
 | AC24 | PARTIAL | Local lifecycle persistence, transaction hash linkage, UNKNOWN lock, reload recovery and reconciliation pass. External wallet rejection, redirect and signed testnet recovery remain gated. |
-| AC25 | PARTIAL | Final reads carry network, finality, block height/hash/timestamp and observation time; stale state is visible and refresh generations prevent late overwrite. Injected index-lag and out-of-order adapter tests remain incomplete. |
+| AC25 | PARTIAL | Final reads carry network, finality, block height/hash/timestamp and observation time. M04.1 injects an old observation time and verifies visible stale state; refresh generations prevent late overwrite. Injected index-lag and a dedicated out-of-order adapter test remain incomplete. |
 | AC26 | PASS | Chain-unavailable mode blocks transactions and does not fabricate state. Paid providers remain unavailable without all authorization gates. No runtime fixture fallback exists. |
 | AC27 | PASS | The eight-sector radar uses deterministic numerator/denominator sources, distinguishes N/A from zero, exposes accessible details and is verified in populated screenshots. It has no settlement authority. |
-| AC28 | PARTIAL | Populated browser evidence shows materials, reviewers, tasks and activity from one selected canonical case, with UTC and event sequence labels. Duplicate event ID and full pagination/case-switch matrices remain incomplete. |
+| AC28 | PARTIAL | Populated browser evidence shows materials, reviewers, tasks and activity from one selected canonical case, with readable UTC labels. M04.1 verifies two-case switching, all material tabs and activity pagination in both directions. Duplicate event ID handling and broader multi-page datasets remain incomplete. |
 | AC29 | PASS | Text is escaped, structured citations are allowlisted, source content is explicitly untrusted, NEP-413 replay/expiry and cross-case access tests pass, and no secret is exposed in browser assets. |
-| AC30 | PARTIAL | Chromium passes desktop, tablet and mobile overflow, named controls, keyboard focus, textual status, reduced motion and console checks. A 320px at 200 percent zoom screen-reader audit, Escape behavior and focus return remain incomplete. |
+| AC30 | PARTIAL | Chromium passes desktop, tablet, mobile, 125 percent and 200 percent effective zoom, including 320px width. Keyboard dialog entry, Escape, Back, focus return, landmarks, chart semantics, visible textual state, contrast and reduced motion pass. A manual assistive-technology screen-reader audit remains incomplete. |
 | AC31 | BLOCKED | The complete local unchallenged Sandbox journey passes with linked manifest, receipts, exact balance delta and callback. The frozen criterion requires an authorized testnet case and actual provider records, which remain unauthorized. |
 | AC32 | BLOCKED | The complete local challenged Sandbox journey passes with a stored counterexample, fresh reversal, exact balance delta and callback. The frozen criterion requires authorized testnet and actual provider records, which remain unauthorized. |
 | AC33 | PASS | `docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md`, contract ABI, API routes and The Bench entries provide A01-A23 role/state, mutation/no-op, receipt/job, error/retry and UI traceability. M04 raw operations link all exercised mutations to receipts. |
 
-Summary: 20 PASS, 11 PARTIAL, 2 BLOCKED. No AC status relaxes the frozen protocol or authorizes testnet, paid inference, production secrets or mainnet.
+Summary after M04.1: 21 PASS, 10 PARTIAL, 2 BLOCKED. No AC status relaxes the frozen protocol or authorizes testnet, paid inference, production secrets or mainnet.
 
 ## Browser verification
 
 Chromium rendered the genuine retained Sandbox state. The final run passed 16 checks: populated selection, settled state, final-block display, accessible button names, structured criteria sources, radar details, search, keyboard focus, desktop/tablet/mobile overflow, tablet materials, mobile clipping/navigation, reduced motion and zero console errors. Visual inspection found and corrected a tablet radar-height defect before the passing recapture. The screenshots are evidence of the local Sandbox state, not owner visual acceptance.
+
+M04.1 adds 58 passing end-to-end browser assertions, 55 responsive assertions across empty and populated states, and 15 radar and information-accuracy assertions. It verifies portable Playwright imports, account connect/disconnect, persisted-operation reconciliation after reload, all navigation entries, genuine case switching, Back, Escape, focus restoration, search, tabs, activity pagination, stale and unavailable states, permission denial, 125 and 200 percent effective zoom, 320px layout, touch targets, reduced motion, chart semantics and contrast. Owner visual acceptance remains separate.

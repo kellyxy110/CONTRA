@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-054 | M04.1 local frontend gate complete with external acceptance separate | 2026-11-03
+
+ACCEPTED: complete M04.1 at the local frontend scope because all three sequential gates pass against empty and genuine populated states, browser tooling is portable, the approved 1200 geometry is exact, responsive and radar acceptance matrices pass, and the complete local journeys remain valid. Keep owner visual acceptance, manual assistive-technology review, external wallet behavior, testnet cases, paid providers and independent reviewer operators separate. Do not convert the failed Cargo dependency-fetch attempt into a contract test result; preserve the accepted M03 evidence because no contract source changed. Record unresolved upstream NEAR Sandbox dependency audit findings without applying breaking downgrades that weaken the verified environment.
+
 ## D-053 | Radar coverage remains a sourced segmented measurement | 2026-11-03
 
 ACCEPTED: render each radar sector from the existing numerator and denominator definitions, with separate low-opacity fills and persistent rings, spokes and boundaries. Denominator zero remains N/A and is never painted as measured zero. Full coverage may fill every sector only when the genuine case metrics are complete, but the chart grid must remain visually dominant enough to preserve segmentation. Canvas pixels follow the rendered size and device pixel ratio. Coverage remains descriptive UI state and never authorizes judgment or settlement.

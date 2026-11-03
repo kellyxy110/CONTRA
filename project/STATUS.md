@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.1-P3
+
+M04.1 Phase 3 and the three-phase frontend implementation are COMPLETE at the authorized local scope. Playwright is a pinned repository dependency, browser installation and test commands are portable, and no test contains a user-specific module or Chromium path. The final browser run passes 58/58 assertions covering connect/disconnect, two genuine case records, all navigation entries and tabs, search, activity pagination, Back, Escape, focus restoration, reload reconciliation, stale data, service failure, permission denial, reduced motion, semantics, contrast, 125 percent and 200 percent effective zoom, 320px width and final screenshots. The legacy populated browser regression passes 16/16.
+
+Final regression also passes 29/29 service tests and the wallet bundle build. Phase 1 and Phase 2 results remain 26/26 empty responsive, 29/29 populated responsive and 15/15 interface checks. The current task executed both local Sandbox journeys again with 44 confirmed operations and receipts, retaining exact 1 NEAR callback-confirmed settlements and the challenged ACCEPT to REJECT reversal. AC01-AC33 now stand at 21 PASS, 10 PARTIAL and 2 BLOCKED. Owner visual acceptance remains pending.
+
+A fresh Rust rerun did not execute: Windows DNS failed for `index.crates.io`, offline cache lacked `near-primitives`, and the WSL runtime has no Cargo installation. No Rust source changed, and accepted M03 evidence remains 28/28 Rust tests with complete P0 proof. Windows frontend-only `npm ci --ignore-scripts` passes; plain Windows `npm ci` is not supported by the pinned `near-sandbox` installer. The dependency audit findings and exact remaining gates are recorded in `docs/M041_ACCEPTANCE.md`. No deployment, paid inference, production secret, testnet or mainnet operation occurred.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.1-P2
 
 M04.1 Phase 2 radar and interface refinement is COMPLETE. The radar now renders eight separately bounded sectors with low-opacity genuine-data fills, high-contrast concentric rings and spokes, responsive geometry and a device-pixel-ratio-aware canvas buffer. Zero coverage remains N/A with denominator zero. The retained challenged case proves partial Overall coverage at Review 2/3 and Challenge 6/8, while the Criteria view proves full coverage without hiding the grid. Zero, partial, full and 320px close-ups are in `project/artifacts/m041/phase2/`.

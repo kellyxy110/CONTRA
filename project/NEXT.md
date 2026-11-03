@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | M04.1 owner acceptance and authorized external gates
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P3. The owner reviews the final desktop, tablet, mobile, zoom and UX3A comparison screenshots and gives explicit visual acceptance or precise corrections. A manual assistive-technology screen-reader session remains open. Separately resolve the crates.io DNS or use a Cargo-equipped verified host before claiming a fresh Rust rerun, and review the upstream `near-sandbox` dependency advisories without breaking the accepted P0 environment. AC31 and AC32 remain blocked until testnet and paid provider use are separately authorized, credits are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without that authorization.
+
 ## Active next task | IMPL-M04.1 Phase 3 end-to-end UX acceptance
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P2. Make browser tooling portable, then verify account connection, case selection, all tabs, search, pagination, dialogs, Back, Escape, focus restoration, stale and unavailable states, permission errors, keyboard navigation, reduced motion, 125 and 200 percent zoom, 320px effective width, chart semantics and contrast. Reuse the retained genuine Sandbox cases for complete unchallenged and challenged workflow evidence, rerun relevant financial and service regression gates, and update AC01-AC33 only where new evidence satisfies the frozen text. Produce final screenshots, browser and accessibility reports, and an unresolved-issues register for explicit owner visual acceptance. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.

@@ -1,5 +1,11 @@
 # CONTRA session log
 
+## 2026-11-03 UTC | IMPL-M04.1-P3 complete frontend UX gate
+
+Continued from Phase 2 commit `879edf984a7265184045f0bdf10a8fd05b9f938b`. Installed pinned Playwright, added portable setup and test scripts and removed all machine-specific browser imports and executable paths. The browser matrix found and corrected missing disconnect, unavailable reconciliation in the account dialog, async navigation close races and lost dialog opener focus. Implemented serialized handlers, dialog history state, Back close, Escape close and focus return.
+
+The final end-to-end run passed 58/58 checks covering two genuine cases, connect/disconnect, all navigation and tabs, search, activity pagination, keyboard flow, Back, Escape, reload reconciliation, stale read injection, service failure, permission denial, reduced motion, semantics, contrast, zoom and screenshots. The legacy populated browser regression passed 16/16. Service tests passed 29/29 and wallet build passed. `npm ci --ignore-scripts` verified the Windows frontend lockfile; plain Windows `npm ci` remains incompatible with the pinned `near-sandbox` installer. A fresh Rust attempt did not execute because this host could not resolve crates.io, offline cache lacked `near-primitives` and WSL had no Cargo. No Rust source changed and no false pass is recorded. Updated AC status is 21 PASS, 10 PARTIAL and 2 BLOCKED. No paid call, deployment, production secret, testnet or mainnet action occurred. Owner visual acceptance remains pending.
+
 ## 2026-11-03 UTC | IMPL-M04.1-P2 radar and interface gate
 
 Continued from Phase 1 commit `c1262199c80f7eadaca10b1f04cd72630ee9d9a3`. Replaced the hardcoded 2x, fixed-size radar drawing with responsive device-pixel-ratio rendering and separately filled eight-sector wedges. Increased grid and boundary contrast so full coverage stays segmented. Recorded zero N/A, genuine partial Overall and genuine full Criteria screenshots. The challenged case supplied Review 2/3 and Challenge 6/8 partial measurements without fixtures.

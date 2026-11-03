@@ -1,10 +1,10 @@
-import {chromium} from 'file:///C:/Users/user/AppData/Local/Temp/contra-playwright-ux2b/node_modules/playwright/index.mjs';
+import {chromium} from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-const root=process.env.CONTRA_QA_ROOT||'http://127.0.0.1:4173',output=path.resolve(process.env.CONTRA_QA_OUTPUT||'project/artifacts/m04/local-journeys'),reportData=JSON.parse(await fs.readFile(path.join(output,'journey-report.json'),'utf8')),executablePath='C:/Users/user/AppData/Local/ms-playwright/chromium-1148/chrome-win/chrome.exe';
+const root=process.env.CONTRA_QA_ROOT||'http://127.0.0.1:4173',output=path.resolve(process.env.CONTRA_QA_OUTPUT||'project/artifacts/m04/local-journeys'),reportData=JSON.parse(await fs.readFile(path.join(output,'journey-report.json'),'utf8'));
 await fs.mkdir(output,{recursive:true});
-const browser=await chromium.launch({headless:true,executablePath}),report={checkpoint:'CONTRA-2026-11-03-IMPL-M04-V01',case_id:reportData.challenged.case_id,console_errors:[],checks:[]};
+const browser=await chromium.launch({headless:true}),report={checkpoint:'CONTRA-2026-11-03-IMPL-M04-V01',case_id:reportData.challenged.case_id,console_errors:[],checks:[]};
 const check=(name,pass,detail='')=>{report.checks.push({name,pass,detail});if(!pass)process.exitCode=1;};
 async function open(viewport,reducedMotion='no-preference'){
  const context=await browser.newContext({viewport,reducedMotion}),page=await context.newPage();page.on('console',message=>{if(message.type()==='error')report.console_errors.push(message.text());});page.on('pageerror',error=>report.console_errors.push(error.message));await page.goto(root,{waitUntil:'networkidle'});return {context,page};
@@ -13,7 +13,7 @@ async function selectPopulated(page){
  await page.locator('[data-action="account"]').first().click();await page.locator('#account-choice').selectOption({label:'creator.test.near'});await page.locator('[data-action="connect"]').click();await page.locator('dialog').evaluate(dialog=>dialog.close());await page.locator('[data-action="refresh"]').click();await page.waitForTimeout(500);await page.locator('[data-nav="Cases"]').click();await page.locator(`[data-case="${reportData.challenged.case_id}"]`).click();await page.locator('#dialog-title').filter({hasText:'Agreement & escrow'}).waitFor();await page.locator('dialog').evaluate(dialog=>dialog.close());await page.waitForTimeout(250);
 }
 const desktop=await open({width:1200,height:900});await selectPopulated(desktop.page);await desktop.page.screenshot({path:path.join(output,'the-bench-populated-desktop-1200x900.png'),fullPage:true});
-check('desktop populated challenged case',await desktop.page.locator('.person h2').textContent()==='Agreement '+reportData.challenged.case_id.slice(0,6));
+check('desktop populated challenged case',await desktop.page.locator('.person h2').textContent()==='Case '+reportData.challenged.case_id.slice(0,6));
 check('desktop settled state',await desktop.page.locator('.person p').textContent()==='Settled');
 check('desktop final block source visible',(await desktop.page.locator('#network').textContent()).includes('block'));
 check('desktop no horizontal overflow',await desktop.page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),String(await desktop.page.evaluate(()=>document.documentElement.scrollWidth)));
