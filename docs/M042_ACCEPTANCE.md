@@ -1,6 +1,6 @@
 # M04.2 visual correction acceptance record
 
-Checkpoint: `CONTRA-2026-11-03-IMPL-M04.2-P1`
+Checkpoint: `CONTRA-2026-11-03-IMPL-M04.2-P3`
 
 Branch: `implementation/oct28`
 
@@ -55,3 +55,21 @@ The genuine challenged case renders Evidence 1/1, Provenance 1/1, Review 2/3, Fi
 ## Phase 2 gate
 
 PASS. Phase 3 navigation, state, accessibility and full browser verification may proceed. The full screenshot is a deterministic visual fixture, not a live case or provider result. Owner visual acceptance remains pending.
+
+## Phase 3 result
+
+Major workflows now use stable navigable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Hash routes preserve the selected case, support direct entry and keep browser Back behavior predictable. Dialogs remain limited to focused actions such as account connection, evidence submission and settlement action confirmation.
+
+The final end-to-end browser suite passes 54/54 checks. It covers account connect and disconnect, genuine case switching, every stable view, direct navigation, browser Back, focus restoration, evidence actions, material and radar tabs, search, pagination, reload reconciliation, stale reads, unavailable chain, permission denial, service failure, pending and failed transfer states, UNKNOWN payout locking, reduced motion, contrast, effective zoom, tablet and mobile layouts and zero console errors.
+
+Empty and genuine populated responsive matrices each pass 46/46 checks at 1200 x 900, 1366 x 768, 1536 x 676, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320 x 844. Operational radar browser checks pass 13/13 and deterministic measurement tests pass 3/3.
+
+The browser matrix passes 4/4 in installed Windows Google Chrome, 4/4 in Playwright Chromium and 4/4 in Firefox. Linux Chromium is BLOCKED because the compatible WSL browser download timed out at the primary host and failed DNS resolution at alternate hosts. This is not reported as a browser pass. Manual assistive-technology screen-reader verification remains PARTIAL.
+
+Both local Sandbox workflows were executed again. The retained report contains 44 persisted operations and receipts, exact 1 NEAR callback-confirmed settlement in each case and a challenged ACCEPT to REJECT fresh-review reversal. The records are under `project/artifacts/m042/phase3/sandbox/`.
+
+Final captures are `project/artifacts/m042/phase3/final-desktop-1200x900.png`, `final-tablet-768x1024.png` and `final-mobile-390x844.png`. Component audit and unresolved items are recorded in `docs/M042_COMPONENT_AUDIT.md`.
+
+## Phase 3 gate
+
+PASS at the authorized local scope. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED because the new local evidence does not satisfy the separately gated testnet, live provider, external wallet, independent operator or manual screen-reader requirements. Owner visual acceptance remains pending.

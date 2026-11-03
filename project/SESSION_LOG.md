@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-03 UTC | IMPL-M04.2-P3 stable navigation and complete UX verification
+
+Continued from Phase 2 commit `117bd5ea4fb82ed83d2bb05d08cf27f9b43a0774`. Replaced major workflow dialogs with stable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Added hash routing, browser Back and direct-route synchronization, selected-case context and focused-action dialog retention. Audited every visible dashboard component and mapped its source, interaction, states and verification evidence.
+
+The final end-to-end suite passes 54/54 checks across genuine and injected states, keyboard and focus behavior, search, tabs, pagination, navigation, reload recovery, settlement safety, reduced motion, contrast, effective zoom, tablet and mobile layouts and console output. Responsive results are 46/46 empty and 46/46 populated. Radar checks pass 13/13 and deterministic coverage tests pass 3/3. Windows Google Chrome, Playwright Chromium and Firefox each pass 4/4 matrix checks. Linux Chromium remains blocked because WSL browser download attempts timed out or failed DNS resolution. Manual screen-reader verification remains PARTIAL.
+
+Reexecuted both local Sandbox journeys and retained 44 operation and receipt records. Each payout settled exactly 1 NEAR through an observed callback, and the challenged case reversed ACCEPT to REJECT under fresh review. No contract source, protocol, P0 safeguard, deployment, paid provider, production secret, testnet or mainnet state changed. Owner visual acceptance remains pending.
+
 ## 2026-11-03 UTC | IMPL-M04.2-P2 operational radar measurements
 
 Continued from Phase 1 commit `dd23956975e4fb6a1e7aa8de4b219fa39335a009`. Replaced radar counters based on frozen committee or settlement configuration fields with operational evidence, provenance, selected-round review, finality, challenge, quorum, keyboard and criterion measurements. Added source retrieval verification, explicit absence of criterion evaluations, exact source descriptions and a shared depth calculation. The current genuine cases correctly remain partial because only two reviewers revealed and no independent per-criterion evaluation record exists.

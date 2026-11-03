@@ -1,0 +1,1054 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04.2-P1",
+  "root": "http://127.0.0.1:4176",
+  "populated_case": "e97ff99942388b0e490e057435228fa82709ec76f2849b5c8c1bec579eca6e9c",
+  "checks": [
+    {
+      "name": "desktop-1200x900 has no horizontal overflow",
+      "pass": true,
+      "detail": "1200px document at 1200px viewport"
+    },
+    {
+      "name": "desktop-1200x900 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1200x900 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "desktop-1200x900 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "desktop-1200x900 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1200 x 900 preserves the approved shell origin and width",
+      "pass": true,
+      "detail": "{\"left\":60,\"top\":45,\"width\":1080,\"height\":842}"
+    },
+    {
+      "name": "laptop-1366x768 has no horizontal overflow",
+      "pass": true,
+      "detail": "1366px document at 1366px viewport"
+    },
+    {
+      "name": "laptop-1366x768 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "laptop-1366x768 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "laptop-1366x768 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "laptop-1366x768 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "laptop-1366x768 uses the document as the short-screen scroll owner",
+      "pass": true,
+      "detail": "882px document at 768px viewport"
+    },
+    {
+      "name": "owner-1536x676 has no horizontal overflow",
+      "pass": true,
+      "detail": "1536px document at 1536px viewport"
+    },
+    {
+      "name": "owner-1536x676 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "owner-1536x676 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "owner-1536x676 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "owner-1536x676 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "owner-1536x676 uses the document as the short-screen scroll owner",
+      "pass": true,
+      "detail": "882px document at 676px viewport"
+    },
+    {
+      "name": "desktop-1440x900 has no horizontal overflow",
+      "pass": true,
+      "detail": "1440px document at 1440px viewport"
+    },
+    {
+      "name": "desktop-1440x900 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1440x900 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "desktop-1440x900 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "desktop-1440x900 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1920x1080 has no horizontal overflow",
+      "pass": true,
+      "detail": "1920px document at 1920px viewport"
+    },
+    {
+      "name": "desktop-1920x1080 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1920x1080 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "desktop-1920x1080 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "desktop-1920x1080 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet-768x1024 has no horizontal overflow",
+      "pass": true,
+      "detail": "768px document at 768px viewport"
+    },
+    {
+      "name": "tablet-768x1024 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet-768x1024 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "tablet-768x1024 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "tablet-768x1024 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-390x844 has no horizontal overflow",
+      "pass": true,
+      "detail": "390px document at 390px viewport"
+    },
+    {
+      "name": "mobile-390x844 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-390x844 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "mobile-390x844 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "mobile-390x844 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-320x844 has no horizontal overflow",
+      "pass": true,
+      "detail": "320px document at 320px viewport"
+    },
+    {
+      "name": "mobile-320x844 has no clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-320x844 does not use independent column scrolling",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "mobile-320x844 contains no text below 10px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "mobile-320x844 keeps the case heading readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser console remains error-free",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "measurements": {
+    "desktop-1200x900": {
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "document": {
+        "width": 1200,
+        "height": 945
+      },
+      "shell": {
+        "left": 60,
+        "top": 45,
+        "width": 1080,
+        "height": 842
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 114,
+          "right": 368,
+          "width": 254,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 114,
+          "right": 368,
+          "width": 254,
+          "height": 124
+        },
+        {
+          "className": "feedback",
+          "left": 114,
+          "right": 368,
+          "width": 254,
+          "height": 390
+        },
+        {
+          "className": "path",
+          "left": 369,
+          "right": 840,
+          "width": 471,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 369,
+          "right": 840,
+          "width": 471,
+          "height": 410
+        },
+        {
+          "className": "materials",
+          "left": 369,
+          "right": 840,
+          "width": 471,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 841,
+          "right": 1140,
+          "width": 299,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 841,
+          "right": 1140,
+          "width": 299,
+          "height": 377
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": true,
+      "headingTruncated": false,
+      "tinyText": []
+    },
+    "laptop-1366x768": {
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "document": {
+        "width": 1366,
+        "height": 882
+      },
+      "shell": {
+        "left": 60,
+        "top": 20,
+        "width": 1246,
+        "height": 842
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 114,
+          "right": 409,
+          "width": 295,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 114,
+          "right": 409,
+          "width": 295,
+          "height": 124
+        },
+        {
+          "className": "feedback",
+          "left": 114,
+          "right": 409,
+          "width": 295,
+          "height": 390
+        },
+        {
+          "className": "path",
+          "left": 410,
+          "right": 957,
+          "width": 547,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 410,
+          "right": 957,
+          "width": 547,
+          "height": 410
+        },
+        {
+          "className": "materials",
+          "left": 410,
+          "right": 957,
+          "width": 547,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 958,
+          "right": 1305,
+          "width": 347,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 958,
+          "right": 1305,
+          "width": 347,
+          "height": 377
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": true,
+      "headingTruncated": false,
+      "tinyText": []
+    },
+    "owner-1536x676": {
+      "viewport": {
+        "width": 1536,
+        "height": 676
+      },
+      "document": {
+        "width": 1536,
+        "height": 882
+      },
+      "shell": {
+        "left": 60,
+        "top": 20,
+        "width": 1416,
+        "height": 842
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 114,
+          "right": 452,
+          "width": 338,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 114,
+          "right": 452,
+          "width": 338,
+          "height": 124
+        },
+        {
+          "className": "feedback",
+          "left": 114,
+          "right": 452,
+          "width": 338,
+          "height": 390
+        },
+        {
+          "className": "path",
+          "left": 453,
+          "right": 1078,
+          "width": 625,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 453,
+          "right": 1078,
+          "width": 625,
+          "height": 410
+        },
+        {
+          "className": "materials",
+          "left": 453,
+          "right": 1078,
+          "width": 625,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 1079,
+          "right": 1475,
+          "width": 396,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 1079,
+          "right": 1475,
+          "width": 396,
+          "height": 377
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": true,
+      "headingTruncated": false,
+      "tinyText": []
+    },
+    "desktop-1440x900": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "document": {
+        "width": 1440,
+        "height": 900
+      },
+      "shell": {
+        "left": 60,
+        "top": 20,
+        "width": 1320,
+        "height": 842
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 114,
+          "right": 428,
+          "width": 314,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 114,
+          "right": 428,
+          "width": 314,
+          "height": 124
+        },
+        {
+          "className": "feedback",
+          "left": 114,
+          "right": 428,
+          "width": 314,
+          "height": 390
+        },
+        {
+          "className": "path",
+          "left": 429,
+          "right": 1010,
+          "width": 581,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 429,
+          "right": 1010,
+          "width": 581,
+          "height": 410
+        },
+        {
+          "className": "materials",
+          "left": 429,
+          "right": 1010,
+          "width": 581,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 1011,
+          "right": 1379,
+          "width": 368,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 1011,
+          "right": 1379,
+          "width": 368,
+          "height": 377
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": false,
+      "headingTruncated": false,
+      "tinyText": []
+    },
+    "desktop-1920x1080": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "document": {
+        "width": 1920,
+        "height": 1080
+      },
+      "shell": {
+        "left": 180,
+        "top": 20,
+        "width": 1560,
+        "height": 842
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 234,
+          "right": 607,
+          "width": 373,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 234,
+          "right": 607,
+          "width": 373,
+          "height": 124
+        },
+        {
+          "className": "feedback",
+          "left": 234,
+          "right": 607,
+          "width": 373,
+          "height": 390
+        },
+        {
+          "className": "path",
+          "left": 608,
+          "right": 1300,
+          "width": 692,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 608,
+          "right": 1300,
+          "width": 692,
+          "height": 410
+        },
+        {
+          "className": "materials",
+          "left": 608,
+          "right": 1300,
+          "width": 692,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 1301,
+          "right": 1739,
+          "width": 438,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 1301,
+          "right": 1739,
+          "width": 438,
+          "height": 377
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 787,
+          "scrollHeight": 787,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": false,
+      "headingTruncated": false,
+      "tinyText": []
+    },
+    "tablet-768x1024": {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "document": {
+        "width": 768,
+        "height": 2681
+      },
+      "shell": {
+        "left": 8,
+        "top": 8,
+        "width": 752,
+        "height": 2665
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 147
+        },
+        {
+          "className": "feedback",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 479
+        },
+        {
+          "className": "path",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 122
+        },
+        {
+          "className": "signals",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 553
+        },
+        {
+          "className": "materials",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 195
+        },
+        {
+          "className": "tasks",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 444
+        },
+        {
+          "className": "activity",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 325
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 899,
+          "scrollHeight": 899,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 870,
+          "scrollHeight": 870,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 769,
+          "scrollHeight": 769,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": true,
+      "headingTruncated": false,
+      "tinyText": []
+    },
+    "mobile-390x844": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 390,
+        "height": 2553
+      },
+      "shell": {
+        "left": 0,
+        "top": -1709,
+        "width": 390,
+        "height": 2553
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 147
+        },
+        {
+          "className": "feedback",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 479
+        },
+        {
+          "className": "path",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 122
+        },
+        {
+          "className": "signals",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 390
+        },
+        {
+          "className": "materials",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 195
+        },
+        {
+          "className": "tasks",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 444
+        },
+        {
+          "className": "activity",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 325
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 899,
+          "scrollHeight": 899,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 707,
+          "scrollHeight": 707,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 769,
+          "scrollHeight": 769,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": true,
+      "headingTruncated": false,
+      "tinyText": []
+    },
+    "mobile-320x844": {
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "document": {
+        "width": 320,
+        "height": 2528
+      },
+      "shell": {
+        "left": 0,
+        "top": -1684,
+        "width": 320,
+        "height": 2528
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 273
+        },
+        {
+          "className": "time",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 147
+        },
+        {
+          "className": "feedback",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 479
+        },
+        {
+          "className": "path",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 122
+        },
+        {
+          "className": "signals",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 365
+        },
+        {
+          "className": "materials",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 195
+        },
+        {
+          "className": "tasks",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 444
+        },
+        {
+          "className": "activity",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 325
+        }
+      ],
+      "columns": [
+        {
+          "className": "left",
+          "clientHeight": 899,
+          "scrollHeight": 899,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "middle",
+          "clientHeight": 682,
+          "scrollHeight": 682,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        },
+        {
+          "className": "right",
+          "clientHeight": 769,
+          "scrollHeight": 769,
+          "overflowY": "visible",
+          "scrollbarGutter": "auto"
+        }
+      ],
+      "horizontalOverflow": false,
+      "clippedSections": [],
+      "independentColumnScrolls": [],
+      "documentScrollable": true,
+      "headingTruncated": false,
+      "tinyText": []
+    }
+  },
+  "console_errors": []
+}

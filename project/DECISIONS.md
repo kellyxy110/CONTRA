@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-057 | Stable routed workspaces complete the M04.2 local frontend gate | 2026-11-03
+
+ACCEPTED: major workflows use stable navigable views with direct hash routes and selected-case context. Dialogs remain for focused actions only. Complete the M04.2 local frontend gate because the sequential responsive, operational radar and end-to-end verification gates pass without changing UX3C protocol or P0 financial safeguards. Keep owner visual acceptance, manual assistive-technology review, external wallet behavior, authorized testnet execution, paid providers and genuinely independent reviewer operators as separate gates. Record Linux Chromium as blocked when its browser binary cannot be downloaded; do not infer a pass from Windows Chromium.
+
 ## D-056 | Radar progress requires operational records | 2026-11-03
 
 ACCEPTED: configuration presence never counts as radar completion. Evidence requires retrievable source linkage per frozen criterion. Provenance requires retrievable source bytes plus origin, capture time and submitter. Review and quorum use the selected round's actual reveals. Finality uses completed decision, payout intent, callback observation and settlement milestones. Challenge is N/A without a confirmed challenge and otherwise tracks its fresh-review lifecycle. Keyboard fulfillment requires an independently recorded and verified FULFILLED evaluation. Criteria completion requires separate evidence and evaluation records. The three visual tabs may change lens labeling but cannot change operational truth. This supersedes the configuration-derived portions of D-053 while preserving its N/A, segmentation and non-authority rules.

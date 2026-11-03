@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | M04.2 owner visual acceptance and external gates
+
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P3. The owner reviews the final desktop, tablet and mobile screenshots plus the running local populated application and either grants explicit visual acceptance or identifies a precise correction. Complete a manual assistive-technology screen-reader session and Linux Chromium verification when a compatible browser binary is available. AC31 and AC32 remain blocked until testnet deployment and paid provider use are separately authorized, credits and pricing are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without authorization.
+
 ## Active next task | M04.2 Phase 3 navigation and complete UX verification
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P2. Audit every visible component and replace major workflow dialogs with stable navigable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement/history, Lab and Settings. Preserve focused dialogs only for focused actions. Verify browser Back, direct navigation, selected-case context, focus restoration and accurate loading, empty, partial, challenged, settlement-pending, settled and failure states. Run Windows Chrome, Linux Chromium and another available engine where practical, keyboard and accessibility checks, 125 and 200 percent zoom, both genuine Sandbox journeys and the full responsive matrix. Record manual screen-reader coverage as PARTIAL unless actually performed. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.

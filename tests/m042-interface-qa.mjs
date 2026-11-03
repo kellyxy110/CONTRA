@@ -42,9 +42,9 @@ const connect = async page => {
 };
 const selectCase = async (page, caseId) => {
   await page.locator('[data-nav="Cases"]').click();
-  await page.locator(`[data-case="${caseId}"]`).click();
-  await page.locator('#dialog-title').filter({hasText:'Agreement & escrow'}).waitFor();
-  await page.locator('dialog').evaluate(dialog => dialog.close());
+  await page.locator(`[data-select-case="${caseId}"]`).click();
+  await page.waitForFunction(id => document.querySelector('.person h2')?.title === id, caseId);
+  await page.locator('[data-nav="Overview"]').click();
   await page.waitForTimeout(200);
 };
 

@@ -48,9 +48,9 @@ for (const [name, width, height] of viewports) {
     await page.locator('[data-action="refresh"]').click();
     await page.waitForTimeout(300);
     await page.locator('[data-nav="Cases"]').click();
-    await page.locator(`[data-case="${populatedCase}"]`).click();
-    await page.locator('#dialog-title').filter({hasText: 'Agreement & escrow'}).waitFor();
-    await page.locator('dialog').evaluate(dialog => dialog.close());
+    await page.locator(`[data-select-case="${populatedCase}"]`).click();
+    await page.waitForFunction(id => document.querySelector('.person h2')?.title === id, populatedCase);
+    await page.locator('[data-nav="Overview"]').click();
   }
   const measurements = await page.evaluate(() => {
     const visible = element => {

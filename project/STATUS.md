@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.2-P3
+
+M04.2 Phase 3 and the three-phase correction are COMPLETE at the authorized local scope. Major workflows now use stable hash-routed views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Browser Back, direct routes and selected-case context are preserved. Focused dialogs remain only for focused actions.
+
+The final end-to-end suite passes 54/54 checks. Empty and genuine populated responsive matrices each pass 46/46 checks across eight viewports. The operational radar suite passes 13/13 browser checks and 3/3 deterministic coverage subtests. Windows Google Chrome, Playwright Chromium and Firefox each pass 4/4 browser-matrix checks. Linux Chromium is BLOCKED because the WSL browser download could not resolve its alternate host after the primary host timed out. Manual screen-reader verification remains PARTIAL.
+
+Both local Sandbox journeys were executed again with 44 persisted operations and receipts. The unchallenged case and challenged fresh-review reversal each settled exactly 1 NEAR through callback-confirmed payout. No contract source or P0 safeguard changed. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED. Owner visual acceptance remains pending.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.2-P2
 
 M04.2 Phase 2 operational radar correction is COMPLETE. All eight sectors now derive from actual evidence retrieval, provenance, selected-round reveals, settlement milestones, confirmed challenge lifecycle, matching quorum, verified keyboard evaluation records and independent criterion evidence/evaluation records. Configuration fields no longer count as completion. Denominator zero remains N/A. The canvas uses 25, 50, 75 and 100 percent rings and independent radial sector depths.
