@@ -1,0 +1,203 @@
+{
+  "checkpoint": "CONTRA-2026-11-04-IMPL-M04.3-P3",
+  "root": "http://127.0.0.1:4176",
+  "case_id": "e97ff99942388b0e490e057435228fa82709ec76f2849b5c8c1bec579eca6e9c",
+  "account": "creator.test.near",
+  "captures": [
+    {
+      "name": "desktop-short",
+      "width": 1536,
+      "height": 676,
+      "file": "desktop-short-1536x676.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "laptop",
+      "width": 1366,
+      "height": 768,
+      "file": "laptop-1366x768.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "desktop-reference",
+      "width": 1200,
+      "height": 900,
+      "file": "desktop-reference-1200x900.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "desktop-wide",
+      "width": 1440,
+      "height": 900,
+      "file": "desktop-wide-1440x900.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "full-hd",
+      "width": 1920,
+      "height": 1080,
+      "file": "full-hd-1920x1080.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "file": "tablet-768x1024.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "tablet-radar",
+      "width": 768,
+      "height": 1024,
+      "file": "tablet-radar-768x1024.png",
+      "kind": "visible viewport",
+      "scroll_y": 337
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "file": "mobile-390x844.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "mobile-radar",
+      "width": 390,
+      "height": 844,
+      "file": "mobile-radar-390x844.png",
+      "kind": "visible viewport",
+      "scroll_y": 622
+    },
+    {
+      "name": "effective-320",
+      "width": 320,
+      "height": 844,
+      "file": "effective-320-320x844.png",
+      "kind": "visible viewport",
+      "scroll_y": 0
+    },
+    {
+      "name": "effective-320-radar",
+      "width": 320,
+      "height": 844,
+      "file": "effective-320-radar-320x844.png",
+      "kind": "visible viewport",
+      "scroll_y": 609
+    }
+  ],
+  "metrics": [
+    {
+      "label": "Evidence",
+      "numerator": 1,
+      "denominator": 1,
+      "source": "Frozen criteria with a selected manifest record whose linked source digests are retrievable",
+      "status": "measured",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "100%",
+      "ratio": 1
+    },
+    {
+      "label": "Provenance",
+      "numerator": 1,
+      "denominator": 1,
+      "source": "Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance",
+      "status": "measured",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "100%",
+      "ratio": 1
+    },
+    {
+      "label": "Review",
+      "numerator": 2,
+      "denominator": 3,
+      "source": "Completed reviewer reveals in selected round 1",
+      "status": "measured",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "67%",
+      "ratio": 0.6666666666666666
+    },
+    {
+      "label": "Finality",
+      "numerator": 4,
+      "denominator": 4,
+      "source": "Completed final disposition, payout intent, observed callback result and settled-state milestones",
+      "status": "measured",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "100%",
+      "ratio": 1
+    },
+    {
+      "label": "Challenge",
+      "numerator": 4,
+      "denominator": 4,
+      "source": "Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones",
+      "status": "measured",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "100%",
+      "ratio": 1
+    },
+    {
+      "label": "Quorum",
+      "numerator": 2,
+      "denominator": 2,
+      "source": "Largest matching disposition count in selected round 1 against the policy threshold",
+      "status": "measured",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "100%",
+      "ratio": 1
+    },
+    {
+      "label": "Keyboard",
+      "numerator": 0,
+      "denominator": 0,
+      "source": "Keyboard criteria with an independently recorded and verified FULFILLED evaluation",
+      "status": "missing",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "Criterion evaluation records are missing.",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "Missing",
+      "ratio": 0
+    },
+    {
+      "label": "Criteria",
+      "numerator": 0,
+      "denominator": 0,
+      "source": "Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation",
+      "status": "missing",
+      "observedAt": "2026-11-04T02:14:49.983Z",
+      "reason": "Criterion evaluation records are missing.",
+      "lens": "Overall",
+      "scope": "included",
+      "value": "Missing",
+      "ratio": 0
+    }
+  ],
+  "console_errors": []
+}

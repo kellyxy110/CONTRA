@@ -96,3 +96,43 @@ The required comparison is `project/artifacts/m043/phase2/radar-three-state-comp
 ## Phase 2 gate
 
 PASS. The actual screenshots were inspected after the calculations passed. Phase 3 may proceed. Owner visual acceptance is not claimed.
+
+## Phase 3 browser verification
+
+Windows Chrome, Playwright Chromium and Firefox each passed 93 viewport checks and 12 interaction checks. The resulting total is 315/315. The matrix uses actual visible browser viewports, not full-page screenshots, at 1536 x 676, 1366 x 768, 1200 x 900, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320 x 844.
+
+Verified behavior includes horizontal overflow, desktop document and column scroll ownership, primary-section boundaries, full radar placement, eight direct metric values, label overlap, readable text, console errors, keyboard navigation through all workspaces, browser Back, Escape, focus restoration and reduced motion. The report is `project/artifacts/m043/phase3/browser-matrix/browser-matrix-report.json`.
+
+The existing complete end-to-end suite also passes 54/54 checks. Manual screen-reader testing was not run, is recorded as NOT RUN, and remains an open acceptance item.
+
+## Phase 3 visual inspection
+
+Fresh connected-case images are in `project/artifacts/m043/phase3/final/`. The mandatory corrected image is `desktop-short-1536x676.png`. The same directory contains 1366 x 768, 1200 x 900, 1440 x 900, 1920 x 1080, tablet, mobile and 320px visible-viewport images plus dedicated smaller-screen radar positions.
+
+The 1536 x 676, 1200 x 900, tablet, mobile and mobile-radar screenshots were visually inspected after the automated checks. The desktop primary workspace is fully visible. The responsive layouts have no horizontal clipping, and the radar labels, values, rings, spokes and eight independent sectors remain readable. No remaining visual defect was identified in this local review. This is engineering verification only, not owner acceptance.
+
+## Phase 3 Sandbox regression
+
+The first rerun encountered `EADDRINUSE` because the retained review server owned port 4173. The unchanged workflow passed on isolated port 4273 with 44 confirmed operations, 44 receipts and two manifests. Artifacts are under `project/artifacts/m043/phase3/sandbox/`.
+
+| Journey | Primary | Final | Basis | Receiver | Exact balance delta | Callback |
+| --- | --- | --- | --- | --- | ---: | --- |
+| Unchallenged | ACCEPT | ACCEPT | PRIMARY | beneficiary.test.near | 1000000000000000000000000 yoctoNEAR | SUCCESS |
+| Challenged | ACCEPT | REJECT | FRESH | creator.test.near | 1000000000000000000000000 yoctoNEAR | SUCCESS |
+
+All six local reviewer accounts were controlled by one process. This is functional committee evidence, not independent-operator evidence. No paid inference was used.
+
+## Phase 3 regression results
+
+- Browser matrix: 315/315 pass across three engines.
+- Complete frontend end-to-end suite: 54/54 pass.
+- Repository service and coverage tests: 35/35 pass.
+- Rendered radar checks: 17/17 pass.
+- Desktop responsive gate: pass at all eight target sizes.
+- Wallet bundle: build passed.
+- Browser console errors: zero.
+- Manual screen reader: NOT RUN.
+
+## Phase 3 gate
+
+PASS at the authorized local engineering scope. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED. AC31 and AC32 remain blocked. Owner visual acceptance is pending and is not claimed.

@@ -1,0 +1,1669 @@
+{
+  "checkpoint": "CONTRA-2026-11-04-IMPL-M04.3-P3",
+  "root": "http://127.0.0.1:4176",
+  "targets": [
+    {
+      "name": "windows-chrome",
+      "viewports": [
+        {
+          "name": "desktop-short",
+          "width": 1536,
+          "height": 676,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 664"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 663"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 310.765625"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 154"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 571"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 430.15625"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 525"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "676/676"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"},{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"},{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "laptop",
+          "width": 1366,
+          "height": 768,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 756"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 755"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 348.484375"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 154"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 663"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 486.28125"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 525"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "768/768"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"},{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"},{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "desktop-reference",
+          "width": 1200,
+          "height": 900,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 855"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 854"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 370"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 204"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 614"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 509"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 578"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "900/900"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "desktop-wide",
+          "width": 1440,
+          "height": 900,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 855"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 854"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 370"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 204"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 614"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 509"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 578"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "900/900"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "full-hd",
+          "width": 1920,
+          "height": 1080,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 945"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 944"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 460"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 294"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 704"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 599"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 668"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "1080/1080"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "tablet",
+          "width": 768,
+          "height": 1024,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "mobile",
+          "width": 390,
+          "height": 844,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "effective-320",
+          "width": 320,
+          "height": 844,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "interaction_checks": [
+        {
+          "name": "keyboard navigation opens Overview",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Cases",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Challenges",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Evidence",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Reviewers",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Settlement",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Lab",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Activity",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Settings",
+          "pass": true
+        },
+        {
+          "name": "browser Back restores Cases",
+          "pass": true
+        },
+        {
+          "name": "Escape closes dialog and restores focus",
+          "pass": true
+        },
+        {
+          "name": "reduced motion preference is active",
+          "pass": true
+        }
+      ],
+      "console_errors": [],
+      "pass": true
+    },
+    {
+      "name": "playwright-chromium",
+      "viewports": [
+        {
+          "name": "desktop-short",
+          "width": 1536,
+          "height": 676,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 664"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 663"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 310.765625"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 154"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 571"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 430.15625"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 525"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "676/676"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"},{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"},{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "laptop",
+          "width": 1366,
+          "height": 768,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 756"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 755"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 348.484375"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 154"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 663"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 486.28125"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 525"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "768/768"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"},{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"},{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "desktop-reference",
+          "width": 1200,
+          "height": 900,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 855"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 854"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 370"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 204"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 614"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 509"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 578"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "900/900"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "desktop-wide",
+          "width": 1440,
+          "height": 900,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 855"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 854"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 370"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 204"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 614"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 509"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 578"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "900/900"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "full-hd",
+          "width": 1920,
+          "height": 1080,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 945"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 944"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 460"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 294"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 704"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 599"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 668"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "1080/1080"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "tablet",
+          "width": 768,
+          "height": 1024,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "mobile",
+          "width": 390,
+          "height": 844,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "effective-320",
+          "width": 320,
+          "height": 844,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "interaction_checks": [
+        {
+          "name": "keyboard navigation opens Overview",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Cases",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Challenges",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Evidence",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Reviewers",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Settlement",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Lab",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Activity",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Settings",
+          "pass": true
+        },
+        {
+          "name": "browser Back restores Cases",
+          "pass": true
+        },
+        {
+          "name": "Escape closes dialog and restores focus",
+          "pass": true
+        },
+        {
+          "name": "reduced motion preference is active",
+          "pass": true
+        }
+      ],
+      "console_errors": [],
+      "pass": true
+    },
+    {
+      "name": "firefox",
+      "viewports": [
+        {
+          "name": "desktop-short",
+          "width": 1536,
+          "height": 676,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 664"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 663"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 310.76666259765625"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 154"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 571"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 430.16668701171875"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 525"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "676/676"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"},{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"},{\"client\":597,\"scroll\":597,\"overflow\":\"hidden\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "laptop",
+          "width": 1366,
+          "height": 768,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 756"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 755"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 348.48333740234375"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 154"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 663"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 486.2833251953125"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 525"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "768/768"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"},{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"},{\"client\":689,\"scroll\":689,\"overflow\":\"hidden\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "desktop-reference",
+          "width": 1200,
+          "height": 900,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 855"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 854"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 370"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 204"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 614"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 509"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 578"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "900/900"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "desktop-wide",
+          "width": 1440,
+          "height": 900,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 855"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 854"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 370"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 204"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 614"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 509"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 578"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "900/900"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "full-hd",
+          "width": 1920,
+          "height": 1080,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            },
+            {
+              "name": "shell fits visible viewport",
+              "pass": true,
+              "detail": "bottom 945"
+            },
+            {
+              "name": "nav fits visible viewport",
+              "pass": true,
+              "detail": "bottom 944"
+            },
+            {
+              "name": "profile fits visible viewport",
+              "pass": true,
+              "detail": "bottom 460"
+            },
+            {
+              "name": "progress fits visible viewport",
+              "pass": true,
+              "detail": "bottom 294"
+            },
+            {
+              "name": "signals fits visible viewport",
+              "pass": true,
+              "detail": "bottom 704"
+            },
+            {
+              "name": "tasks fits visible viewport",
+              "pass": true,
+              "detail": "bottom 599"
+            },
+            {
+              "name": "canvas fits visible viewport",
+              "pass": true,
+              "detail": "bottom 668"
+            },
+            {
+              "name": "desktop needs no document scroll",
+              "pass": true,
+              "detail": "1080/1080"
+            },
+            {
+              "name": "desktop has no independent column scroll",
+              "pass": true,
+              "detail": "[{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"},{\"client\":756,\"scroll\":756,\"overflow\":\"visible\"}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "tablet",
+          "width": 768,
+          "height": 1024,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "mobile",
+          "width": 390,
+          "height": 844,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        },
+        {
+          "name": "effective-320",
+          "width": 320,
+          "height": 844,
+          "checks": [
+            {
+              "name": "no horizontal overflow",
+              "pass": true
+            },
+            {
+              "name": "no console error",
+              "pass": true,
+              "detail": ""
+            },
+            {
+              "name": "radar labels do not overlap",
+              "pass": true
+            },
+            {
+              "name": "radar labels fit canvas",
+              "pass": true
+            },
+            {
+              "name": "radar exposes eight direct values",
+              "pass": true
+            },
+            {
+              "name": "primary text is at least 10px",
+              "pass": true,
+              "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":12},{\"selector\":\".section-link\",\"size\":10},{\"selector\":\"#signal-tabs button\",\"size\":10}]"
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "interaction_checks": [
+        {
+          "name": "keyboard navigation opens Overview",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Cases",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Challenges",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Evidence",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Reviewers",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Settlement",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Lab",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Activity",
+          "pass": true
+        },
+        {
+          "name": "keyboard navigation opens Settings",
+          "pass": true
+        },
+        {
+          "name": "browser Back restores Cases",
+          "pass": true
+        },
+        {
+          "name": "Escape closes dialog and restores focus",
+          "pass": true
+        },
+        {
+          "name": "reduced motion preference is active",
+          "pass": true
+        }
+      ],
+      "console_errors": [],
+      "pass": true
+    }
+  ],
+  "manual_screen_reader": "NOT RUN: no manual assistive-technology session was available."
+}

@@ -45,7 +45,7 @@ async function connect(page, account = 'creator.test.near') {
   await page.waitForTimeout(300);
 }
 async function chooseCase(page, caseId) {
-  await page.locator('[data-nav="Cases"]').click();
+  await page.locator('nav [data-nav="Cases"]').click();
   await page.locator(`[data-select-case="${caseId}"]`).click();
   await page.waitForFunction(id => location.hash.includes(id) && document.querySelector('.person h2')?.title === id, caseId);
 }
@@ -61,13 +61,13 @@ const views = [
   ['Settlement','Settlement & history'],['Lab','Review lab'],['Activity','Settlement & history'],['Settings','Settings']
 ];
 for (const [name, heading] of views) {
-  await primary.page.locator(`[data-nav="${name}"]`).click();
+  await primary.page.locator(`nav [data-nav="${name}"]`).click();
   check(`${name} is a stable navigable view`, !await primary.page.locator('dialog').isVisible() && primary.page.url().includes(`view=${name}`));
   if (heading) check(`${name} view exposes its heading`, await primary.page.locator('#workspace-view h2').textContent() === heading);
 }
 
-await primary.page.locator('[data-nav="Cases"]').click();
-await primary.page.locator('[data-nav="Evidence"]').click();
+await primary.page.locator('nav [data-nav="Cases"]').click();
+await primary.page.locator('nav [data-nav="Evidence"]').click();
 await primary.page.goBack();
 await primary.page.waitForFunction(() => location.hash.includes('view=Cases'));
 await primary.page.waitForFunction(() => document.querySelector('#workspace-view h2')?.textContent.trim() === 'Cases');
@@ -78,7 +78,7 @@ await primary.page.goto(`${root}/#view=Evidence&case=${journey.unchallenged.case
 await primary.page.waitForFunction(id => document.querySelector('#workspace-view h2')?.textContent.trim() === 'Evidence' && document.querySelector('.person h2')?.title === id, journey.unchallenged.case_id);
 check('direct navigation restores selected-case context', await primary.page.locator('#workspace-view h2').textContent() === 'Evidence' && await primary.page.locator('.person h2').getAttribute('title') === journey.unchallenged.case_id, `${primary.page.url()} · ${await primary.page.locator('#workspace-view h2').textContent()} · ${await primary.page.locator('.person h2').getAttribute('title')}`);
 await chooseCase(primary.page, journey.challenged.case_id);
-await primary.page.locator('[data-nav="Evidence"]').click();
+await primary.page.locator('nav [data-nav="Evidence"]').click();
 const evidenceAction = primary.page.locator('#workspace-view [data-action="evidence"]');
 await evidenceAction.focus();
 await evidenceAction.press('Enter');
@@ -89,7 +89,7 @@ await primary.page.locator('dialog').waitFor({state:'hidden'});
 await primary.page.waitForTimeout(200);
 check('focused action dialog restores focus', await primary.page.evaluate(() => document.activeElement?.matches('#workspace-view [data-action="evidence"]')));
 
-await primary.page.locator('[data-nav="Overview"]').click();
+await primary.page.locator('nav [data-nav="Overview"]').click();
 for (const label of ['Evidence','Reviews','Criteria','Protocol']) {
   await primary.page.locator('#material-tabs button').filter({hasText:label}).click();
   check(`${label} materials remain data-bound`, (await primary.page.locator('#materials').textContent()).trim().length > 0);
@@ -119,7 +119,7 @@ await primary.page.locator('#dialog-title').filter({hasText:'Transaction reconci
 check('reload reconciliation finds the confirmed transaction', (await primary.page.locator('#dialog-extra').textContent()).includes('CONFIRMED'));
 await primary.page.keyboard.press('Escape');
 
-await primary.page.locator('[data-nav="Settings"]').click();
+await primary.page.locator('nav [data-nav="Settings"]').click();
 check('settings discloses gated spending', (await primary.page.locator('#workspace-view').textContent()).includes('Paid inference disabled'));
 await primary.page.locator('[data-action="account"]').first().click();
 await primary.page.locator('[data-action="disconnect"]').click();
@@ -128,7 +128,7 @@ await primary.page.keyboard.press('Escape');
 check('disconnect preserves read-only selected case', await primary.page.locator('.person h2').getAttribute('title') === journey.challenged.case_id);
 check('unauthenticated evidence remains protected', (await primary.context.request.get(root+'/api/evidence/manifests?case_id='+journey.challenged.case_id)).status() === 401);
 check('visible view has one main landmark', await primary.page.evaluate(() => [...document.querySelectorAll('main,[role="main"]')].filter(element => !element.hidden).length === 1));
-await primary.page.locator('[data-nav="Overview"]').click();
+await primary.page.locator('nav [data-nav="Overview"]').click();
 await primary.page.screenshot({path:path.join(output,'final-desktop-1200x900.png'),fullPage:true});
 await primary.context.close();
 
@@ -172,7 +172,7 @@ await reduced.context.close();
 
 for (const [name, viewport] of [['zoom-125-effective-960x720',{width:960,height:720}],['zoom-200-effective-320x422',{width:320,height:422}]]) {
   const view = await open(root, {viewport,hasTouch:true});
-  await view.page.locator('[data-nav="Cases"]').click();
+  await view.page.locator('nav [data-nav="Cases"]').click();
   check(`${name} has no horizontal overflow`, await noOverflow(view.page));
   check(`${name} keeps navigation and view content reachable`, await view.page.locator('nav').isVisible() && await view.page.locator('#workspace-view').isVisible());
   await view.page.screenshot({path:path.join(output,`${name}.png`),fullPage:true});
@@ -183,7 +183,7 @@ for (const [name, viewport] of [['tablet',{width:768,height:1024}],['mobile',{wi
   const view = await open(root, {viewport,hasTouch:true});
   await connect(view.page);
   await chooseCase(view.page, journey.challenged.case_id);
-  await view.page.locator('[data-nav="Settlement"]').click();
+  await view.page.locator('nav [data-nav="Settlement"]').click();
   check(`${name} stable view has no horizontal overflow`, await noOverflow(view.page));
   await view.page.screenshot({path:path.join(output,`final-${name}-${viewport.width}x${viewport.height}.png`),fullPage:true});
   await view.context.close();

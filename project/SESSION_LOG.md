@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-04 UTC | IMPL-M04.3-P3 browser verification and visual acceptance package
+
+Continued from Phase 2 commit `b9b41ea`. Added a three-engine browser matrix covering eight exact viewport sizes. Windows Chrome, Playwright Chromium and Firefox each pass 93 viewport assertions and 12 interaction assertions, for 315/315 total. The checks cover visible bounds, horizontal and vertical scroll ownership, complete radar placement, direct values, label overlap, readable text, console errors, every routed workspace, keyboard activation, browser Back, Escape focus restoration and reduced motion. The existing end-to-end suite passes 54/54 after correcting its navigation selectors for the compact Overview links.
+
+Captured a connected challenged Sandbox case at every required size and visually inspected the actual 1536 x 676, 1200 x 900, tablet, mobile and mobile-radar renders. The desktop primary workspace is fully visible and the smaller layouts use one deliberate document flow without horizontal clipping. No screenshot defect required another style change. Manual screen-reader testing was not run and is explicitly recorded as NOT RUN.
+
+The first journey attempt failed because the retained local server already owned port 4173. Reran unchanged on isolated port 4273. The successful real Sandbox run recorded 44 confirmed operations and 44 receipts. The unchallenged case settled PRIMARY ACCEPT to the beneficiary, while the challenged case stored its counterexample, reversed ACCEPT to FRESH REJECT and settled to the creator. Each receiver balance increased by exactly `1000000000000000000000000` yoctoNEAR and each payout callback reported SUCCESS. No reviewer-independence claim is made because all six keys share one local process. No paid call, deployment, production secret, testnet or mainnet action occurred.
+
 ## 2026-11-04 UTC | IMPL-M04.3-P2 accurate radar values and retrieval states
 
 Continued from Phase 1 commit `f14c87f`. Audited the coverage module and found two semantic defects: evidence retrieval exceptions were collapsed into `false`, and Criteria, Evidence and Overall changed only a label while preserving the same profile. The chart also required users to infer values solely from wedge depth.

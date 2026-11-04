@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-060 | M04.3 local browser gate complete with owner acceptance separate | 2026-11-04
+
+ACCEPTED: complete the M04.3 local engineering gate because all three phases pass sequentially, actual rendered screenshots were inspected, three browser engines pass the full viewport matrix, and both real local Sandbox journeys still settle correctly. Keep owner visual acceptance and manual screen-reader review as separate open gates. Keep AC31 and AC32 blocked until their frozen testnet and live-provider requirements are separately authorized and proven. A local controlled six-account run is not reviewer independence evidence.
+
 ## D-059 | Radar status and lens semantics are explicit | 2026-11-04
 
 ACCEPTED: measured zero is a valid `0%` with a nonzero denominator. `N/A` means the measurement does not apply, `Locked` means protected records require participant authorization, `Unavailable` means retrieval failed, and `Missing` means an expected record was not returned. None of these non-measured states may render as measured zero. Criteria, Evidence and Overall are scoped lenses, not cosmetic tabs: Criteria covers acceptance records, Evidence covers adjudication readiness and Overall covers all eight lifecycle sectors. Each rendered metric retains exact numerator, denominator, source, status and observation time. Coverage remains separate from model confidence, evidence truthfulness and settlement authority.

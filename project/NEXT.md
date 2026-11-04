@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | M04.3 owner visual review
+
+Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P3. Present the inspected visible-viewport screenshots, three-state radar comparison, exact metric table and browser reports for explicit owner review. Do not mark visual acceptance without the owner's response. A manual assistive-technology screen-reader session remains open and must be recorded separately if performed. AC31 and AC32 remain blocked until authorized testnet deployment and live provider records prove their frozen scope. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without separate authorization.
+
 ## Active next task | M04.3 Phase 3 browser verification and visual evidence
 
 Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P2. Run visible-viewport verification in Chromium, installed Windows Chrome and Firefox across 1536 x 676, 1366 x 768, 1200 x 900, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320px effective width. Verify every stable workspace, keyboard navigation, browser Back, Escape, focus restoration, zoom, reduced motion and connected, disconnected, unavailable, pending, challenged and settled states. Rerun service, frontend, wallet and relevant journey regressions, confirm retained Sandbox settlement evidence and record manual screen-reader testing separately. Inspect all actual screenshots before the final checkpoint. Do not claim owner acceptance.

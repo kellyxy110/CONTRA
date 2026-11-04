@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-04-IMPL-M04.3-P3
+
+M04.3 Phase 3 browser verification is COMPLETE at the authorized local scope. Windows Chrome, Playwright Chromium and Firefox each pass 105 checks across 1536 x 676, 1366 x 768, 1200 x 900, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320 x 844, for 315/315 total checks. The matrix verifies visible viewport boundaries, complete radar placement, direct values, label overlap, console output, keyboard workspace navigation, browser Back, Escape focus restoration and reduced motion. Actual screenshots were inspected after the numerical gate.
+
+Fresh connected Sandbox captures cover all target sizes. Both local settlement journeys were reexecuted with 44 confirmed operations and 44 receipts. The unchallenged PRIMARY ACCEPT paid exactly 1 NEAR to the beneficiary, and the challenged case reversed PRIMARY ACCEPT to FRESH REJECT and paid exactly 1 NEAR to the creator. Both callbacks recorded SUCCESS. Repository tests pass 35/35, the radar gate passes 17/17, the desktop viewport gate passes, the wallet bundle builds and the reference hash remains exact. Manual screen-reader testing was not run and is not claimed. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED. Owner visual acceptance remains pending.
+
 ## Current checkpoint | CONTRA-2026-11-04-IMPL-M04.3-P2
 
 M04.3 Phase 2 radar correction is COMPLETE. The chart displays a direct value beside every sector label and distinguishes measured 0%, partial progress, full progress, N/A, protected evidence marked Locked, unavailable retrieval and missing records. Every metric preserves numerator, denominator, source, status and observation time. Retrieval and authorization errors no longer become false zero coverage.
