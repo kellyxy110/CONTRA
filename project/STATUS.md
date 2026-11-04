@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-04-IMPL-M04.3-P2
+
+M04.3 Phase 2 radar correction is COMPLETE. The chart displays a direct value beside every sector label and distinguishes measured 0%, partial progress, full progress, N/A, protected evidence marked Locked, unavailable retrieval and missing records. Every metric preserves numerator, denominator, source, status and observation time. Retrieval and authorization errors no longer become false zero coverage.
+
+The three tabs now have documented scopes. Criteria includes Evidence, Provenance, Keyboard and Criteria. Evidence includes Evidence, Provenance, Review and Quorum. Overall includes all eight lifecycle measurements and is the default. Excluded sectors are visibly N/A for that lens while retaining their underlying records in the metric data.
+
+Deterministic tests cover no case, created/unfunded, funded/no evidence, evidence/incomplete review, provisional, active challenge, incomplete fresh review, settled unchallenged, settled challenged, inaccessible, unavailable, missing and not-applicable states. Results: 35/35 repository tests and 17/17 rendered radar checks pass. Genuine case switching refreshes all eight measurements. Side-by-side zero, partial and complete fixture screenshots plus genuine Sandbox screenshots are under `project/artifacts/m043/phase2/`. Phase 3 browser verification is next. Owner visual acceptance remains pending.
+
 ## Current checkpoint | CONTRA-2026-11-04-IMPL-M04.3-P1
 
 M04.3 Phase 1 desktop workspace correction is COMPLETE. Owner visual acceptance of M04.2 was rejected. The root cause was the combined desktop `min-height:810px`, `min-height:756px` and cumulative fixed section minimums, which produced an 842px shell and 206px of document overflow at 1536 x 676. The corrected short-desktop shell is 652px tall at y=12, with a 597px main workspace and no document or column scrollbar.

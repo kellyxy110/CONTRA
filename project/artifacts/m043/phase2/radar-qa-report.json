@@ -1,0 +1,643 @@
+{
+  "checkpoint": "CONTRA-2026-11-04-IMPL-M04.3-P2",
+  "checks": [
+    {
+      "name": "created-unfunded-zero renders exact values",
+      "pass": true,
+      "detail": "{\"Evidence\":\"measured:0/2:0%\",\"Provenance\":\"not-applicable:0/0:N/A\",\"Review\":\"measured:0/3:0%\",\"Finality\":\"measured:0/4:0%\",\"Challenge\":\"not-applicable:0/0:N/A\",\"Quorum\":\"measured:0/2:0%\",\"Keyboard\":\"measured:0/1:0%\",\"Criteria\":\"measured:0/4:0%\"}"
+    },
+    {
+      "name": "created-unfunded-zero labels do not overlap",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"left\":289.6701551476767,\"top\":12.774569985437543,\"right\":331.4362073937705,\"bottom\":43.79456998543755},{\"label\":\"Provenance\",\"left\":366.98543001456244,\"top\":90.08984485232325,\"right\":420.7839987401484,\"bottom\":121.10984485232326},{\"label\":\"Review\",\"left\":366.98543001456244,\"top\":199.43015514767671,\"right\":399.4424765233515,\"bottom\":230.4501551476767},{\"label\":\"Finality\",\"left\":289.6701551476767,\"top\":276.7454300145624,\"right\":322.3488355675986,\"bottom\":307.7654300145624},{\"label\":\"Challenge\",\"left\":134.7620500525186,\"top\":276.7454300145624,\"right\":180.32984485232328,\"bottom\":307.7654300145624},{\"label\":\"Quorum\",\"left\":66.61904691414853,\"top\":199.4301551476768,\"right\":103.01456998543759,\"bottom\":230.45015514767678},{\"label\":\"Keyboard\",\"left\":59.6300027246954,\"top\":90.0898448523232,\"right\":103.01456998543759,\"bottom\":121.1098448523232},{\"label\":\"Criteria\",\"left\":146.98173083865132,\"top\":12.774569985437571,\"right\":180.3298448523232,\"bottom\":43.794569985437576}]"
+    },
+    {
+      "name": "created-unfunded-zero labels fit the chart",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "created-unfunded-zero exposes values in accessible text",
+      "pass": true,
+      "detail": "Radar, Overall lens. Evidence 0%; Provenance N/A; Review 0%; Finality 0%; Challenge N/A; Quorum 0%; Keyboard 0%; Criteria 0%. Coverage is not confidence, truthfulness or settlement authority."
+    },
+    {
+      "name": "fresh-review-partial renders exact values",
+      "pass": true,
+      "detail": "{\"Evidence\":\"measured:2/2:100%\",\"Provenance\":\"measured:2/2:100%\",\"Review\":\"measured:1/3:33%\",\"Finality\":\"measured:0/4:0%\",\"Challenge\":\"measured:3/4:75%\",\"Quorum\":\"measured:1/2:50%\",\"Keyboard\":\"measured:0/1:0%\",\"Criteria\":\"measured:2/4:50%\"}"
+    },
+    {
+      "name": "fresh-review-partial labels do not overlap",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"left\":289.6701551476767,\"top\":12.774569985437543,\"right\":331.4362073937705,\"bottom\":43.79456998543755},{\"label\":\"Provenance\",\"left\":366.98543001456244,\"top\":90.08984485232325,\"right\":420.7839987401484,\"bottom\":121.10984485232326},{\"label\":\"Review\",\"left\":366.98543001456244,\"top\":199.43015514767671,\"right\":399.4424765233515,\"bottom\":230.4501551476767},{\"label\":\"Finality\",\"left\":289.6701551476767,\"top\":276.7454300145624,\"right\":322.3488355675986,\"bottom\":307.7654300145624},{\"label\":\"Challenge\",\"left\":134.7620500525186,\"top\":276.7454300145624,\"right\":180.32984485232328,\"bottom\":307.7654300145624},{\"label\":\"Quorum\",\"left\":66.61904691414853,\"top\":199.4301551476768,\"right\":103.01456998543759,\"bottom\":230.45015514767678},{\"label\":\"Keyboard\",\"left\":59.6300027246954,\"top\":90.0898448523232,\"right\":103.01456998543759,\"bottom\":121.1098448523232},{\"label\":\"Criteria\",\"left\":146.98173083865132,\"top\":12.774569985437571,\"right\":180.3298448523232,\"bottom\":43.794569985437576}]"
+    },
+    {
+      "name": "fresh-review-partial labels fit the chart",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "fresh-review-partial exposes values in accessible text",
+      "pass": true,
+      "detail": "Radar, Overall lens. Evidence 100%; Provenance 100%; Review 33%; Finality 0%; Challenge 75%; Quorum 50%; Keyboard 0%; Criteria 50%. Coverage is not confidence, truthfulness or settlement authority."
+    },
+    {
+      "name": "Criteria, Evidence and Overall tabs have distinct profiles",
+      "pass": true,
+      "detail": "[{\"lens\":\"Criteria\",\"profile\":[\"measured:1\",\"measured:1\",\"not-applicable:0\",\"not-applicable:0\",\"not-applicable:0\",\"not-applicable:0\",\"measured:0\",\"measured:0.5\"],\"description\":\"Acceptance-record lens: linked criterion evidence, source provenance, verified keyboard results and criterion completion.\"},{\"lens\":\"Evidence\",\"profile\":[\"measured:1\",\"measured:1\",\"measured:0.3333333333333333\",\"not-applicable:0\",\"not-applicable:0\",\"measured:0.5\",\"not-applicable:0\",\"not-applicable:0\"],\"description\":\"Adjudication-readiness lens: retrievable evidence, provenance, selected-round participation and quorum.\"},{\"lens\":\"Overall\",\"profile\":[\"measured:1\",\"measured:1\",\"measured:0.3333333333333333\",\"measured:0\",\"measured:0.75\",\"measured:0.5\",\"measured:0\",\"measured:0.5\"],\"description\":\"Lifecycle lens: all eight evidence, review, challenge and settlement measurements.\"}]"
+    },
+    {
+      "name": "settled-challenged-complete renders exact values",
+      "pass": true,
+      "detail": "{\"Evidence\":\"measured:2/2:100%\",\"Provenance\":\"measured:2/2:100%\",\"Review\":\"measured:3/3:100%\",\"Finality\":\"measured:4/4:100%\",\"Challenge\":\"measured:4/4:100%\",\"Quorum\":\"measured:2/2:100%\",\"Keyboard\":\"measured:1/1:100%\",\"Criteria\":\"measured:4/4:100%\"}"
+    },
+    {
+      "name": "settled-challenged-complete labels do not overlap",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"left\":289.6701551476767,\"top\":12.774569985437543,\"right\":331.4362073937705,\"bottom\":43.79456998543755},{\"label\":\"Provenance\",\"left\":366.98543001456244,\"top\":90.08984485232325,\"right\":420.7839987401484,\"bottom\":121.10984485232326},{\"label\":\"Review\",\"left\":366.98543001456244,\"top\":199.43015514767671,\"right\":399.4424765233515,\"bottom\":230.4501551476767},{\"label\":\"Finality\",\"left\":289.6701551476767,\"top\":276.7454300145624,\"right\":322.3488355675986,\"bottom\":307.7654300145624},{\"label\":\"Challenge\",\"left\":134.7620500525186,\"top\":276.7454300145624,\"right\":180.32984485232328,\"bottom\":307.7654300145624},{\"label\":\"Quorum\",\"left\":66.61904691414853,\"top\":199.4301551476768,\"right\":103.01456998543759,\"bottom\":230.45015514767678},{\"label\":\"Keyboard\",\"left\":59.6300027246954,\"top\":90.0898448523232,\"right\":103.01456998543759,\"bottom\":121.1098448523232},{\"label\":\"Criteria\",\"left\":146.98173083865132,\"top\":12.774569985437571,\"right\":180.3298448523232,\"bottom\":43.794569985437576}]"
+    },
+    {
+      "name": "settled-challenged-complete labels fit the chart",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "settled-challenged-complete exposes values in accessible text",
+      "pass": true,
+      "detail": "Radar, Overall lens. Evidence 100%; Provenance 100%; Review 100%; Finality 100%; Challenge 100%; Quorum 100%; Keyboard 100%; Criteria 100%. Coverage is not confidence, truthfulness or settlement authority."
+    },
+    {
+      "name": "disconnected read-only case keeps protected evidence locked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "locked data is not rendered as measured zero",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "genuine case switching refreshes all eight measurements",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser console remains error-free",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "created-unfunded-zero",
+      "path": "C:\\Users\\user\\Desktop\\CONTRA\\project\\artifacts\\m043\\phase2\\radar-created-unfunded-zero.png",
+      "metrics": [
+        {
+          "label": "Evidence",
+          "numerator": 0,
+          "denominator": 2,
+          "source": "Frozen criteria with a selected manifest record whose linked source digests are retrievable",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        },
+        {
+          "label": "Provenance",
+          "numerator": 0,
+          "denominator": 0,
+          "source": "Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance",
+          "status": "not-applicable",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "No evidence manifest has been selected.",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "N/A",
+          "ratio": 0
+        },
+        {
+          "label": "Review",
+          "numerator": 0,
+          "denominator": 3,
+          "source": "Completed reviewer reveals in selected round 0",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        },
+        {
+          "label": "Finality",
+          "numerator": 0,
+          "denominator": 4,
+          "source": "Completed final disposition, payout intent, observed callback result and settled-state milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        },
+        {
+          "label": "Challenge",
+          "numerator": 0,
+          "denominator": 0,
+          "source": "Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones",
+          "status": "not-applicable",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "No challenge is confirmed.",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "N/A",
+          "ratio": 0
+        },
+        {
+          "label": "Quorum",
+          "numerator": 0,
+          "denominator": 2,
+          "source": "Largest matching disposition count in selected round 0 against the policy threshold",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        },
+        {
+          "label": "Keyboard",
+          "numerator": 0,
+          "denominator": 1,
+          "source": "Keyboard criteria with an independently recorded and verified FULFILLED evaluation",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        },
+        {
+          "label": "Criteria",
+          "numerator": 0,
+          "denominator": 4,
+          "source": "Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        }
+      ]
+    },
+    {
+      "name": "fresh-review-partial",
+      "path": "C:\\Users\\user\\Desktop\\CONTRA\\project\\artifacts\\m043\\phase2\\radar-fresh-review-partial.png",
+      "metrics": [
+        {
+          "label": "Evidence",
+          "numerator": 2,
+          "denominator": 2,
+          "source": "Frozen criteria with a selected manifest record whose linked source digests are retrievable",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Provenance",
+          "numerator": 2,
+          "denominator": 2,
+          "source": "Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Review",
+          "numerator": 1,
+          "denominator": 3,
+          "source": "Completed reviewer reveals in selected round 1",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "33%",
+          "ratio": 0.3333333333333333
+        },
+        {
+          "label": "Finality",
+          "numerator": 0,
+          "denominator": 4,
+          "source": "Completed final disposition, payout intent, observed callback result and settled-state milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        },
+        {
+          "label": "Challenge",
+          "numerator": 3,
+          "denominator": 4,
+          "source": "Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "75%",
+          "ratio": 0.75
+        },
+        {
+          "label": "Quorum",
+          "numerator": 1,
+          "denominator": 2,
+          "source": "Largest matching disposition count in selected round 1 against the policy threshold",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "50%",
+          "ratio": 0.5
+        },
+        {
+          "label": "Keyboard",
+          "numerator": 0,
+          "denominator": 1,
+          "source": "Keyboard criteria with an independently recorded and verified FULFILLED evaluation",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "0%",
+          "ratio": 0
+        },
+        {
+          "label": "Criteria",
+          "numerator": 2,
+          "denominator": 4,
+          "source": "Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "50%",
+          "ratio": 0.5
+        }
+      ]
+    },
+    {
+      "name": "settled-challenged-complete",
+      "path": "C:\\Users\\user\\Desktop\\CONTRA\\project\\artifacts\\m043\\phase2\\radar-settled-challenged-complete.png",
+      "metrics": [
+        {
+          "label": "Evidence",
+          "numerator": 2,
+          "denominator": 2,
+          "source": "Frozen criteria with a selected manifest record whose linked source digests are retrievable",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Provenance",
+          "numerator": 2,
+          "denominator": 2,
+          "source": "Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Review",
+          "numerator": 3,
+          "denominator": 3,
+          "source": "Completed reviewer reveals in selected round 1",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Finality",
+          "numerator": 4,
+          "denominator": 4,
+          "source": "Completed final disposition, payout intent, observed callback result and settled-state milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Challenge",
+          "numerator": 4,
+          "denominator": 4,
+          "source": "Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Quorum",
+          "numerator": 2,
+          "denominator": 2,
+          "source": "Largest matching disposition count in selected round 1 against the policy threshold",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Keyboard",
+          "numerator": 1,
+          "denominator": 1,
+          "source": "Keyboard criteria with an independently recorded and verified FULFILLED evaluation",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Criteria",
+          "numerator": 4,
+          "denominator": 4,
+          "source": "Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation",
+          "status": "measured",
+          "observedAt": "2026-11-04T00:00:00.000Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        }
+      ]
+    }
+  ],
+  "genuineProfiles": [
+    {
+      "case_id": "756d7a074c66104dcdf563f5a02a3a719bd41545a6953c1639184622244cf072",
+      "metrics": [
+        {
+          "label": "Evidence",
+          "numerator": 1,
+          "denominator": 1,
+          "source": "Frozen criteria with a selected manifest record whose linked source digests are retrievable",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Provenance",
+          "numerator": 1,
+          "denominator": 1,
+          "source": "Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Review",
+          "numerator": 2,
+          "denominator": 3,
+          "source": "Completed reviewer reveals in selected round 0",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "67%",
+          "ratio": 0.6666666666666666
+        },
+        {
+          "label": "Finality",
+          "numerator": 4,
+          "denominator": 4,
+          "source": "Completed final disposition, payout intent, observed callback result and settled-state milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Challenge",
+          "numerator": 0,
+          "denominator": 0,
+          "source": "Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones",
+          "status": "not-applicable",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "No challenge is confirmed.",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "N/A",
+          "ratio": 0
+        },
+        {
+          "label": "Quorum",
+          "numerator": 2,
+          "denominator": 2,
+          "source": "Largest matching disposition count in selected round 0 against the policy threshold",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Keyboard",
+          "numerator": 0,
+          "denominator": 0,
+          "source": "Keyboard criteria with an independently recorded and verified FULFILLED evaluation",
+          "status": "missing",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "Criterion evaluation records are missing.",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "Missing",
+          "ratio": 0
+        },
+        {
+          "label": "Criteria",
+          "numerator": 0,
+          "denominator": 0,
+          "source": "Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation",
+          "status": "missing",
+          "observedAt": "2026-11-04T01:54:31.933Z",
+          "reason": "Criterion evaluation records are missing.",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "Missing",
+          "ratio": 0
+        }
+      ]
+    },
+    {
+      "case_id": "e97ff99942388b0e490e057435228fa82709ec76f2849b5c8c1bec579eca6e9c",
+      "metrics": [
+        {
+          "label": "Evidence",
+          "numerator": 1,
+          "denominator": 1,
+          "source": "Frozen criteria with a selected manifest record whose linked source digests are retrievable",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Provenance",
+          "numerator": 1,
+          "denominator": 1,
+          "source": "Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Review",
+          "numerator": 2,
+          "denominator": 3,
+          "source": "Completed reviewer reveals in selected round 1",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "67%",
+          "ratio": 0.6666666666666666
+        },
+        {
+          "label": "Finality",
+          "numerator": 4,
+          "denominator": 4,
+          "source": "Completed final disposition, payout intent, observed callback result and settled-state milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Challenge",
+          "numerator": 4,
+          "denominator": 4,
+          "source": "Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Quorum",
+          "numerator": 2,
+          "denominator": 2,
+          "source": "Largest matching disposition count in selected round 1 against the policy threshold",
+          "status": "measured",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "100%",
+          "ratio": 1
+        },
+        {
+          "label": "Keyboard",
+          "numerator": 0,
+          "denominator": 0,
+          "source": "Keyboard criteria with an independently recorded and verified FULFILLED evaluation",
+          "status": "missing",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "Criterion evaluation records are missing.",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "Missing",
+          "ratio": 0
+        },
+        {
+          "label": "Criteria",
+          "numerator": 0,
+          "denominator": 0,
+          "source": "Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation",
+          "status": "missing",
+          "observedAt": "2026-11-04T01:54:34.079Z",
+          "reason": "Criterion evaluation records are missing.",
+          "lens": "Overall",
+          "scope": "included",
+          "value": "Missing",
+          "ratio": 0
+        }
+      ]
+    }
+  ],
+  "consoleErrors": []
+}

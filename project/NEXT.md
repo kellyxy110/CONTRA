@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | M04.3 Phase 3 browser verification and visual evidence
+
+Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P2. Run visible-viewport verification in Chromium, installed Windows Chrome and Firefox across 1536 x 676, 1366 x 768, 1200 x 900, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320px effective width. Verify every stable workspace, keyboard navigation, browser Back, Escape, focus restoration, zoom, reduced motion and connected, disconnected, unavailable, pending, challenged and settled states. Rerun service, frontend, wallet and relevant journey regressions, confirm retained Sandbox settlement evidence and record manual screen-reader testing separately. Inspect all actual screenshots before the final checkpoint. Do not claim owner acceptance.
+
 ## Active next task | M04.3 Phase 2 accurate and readable radar
 
 Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P1. Define meaningful Criteria, Evidence and Overall scopes, display every sector value directly, and preserve exact numerator, denominator, source and observation time. Distinguish measured zero, unavailable, inaccessible and not applicable. Never convert evidence authorization or network failures to zero. Verify no selected case, created/unfunded, funded/no evidence, evidence/incomplete review, provisional, active challenge, incomplete fresh review, settled unchallenged, settled challenged and missing/inaccessible/not-applicable states. Use genuine Sandbox records where available and label deterministic fixtures. Submit side-by-side visible-viewport radar screenshots for at least three distinct states with exact values before Phase 3.

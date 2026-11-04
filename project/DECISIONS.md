@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-059 | Radar status and lens semantics are explicit | 2026-11-04
+
+ACCEPTED: measured zero is a valid `0%` with a nonzero denominator. `N/A` means the measurement does not apply, `Locked` means protected records require participant authorization, `Unavailable` means retrieval failed, and `Missing` means an expected record was not returned. None of these non-measured states may render as measured zero. Criteria, Evidence and Overall are scoped lenses, not cosmetic tabs: Criteria covers acceptance records, Evidence covers adjudication readiness and Overall covers all eight lifecycle sectors. Each rendered metric retains exact numerator, denominator, source, status and observation time. Coverage remains separate from model confidence, evidence truthfulness and settlement authority.
+
 ## D-058 | Primary desktop workspace must fit the visible short viewport | 2026-11-04
 
 ACCEPTED: the Overview at 1536 x 676 must fit case summary, progress, complete radar, primary actions and navigation inside the visible viewport without document or independent column scrolling. Extended reviewer lists, evidence records and event history belong in their stable workspaces; Overview may show compact sourced summaries and direct links. Use flexible desktop grid rows rather than cumulative fixed minimum heights. Preserve the three-column identity and 1200 x 900 visual system, but viewport usability takes precedence over the historical 810px minimum-height dependency. This supersedes the M04.2 short-desktop document-scroll approach in D-055 while retaining its prohibition on three independent scrollbars.

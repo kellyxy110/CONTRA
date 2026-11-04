@@ -41,3 +41,58 @@ The mandatory corrected screenshot is `project/artifacts/m043/phase1/desktop-sho
 ## Phase 1 gate
 
 PASS. The screenshots were inspected after the numerical checks. Phase 2 may proceed. Owner visual acceptance is not claimed.
+
+## Phase 2 measurement definitions
+
+| Sector | Numerator | Denominator | Source |
+| --- | --- | --- | --- |
+| Evidence | Frozen criteria with a selected manifest record whose linked sources are retrievable | Frozen criteria | Selected evidence manifest and source retrieval results |
+| Provenance | Retrievable selected-manifest sources with origin, capture time and submitter | Selected-manifest sources | Selected evidence manifest provenance |
+| Review | Completed reveals in the selected primary or fresh round | Appointed slots in the selected round | Contract round records |
+| Finality | Completed disposition, payout intent, callback observation and settled state | Four lifecycle milestones | Contract case and payout records |
+| Challenge | Completed counterexample, fresh commit, fresh reveal and fresh resolution | Four challenge milestones | Contract challenge and fresh-round records |
+| Quorum | Largest matching disposition count capped at threshold | Two matching reveals | Contract round records and frozen policy |
+| Keyboard | Verified FULFILLED keyboard evaluations | Keyboard criteria | Protected criterion evaluation records |
+| Criteria | Valid linked evidence plus recorded evaluation entries | Two records per frozen criterion | Protected manifest and evaluation records |
+
+Measured zero has a nonzero denominator and displays `0%`. N/A means the measurement does not apply. Locked means the user lacks access to protected records. Unavailable means retrieval failed. Missing means an expected record was not returned. These states never masquerade as measured zero.
+
+## Phase 2 lens definitions
+
+- Criteria: Evidence, Provenance, Keyboard and Criteria acceptance records.
+- Evidence: Evidence, Provenance, Review and Quorum adjudication readiness.
+- Overall: all eight lifecycle measurements. This is the default.
+
+An excluded sector displays N/A for the selected lens while its underlying numerator, denominator, source and status remain in the metric record.
+
+## Genuine Sandbox values
+
+Observation records are preserved in `radar-qa-report.json`. The selected genuine challenged case is `e97ff99942388b0e490e057435228fa82709ec76f2849b5c8c1bec579eca6e9c`.
+
+| Sector | Value | Numerator | Denominator | Status | Source |
+| --- | ---: | ---: | ---: | --- | --- |
+| Evidence | 100% | 1 | 1 | measured | Retrievable source-linked selected manifest criterion |
+| Provenance | 100% | 1 | 1 | measured | Retrievable source with complete provenance |
+| Review | 67% | 2 | 3 | measured | Fresh round reveals |
+| Finality | 100% | 4 | 4 | measured | Disposition, intent, callback and settled state |
+| Challenge | 100% | 4 | 4 | measured | Counterexample, fresh commit, fresh reveal and resolution |
+| Quorum | 100% | 2 | 2 | measured | Largest matching fresh-round disposition count |
+| Keyboard | Missing | 0 | 0 | missing | No independent criterion evaluation record returned |
+| Criteria | Missing | 0 | 0 | missing | No independent criterion evaluation record returned |
+
+The genuine unchallenged case differs at Challenge, which is N/A, and uses primary round review and quorum sources. Protected sectors display Locked when disconnected rather than false 0%.
+
+## Phase 2 verification
+
+- `npm test`: 35/35 pass.
+- `npm run test:frontend:radar:m043`: 17/17 pass.
+- `npm run test:frontend:desktop:m043`: complete responsive matrix passes.
+- Browser console errors: zero.
+- Label overlap: none in zero, partial and complete rendered states.
+- Case switching: all eight genuine metrics refresh and the two profiles differ.
+
+The required comparison is `project/artifacts/m043/phase2/radar-three-state-comparison.png`. It contains clearly labeled deterministic created/unfunded zero, incomplete fresh-review partial and settled challenged complete fixtures. Individual fixture screenshots, genuine case screenshots and the exact report are stored beside it. Deterministic fixtures are not transactions.
+
+## Phase 2 gate
+
+PASS. The actual screenshots were inspected after the calculations passed. Phase 3 may proceed. Owner visual acceptance is not claimed.

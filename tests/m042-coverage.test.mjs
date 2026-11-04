@@ -9,9 +9,9 @@ const SOURCE = {
   Provenance: 'Selected manifest sources with retrievable bytes and origin, capture time and submitter provenance',
   Review: 'Completed reviewer reveals in selected round 0',
   Finality: 'Completed final disposition, payout intent, observed callback result and settled-state milestones',
-  Challenge: 'Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones; N/A without a challenge',
+  Challenge: 'Confirmed counterexample, fresh commit, fresh reveal and fresh resolution milestones',
   Quorum: 'Largest matching disposition count in selected round 0 against the policy threshold',
-  Keyboard: 'Keyboard criteria with an independently recorded and verified FULFILLED evaluation; N/A when evaluation records are unavailable',
+  Keyboard: 'Keyboard criteria with an independently recorded and verified FULFILLED evaluation',
   Criteria: 'Per-criterion completion from two independent records: valid linked evidence and a recorded evaluation'
 };
 const slots = dispositions => Array.from({length: 3}, (_, index) => ({
@@ -26,6 +26,7 @@ const baseCase = overrides => ({
   resolution_basis: null,
   payout: null,
   challenge: null,
+  evidence_digest: 'manifest',
   terms: {
     criteria: [
       {criterion_id: 1, kind: 'GENERAL', requirement_digest: 'requirement-1'},
@@ -69,7 +70,7 @@ test('M04.2 radar states preserve exact numerator, denominator and render depth'
     },
     {
       name: 'draft with no evidence records',
-      metrics: coverage(baseCase({}), 'Overall', {__manifest: null, __criterion_evaluations: []}),
+      metrics: coverage(baseCase({evidence_digest:null}), 'Overall', {__manifest: null, __criterion_evaluations: []}),
       expected: {Evidence:[0,2,0],Provenance:[0,0,0],Review:[0,3,0],Finality:[0,4,0],Challenge:[0,0,0],Quorum:[0,2,0],Keyboard:[0,1,0],Criteria:[0,4,0]}
     },
     {
@@ -107,14 +108,21 @@ test('M04.2 radar states preserve exact numerator, denominator and render depth'
   for (const state of states) assert.deepEqual(vector(state.metrics), state.expected, state.name);
 });
 
-test('radar tabs cannot change operational truth and challenged cases select the fresh round', () => {
+test('radar tabs preserve underlying records while applying distinct scopes', () => {
   const c = baseCase({
     challenge: {counterexample_digest: 'counterexample'},
     rounds: [slots(['ACCEPT','ACCEPT','ACCEPT']), slots(['REJECT'])]
   });
   const byTab = ['Criteria', 'Evidence', 'Overall'].map(tab => coverage(c, tab, availability()));
-  assert.deepEqual(byTab.map(vector), [vector(byTab[0]), vector(byTab[0]), vector(byTab[0])]);
+  assert.notDeepEqual(byTab.map(vector)[0], byTab.map(vector)[1]);
+  assert.notDeepEqual(byTab.map(vector)[1], byTab.map(vector)[2]);
   assert.deepEqual(byTab.map(metrics => metrics[0].lens), ['Criteria', 'Evidence', 'Overall']);
+  assert.deepEqual(byTab.map(metrics => metrics.filter(metric => metric.scope === 'included').map(metric => metric.label)), [
+    ['Evidence','Provenance','Keyboard','Criteria'],
+    ['Evidence','Provenance','Review','Quorum'],
+    LABELS
+  ]);
+  assert.deepEqual(byTab.map(metrics => metrics.find(metric => metric.label === 'Review').numerator), [1,1,1]);
   assert.equal(byTab[0].find(metric => metric.label === 'Review').source, 'Completed reviewer reveals in selected round 1');
   assert.equal(byTab[0].find(metric => metric.label === 'Quorum').source, 'Largest matching disposition count in selected round 1 against the policy threshold');
 });

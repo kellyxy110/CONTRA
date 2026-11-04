@@ -120,6 +120,8 @@ small{font-size:11px;line-height:15px}
 .task p,.event p{font-size:11px;line-height:16px}
 .task .tags span{font-size:10px}
 .event time{font-size:10px}
+.chartlegend b.unavailable{background:transparent;border:1px solid var(--amber)}
+.chartlegend span b.na{background:transparent;border:1px solid #9BAAA4}
 .section-link{color:var(--mint);font-size:10px;line-height:24px;padding:0 4px}
 .section-summary{color:var(--muted);font-size:10px;line-height:15px;margin:8px 0 0}
 #material-summary{display:none;color:var(--muted);font-size:11px;line-height:16px}

@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-04 UTC | IMPL-M04.3-P2 accurate radar values and retrieval states
+
+Continued from Phase 1 commit `f14c87f`. Audited the coverage module and found two semantic defects: evidence retrieval exceptions were collapsed into `false`, and Criteria, Evidence and Overall changed only a label while preserving the same profile. The chart also required users to infer values solely from wedge depth.
+
+Introduced explicit measured, not-applicable, inaccessible, unavailable and missing states. Updated source verification to distinguish a genuine missing artifact from authorization or network failure. Disconnected users retain public chain measurements while protected evidence sectors show Locked. Each metric now carries numerator, denominator, source, status, reason and observation time. Criteria, Evidence and Overall now apply documented scopes, with Overall as the default.
+
+Redrew the canvas labels with direct values and status colors while preserving independent wedges, four reference rings, spokes and boundaries. Added exact label-box metadata and assertions. `npm test` passes 35/35. `npm run test:frontend:radar:m043` passes 17/17 rendered checks, including three deterministic profiles, label overlap, accessible values, distinct tabs, disconnected evidence locking and genuine two-case refresh. The Phase 1 desktop matrix still passes. Screenshots were inspected, not accepted from numerical checks alone. No new transaction, contract, provider, deployment, secret, testnet or mainnet action occurred.
+
 ## 2026-11-04 UTC | IMPL-M04.3-P1 visible desktop workspace
 
 Resumed `implementation/oct28` at `99ecb891518208ce39a9fd032428b233419c5a9d` after the owner rejected M04.2 visual acceptance. The initial 1536 x 676 viewport measured an 842px shell, 787px main area and 882px document height. The cause was the M04.2 `min-height:810px` shell, `min-height:756px` columns and cumulative fixed section minimums.
