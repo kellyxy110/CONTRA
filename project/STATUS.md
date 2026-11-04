@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-04-IMPL-M04.3-P1
+
+M04.3 Phase 1 desktop workspace correction is COMPLETE. Owner visual acceptance of M04.2 was rejected. The root cause was the combined desktop `min-height:810px`, `min-height:756px` and cumulative fixed section minimums, which produced an 842px shell and 206px of document overflow at 1536 x 676. The corrected short-desktop shell is 652px tall at y=12, with a 597px main workspace and no document or column scrollbar.
+
+The Overview now reserves visible space for case summary, progress, the complete radar and all three primary action cards. It shows two reviewer summaries, one recent activity and a compact materials count, with full reviewer, evidence and activity records available through their stable workspaces. The three-column identity remains intact. A second defect found by the new test, 31px of concealed middle-column overflow at 1200 x 900, was corrected with explicit flexible desktop grid rows and true viewport centering.
+
+The Phase 1 browser gate passes across 1536 x 676, 1366 x 768, 1200 x 900, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320 x 844. Screenshots and measurements are under `project/artifacts/m043/phase1/`. Phase 2 radar data and presentation correction is next. Owner visual acceptance remains rejected and pending a new review.
+
 ## Current checkpoint | CONTRA-2026-11-03-IMPL-M04.2-P3
 
 M04.2 Phase 3 and the three-phase correction are COMPLETE at the authorized local scope. Major workflows now use stable hash-routed views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Browser Back, direct routes and selected-case context are preserved. Focused dialogs remain only for focused actions.

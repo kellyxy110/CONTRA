@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-058 | Primary desktop workspace must fit the visible short viewport | 2026-11-04
+
+ACCEPTED: the Overview at 1536 x 676 must fit case summary, progress, complete radar, primary actions and navigation inside the visible viewport without document or independent column scrolling. Extended reviewer lists, evidence records and event history belong in their stable workspaces; Overview may show compact sourced summaries and direct links. Use flexible desktop grid rows rather than cumulative fixed minimum heights. Preserve the three-column identity and 1200 x 900 visual system, but viewport usability takes precedence over the historical 810px minimum-height dependency. This supersedes the M04.2 short-desktop document-scroll approach in D-055 while retaining its prohibition on three independent scrollbars.
+
 ## D-057 | Stable routed workspaces complete the M04.2 local frontend gate | 2026-11-03
 
 ACCEPTED: major workflows use stable navigable views with direct hash routes and selected-case context. Dialogs remain for focused actions only. Complete the M04.2 local frontend gate because the sequential responsive, operational radar and end-to-end verification gates pass without changing UX3C protocol or P0 financial safeguards. Keep owner visual acceptance, manual assistive-technology review, external wallet behavior, authorized testnet execution, paid providers and genuinely independent reviewer operators as separate gates. Record Linux Chromium as blocked when its browser binary cannot be downloaded; do not infer a pass from Windows Chromium.

@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-04 UTC | IMPL-M04.3-P1 visible desktop workspace
+
+Resumed `implementation/oct28` at `99ecb891518208ce39a9fd032428b233419c5a9d` after the owner rejected M04.2 visual acceptance. The initial 1536 x 676 viewport measured an 842px shell, 787px main area and 882px document height. The cause was the M04.2 `min-height:810px` shell, `min-height:756px` columns and cumulative fixed section minimums.
+
+Implemented a short-desktop grid with a 652px shell and 597px main area, keeping the complete radar, case summary, progress and all primary actions visible. Moved extended reviewer, evidence and activity records behind direct links to their existing stable workspaces while retaining sourced summaries on Overview. The first full matrix exposed 31px of concealed middle-column overflow and a document scrollbar at 1200 x 900; flexible grid rows and true viewport centering corrected both.
+
+The final `npm run test:frontend:desktop:m043` run passes visible-boundary, horizontal-overflow, document-scroll, column-scroll, control, typography and console checks across eight target viewports. The corrected 1536 x 676, 1200 x 900, tablet and mobile captures were visually inspected. No Rust, protocol, payout, Sandbox receipt, paid provider, deployment, secret, testnet or mainnet change occurred. Phase 2 radar correction is next; owner acceptance remains pending.
+
 ## 2026-11-03 UTC | IMPL-M04.2-P3 stable navigation and complete UX verification
 
 Continued from Phase 2 commit `117bd5ea4fb82ed83d2bb05d08cf27f9b43a0774`. Replaced major workflow dialogs with stable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Added hash routing, browser Back and direct-route synchronization, selected-case context and focused-action dialog retention. Audited every visible dashboard component and mapped its source, interaction, states and verification evidence.

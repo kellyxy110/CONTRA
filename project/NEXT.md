@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | M04.3 Phase 2 accurate and readable radar
+
+Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P1. Define meaningful Criteria, Evidence and Overall scopes, display every sector value directly, and preserve exact numerator, denominator, source and observation time. Distinguish measured zero, unavailable, inaccessible and not applicable. Never convert evidence authorization or network failures to zero. Verify no selected case, created/unfunded, funded/no evidence, evidence/incomplete review, provisional, active challenge, incomplete fresh review, settled unchallenged, settled challenged and missing/inaccessible/not-applicable states. Use genuine Sandbox records where available and label deterministic fixtures. Submit side-by-side visible-viewport radar screenshots for at least three distinct states with exact values before Phase 3.
+
 ## Active next task | M04.2 owner visual acceptance and external gates
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P3. The owner reviews the final desktop, tablet and mobile screenshots plus the running local populated application and either grants explicit visual acceptance or identifies a precise correction. Complete a manual assistive-technology screen-reader session and Linux Chromium verification when a compatible browser binary is available. AC31 and AC32 remain blocked until testnet deployment and paid provider use are separately authorized, credits and pricing are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without authorization.
