@@ -16,7 +16,7 @@ Dedicated reviewer tests pass 7/7, combined reviewer and wallet integration test
 - Split comprehensive baseline and journey verification into isolated parallel jobs with separate evidence and timing artifacts.
 - Added a truthful aggregate integration gate and preserved the 90-minute Sandbox timeout and separate F01 through F18 workflow.
 - Replaced repeated conservative block stepping with finalized-height calibration without shortening contract deadlines.
-- Local results: policy tests 7/7 and repository tests 76/76 passed; Core and Security policies and the wallet build passed. Fresh Linux Sandbox results remain pending on the optimisation PR.
+- Local results: policy tests 7/7 and repository tests 76/76 passed; Core and Security policies and the wallet build passed. GitHub run `42418916525` passed policy, the isolated nine-test baseline, both complete journeys and the aggregate gate. PR 5 merged as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`.
 
 ## 2026-11-07 | IMPL-M06-P1 final wallet hardening
 
