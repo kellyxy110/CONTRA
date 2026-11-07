@@ -56,13 +56,15 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p ci-output
-          ulimit -n 1048576
+          if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
+          echo "Open-file limits: soft=$(ulimit -Sn) hard=$(ulimit -Hn)"
           npm run test:sandbox 2>&1 | tee ci-output/sandbox-baseline.txt
       - name: Complete unchallenged and challenged journeys
         shell: bash
         run: |
           set -o pipefail
-          ulimit -n 1048576
+          if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
+          echo "Open-file limits: soft=$(ulimit -Sn) hard=$(ulimit -Hn)"
           npm run test:m04:journeys 2>&1 | tee ci-output/m04-journeys.txt
       - name: Validate fresh receipt and balance report
         run: node scripts/ci-historical-evidence.mjs
