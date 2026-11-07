@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "full": [
+    {"name": "contract and protocol invariants", "paths": ["contracts/adjudication/**", "packages/protocol/**", "docs/COMMITMENT_TEST_VECTORS.md"]},
+    {"name": "settlement and Sandbox infrastructure", "paths": ["services/chain/sandbox*.mjs", "tests/escrow.sandbox.test.mjs", "scripts/run-m04-journeys.mjs", "scripts/run-p0.mjs", "tests/financial.sandbox.test.mjs", "tests/financial-categories.mjs"]},
+    {"name": "integration routing infrastructure", "paths": [".github/workflows/integration.yml", "ci/integration-risk-map.json", "scripts/ci-integration-policy.mjs", "tests/ci-integration-policy.test.mjs"]}
+  ],
+  "focused": [
+    {"name": "reviewer and committee interaction", "paths": ["services/reviewers/**", "services/api/server.mjs", "services/api/store.mjs"], "test_pattern": "real unchallenged commit/reveal|confirmed challenge blocks ordinary finality|creator cannot profit by forcing challenged fresh-review timeout"},
+    {"name": "wallet and receipt interaction", "paths": ["services/wallet/**", "services/chain/rpc.mjs", "apps/web/wallet-source.mjs"], "test_pattern": "exact native funding|real unchallenged commit/reveal|successful native transfer with failed callback"}
+  ],
+  "fast_only": [
+    "README.md", "LICENSE", "AGENTS.md", "HANDOFF_TO_CODING_AGENT.md", "docs/**", "project/**", "design/**", "apps/web/**",
+    "services/api/auth.mjs", "services/api/rate-limit.mjs", "services/evaluators/**", "services/evidence/**", "services/runtime/**",
+    "tests/service.test.mjs", "tests/m05-runtime.test.mjs", "tests/m06-integration.test.mjs", "tests/m06-wallet-browser.test.mjs", "tests/m042-coverage.test.mjs", "tests/m043-coverage.test.mjs",
+    "package.json", "package-lock.json", ".github/workflows/core.yml", ".github/workflows/security.yml", ".github/workflows/contract.yml", ".github/workflows/financial-p0.yml", ".github/pull_request_template.md"
+  ]
+}

@@ -8,6 +8,12 @@ Implemented exact committee account, operator, revision and disclosure inspectio
 
 Focused reviewer tests pass 7/7. Combined M06 reviewer and wallet tests pass 17/17. The repository suite passes 76/76. The wallet production bundle, JavaScript syntax, diff check, Core policy, Security policy and dependency audit pass. The dependency baseline remains 14 low, two high and one critical inherited finding. No Sandbox transaction, live signing, testnet deployment, mainnet activity, provider call, secret change or spending occurred. Exact next action is publish the focused PR, obtain applicable green CI and merge under the standing policy.
 
+## 2026-11-07 UTC | CI Sandbox optimisation
+
+Merged PR 4 under the owner's standing green-check policy. The reviewed head was `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f`; Core `42408934722`, Security `42408934686` and Integration `42408934712` passed. The resulting `implementation/oct28` merge commit is `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`, created at `2026-11-07T21:48:15Z`.
+
+Created `ci/optimise-sandbox-runtime` and implemented maintained risk routing, a visible policy artifact, focused named Sandbox scenarios, isolated parallel full jobs and a strict aggregate gate. Unclassified work defaults to full. Added adaptive finalized-block advancement that calibrates against the observed block interval and retains exact contract deadlines. Local routing tests pass 7/7, repository tests pass 76/76, Core and Security policy scans pass and the wallet build passes. The current Windows process cannot execute the Linux Sandbox. GitHub Linux full verification and timing artifacts are the remaining gate. No transaction, deployment, signing, provider call, secret change or spending occurred.
+
 ## 2026-11-07 UTC | IMPL-M06-P1 final wallet hardening
 
 Resumed PR 4 at verified SHA `c24d236506f29d8efd0952463aff44f2e9fbe213` with a clean worktree and preserved `stash@{0}`. Added failing regressions before implementation. The first run proved a finalized RPC response without `result.transaction.hash` was accepted. The cross-layer audit then reproduced two related defects: a stale regressed success still left the RPC adapter as CONFIRMED, and a wallet-returned hash was lost locally when its server callback failed.

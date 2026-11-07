@@ -1,8 +1,12 @@
 # Decision ledger
 
-## D-072 | Reviewer continuity is account-scoped, encrypted and subordinate to frozen contract state | 2026-11-07
+## D-073 | Reviewer continuity is account-scoped, encrypted and subordinate to frozen contract state | 2026-11-07
 
 ACCEPTED. Reviewer onboarding and participation records must retain exact account, declared operator, disclosure digest and registry revision. Primary and fresh committees require six distinct accounts and six distinct declared operator IDs. This is an operational control check, not proof of independent real-world control. Reveal recovery may store only reviewer-supplied ciphertext plus immutable identity metadata. It must be account-scoped, durable, idempotent and conflict-safe. Service workspace, quorum and timeout outputs are advisory; only confirmed contract state can accept commitments, reveals, verdicts or settlement.
+
+## D-072 | Integration CI uses explicit fail-safe risk routing | 2026-11-07
+
+Every pull request receives a recorded integration classification from a maintained path mapping. Fast means no Sandbox execution was required and does not claim a Sandbox pass. Focused runs named onchain scenarios. Full runs the nine-test baseline and both complete journeys on isolated parallel runners. Unknown paths, integration into `main`, release candidates and scheduled verification default to full. F01 through F18 remain a separate financial gate. The 90-minute Sandbox timeout remains until measured evidence supports a change.
 
 ## D-071 | Finalized transaction identity must come from independent RPC proof | 2026-11-07
 
