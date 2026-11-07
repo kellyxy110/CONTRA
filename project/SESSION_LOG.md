@@ -1,5 +1,23 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M06-P1 wallet safety corrections
+
+Started from verified PR 4 head `a42d1f0aa60558d82556f4ab7d7f927ccc7f2609` on `feat/m06-wallet-lifecycle` with `stash@{0}` preserved. Added regression tests before implementation and observed five expected failures: ambiguous final RPC status was confirmed, prepared and handed-off states were absent, post-handoff rejection became FAILED, and browser UNKNOWN recovery was deleted.
+
+Implemented durable `PREPARED` and `SIGNING` separation, atomic handoff, conservative restart recovery, first-hash-only delayed callbacks and repository-wide hash uniqueness. Added explicit NEAR success and failure classification, RPC hash verification, final block freshness checks, transaction intent matching and atomic external terminal persistence. Added the server authorization boundary for live handoff, kept it false in normal startup, and made health and configuration responses distinguish preparation from live signing. Browser storage now retains UNKNOWN state by account, restores outstanding operations after reload and invokes the wallet only after server handoff.
+
+Final local evidence: focused M05/wallet/browser tests 31/31, complete repository tests 66/66, M05 runtime 18/18, wallet bundle build passed, JavaScript syntax and diff checks passed, Core and Security policy scans passed, and the dependency audit retained 17 inherited findings with no new baseline failure. `npm run test:sandbox` was attempted and blocked before launch by the native-Linux preflight because the current process is Windows. No Sandbox test, contract change, full P0 run, signing, transaction, deployment, provider call, secret change or spending occurred. Fresh Linux Core, Security and Integration runs are required after push. PR 4 and PR 3 remain unmerged.
+
+## 2026-11-07 UTC | IMPL-M06-P1 external wallet lifecycle local gate
+
+Verified `implementation/oct28` at `950ca25c8c5df35310a0cd61be5693df2a04b402`, created `feat/m06-wallet-lifecycle`, inspected `stash@{0}` without dropping it, and confirmed it contains wallet, reviewer and provider work. Applied it with the stash retained, then excluded reviewer/provider files and rebuilt the persistence migration as a wallet-only unit.
+
+Implemented persisted external-wallet intent before signing, exact call and role policy, session reload/renew/disconnect, stable operation identity, conflicting-payload prevention, persistent transaction hashes, finalized receipt matching and conservative restart behavior. Missing redirects and non-rejection interruptions lock UNKNOWN with no blind retry. A later callback may attach only the first hash and resume observation. Lower block observations, mismatched network, hash, signer, contract, method, arguments or deposit fail closed.
+
+Controlled simulations cover duplicate buttons and tabs through concurrent shared operation IDs, repeated callbacks, conflicts, rejection, interruption, reload, restart, RPC failure, delayed finality, stale regression, session expiry and account switching. `npm test` passes 60/60. The focused M05, service and wallet run passes 51/51, and the wallet bundle builds. Published code commit `379ff4e0111336da33579357a08c341ce6273dcb` as PR 4 into `implementation/oct28`. Genuine Core `42373449517`, Security `42373449483` and Integration `42373449454` passed. Integration completed the corrected nine-test baseline, both journeys, receipt and balance validation and artifact upload. No contract or financial invariant changed, so full P0 was not rerun. No live signing, transaction, deployment, provider call, secret change or spending occurred.
+
+PR 3 Integration `42370843796` also completed successfully. Its full accumulated diff is mergeable and all Core, Security, Contract and Integration checks pass. Review found the expected large historical evidence set, including two approximately 5.1 MB receipt journals and many image artifacts, plus historical whitespace warnings. Security scanning found no restricted credentials; the 17 inherited dependency findings remain disclosed. PR 3 stays unmerged pending explicit owner approval. Exact next work is owner review of PR 4, then a separate reviewer-control branch and PR.
+
 ## 2026-11-07 UTC | IMPL-M05.1 CI recovery local gate
 
 Started `ci/m05.1-recovery` at the verified M05 SHA `34c836bbd02dc672325800b2951714ee6e935659` and safely stashed unfinished M06 work without rewriting history. Added five pinned GitHub Actions workflows and supporting source-policy, secret, dependency-audit, ABI, exact-vector and retrospective-evidence checks. Added the CI verification matrix and pull request template.

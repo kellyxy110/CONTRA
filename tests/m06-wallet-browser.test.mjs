@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+function storage(seed={}){const values=new Map(Object.entries(seed));return {getItem:key=>values.has(key)?values.get(key):null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key),value:key=>values.get(key)};}
+
+test('UNKNOWN browser recovery records retain operation and account identity',async()=>{
+ globalThis.localStorage=storage({'contra-wallet-operations':JSON.stringify({'wallet-unknown':{operation_id:'wallet-unknown',account_id:'creator.testnet',status:'PENDING',tx_hash:null}})});globalThis.fetch=async()=>new Response(JSON.stringify({operation_id:'wallet-unknown',status:'UNKNOWN',tx_hash:null,payload:{signerId:'creator.testnet'}}),{status:200,headers:{'Content-Type':'application/json'}});const module=await import('../apps/web/wallet-source.mjs?unknown-recovery');const operation=await module.reconcileWalletTransaction({token:'token',operationId:'wallet-unknown',accountId:'creator.testnet'});assert.equal(operation.status,'UNKNOWN');const saved=module.pendingWalletOperations('creator.testnet');assert.equal(saved['wallet-unknown'].account_id,'creator.testnet');assert.equal(saved['wallet-unknown'].status,'UNKNOWN');
+});
+
+test('corrupt local storage is ignored without making a server request',async()=>{
+ let requests=0;globalThis.localStorage=storage({'contra-wallet-operations':'{broken'});globalThis.fetch=async()=>{requests++;throw Error('should not run');};const module=await import('../apps/web/wallet-source.mjs?corrupt-recovery');assert.deepEqual(module.pendingWalletOperations('creator.testnet'),{});assert.equal(requests,0);
+});
+
+test('wallet invocation occurs only after persisted handoff and rejection remains UNKNOWN',async()=>{
+ const requests=[];globalThis.localStorage=storage();globalThis.fetch=async(url)=>{requests.push(url);const interrupted=url.endsWith('/api/wallet/interrupt'),body={operation_id:'wallet-handoff',status:interrupted?'UNKNOWN':'SIGNING',tx_hash:null,payload:{signerId:'creator.testnet'}};return new Response(JSON.stringify(interrupted?body:{operation:body,signing_request:{operation_id:'wallet-handoff',transaction:{receiverId:'contra.testnet'}}}),{status:200,headers:{'Content-Type':'application/json'}});};const module=await import('../apps/web/wallet-source.mjs?handoff-order');let walletCalls=0;const wallet={signAndSendTransaction:async()=>{walletCalls++;throw Error('User rejected');}};await assert.rejects(module.sendPreparedWalletTransaction(wallet,{token:'token',operation:{operation_id:'wallet-handoff'}}),/rejected/);assert.deepEqual(requests,['/api/wallet/handoff','/api/wallet/interrupt']);assert.equal(walletCalls,1);assert.equal(module.pendingWalletOperations('creator.testnet')['wallet-handoff'].status,'UNKNOWN');
+});
+
+test('reload restoration inspects only the authenticated account records',async()=>{
+ globalThis.localStorage=storage({'contra-wallet-operations':JSON.stringify({alice:{operation_id:'alice',account_id:'alice.testnet',status:'UNKNOWN',tx_hash:null},bob:{operation_id:'bob',account_id:'bob.testnet',status:'UNKNOWN',tx_hash:null}})});const requests=[];globalThis.fetch=async url=>{requests.push(url);return new Response(JSON.stringify({operation_id:'alice',status:'UNKNOWN',tx_hash:null,payload:{signerId:'alice.testnet'}}),{status:200,headers:{'Content-Type':'application/json'}});};const module=await import('../apps/web/wallet-source.mjs?account-restore');const restored=await module.restoreWalletOperations({token:'token',accountId:'alice.testnet'});assert.equal(restored.length,1);assert.deepEqual(requests,['/api/operation?id=alice']);assert.equal(module.pendingWalletOperations('bob.testnet').bob.account_id,'bob.testnet');
+});
