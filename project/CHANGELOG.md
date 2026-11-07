@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-07 | IMPL-M06-P2 reviewer control local gate
+
+Added reviewer-control operations for exact active registry and disclosure matching, six-account and six-operator committee disjointness, phase-aware commit and reveal validation, missing-reviewer and quorum diagnostics, frozen vote commitment construction, and evidence-bound finding verification. Corrected reviewer confirmation preparation so the signer, active registry revision and disclosure digest must all match.
+
+Advanced SQLite to schema version 5 with durable encrypted reveal recovery packages, finalized registry observations and append-only reviewer audit records. Recovery packages are account and round scoped, idempotent for identical metadata, reject conflicting commitments or findings, survive restart and never expose another reviewer's ciphertext. Added protected reviewer control, workspace, recovery and audit endpoints. All outputs preserve the statement that distinct fixture accounts and declared operators do not prove independent control.
+
+Dedicated reviewer tests pass 7/7, combined reviewer and wallet integration tests pass 17/17 and the repository suite passes 76/76. Wallet bundle, syntax, diff, Core policy, Security policy and dependency baseline checks pass. The inherited dependency baseline remains 17 findings. PR 4 was merged into `implementation/oct28` as `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` before this unit. No live signing, transaction, deployment, paid inference, production secret or spending occurred.
+
 ## 2026-11-07 | IMPL-M06-P1 final wallet hardening
 
 Made finalized RPC transaction hash presence, format and exact equality mandatory. Added signer and contract checks in the RPC adapter, independent inner-hash and exact gas checks in lifecycle verification, final block identity validation, and UNKNOWN classification for stale or regressed success observations. Receipt-integrity exceptions now lock the durable operation UNKNOWN rather than being treated as ordinary RPC unavailability.

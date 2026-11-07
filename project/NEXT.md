@@ -1,5 +1,11 @@
 # Next execution task
 
+## Active next task | M06 Phase 2 reviewer-control PR and CI
+
+Publish `feat/m06-reviewer-control` as a focused pull request into the updated `implementation/oct28`. Run Core and Security CI plus the focused integration policy selected by the CI optimisation unit. Contract CI is required only if contract or protocol code changes; full Sandbox and financial P0 are not required for this service-only unit unless the risk policy classifies a later change as financially sensitive. Resolve actionable failures and merge under the standing green-check policy. Preserve `stash@{0}` until its provider content is recovered separately.
+
+After merge, begin M06 provider interoperability on its own feature branch using non-billable Meta, Baseten and Modal fixtures. Validate exact provider envelopes, strict structured outputs, evidence citations, prompt-injection boundaries, failure recovery, provenance and budget reservations. Do not enable paid inference, live signing, deployment, mainnet activity or production secrets.
+
 ## Active next task | M06 Phase 1 final owner merge gate
 
 Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-FINAL`, PR 4, PR 3 and `stash@{0}`. Obtain one fresh Core, Security and affected Linux Integration run on the intended final PR 4 head. Confirm branch protection, mergeability, final diff and review-conversation state. Do not merge until the owner explicitly authorizes it. If all checks pass, report M06 Phase 1 ready for owner merge approval with exact commit and run links. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED.

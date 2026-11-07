@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-072 | Reviewer continuity is account-scoped, encrypted and subordinate to frozen contract state | 2026-11-07
+
+ACCEPTED. Reviewer onboarding and participation records must retain exact account, declared operator, disclosure digest and registry revision. Primary and fresh committees require six distinct accounts and six distinct declared operator IDs. This is an operational control check, not proof of independent real-world control. Reveal recovery may store only reviewer-supplied ciphertext plus immutable identity metadata. It must be account-scoped, durable, idempotent and conflict-safe. Service workspace, quorum and timeout outputs are advisory; only confirmed contract state can accept commitments, reveals, verdicts or settlement.
+
 ## D-071 | Finalized transaction identity must come from independent RPC proof | 2026-11-07
 
 ACCEPTED: never infer a transaction hash from the hash used to make the RPC request. A finalized result must contain its own valid NEAR transaction hash and that hash must exactly equal the persisted operation hash. Before confirmation, independently verify network, final execution status, signer, contract receiver, exactly one expected FunctionCall action, method, canonical arguments, gas, deposit, final block identity and non-stale observation. Missing or contradictory integrity proof locks the operation UNKNOWN. A wallet-returned hash that has not reached the server is recovery evidence only: retain it by account and attach it through the idempotent callback after reload, without signing or broadcasting again.

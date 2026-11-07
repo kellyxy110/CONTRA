@@ -5,7 +5,7 @@ import {createHash,randomUUID,randomBytes} from 'node:crypto';
 export const sha256=b=>createHash('sha256').update(b).digest('hex');
 export class ApiError extends Error{constructor(status,message,details={}){super(message);this.status=status;Object.assign(this,details);}}
 export function canonical(value){if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';return JSON.stringify(value);}
-const SCHEMA_VERSION=4;
+const SCHEMA_VERSION=5;
 const MIGRATIONS=[
  `CREATE TABLE IF NOT EXISTS blobs(digest TEXT PRIMARY KEY,size INTEGER NOT NULL,media_type TEXT NOT NULL,created_at INTEGER NOT NULL);
   CREATE TABLE IF NOT EXISTS links(case_id TEXT NOT NULL,digest TEXT NOT NULL,actor TEXT NOT NULL,kind TEXT NOT NULL,PRIMARY KEY(case_id,digest,actor,kind));
@@ -24,7 +24,23 @@ const MIGRATIONS=[
   ALTER TABLE attempts ADD COLUMN payload TEXT;
   ALTER TABLE attempts ADD COLUMN observed_height INTEGER;`,
  `ALTER TABLE attempts ADD COLUMN handoff_at INTEGER;
-  CREATE UNIQUE INDEX IF NOT EXISTS attempts_tx_hash_unique ON attempts(tx_hash) WHERE tx_hash IS NOT NULL;`
+  CREATE UNIQUE INDEX IF NOT EXISTS attempts_tx_hash_unique ON attempts(tx_hash) WHERE tx_hash IS NOT NULL;`,
+ `CREATE TABLE IF NOT EXISTS review_packages(
+    reviewer_id TEXT NOT NULL,case_id TEXT NOT NULL,round_id INTEGER NOT NULL,
+    commitment TEXT NOT NULL,payload_digest TEXT NOT NULL,finding_digest TEXT NOT NULL,
+    evidence_digest TEXT NOT NULL,disposition TEXT NOT NULL,encryption TEXT NOT NULL,
+    ciphertext TEXT NOT NULL,created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL,
+    PRIMARY KEY(reviewer_id,case_id,round_id));
+  CREATE INDEX IF NOT EXISTS review_packages_case ON review_packages(case_id,round_id,reviewer_id);
+  CREATE TABLE IF NOT EXISTS reviewer_observations(
+    reviewer_id TEXT PRIMARY KEY,operator_id TEXT NOT NULL,revision TEXT NOT NULL,
+    disclosure_digest TEXT NOT NULL,active INTEGER NOT NULL,confirmed INTEGER NOT NULL,
+    observed_at INTEGER NOT NULL,body TEXT NOT NULL);
+  CREATE TABLE IF NOT EXISTS reviewer_audit(
+    seq INTEGER PRIMARY KEY AUTOINCREMENT,reviewer_id TEXT NOT NULL,case_id TEXT,
+    round_id INTEGER,action TEXT NOT NULL,detail_digest TEXT NOT NULL,created_at INTEGER NOT NULL);
+  CREATE INDEX IF NOT EXISTS reviewer_audit_actor ON reviewer_audit(reviewer_id,created_at,seq);
+  CREATE INDEX IF NOT EXISTS reviewer_audit_case ON reviewer_audit(case_id,round_id,created_at,seq);`
 ];
 export class Store{
  constructor(directory){
@@ -60,6 +76,15 @@ export class Store{
  manifests(caseId){return this.db.prepare('SELECT * FROM manifests WHERE case_id=? ORDER BY created_at,digest').all(caseId).map(row=>({...row,body:JSON.parse(this.read(row.digest).bytes.toString('utf8'))}));}
  saveDisclosure({digest,reviewer_id,operator_id}){this.read(digest);this.db.prepare('INSERT OR IGNORE INTO disclosures VALUES(?,?,?,?)').run(digest,reviewer_id,operator_id,Date.now());}
  disclosures(){return this.db.prepare('SELECT * FROM disclosures ORDER BY created_at,digest').all().map(row=>({...row,body:JSON.parse(this.read(row.digest).bytes.toString('utf8'))}));}
+ recordReviewerAudit({reviewer_id,case_id=null,round_id=null,action,details={}}){if(typeof reviewer_id!=='string'||!reviewer_id||typeof action!=='string'||!action)throw new ApiError(400,'Invalid reviewer audit event');const detail_digest=sha256(canonical(details)),created_at=Date.now();this.db.prepare('INSERT INTO reviewer_audit(reviewer_id,case_id,round_id,action,detail_digest,created_at) VALUES(?,?,?,?,?,?)').run(reviewer_id,case_id,round_id,action,detail_digest,created_at);return {reviewer_id,case_id,round_id,action,detail_digest,created_at};}
+ reviewerAudit(reviewer_id,{case_id=null,round_id=null}={}){let sql='SELECT seq,reviewer_id,case_id,round_id,action,detail_digest,created_at FROM reviewer_audit WHERE reviewer_id=?',args=[reviewer_id];if(case_id){sql+=' AND case_id=?';args.push(case_id);}if(round_id!==null){sql+=' AND round_id=?';args.push(round_id);}return this.db.prepare(sql+' ORDER BY seq').all(...args);}
+ observeReviewer(record){if(!record||typeof record.reviewer_id!=='string'||!record.reviewer_id||!['operator_id','disclosure_digest'].every(name=>/^[0-9a-f]{64}$/.test(record[name]||''))||!/^\d+$/.test(String(record.revision)))throw new ApiError(400,'Invalid reviewer registry observation');const body=canonical({reviewer_id:record.reviewer_id,operator_id:record.operator_id,revision:String(record.revision),disclosure_digest:record.disclosure_digest,active:record.active===true,confirmed:record.confirmed===true}),observed_at=Date.now();this.db.exec('BEGIN IMMEDIATE');try{const old=this.db.prepare('SELECT body FROM reviewer_observations WHERE reviewer_id=?').get(record.reviewer_id);this.db.prepare('INSERT INTO reviewer_observations VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(reviewer_id) DO UPDATE SET operator_id=excluded.operator_id,revision=excluded.revision,disclosure_digest=excluded.disclosure_digest,active=excluded.active,confirmed=excluded.confirmed,observed_at=excluded.observed_at,body=excluded.body').run(record.reviewer_id,record.operator_id,String(record.revision),record.disclosure_digest,record.active?1:0,record.confirmed?1:0,observed_at,body);if(old?.body!==body)this.recordReviewerAudit({reviewer_id:record.reviewer_id,action:'REGISTRY_OBSERVED',details:JSON.parse(body)});this.db.exec('COMMIT');return this.reviewerObservation(record.reviewer_id);}catch(error){this.db.exec('ROLLBACK');throw error;}}
+ reviewerObservation(reviewer_id){const row=this.db.prepare('SELECT * FROM reviewer_observations WHERE reviewer_id=?').get(reviewer_id);return row?{...row,active:Boolean(row.active),confirmed:Boolean(row.confirmed),body:JSON.parse(row.body)}:null;}
+ saveReviewPackage({reviewer_id,case_id,round_id,commitment,payload_digest,finding_digest,evidence_digest,disposition,encryption,ciphertext}){
+  const hashes=[commitment,payload_digest,finding_digest,evidence_digest];if(typeof reviewer_id!=='string'||!reviewer_id||!Number.isInteger(round_id)||![0,1].includes(round_id)||!hashes.every(value=>/^[0-9a-f]{64}$/.test(value||''))||!['ACCEPT','REJECT','UNRESOLVED'].includes(disposition)||!['xchacha20-poly1305','aes-256-gcm'].includes(encryption)||typeof ciphertext!=='string'||ciphertext.length<48||ciphertext.length>65536||!/^[A-Za-z0-9+/_=-]+$/.test(ciphertext))throw new ApiError(400,'Invalid encrypted review package');
+  const now=Date.now();this.db.exec('BEGIN IMMEDIATE');try{const old=this.db.prepare('SELECT * FROM review_packages WHERE reviewer_id=? AND case_id=? AND round_id=?').get(reviewer_id,case_id,round_id),identity={commitment,payload_digest,finding_digest,evidence_digest,disposition};if(old){for(const [name,value] of Object.entries(identity))if(old[name]!==value)throw new ApiError(409,'Conflicting review package already exists');if(old.encryption!==encryption)throw new ApiError(409,'Review package encryption identity cannot change');if(old.ciphertext===ciphertext){this.db.exec('COMMIT');return {...old,replayed:true};}this.db.prepare('UPDATE review_packages SET ciphertext=?,updated_at=? WHERE reviewer_id=? AND case_id=? AND round_id=?').run(ciphertext,now,reviewer_id,case_id,round_id);this.recordReviewerAudit({reviewer_id,case_id,round_id,action:'RECOVERY_PACKAGE_REENCRYPTED',details:{...identity,encryption,ciphertext_digest:sha256(ciphertext)}});}else{this.db.prepare('INSERT INTO review_packages VALUES(?,?,?,?,?,?,?,?,?,?,?,?)').run(reviewer_id,case_id,round_id,commitment,payload_digest,finding_digest,evidence_digest,disposition,encryption,ciphertext,now,now);this.recordReviewerAudit({reviewer_id,case_id,round_id,action:'RECOVERY_PACKAGE_SAVED',details:{...identity,encryption,ciphertext_digest:sha256(ciphertext)}});}this.db.exec('COMMIT');return {...this.reviewPackage(reviewer_id,case_id,round_id),replayed:false};}catch(error){this.db.exec('ROLLBACK');throw error;}
+ }
+ reviewPackage(reviewer_id,case_id,round_id){const row=this.db.prepare('SELECT * FROM review_packages WHERE reviewer_id=? AND case_id=? AND round_id=?').get(reviewer_id,case_id,round_id);if(!row)throw new ApiError(404,'Encrypted review package not found');return row;}
  reserve({actor,case_id,round_id,key,provider,payload,maxCostMicro}){
   if(!['meta','baseten','modal'].includes(provider)||!Number.isSafeInteger(maxCostMicro)||maxCostMicro<=0)throw new ApiError(400,'Invalid provider reservation');if(typeof key!=='string'||key.length<8||key.length>128)throw new ApiError(400,'Idempotency key required');const cap=provider==='modal'?5_000_000:3_000_000,scope=[actor,case_id,round_id,key].join(':'),payloadHash=sha256(canonical(payload));
   this.db.exec('BEGIN IMMEDIATE');try{const existing=this.db.prepare('SELECT * FROM jobs WHERE scope=?').get(scope);if(existing){if(existing.payload_hash!==payloadHash||existing.provider!==provider)throw new ApiError(409,'Idempotency payload conflict');this.db.exec('COMMIT');return {...existing,replayed:true};}const total=this.db.prepare('SELECT COALESCE(SUM(reserved),0) AS total FROM jobs WHERE provider=?').get(provider).total;if(total+maxCostMicro>cap)throw new ApiError(402,'Provider budget exhausted');const job={id:randomUUID(),scope,payload_hash:payloadHash,provider,reserved:maxCostMicro,status:'reserved',created_at:Date.now()};this.db.prepare('INSERT INTO jobs(id,scope,payload_hash,provider,reserved,status,created_at) VALUES(?,?,?,?,?,?,?)').run(job.id,scope,payloadHash,provider,maxCostMicro,'reserved',job.created_at);this.db.exec('COMMIT');return {...job,replayed:false};}catch(e){this.db.exec('ROLLBACK');throw e;}
