@@ -2,7 +2,10 @@
   "schema": "CONTRA_CONTRACT_ABI_BASELINE_V1",
   "source_commit": "34c836bbd02dc672325800b2951714ee6e935659",
   "historical_m05_production_wasm_sha256": "c607adf597dfbf898d8e442fd71b3b75e7032ad47fd808fb50e89e0573fd3ef8",
-  "ci_formatted_production_wasm_sha256": "00b8db129470b8d032d0da020018570b6d1950fdbba136645c41dc69d4c506e2",
+  "observed_ci_formatted_production_wasm_sha256": {
+    "ubuntu_wsl": "00b8db129470b8d032d0da020018570b6d1950fdbba136645c41dc69d4c506e2",
+    "github_ubuntu_24_04": "a8ced163586f8cdc1b8052a1d78ad42481020f66d676a93fb2c009b3100e1222"
+  },
   "production_exports": [
     "accept_terms",
     "advance_round",
