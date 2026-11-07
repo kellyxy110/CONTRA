@@ -56,4 +56,15 @@ The CI setup pull request targets `implementation/oct28`. After it passes and is
 - Historical evidence integrity review: passed.
 - Dependency delta check: passed with the 17 unresolved accepted findings disclosed above.
 
-GitHub run and pull request URLs are added only after genuine remote execution.
+## Genuine GitHub verification
+
+- CI setup PR: `https://github.com/kellyxy110/CONTRA/pull/1`
+- Merged CI setup commit: `a1eedc929758d3e9f16dffb78fee64da5820817e`
+- Core CI: `https://github.com/kellyxy110/CONTRA/actions/runs/42365515162`, passed.
+- Security CI: `https://github.com/kellyxy110/CONTRA/actions/runs/42365515147`, passed with the accepted findings disclosed above.
+- Contract CI: `https://github.com/kellyxy110/CONTRA/actions/runs/42365515157`, passed all formatting, Clippy, 28-test, Wasm, ABI, vector and artifact steps.
+- Integration CI: `https://github.com/kellyxy110/CONTRA/actions/runs/42365411747`, passed the corrected nine-test Sandbox baseline, both M04 journeys, fresh receipt and balance validation and artifact upload in 70m52s.
+- The later Integration run `42365515145` was intentionally cancelled as redundant. The intervening commit changed only Contract ABI evidence reporting and documentation, and Contract CI passed that exact head. It is not represented as an Integration pass.
+- Full Financial P0 was not rerun remotely because this milestone changed CI infrastructure and formatting, not financial invariants. The accepted local F01 through F18 evidence remains retrospective evidence, not a new Actions result.
+
+Branch protection is active on `main` and `implementation/oct28`. Both require pull requests, fresh `core-node` and `security-policy` checks, resolved conversations and stale-review dismissal. Administrators are included, force pushes and branch deletion are disabled, and automatic merge is not enabled.

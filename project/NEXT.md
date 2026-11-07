@@ -1,8 +1,8 @@
 # Next execution task
 
-## Active next task | M05.1 remote CI and PR verification
+## Active next task | M05.1 integration PR review
 
-Preserve product-source baseline `34c836bbd02dc672325800b2951714ee6e935659` and the local M05.1 results. Commit and push `ci/m05.1-recovery`, open its pull request into `implementation/oct28`, and record every genuine job and run URL. Correct failures without weakening assertions. Merge the CI setup only after applicable checks pass. Then open, but do not merge, the integration pull request from `implementation/oct28` to `main`. Configure required core and security checks where repository permissions permit, keep automatic merge disabled and leave `main` unchanged until explicit owner approval.
+Preserve product-source baseline `34c836bbd02dc672325800b2951714ee6e935659`, CI merge `a1eedc929758d3e9f16dffb78fee64da5820817e` and the genuine Core, Security, Contract and Integration results. Open the integration pull request from `implementation/oct28` to `main`, review the complete accumulated contract, backend, dependency, documentation and stored-artifact diff, and leave it unmerged for explicit owner approval. Keep automatic merge disabled and required Core plus Security protection active.
 
 After M05.1 is accepted, resume the safely stashed M06 non-billable external-wallet simulation. The exact first M06 unit is NEP-413 session recovery plus rejected or interrupted wallet-call recovery with persisted transaction identity, finalized receipt reconciliation and duplicate-dispatch prevention. Do not sign a live transaction, deploy, use paid inference or change production secrets.
 
