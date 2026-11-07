@@ -6,7 +6,7 @@
     {"name": "integration routing infrastructure", "paths": [".github/workflows/integration.yml", "ci/integration-risk-map.json", "scripts/ci-integration-policy.mjs", "tests/ci-integration-policy.test.mjs"]}
   ],
   "focused": [
-    {"name": "reviewer and committee interaction", "paths": ["services/reviewers/**", "services/api/server.mjs", "services/api/store.mjs"], "test_pattern": "real unchallenged commit/reveal|confirmed challenge blocks ordinary finality|creator cannot profit by forcing challenged fresh-review timeout"},
+    {"name": "reviewer and committee interaction", "paths": ["services/reviewers/**", "services/api/server.mjs", "services/api/store.mjs", "tests/m06-reviewer*.test.mjs"], "test_pattern": "real unchallenged commit/reveal|confirmed challenge blocks ordinary finality|creator cannot profit by forcing challenged fresh-review timeout"},
     {"name": "wallet and receipt interaction", "paths": ["services/wallet/**", "services/chain/rpc.mjs", "apps/web/wallet-source.mjs"], "test_pattern": "exact native funding|real unchallenged commit/reveal|successful native transfer with failed callback"}
   ],
   "fast_only": [

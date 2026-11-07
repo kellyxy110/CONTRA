@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-07-CI-REVIEWER-RISK-MAP
+
+PR 5 merged the verified CI optimisation into `implementation/oct28` at `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. The focused reviewer mapping now explicitly covers `tests/m06-reviewer*.test.mjs` together with reviewer source changes. A regression proves this combined diff selects focused committee, reversal and timeout Sandbox coverage. The correction itself remains full-classified because it changes the governing risk map.
+
 ## Current checkpoint | CONTRA-2026-11-07-CI-SANDBOX-OPT
 
 Owner standing approval merged PR 4 after exact head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f` passed Core `42408934722`, Security `42408934686` and Integration `42408934712`. GitHub created merge commit `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` on `implementation/oct28` at `2026-11-07T21:48:15Z`.

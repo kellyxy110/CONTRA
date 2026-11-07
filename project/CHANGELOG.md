@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-07 | Reviewer CI risk-map correction
+
+- Added `tests/m06-reviewer*.test.mjs` to the explicit reviewer focused mapping.
+- Added a regression for a combined reviewer source and reviewer test diff.
+- Preserved full classification for this risk-map correction and all unknown paths.
+
 ## 2026-11-07 | CI Sandbox optimisation
 
 - Recorded PR 4 merge head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f`, merge SHA `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` and its three passing pre-merge runs.
