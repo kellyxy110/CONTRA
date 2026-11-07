@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-08-IMPL-M06-P3-PROVIDERS
+
+M06 provider interoperability is implemented on `feat/m06-provider-interoperability` with mocked transports only. Meta primary and fresh review, Baseten adversarial review and Modal proposal verification now use distinct strict request envelopes. Meta Muse Spark 1.3 is recorded as the proposed primary model and Muse Wonder 1.0 as optional escalation metadata, with access explicitly unverified. Every live provider remains disabled unless owner authorization, credits, pricing, model interface, endpoint, key and request cap gates are all satisfied.
+
+Provider findings cover every frozen criterion, cite only case-bound evidence and fail closed on extra fields, missing criteria, contradictory disposition or invalid citations. Contradictory and insufficient evidence must remain unresolved. Bounded raw responses are stored immutably before validation. Modal verification binds an existing AI proposal digest and remains an `AI verification proposed` artifact. No provider output can create a reviewer vote, judgment, transaction or settlement. Started ambiguous calls retain their reservation and cannot be blindly repeated. The $3 Meta, $3 Baseten and $5 Modal caps are unchanged. No live provider call, secret change, transaction, deployment or spending occurred. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED pending authorized live interoperability evidence.
+
 ## Current checkpoint | CONTRA-2026-11-07-IMPL-M06-P2-REVIEWER-CONTROL
 
 M06 Phase 2 reviewer control is complete at the local engineering gate on `feat/m06-reviewer-control`, based on the PR 4 merge commit `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`. The preserved stash was inspected without applying it wholesale. Only its reviewer-control concepts were recovered; wallet and provider stash content remains preserved.

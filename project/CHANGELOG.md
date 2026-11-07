@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-08 | IMPL-M06-P3 provider interoperability
+
+- Added strict Meta, Baseten and Modal request adapters and provider-specific response extraction.
+- Added criterion-complete finding validation, evidence-state consistency and exact citation checks.
+- Added immutable raw response provenance and bounded usage metadata.
+- Added Modal verification bound to an existing AI proposal without voting or settlement authority.
+- Added explicit model-interface gating and unverified proposed Meta model metadata.
+- Expanded non-billable provider tests for request shapes, injection isolation, malformed output, contradictions, idempotency, timeout retention, budgets and provenance.
+
 ## 2026-11-07 | IMPL-M06-P2 reviewer control local gate
 
 Added reviewer-control operations for exact active registry and disclosure matching, six-account and six-operator committee disjointness, phase-aware commit and reveal validation, missing-reviewer and quorum diagnostics, frozen vote commitment construction, and evidence-bound finding verification. Corrected reviewer confirmation preparation so the signer, active registry revision and disclosure digest must all match.

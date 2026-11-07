@@ -1,5 +1,11 @@
 # Next execution task
 
+## Active next task | Provider interoperability PR and CI
+
+Publish `feat/m06-provider-interoperability` into `implementation/oct28`. Require Core, Security and the integration policy gate on the exact head. This provider-only unit should remain in the fast gate unless an independently risky path changes. Resolve actionable failures and merge under the standing green-check policy. Do not perform live inference, add production secrets or spend credits.
+
+After merge, run the complete controlled M06 workflow with wallet, reviewer and provider fixtures across restart, timeout and contradictory-evidence paths. Authorized live provider checks remain separately gated.
+
 ## Active next task | M06 Phase 2 reviewer-control PR and CI
 
 PR 6 is open from `feat/m06-reviewer-control` into the updated `implementation/oct28`. Run Core and Security CI plus the focused integration policy selected by the merged CI optimisation unit. Contract CI is required only if contract or protocol code changes; full Sandbox and financial P0 are not required for this service-only unit unless the risk policy classifies a later change as financially sensitive. Resolve actionable failures and merge under the standing green-check policy. Preserve `stash@{0}` until its provider content is recovered separately.

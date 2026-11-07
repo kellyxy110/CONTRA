@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-075 | Provider output is strict, evidence-bound and non-binding | 2026-11-08
+
+ACCEPTED. Meta and Baseten may create only immutable AI proposal artifacts that cover every frozen criterion and cite allowed case evidence. Modal may create only an immutable verification proposal bound to an existing AI proposal digest. Missing, contradictory or insufficient evidence stays unresolved. Provider-supplied authority, identity, state and settlement fields are rejected. Raw bounded responses remain auditable. A started call with an ambiguous billing outcome keeps its reservation and is not automatically repeated.
+
 ## D-074 | Reviewer continuity is account-scoped, encrypted and subordinate to frozen contract state | 2026-11-07
 
 ACCEPTED. Reviewer onboarding and participation records must retain exact account, declared operator, disclosure digest and registry revision. Primary and fresh committees require six distinct accounts and six distinct declared operator IDs. This is an operational control check, not proof of independent real-world control. Reveal recovery may store only reviewer-supplied ciphertext plus immutable identity metadata. It must be account-scoped, durable, idempotent and conflict-safe. Service workspace, quorum and timeout outputs are advisory; only confirmed contract state can accept commitments, reveals, verdicts or settlement.

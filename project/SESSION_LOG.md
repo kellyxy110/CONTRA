@@ -1,5 +1,11 @@
 # CONTRA session log
 
+## 2026-11-08 UTC | IMPL-M06-P3 provider interoperability
+
+Started `feat/m06-provider-interoperability` from reviewer merge `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc`. Inspected `stash@{0}` without applying it and recovered only the provider-response provenance concept. The stash remains intact.
+
+Implemented strict provider-specific request and response adapters, criterion-complete evidence findings, fail-closed contradiction handling, immutable raw response provenance, model-interface availability gates and Modal proposal verification. All transports are fixtures. No endpoint was contacted, no API key or production secret was used, and spending remains $0.
+
 ## 2026-11-07 UTC | IMPL-M06-P2 reviewer control local gate
 
 Started `feat/m06-reviewer-control` from the merged wallet target `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`. Inspected `stash@{0}` and its untracked parent without applying it. Recovered only the reviewer operations design; the provider and remaining wallet stash records were not changed or dropped.
