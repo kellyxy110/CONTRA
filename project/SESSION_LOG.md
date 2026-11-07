@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M05.1 CI recovery local gate
+
+Started `ci/m05.1-recovery` at the verified M05 SHA `34c836bbd02dc672325800b2951714ee6e935659` and safely stashed unfinished M06 work without rewriting history. Added five pinned GitHub Actions workflows and supporting source-policy, secret, dependency-audit, ABI, exact-vector and retrospective-evidence checks. Added the CI verification matrix and pull request template.
+
+Local verification passed all 52 repository tests and the wallet build with Playwright 1.65.0. On the compatible Ubuntu environment, strict Clippy passed and all 28 Rust tests passed. Production and fault Wasm rebuilt with 29 production and four fault-only exports; exact commitment vectors passed. Rustfmt and two Clippy-equivalent source rewrites changed the reproducible Wasm bytes, so the original M05 hash `c607adf597dfbf898d8e442fd71b3b75e7032ad47fd808fb50e89e0573fd3ef8` and current CI-formatted hash `00b8db129470b8d032d0da020018570b6d1950fdbba136645c41dc69d4c506e2` are recorded separately.
+
+Updated Playwright from 1.49.1 to exact 1.65.0, removing its direct high-severity advisory. The security baseline still reports 17 inherited findings in the NEAR development and Sandbox dependency graph: 14 low, two high and one critical. They remain visible and unresolved. No external transaction, deployment, signing, provider use, production secret, mainnet action or spending occurred. The next step is a genuine Actions run and CI setup PR into `implementation/oct28`; `main` remains unchanged.
+
 ## 2026-11-07 UTC | IMPL-M05-R03 compatible-host Sandbox regression
 
 Selected the installed `Ubuntu` WSL distribution after the Windows and Ubuntu-22.04 attempts failed before launch. Its GLIBC 2.39 runtime, native Linux process tools and 1,048,576 file limit passed the strengthened preflight. `npm run test:m04:journeys` then completed both local Sandbox workflows and refreshed the structured journey report, operation journal and receipt journal.

@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-07 | IMPL-M05.1 CI recovery local gate
+
+Added Core, Contract, Security, Integration and Full Financial P0 GitHub Actions workflows with pinned actions, Node 26.13.0, clean Linux dependency installs, package-download caching and retained CI evidence. Added source, secret, dependency-delta, contract ABI, production/fault export, commitment-vector and historical-evidence checks plus a pull request template and retrospective verification matrix.
+
+Pinned Playwright 1.65.0 and removed its direct advisory. Retained and disclosed 17 inherited NEAR development and Sandbox dependency findings. Rustfmt-normalized the contract and applied two strict-Clippy-equivalent rewrites. Local checks pass 52 repository tests, 28 Rust tests, rustfmt, Clippy with warnings denied, wallet build, exact vectors, 29 production exports, four fault-only exports and historical evidence integrity. The original and rebuilt Wasm hashes remain distinct and documented. No financial assertion, contract interface or settlement safeguard was weakened. Genuine Actions and PR evidence remain pending. No external transaction, deployment, signing, paid provider, production secret, mainnet action or spend occurred.
+
 ## 2026-11-07 | IMPL-M05-R03 compatible-host Sandbox regression
 
 Ran both API-backed local Sandbox journeys on the compatible `Ubuntu` WSL distribution after the strengthened preflight passed. Refreshed the three structured M04 journey evidence files. Verified 44 CONFIRMED operations, 44 unique transaction hashes, 44 matching successful receipts and two callback-confirmed exact 1 NEAR settlements. The unchallenged path ended PRIMARY ACCEPT to the beneficiary. The challenged path reversed PRIMARY ACCEPT to FRESH REJECT and refunded the creator. Preserved the explicit one-process reviewer-control disclosure. No testnet transaction, deployment, external signing, live provider, production secret, mainnet action or spending occurred. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED.

@@ -1,0 +1,73 @@
+name: Contract CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/contract.yml"
+      - "ci/contract-abi-baseline.json"
+      - "contracts/adjudication/**"
+      - "docs/COMMITMENT_TEST_VECTORS.md"
+      - "docs/CONTRACT_ABI_V1.md"
+      - "packages/protocol/encoding.mjs"
+      - "scripts/build-contracts.mjs"
+      - "scripts/ci-contract-abi.mjs"
+      - "scripts/ci-commitment-vectors.mjs"
+      - "rust-toolchain.toml"
+  push:
+    branches:
+      - "implementation/**"
+      - "release/**"
+    paths:
+      - "contracts/adjudication/**"
+      - "docs/COMMITMENT_TEST_VECTORS.md"
+      - "docs/CONTRACT_ABI_V1.md"
+      - "packages/protocol/encoding.mjs"
+      - "scripts/build-contracts.mjs"
+      - "rust-toolchain.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contract-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contract-rust:
+    name: contract-rust
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Use pinned Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+      - name: Install pinned Rust components
+        run: |
+          rustup show
+          rustup component add rustfmt clippy
+      - name: Rust formatting
+        run: cargo fmt --manifest-path contracts/adjudication/Cargo.toml -- --check
+      - name: Rust Clippy
+        run: cargo clippy --locked --manifest-path contracts/adjudication/Cargo.toml --all-targets --all-features -- -D warnings
+      - name: Rust library tests
+        run: cargo test --locked --manifest-path contracts/adjudication/Cargo.toml --lib -- --test-threads=1
+      - name: Production and fault Wasm builds
+        run: node scripts/build-contracts.mjs
+      - name: Contract ABI and export separation
+        run: node scripts/ci-contract-abi.mjs
+      - name: Exact commitment vectors
+        run: node scripts/ci-commitment-vectors.mjs
+      - name: Upload Wasm artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: contract-wasm-${{ github.run_id }}
+          path: |
+            contracts/adjudication/target/wasm32-unknown-unknown/release/contra_adjudication.wasm
+            contracts/adjudication/target/wasm32-unknown-unknown/faults.wasm
+          if-no-files-found: warn
+          retention-days: 30
