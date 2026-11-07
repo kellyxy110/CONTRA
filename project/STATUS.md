@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-07-CI-SANDBOX-OPT
+
+Owner standing approval merged PR 4 after exact head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f` passed Core `42408934722`, Security `42408934686` and Integration `42408934712`. GitHub created merge commit `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` on `implementation/oct28` at `2026-11-07T21:48:15Z`.
+
+CI optimisation is implemented on `ci/optimise-sandbox-runtime`. A versioned mapping selects fast, focused or full integration coverage from the complete pull request diff. Unknown paths default to full. The aggregate gate distinguishes a policy-only fast decision from executed Sandbox tests. Full baseline and journey verification use isolated parallel jobs, while F01 through F18 remain separate and unchanged. Adaptive Sandbox block advancement uses observed finalized block intervals without shortening contract deadlines. Local policy tests pass 7/7 and the complete repository suite passes 76/76. Fresh GitHub timing and full verification remain the remote exit gate.
+
 ## Current checkpoint | CONTRA-2026-11-07-IMPL-M06-P1-WALLET-FINAL
 
 M06 Phase 1 final wallet hardening is complete locally on `feat/m06-wallet-lifecycle` and remains within PR 4. Finalized RPC proof now requires an independently supplied, valid NEAR transaction hash that exactly matches the persisted hash. The adapter also verifies signer, configured contract, explicit final execution status and final block identity. The lifecycle layer independently rechecks the inner transaction hash, signer, receiver, single FunctionCall action, method, canonical arguments, gas and deposit. Missing, malformed, contradictory, stale or regressed proof cannot become CONFIRMED. Integrity failures lock the durable operation as UNKNOWN instead of leaving a potentially broadcast operation reusable.
