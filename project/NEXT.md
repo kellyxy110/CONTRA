@@ -1,5 +1,11 @@
 # Next execution task
 
+## Active next task | M06 Phase 1 wallet PR verification
+
+Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET` and the original `stash@{0}` until its reviewer and provider portions are safely recovered into their separate feature branches. Commit and push `feat/m06-wallet-lifecycle`, open a focused pull request into `implementation/oct28`, and run Core, Security and affected Integration checks. Contract CI is not required unless review finds a protocol or contract change. Do not run full P0 unless a financial invariant or settlement path changes.
+
+Resolve actionable CI failures without weakening UNKNOWN handling, exact deposits, receipt matching or the existing Sandbox safeguards. Leave the PR unmerged for owner approval. After the wallet PR passes, create the separate reviewer-control feature branch and PR. Do not sign a live transaction, deploy, use paid inference, change production secrets or start UI and demo work.
+
 ## Active next task | M05.1 integration PR review
 
 Preserve product-source baseline `34c836bbd02dc672325800b2951714ee6e935659`, CI merge `a1eedc929758d3e9f16dffb78fee64da5820817e` and the genuine Core, Security, Contract and Integration results. Open the integration pull request from `implementation/oct28` to `main`, review the complete accumulated contract, backend, dependency, documentation and stored-artifact diff, and leave it unmerged for explicit owner approval. Keep automatic merge disabled and required Core plus Security protection active.

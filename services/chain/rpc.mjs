@@ -63,7 +63,8 @@ export function rpcAdapter({url,contractAccount,network='testnet',transport=fetc
    const result=await rpc('tx',{tx_hash:hash,sender_account_id:account,wait_until:'FINAL'});
    const final=result.final_execution_status==='FINAL';
    const failure=result.status&&typeof result.status==='object'&&Object.hasOwn(result.status,'Failure');
-   return {network,tx_hash:hash,signer_id:account,final,success:final&&!failure,status:failure?'FAILED':final?'CONFIRMED':'PENDING',result,observed_at:now().toISOString()};
+   const blockHash=result.transaction_outcome?.block_hash||null,finalizedBlock=blockHash?await block(blockHash):null;
+   return {network,tx_hash:hash,signer_id:account,final,finality:final?'final':'pending',success:final&&!failure,status:failure?'FAILED':final?'CONFIRMED':'PENDING',finalized_block_hash:blockHash,finalized_block_height:finalizedBlock?String(finalizedBlock.header.height):null,finalized_block_timestamp_ns:finalizedBlock?String(finalizedBlock.header.timestamp_nanosec):null,result,observed_at:now().toISOString()};
   }
  };
  return adapter;

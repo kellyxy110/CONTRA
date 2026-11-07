@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-07 | IMPL-M06-P1 external wallet lifecycle local gate
+
+Recovered the wallet portion of the preserved M06 stash onto `feat/m06-wallet-lifecycle` without applying its reviewer or provider work. Added strict external-call policy, durable pre-signing intents, session inspection, renewal and revocation, transaction-hash callbacks, finalized receipt reconciliation, network and payload matching, block-regression rejection and restart recovery. Added browser adapter helpers for stable operation identifiers, reload-visible pending operations, explicit rejection, interruption locking and delayed callback recovery.
+
+Added eight controlled wallet lifecycle tests covering policy, receipt integrity, restart, concurrent prepare, conflicting reuse, repeated callbacks, rejection, missing redirect, delayed receipts, RPC failure, stale observations, UNKNOWN safety and session/account isolation. Updated M05 recovery expectations for schema version 3 and added finalized receipt block metadata. `npm test` passes 60/60, the focused M05/service/wallet run passes 51/51 and `npm run build:wallet` passes. No contract source, financial assertion, live transaction, signing, deployment, paid inference, secret or spend changed. PR and genuine CI evidence remain pending.
+
 ## 2026-11-07 | IMPL-M05.1 CI recovery local gate
 
 Added Core, Contract, Security, Integration and Full Financial P0 GitHub Actions workflows with pinned actions, Node 26.13.0, clean Linux dependency installs, package-download caching and retained CI evidence. Added source, secret, dependency-delta, contract ABI, production/fault export, commitment-vector and historical-evidence checks plus a pull request template and retrospective verification matrix.

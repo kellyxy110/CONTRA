@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M06-P1 external wallet lifecycle local gate
+
+Verified `implementation/oct28` at `950ca25c8c5df35310a0cd61be5693df2a04b402`, created `feat/m06-wallet-lifecycle`, inspected `stash@{0}` without dropping it, and confirmed it contains wallet, reviewer and provider work. Applied it with the stash retained, then excluded reviewer/provider files and rebuilt the persistence migration as a wallet-only unit.
+
+Implemented persisted external-wallet intent before signing, exact call and role policy, session reload/renew/disconnect, stable operation identity, conflicting-payload prevention, persistent transaction hashes, finalized receipt matching and conservative restart behavior. Missing redirects and non-rejection interruptions lock UNKNOWN with no blind retry. A later callback may attach only the first hash and resume observation. Lower block observations, mismatched network, hash, signer, contract, method, arguments or deposit fail closed.
+
+Controlled simulations cover duplicate buttons and tabs through concurrent shared operation IDs, repeated callbacks, conflicts, rejection, interruption, reload, restart, RPC failure, delayed finality, stale regression, session expiry and account switching. `npm test` passes 60/60. The focused M05, service and wallet run passes 51/51, and the wallet bundle builds. No contract or financial invariant changed, so full P0 was not rerun. No live signing, transaction, deployment, provider call, secret change or spending occurred. PR 3 remains unmerged. Exact next work is the focused wallet PR and genuine Core, Security and affected Integration CI.
+
 ## 2026-11-07 UTC | IMPL-M05.1 CI recovery local gate
 
 Started `ci/m05.1-recovery` at the verified M05 SHA `34c836bbd02dc672325800b2951714ee6e935659` and safely stashed unfinished M06 work without rewriting history. Added five pinned GitHub Actions workflows and supporting source-policy, secret, dependency-audit, ABI, exact-vector and retrospective-evidence checks. Added the CI verification matrix and pull request template.

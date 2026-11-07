@@ -1,0 +1,64 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {Store,sha256} from '../services/api/store.mjs';
+import {createApp} from '../services/api/server.mjs';
+import {classifyWalletError,receiptState,validateWalletCall,verifyReceiptIntent} from '../services/wallet/lifecycle.mjs';
+
+function fixture(t){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'contra-m06-wallet-')),store=new Store(dir);t.after(()=>{try{store.close();}catch{}fs.rmSync(dir,{recursive:true,force:true});});return {dir,store};}
+const contract='contra.testnet',creator='creator.testnet',beneficiary='beneficiary.testnet',caseId=sha256('m06-case'),termsDigest=sha256('terms'),txHash='11111111111111111111111111111111111111111111';
+const committees=Array.from({length:6},(_,index)=>({reviewer_id:`reviewer${index}.testnet`}));
+const caseRecord={case_id:caseId,creator_id:creator,terms_digest:termsDigest,primary_disposition:'ACCEPT',payout:{payout_intent_id:sha256('payout'),attempt:1},terms:{chain_id:'testnet',contract_account:contract,beneficiary_id:beneficiary,amount_yocto:'1000000000000000000000000',criteria:[{criterion_id:1}],primary_committee:committees.slice(0,3),fresh_committee:committees.slice(3)}};
+const configRecord={owner_id:creator,creator_allowlist:[creator]};
+function call(method,args={},deposit='0',receiverId=contract){return {receiverId,method,args,deposit};}
+function payload(method='finalize_case',args={case_id:caseId},signerId=creator){return validateWalletCall({network:'testnet',contractAccount:contract,signerId,call:call(method,args,method==='file_challenge'?'1':'0'),caseRecord,configRecord});}
+function receipt(operation,{final=true,success=true,status=success?'CONFIRMED':'FAILED',height=42,network='testnet',hash=txHash}={}){return {network,tx_hash:hash,signer_id:operation.signerId,final,finality:final?'final':'pending',success,status,finalized_block_height:String(height),result:{transaction:{signer_id:operation.signerId,receiver_id:operation.receiverId,actions:[{FunctionCall:{method_name:operation.methodName,args:Buffer.from(JSON.stringify(operation.args)).toString('base64'),gas:operation.gas,deposit:operation.deposit}}]}}};}
+async function running(t,{store,receipt:observe=async()=>null}={}){store??=fixture(t).store;const chain={network:'testnet',contractAccount:contract,view:async(method,args)=>method==='get_case'?caseRecord:method==='get_config'?configRecord:method==='get_reviewer'?{reviewer_id:args.reviewer_id}:null,receipt:observe};const app=createApp({store,chain});await new Promise(resolve=>app.server.listen(0,'127.0.0.1',resolve));t.after(()=>app.server.close());const base='http://127.0.0.1:'+app.server.address().port,token=store.session(creator),post=(route,body,auth=token)=>fetch(base+'/api/'+route,{method:'POST',headers:{Authorization:'Bearer '+auth,'Content-Type':'application/json'},body:JSON.stringify(body)});return {store,base,token,post};}
+
+test('wallet policy enforces testnet, destination, exact arguments, signer roles and deposits',()=>{
+ const funded=validateWalletCall({network:'testnet',contractAccount:contract,signerId:creator,call:call('fund_case',{case_id:caseId,terms_digest:termsDigest},caseRecord.terms.amount_yocto),caseRecord,configRecord});assert.equal(funded.deposit,caseRecord.terms.amount_yocto);
+ assert.throws(()=>validateWalletCall({network:'testnet',contractAccount:contract,signerId:creator,call:call('fund_case',{case_id:caseId,terms_digest:termsDigest},'1'),caseRecord,configRecord}),/must equal/);
+ assert.throws(()=>validateWalletCall({network:'testnet',contractAccount:contract,signerId:beneficiary,call:call('fund_case',{case_id:caseId,terms_digest:termsDigest},caseRecord.terms.amount_yocto),caseRecord,configRecord}),/creator/);
+ assert.throws(()=>validateWalletCall({network:'testnet',contractAccount:contract,signerId:creator,call:call('finalize_case',{case_id:caseId,extra:true},'0'),caseRecord,configRecord}),/exactly/);
+ assert.throws(()=>validateWalletCall({network:'testnet',contractAccount:contract,signerId:creator,call:call('finalize_case',{case_id:caseId},'0','evil.testnet'),caseRecord,configRecord}),/target/);
+ assert.throws(()=>validateWalletCall({network:'mainnet',contractAccount:contract,signerId:creator,call:call('finalize_case',{case_id:caseId}),caseRecord,configRecord}),/testnet-only/);
+ assert.doesNotThrow(()=>validateWalletCall({network:'testnet',contractAccount:contract,signerId:'reviewer0.testnet',call:call('commit_vote',{case_id:caseId,round_id:0,commitment:sha256('vote')}),caseRecord,configRecord}));
+ assert.throws(()=>validateWalletCall({network:'testnet',contractAccount:contract,signerId:'reviewer3.testnet',call:call('commit_vote',{case_id:caseId,round_id:0,commitment:sha256('vote')}),caseRecord,configRecord}),/not appointed/);
+ assert.throws(()=>validateWalletCall({network:'testnet',contractAccount:contract,signerId:'reviewer0.testnet',call:call('confirm_reviewer',{revision:'1',disclosure_digest:sha256('disclosure')},'1'),caseRecord,configRecord:null}),/registered matching reviewer/);
+});
+
+test('wallet error and receipt validation never fabricate confirmation',()=>{
+ const operation=payload();assert.equal(classifyWalletError({code:'USER_REJECTED'}).status,'FAILED');assert.equal(classifyWalletError(new Error('redirect timed out')).status,'UNKNOWN');assert.equal(receiptState({final:false,status:'PENDING'}).status,'PENDING');assert.equal(receiptState({final:true,success:false,status:'FAILED'}).status,'FAILED');assert.equal(verifyReceiptIntent(receipt(operation),operation,{expectedHash:txHash}),true);
+ assert.throws(()=>verifyReceiptIntent(receipt(operation,{network:'mainnet'}),operation,{expectedHash:txHash}),/network/);assert.throws(()=>verifyReceiptIntent(receipt(operation,{hash:'22222222222222222222222222222222'}),operation,{expectedHash:txHash}),/hash/);const forged=receipt(operation);forged.result.transaction.receiver_id='evil.testnet';assert.throws(()=>verifyReceiptIntent(forged,operation,{expectedHash:txHash}),/does not match/);
+});
+
+test('restart recovery preserves unsigned wallet intent and reconciles known hashes without redispatch',t=>{
+ const {dir,store}=fixture(t),operation=payload(),unsigned=store.beginTx('wallet-unsigned',creator,operation,{kind:'external-wallet'}),known=store.beginTx('wallet-known',creator,operation,{kind:'external-wallet'});store.updateTx(unsigned.id,'AWAITING_SIGNATURE');store.updateTx(known.id,'AWAITING_SIGNATURE');store.updateTx(known.id,'BROADCAST',{tx_hash:txHash});store.close();const reopened=new Store(dir),result=reopened.recoverInterrupted();assert.deepEqual(result,{total:2,locked:0,recoverable:2});assert.equal(reopened.tx('wallet-unsigned',creator).status,'AWAITING_SIGNATURE');assert.equal(reopened.tx('wallet-known',creator).status,'PENDING');assert.equal(reopened.tx('wallet-known',creator).tx_hash,txHash);reopened.close();
+});
+
+test('concurrent prepare and repeated callbacks dispatch at most one persisted intent',async t=>{
+ const env=await running(t),body={operation_id:'wallet-concurrent',call:call('finalize_case',{case_id:caseId})},prepared=await Promise.all(Array.from({length:8},()=>env.post('wallet/prepare',body)));assert(prepared.every(response=>response.status===200));assert.deepEqual(env.store.tx(body.operation_id,creator).history.map(item=>item.status),['PREPARING','AWAITING_SIGNATURE']);const conflicting=await env.post('wallet/prepare',{...body,call:call('advance_round',{case_id:caseId})});assert.equal(conflicting.status,409);
+ const callbacks=await Promise.all(Array.from({length:8},()=>env.post('wallet/broadcast',{operation_id:body.operation_id,tx_hash:txHash})));assert(callbacks.every(response=>response.status===200));assert.deepEqual(env.store.tx(body.operation_id,creator).history.map(item=>item.status),['PREPARING','AWAITING_SIGNATURE','BROADCAST','PENDING']);const other=await env.post('wallet/broadcast',{operation_id:body.operation_id,tx_hash:'22222222222222222222222222222222'});assert.equal(other.status,409);
+});
+
+test('rejection, wallet closure and missing redirect remain accurate recoverable states',async t=>{
+ const env=await running(t);await env.post('wallet/prepare',{operation_id:'wallet-rejected',call:call('finalize_case',{case_id:caseId})});const rejected=await env.post('wallet/reject',{operation_id:'wallet-rejected'});assert.equal(rejected.status,200);assert.equal((await rejected.json()).status,'FAILED');assert.equal((await env.post('wallet/broadcast',{operation_id:'wallet-rejected',tx_hash:txHash})).status,409);
+ await env.post('wallet/prepare',{operation_id:'wallet-interrupted',call:call('finalize_case',{case_id:caseId})});assert.equal((await env.post('wallet/interrupt',{operation_id:'wallet-interrupted'})).status,200);assert.equal((await fetch(env.base+'/api/operation?id=wallet-interrupted',{headers:{Authorization:'Bearer '+env.token}}).then(response=>response.json())).status,'UNKNOWN');const delayed=await env.post('wallet/broadcast',{operation_id:'wallet-interrupted',tx_hash:txHash});assert.equal(delayed.status,200);assert.equal((await delayed.json()).status,'PENDING');
+});
+
+test('delayed receipt, RPC failure and finalized success reconcile without redispatch',async t=>{
+ let observed=null,calls=0;const env=await running(t,{receipt:async()=>{calls++;if(observed instanceof Error)throw observed;return observed;}}),operationId='wallet-reconcile';await env.post('wallet/prepare',{operation_id:operationId,call:call('finalize_case',{case_id:caseId})});await env.post('wallet/broadcast',{operation_id:operationId,tx_hash:txHash});const operation=env.store.tx(operationId,creator).payload;
+ observed=receipt(operation,{final:false,success:false,status:'PENDING',height:40});assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,202);observed=new Error('offline');assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,503);assert.equal(env.store.tx(operationId,creator).status,'PENDING');observed=receipt(operation,{height:42});assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,200);assert.equal(env.store.tx(operationId,creator).status,'CONFIRMED');assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,200);assert.equal(calls,3);
+});
+
+test('regressed observations and mismatched finalized receipts fail closed',async t=>{
+ let observed;const env=await running(t,{receipt:async()=>observed}),operationId='wallet-regression';await env.post('wallet/prepare',{operation_id:operationId,call:call('finalize_case',{case_id:caseId})});await env.post('wallet/broadcast',{operation_id:operationId,tx_hash:txHash});const operation=env.store.tx(operationId,creator).payload;observed=receipt(operation,{final:false,success:false,status:'PENDING',height:50});assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,202);observed=receipt(operation,{final:false,success:false,status:'PENDING',height:49});assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,409);assert.equal(env.store.tx(operationId,creator).observed_height,50);
+ const otherId='wallet-mismatch';await env.post('wallet/prepare',{operation_id:otherId,call:call('finalize_case',{case_id:caseId})});await env.post('wallet/broadcast',{operation_id:otherId,tx_hash:txHash});observed=receipt(env.store.tx(otherId,creator).payload);observed.result.transaction.signer_id=beneficiary;assert.equal((await env.post('wallet/reconcile',{operation_id:otherId})).status,409);assert.equal(env.store.tx(otherId,creator).status,'UNKNOWN');assert.equal((await env.post('wallet/broadcast',{operation_id:otherId,tx_hash:txHash})).status,409);
+});
+
+test('session reload, renewal, disconnect, expiry and account switching are isolated',async t=>{
+ const env=await running(t),session=await fetch(env.base+'/api/session',{headers:{Authorization:'Bearer '+env.token}});assert.equal(session.status,200);assert.equal((await session.json()).account,creator);const renewed=await env.post('session/renew',{}),renewedBody=await renewed.json();assert.equal(renewed.status,200);assert.equal(renewedBody.account,creator);assert.equal((await fetch(env.base+'/api/session',{headers:{Authorization:'Bearer '+env.token}})).status,401);assert.equal((await env.post('session/disconnect',{},renewedBody.token)).status,200);assert.equal((await fetch(env.base+'/api/session',{headers:{Authorization:'Bearer '+renewedBody.token}})).status,401);
+ const beneficiaryToken=env.store.session(beneficiary);assert.equal((await fetch(env.base+'/api/session',{headers:{Authorization:'Bearer '+beneficiaryToken}}).then(response=>response.json())).account,beneficiary);env.store.db.prepare('UPDATE sessions SET expires=0').run();assert.equal((await fetch(env.base+'/api/session',{headers:{Authorization:'Bearer '+beneficiaryToken}})).status,401);
+});

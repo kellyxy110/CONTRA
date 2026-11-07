@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-07-IMPL-M06-P1-WALLET
+
+M06 Phase 1 wallet lifecycle has reached its local engineering gate on `feat/m06-wallet-lifecycle`. The backend now persists a server-validated external-wallet intent before signing, enforces exact testnet contract, signer, method, argument and deposit policy, retains one stable operation identity, and reconciles only a matching finalized receipt. Sessions support reload inspection, renewal and revocation. Wallet rejection is final before broadcast; an interrupted or missing redirect becomes UNKNOWN and cannot be blindly redispatched. A delayed callback may attach the original transaction hash and resume receipt-only reconciliation.
+
+SQLite schema version 3 stores external-wallet payloads, operation kind and highest observed block height. Restart recovery preserves unsigned requests and returns known hashes to PENDING reconciliation while retaining conservative UNKNOWN locking for existing Sandbox operations. Duplicate prepare, conflicting payload reuse, repeated callbacks, delayed receipts, RPC failure, regressed observations, mismatched receipts, reload, restart, session expiry and account isolation are covered by controlled simulations. `npm test` passes 60/60, the wallet-focused M05/service subset passes 51/51 and the wallet bundle builds. No contract or financial protocol source changed, so full P0 was not rerun. The acceptance baseline remains 21 PASS, 10 PARTIAL and 2 BLOCKED until external authorized signing evidence exists.
+
+PR creation and genuine Actions evidence remain pending for this checkpoint. PR 3 remains open and unmerged under the owner-controlled boundary. No live signing, testnet transaction, deployment, provider request, production-secret change, mainnet action or spending occurred.
+
 ## Current checkpoint | CONTRA-2026-11-07-IMPL-M05.1-CI
 
 M05.1 CI recovery is COMPLETE. Five GitHub Actions workflows now cover core, contract, security, Sandbox integration and risk-based full financial P0 verification. Supporting checks enforce clean dependency installation, JavaScript syntax, the no-em-dash policy, immutable reference integrity, restricted credentials, dependency-audit deltas, exact contract exports, production/fault separation, frozen commitment vectors and truthful historical evidence boundaries.
