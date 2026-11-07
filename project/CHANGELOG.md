@@ -1,5 +1,25 @@
 # Change log
 
+## 2026-11-07 | IMPL-M06-P1 final wallet hardening
+
+Made finalized RPC transaction hash presence, format and exact equality mandatory. Added signer and contract checks in the RPC adapter, independent inner-hash and exact gas checks in lifecycle verification, final block identity validation, and UNKNOWN classification for stale or regressed success observations. Receipt-integrity exceptions now lock the durable operation UNKNOWN rather than being treated as ordinary RPC unavailability.
+
+The complete browser recovery audit identified one related P1 defect: a wallet-returned hash was lost if the server callback failed before persistence. The client now saves that hash before the callback and, after reload, attaches it through the existing first-hash-only callback for receipt reconciliation. It never invokes the wallet or redispatches the transaction during recovery.
+
+Added controlled regressions for matching, missing, empty, malformed and different hashes; signer and contract mismatch; extra actions; changed arguments; incorrect gas and deposit; missing finality; unknown and explicit-failure execution status; stale, regressed and contradictory block observations; malformed proof UNKNOWN locking; and delayed browser hash recovery. Initial regressions failed at the identified boundaries. Final focused tests pass 34/34 and the full repository passes 69/69. Wallet bundle, syntax, diff, Core policy, Security policy and dependency-baseline checks pass locally. The accepted dependency baseline remains 17 inherited findings. Fresh PR 4 CI is pending on the final commit. No contract, financial invariant, transaction, signing, deployment, paid inference, secret or spend changed.
+
+## 2026-11-07 | IMPL-M06-P1 wallet safety corrections
+
+Added durable signing handoff state, restart-safe prepared intents, post-handoff UNKNOWN locking, unique transaction-hash ownership and atomic terminal receipt persistence. Added a server-only live-signing authorization gate while retaining non-billable preparation with live execution disabled by default. Tightened RPC result classification to explicit NEAR success and failure variants, validated returned transaction identity and final block freshness, and prevented ambiguous finality from becoming confirmation.
+
+Changed browser recovery to retain UNKNOWN operation IDs, account identity and known hashes across reloads; added account-scoped restoration and safe corrupt-storage handling. Added pre-fix regressions that failed in five places, then expanded focused coverage for restart before and after handoff, concurrent handoff, delayed callbacks, rejection authority, duplicate hashes, explicit finality, stale observations, wallet invocation order and account-isolated restoration. Final focused result is 31/31, repository result is 66/66, M05 runtime is 18/18, wallet build and local Core/Security policy checks pass. The dependency baseline remains 17 inherited findings with no new failure. Windows Sandbox preflight blocked before launch, so fresh Linux Integration CI remains pending. No contract, transaction, signing, deployment, paid provider, production secret or spend changed.
+
+## 2026-11-07 | IMPL-M06-P1 external wallet lifecycle local gate
+
+Recovered the wallet portion of the preserved M06 stash onto `feat/m06-wallet-lifecycle` without applying its reviewer or provider work. Added strict external-call policy, durable pre-signing intents, session inspection, renewal and revocation, transaction-hash callbacks, finalized receipt reconciliation, network and payload matching, block-regression rejection and restart recovery. Added browser adapter helpers for stable operation identifiers, reload-visible pending operations, explicit rejection, interruption locking and delayed callback recovery.
+
+Added eight controlled wallet lifecycle tests covering policy, receipt integrity, restart, concurrent prepare, conflicting reuse, repeated callbacks, rejection, missing redirect, delayed receipts, RPC failure, stale observations, UNKNOWN safety and session/account isolation. Updated M05 recovery expectations for schema version 3 and added finalized receipt block metadata. `npm test` passes 60/60, the focused M05/service/wallet run passes 51/51 and `npm run build:wallet` passes. Published code commit `379ff4e0111336da33579357a08c341ce6273dcb` in PR 4. Genuine Core `42373449517`, Security `42373449483` and Integration `42373449454` passed. Integration reran the nine-test baseline and both full journeys, then validated receipts and balances. No contract source, financial assertion, live transaction, signing, deployment, paid inference, secret or spend changed.
+
 ## 2026-11-07 | IMPL-M05.1 CI recovery local gate
 
 Added Core, Contract, Security, Integration and Full Financial P0 GitHub Actions workflows with pinned actions, Node 26.13.0, clean Linux dependency installs, package-download caching and retained CI evidence. Added source, secret, dependency-delta, contract ABI, production/fault export, commitment-vector and historical-evidence checks plus a pull request template and retrospective verification matrix.

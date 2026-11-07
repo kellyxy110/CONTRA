@@ -1,5 +1,23 @@
 # Next execution task
 
+## Active next task | M06 Phase 1 final owner merge gate
+
+Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-FINAL`, PR 4, PR 3 and `stash@{0}`. Obtain one fresh Core, Security and affected Linux Integration run on the intended final PR 4 head. Confirm branch protection, mergeability, final diff and review-conversation state. Do not merge until the owner explicitly authorizes it. If all checks pass, report M06 Phase 1 ready for owner merge approval with exact commit and run links. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED.
+
+After owner-authorized merge into `implementation/oct28`, verify the target commit and required checks, preserve PR 3's independent boundary, create `feat/m06-reviewer-control`, and recover only the reviewer portion of the preserved stash. Implement reviewer onboarding, registry verification, signer-control disclosure, primary and fresh committee separation, evidence authorization, commit-reveal failure handling, quorum recovery and session continuity. No live signing, deployment, paid inference, production-secret change, UI redesign or demo work is authorized.
+
+## Active next task | M06 Phase 1 wallet safety CI and owner review
+
+Preserve checkpoint `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-SAFETY`, PR 4, PR 3 and the original `stash@{0}`. Push the corrective wallet head, obtain fresh Core, Security and affected Linux Integration results, resolve any actionable failure and document the resolved review findings in PR 4. Do not merge either PR without explicit owner approval. Contract CI is required only if contract or protocol source changes; full financial P0 is required only if settlement or financial invariants change.
+
+After PR 4 passes and the owner authorizes its merge, create a separate reviewer-control feature branch and PR from the updated `implementation/oct28`. Recover only the reviewer portion of the preserved stash. Implement onboarding, registry verification, operator-control disclosure, frozen disjoint committees, evidence access, commitment and reveal failure cases, quorum timeout recovery and session continuity. Keep the six Sandbox keys described as single-process fixtures. Do not sign live transactions, deploy, use paid inference, change secrets, or start UI and demo work.
+
+## Active next task | M06 Phase 1 wallet PR verification
+
+Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET`, wallet code commit `379ff4e0111336da33579357a08c341ce6273dcb`, PR 4 and the original `stash@{0}` until its reviewer and provider portions are safely recovered into their separate feature branches. Core `42373449517`, Security `42373449483` and affected Integration `42373449454` passed on the wallet code. Contract CI was not required because no contract or protocol code changed. Full P0 was not required because no financial invariant or settlement path changed.
+
+Leave PR 4 unmerged for owner approval. After owner-directed merge, create the separate reviewer-control feature branch and PR from the updated implementation branch, recovering only the reviewer portion of the preserved stash. Do not sign a live transaction, deploy, use paid inference, change production secrets or start UI and demo work.
+
 ## Active next task | M05.1 integration PR review
 
 Preserve product-source baseline `34c836bbd02dc672325800b2951714ee6e935659`, CI merge `a1eedc929758d3e9f16dffb78fee64da5820817e` and the genuine Core, Security, Contract and Integration results. Open the integration pull request from `implementation/oct28` to `main`, review the complete accumulated contract, backend, dependency, documentation and stored-artifact diff, and leave it unmerged for explicit owner approval. Keep automatic merge disabled and required Core plus Security protection active.
