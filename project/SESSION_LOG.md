@@ -8,6 +8,10 @@ Implemented exact committee account, operator, revision and disclosure inspectio
 
 Focused reviewer tests pass 7/7. Combined M06 reviewer and wallet tests pass 17/17. After merging the CI optimisation target, the combined focused set passes 24/24 and the repository suite passes 83/83. The wallet production bundle, JavaScript syntax, diff check, Core policy, Security policy and dependency audit pass. The dependency baseline remains 14 low, two high and one critical inherited finding. The superseded old full Integration run `42419712122` was cancelled before expensive execution. PR 6 now requires the focused classified gate on its updated head. No Sandbox transaction, live signing, testnet deployment, mainnet activity, provider call, secret change or spending occurred.
 
+## 2026-11-07 UTC | Reviewer CI risk-map correction
+
+Started `ci/reviewer-risk-map` from `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. Added the missing reviewer test-file pattern and a combined-diff routing regression. No contract, financial assertion, runtime transaction path, deployment, signing, provider call, secret or spending changed.
+
 ## 2026-11-07 UTC | CI Sandbox optimisation
 
 Merged PR 4 under the owner's standing green-check policy. The reviewed head was `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f`; Core `42408934722`, Security `42408934686` and Integration `42408934712` passed. The resulting `implementation/oct28` merge commit is `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`, created at `2026-11-07T21:48:15Z`.

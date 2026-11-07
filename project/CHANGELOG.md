@@ -8,6 +8,12 @@ Advanced SQLite to schema version 5 with durable encrypted reveal recovery packa
 
 Dedicated reviewer tests pass 7/7, combined reviewer and wallet integration tests pass 17/17 and the repository suite passes 76/76. Wallet bundle, syntax, diff, Core policy, Security policy and dependency baseline checks pass. The inherited dependency baseline remains 17 findings. PR 4 was merged into `implementation/oct28` as `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` before this unit. No live signing, transaction, deployment, paid inference, production secret or spending occurred.
 
+## 2026-11-07 | Reviewer CI risk-map correction
+
+- Added `tests/m06-reviewer*.test.mjs` to the explicit reviewer focused mapping.
+- Added a regression for a combined reviewer source and reviewer test diff.
+- Preserved full classification for this risk-map correction and all unknown paths.
+
 ## 2026-11-07 | CI Sandbox optimisation
 
 - Recorded PR 4 merge head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f`, merge SHA `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` and its three passing pre-merge runs.

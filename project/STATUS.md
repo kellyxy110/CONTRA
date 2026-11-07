@@ -8,6 +8,10 @@ Reviewer operations now verify six frozen account and operator identities, exact
 
 SQLite schema version 5 adds account-scoped encrypted reveal recovery packages, finalized registry observations and append-only reviewer audit history. Recovery metadata is idempotent, conflict-safe and durable across restart. Finding identity must match case, terms, round, evidence, reviewer and disposition before package storage. Dedicated reviewer tests pass 7/7, the combined reviewer, wallet and CI-policy tests pass 24/24, and the updated complete repository suite passes 83/83 after merging the CI optimisation target. Wallet bundle, syntax, diff, Core policy, Security policy and dependency checks pass locally. The accepted 17 inherited dependency findings remain unchanged. No contract or financial invariant changed, so full financial P0 is not required. PR 6 focused GitHub checks remain the external gate. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED. No signing, transaction, deployment, provider call, secret change or spending occurred.
 
+## Current checkpoint | CONTRA-2026-11-07-CI-REVIEWER-RISK-MAP
+
+PR 5 merged the verified CI optimisation into `implementation/oct28` at `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. The focused reviewer mapping now explicitly covers `tests/m06-reviewer*.test.mjs` together with reviewer source changes. A regression proves this combined diff selects focused committee, reversal and timeout Sandbox coverage. The correction itself remains full-classified because it changes the governing risk map.
+
 ## Current checkpoint | CONTRA-2026-11-07-CI-SANDBOX-OPT
 
 Owner standing approval merged PR 4 after exact head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f` passed Core `42408934722`, Security `42408934686` and Integration `42408934712`. GitHub created merge commit `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` on `implementation/oct28` at `2026-11-07T21:48:15Z`.
