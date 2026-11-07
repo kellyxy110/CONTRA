@@ -1,5 +1,11 @@
 # Next execution task
 
+## Active next task | M06 Phase 1 final owner merge gate
+
+Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-FINAL`, PR 4, PR 3 and `stash@{0}`. Obtain one fresh Core, Security and affected Linux Integration run on the intended final PR 4 head. Confirm branch protection, mergeability, final diff and review-conversation state. Do not merge until the owner explicitly authorizes it. If all checks pass, report M06 Phase 1 ready for owner merge approval with exact commit and run links. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED.
+
+After owner-authorized merge into `implementation/oct28`, verify the target commit and required checks, preserve PR 3's independent boundary, create `feat/m06-reviewer-control`, and recover only the reviewer portion of the preserved stash. Implement reviewer onboarding, registry verification, signer-control disclosure, primary and fresh committee separation, evidence authorization, commit-reveal failure handling, quorum recovery and session continuity. No live signing, deployment, paid inference, production-secret change, UI redesign or demo work is authorized.
+
 ## Active next task | M06 Phase 1 wallet safety CI and owner review
 
 Preserve checkpoint `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-SAFETY`, PR 4, PR 3 and the original `stash@{0}`. Push the corrective wallet head, obtain fresh Core, Security and affected Linux Integration results, resolve any actionable failure and document the resolved review findings in PR 4. Do not merge either PR without explicit owner approval. Contract CI is required only if contract or protocol source changes; full financial P0 is required only if settlement or financial invariants change.

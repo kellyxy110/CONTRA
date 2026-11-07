@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M06-P1 final wallet hardening
+
+Resumed PR 4 at verified SHA `c24d236506f29d8efd0952463aff44f2e9fbe213` with a clean worktree and preserved `stash@{0}`. Added failing regressions before implementation. The first run proved a finalized RPC response without `result.transaction.hash` was accepted. The cross-layer audit then reproduced two related defects: a stale regressed success still left the RPC adapter as CONFIRMED, and a wallet-returned hash was lost locally when its server callback failed.
+
+Required independent transaction hash proof in the RPC adapter and lifecycle validator. Added exact signer, configured contract, one-action FunctionCall, method, arguments, gas, deposit, finality, execution status, final block identity and freshness checks. Changed malformed or contradictory finalized proof to durable UNKNOWN locking. Preserved explicit final failure, ordinary RPC-unavailable PENDING observation, first-hash-only recovery, unique cross-operation hashes, atomic terminal persistence and all prior PREPARED and SIGNING handoff protections.
+
+Persisted wallet-returned hashes before callback delivery and added account-scoped reload attachment through the idempotent callback. Controlled tests cover missing, empty, malformed and different hashes; signer and contract mismatch; extra actions; changed arguments; gas and deposit mismatch; missing finality; unknown and explicit-failure status; stale and regressed blocks; integrity-error locking; callback failure and reload recovery. Final focused result is 34/34 and full repository result is 69/69. Wallet production bundle, syntax, diff, Core policy, Security policy and dependency audit pass locally. The dependency audit retains 14 low, two high and one critical inherited finding with no new failure. Fresh PR 4 CI remains the final external gate. No transaction, signing, deployment, provider request, secret change or spending occurred. PR 3 remains open and unmerged.
+
 ## 2026-11-07 UTC | IMPL-M06-P1 wallet safety corrections
 
 Started from verified PR 4 head `a42d1f0aa60558d82556f4ab7d7f927ccc7f2609` on `feat/m06-wallet-lifecycle` with `stash@{0}` preserved. Added regression tests before implementation and observed five expected failures: ambiguous final RPC status was confirmed, prepared and handed-off states were absent, post-handoff rejection became FAILED, and browser UNKNOWN recovery was deleted.

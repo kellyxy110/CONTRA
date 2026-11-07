@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-071 | Finalized transaction identity must come from independent RPC proof | 2026-11-07
+
+ACCEPTED: never infer a transaction hash from the hash used to make the RPC request. A finalized result must contain its own valid NEAR transaction hash and that hash must exactly equal the persisted operation hash. Before confirmation, independently verify network, final execution status, signer, contract receiver, exactly one expected FunctionCall action, method, canonical arguments, gas, deposit, final block identity and non-stale observation. Missing or contradictory integrity proof locks the operation UNKNOWN. A wallet-returned hash that has not reached the server is recovery evidence only: retain it by account and attach it through the idempotent callback after reload, without signing or broadcasting again.
+
 ## D-070 | Wallet handoff and receipt success require durable server evidence | 2026-11-07
 
 ACCEPTED: a prepared external-wallet intent is not signable. Persist a one-way `PREPARED` to `SIGNING` handoff before invoking the wallet, and release a signing request only when an explicit server authorization gate is enabled. After handoff, browser rejection, closure, timeout and missing redirect are not proof that broadcast did not occur and must lock `UNKNOWN` until the original hash is recovered. A transaction becomes `CONFIRMED` only when a matching finalized RPC response explicitly contains a supported NEAR success result and a current final block identity. Preserve unresolved browser recovery identifiers by account. Keep live signing disabled in normal runtime configuration.

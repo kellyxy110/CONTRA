@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import {Store,sha256} from '../services/api/store.mjs';
+import {ApiError,Store,sha256} from '../services/api/store.mjs';
 import {createApp} from '../services/api/server.mjs';
 import {classifyWalletError,receiptState,validateWalletCall,verifyReceiptIntent} from '../services/wallet/lifecycle.mjs';
 
@@ -31,7 +31,16 @@ test('wallet policy enforces testnet, destination, exact arguments, signer roles
 
 test('wallet error and receipt validation never fabricate confirmation',()=>{
  const operation=payload();assert.equal(classifyWalletError({code:'USER_REJECTED'}).status,'UNKNOWN');assert.equal(classifyWalletError(new Error('redirect timed out')).status,'UNKNOWN');assert.equal(receiptState({final:false,status:'PENDING'}).status,'PENDING');assert.equal(receiptState({final:true,success:false,status:'FAILED',execution_status:'Failure'}).status,'FAILED');assert.equal(verifyReceiptIntent(receipt(operation),operation,{expectedHash:txHash}),true);
- assert.throws(()=>verifyReceiptIntent(receipt(operation,{network:'mainnet'}),operation,{expectedHash:txHash}),/network/);assert.throws(()=>verifyReceiptIntent(receipt(operation,{hash:'22222222222222222222222222222222'}),operation,{expectedHash:txHash}),/hash/);assert.throws(()=>verifyReceiptIntent(receipt(operation,{stale:true}),operation,{expectedHash:txHash}),/Stale/);const forged=receipt(operation);forged.result.transaction.receiver_id='evil.testnet';assert.throws(()=>verifyReceiptIntent(forged,operation,{expectedHash:txHash}),/does not match/);
+ assert.equal(receiptState({final:true,success:true,status:'CONFIRMED',execution_status:'Unknown'}).status,'UNKNOWN');assert.throws(()=>verifyReceiptIntent(receipt(operation,{network:'mainnet'}),operation,{expectedHash:txHash}),/network/);assert.throws(()=>verifyReceiptIntent(receipt(operation,{hash:'22222222222222222222222222222222'}),operation,{expectedHash:txHash}),/hash/);assert.throws(()=>verifyReceiptIntent(receipt(operation,{stale:true}),operation,{expectedHash:txHash}),/Stale/);assert.throws(()=>verifyReceiptIntent(receipt(operation,{regressed:true}),operation,{expectedHash:txHash}),/Stale/);
+ const missingFinality=receipt(operation);missingFinality.finality='pending';assert.throws(()=>verifyReceiptIntent(missingFinality,operation,{expectedHash:txHash}),/finalized/);
+ const wrongSigner=receipt(operation);wrongSigner.result.transaction.signer_id=beneficiary;assert.throws(()=>verifyReceiptIntent(wrongSigner,operation,{expectedHash:txHash}),/signer or contract/);
+ const wrongContract=receipt(operation);wrongContract.result.transaction.receiver_id='evil.testnet';assert.throws(()=>verifyReceiptIntent(wrongContract,operation,{expectedHash:txHash}),/signer or contract/);
+ const missingInnerHash=receipt(operation);delete missingInnerHash.result.transaction.hash;assert.throws(()=>verifyReceiptIntent(missingInnerHash,operation,{expectedHash:txHash}),/hash/);
+ const malformedInnerHash=receipt(operation);malformedInnerHash.result.transaction.hash='not-a-near-hash';assert.throws(()=>verifyReceiptIntent(malformedInnerHash,operation,{expectedHash:txHash}),/hash/);
+ const extraAction=receipt(operation);extraAction.result.transaction.actions.push({Transfer:{deposit:'1'}});assert.throws(()=>verifyReceiptIntent(extraAction,operation,{expectedHash:txHash}),/action/);
+ const changedArgs=receipt(operation);changedArgs.result.transaction.actions[0].FunctionCall.args=Buffer.from(JSON.stringify({case_id:sha256('other-case')})).toString('base64');assert.throws(()=>verifyReceiptIntent(changedArgs,operation,{expectedHash:txHash}),/method, arguments, gas or deposit/);
+ const wrongDeposit=receipt(operation);wrongDeposit.result.transaction.actions[0].FunctionCall.deposit='1';assert.throws(()=>verifyReceiptIntent(wrongDeposit,operation,{expectedHash:txHash}),/method, arguments, gas or deposit/);
+ const wrongGas=receipt(operation);wrongGas.result.transaction.actions[0].FunctionCall.gas='1';assert.throws(()=>verifyReceiptIntent(wrongGas,operation,{expectedHash:txHash}),/method, arguments, gas or deposit/);
 });
 
 test('restart distinguishes prepared intent from handed-off signing uncertainty',t=>{
@@ -56,6 +65,10 @@ test('rejection, wallet closure and missing redirect remain accurate recoverable
 test('delayed receipt, RPC failure and finalized success reconcile without redispatch',async t=>{
  let observed=null,calls=0;const env=await running(t,{receipt:async()=>{calls++;if(observed instanceof Error)throw observed;return observed;},walletSigningAuthorized:true}),operationId='wallet-reconcile';await env.post('wallet/prepare',{operation_id:operationId,call:call('finalize_case',{case_id:caseId})});await env.post('wallet/handoff',{operation_id:operationId});await env.post('wallet/broadcast',{operation_id:operationId,tx_hash:txHash});const operation=env.store.tx(operationId,creator).payload;
  observed=receipt(operation,{final:false,success:false,status:'PENDING',height:40});assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,202);observed=new Error('offline');assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,503);assert.equal(env.store.tx(operationId,creator).status,'PENDING');observed=receipt(operation,{height:42});assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,200);assert.equal(env.store.tx(operationId,creator).status,'CONFIRMED');assert.equal((await env.post('wallet/reconcile',{operation_id:operationId})).status,200);assert.equal(calls,3);
+});
+
+test('malformed finalized RPC proof locks the operation UNKNOWN instead of remaining retryable',async t=>{
+ const env=await running(t,{receipt:async()=>{throw new ApiError(502,'Finalized transaction hash missing');},walletSigningAuthorized:true}),operationId='wallet-malformed-proof';await env.post('wallet/prepare',{operation_id:operationId,call:call('finalize_case',{case_id:caseId})});await env.post('wallet/handoff',{operation_id:operationId});await env.post('wallet/broadcast',{operation_id:operationId,tx_hash:txHash});const reconciled=await env.post('wallet/reconcile',{operation_id:operationId});assert.equal(reconciled.status,502);const operation=env.store.tx(operationId,creator);assert.equal(operation.status,'UNKNOWN');assert.match(operation.error,/integrity failure/);assert.equal((await env.post('wallet/broadcast',{operation_id:operationId,tx_hash:txHash})).status,409);
 });
 
 test('regressed observations and mismatched finalized receipts fail closed',async t=>{

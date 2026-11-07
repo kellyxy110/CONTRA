@@ -102,10 +102,11 @@ export function verifyReceiptIntent(receipt,payload,{expectedHash=null}={}){
  if(receipt?.network!==payload.network)throw new ApiError(409,'Finalized receipt network does not match the prepared operation');
  if(expectedHash&&receipt?.tx_hash!==expectedHash)throw new ApiError(409,'Finalized receipt hash does not match the persisted transaction hash');
  const transaction=receipt?.result?.transaction;if(!transaction)throw new ApiError(502,'Finalized receipt omitted the signed transaction');
+ if(!TX_HASH.test(transaction.hash||'')||transaction.hash!==receipt.tx_hash||(expectedHash&&transaction.hash!==expectedHash))throw new ApiError(409,'Finalized signed transaction hash is missing, malformed or does not match the persisted transaction hash');
  if(transaction.signer_id!==payload.signerId||transaction.receiver_id!==payload.receiverId)throw new ApiError(409,'Finalized transaction signer or contract does not match the prepared operation');
  const actions=transaction.actions;if(!Array.isArray(actions)||actions.length!==1||!actions[0]?.FunctionCall)throw new ApiError(409,'Finalized transaction action does not match the prepared operation');
- const action=actions[0].FunctionCall,decoded=JSON.parse(Buffer.from(action.args,'base64').toString('utf8'));
- if(action.method_name!==payload.methodName||String(action.deposit)!==payload.deposit||canonical(decoded)!==canonical(payload.args))throw new ApiError(409,'Finalized transaction method, arguments or deposit do not match the prepared operation');
+ const action=actions[0].FunctionCall;let decoded;try{if(typeof action.args!=='string'||!action.args.length)throw Error();decoded=JSON.parse(Buffer.from(action.args,'base64').toString('utf8'));}catch{throw new ApiError(409,'Finalized transaction arguments are malformed');}
+ if(action.method_name!==payload.methodName||String(action.gas)!==payload.gas||String(action.deposit)!==payload.deposit||canonical(decoded)!==canonical(payload.args))throw new ApiError(409,'Finalized transaction method, arguments, gas or deposit do not match the prepared operation');
  return true;
 }
 

@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-07 | IMPL-M06-P1 final wallet hardening
+
+Made finalized RPC transaction hash presence, format and exact equality mandatory. Added signer and contract checks in the RPC adapter, independent inner-hash and exact gas checks in lifecycle verification, final block identity validation, and UNKNOWN classification for stale or regressed success observations. Receipt-integrity exceptions now lock the durable operation UNKNOWN rather than being treated as ordinary RPC unavailability.
+
+The complete browser recovery audit identified one related P1 defect: a wallet-returned hash was lost if the server callback failed before persistence. The client now saves that hash before the callback and, after reload, attaches it through the existing first-hash-only callback for receipt reconciliation. It never invokes the wallet or redispatches the transaction during recovery.
+
+Added controlled regressions for matching, missing, empty, malformed and different hashes; signer and contract mismatch; extra actions; changed arguments; incorrect gas and deposit; missing finality; unknown and explicit-failure execution status; stale, regressed and contradictory block observations; malformed proof UNKNOWN locking; and delayed browser hash recovery. Initial regressions failed at the identified boundaries. Final focused tests pass 34/34 and the full repository passes 69/69. Wallet bundle, syntax, diff, Core policy, Security policy and dependency-baseline checks pass locally. The accepted dependency baseline remains 17 inherited findings. Fresh PR 4 CI is pending on the final commit. No contract, financial invariant, transaction, signing, deployment, paid inference, secret or spend changed.
+
 ## 2026-11-07 | IMPL-M06-P1 wallet safety corrections
 
 Added durable signing handoff state, restart-safe prepared intents, post-handoff UNKNOWN locking, unique transaction-hash ownership and atomic terminal receipt persistence. Added a server-only live-signing authorization gate while retaining non-billable preparation with live execution disabled by default. Tightened RPC result classification to explicit NEAR success and failure variants, validated returned transaction identity and final block freshness, and prevented ambiguous finality from becoming confirmation.

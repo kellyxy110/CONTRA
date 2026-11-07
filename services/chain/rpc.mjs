@@ -1,6 +1,7 @@
 import {ApiError} from '../api/store.mjs';
 
 const ACCOUNT_ID=/^(?=.{2,64}$)[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
+const TX_HASH=/^[1-9A-HJ-NP-Za-km-z]{32,64}$/;
 const ZERO_CODE_HASH='11111111111111111111111111111111';
 
 function rpcFailure(cause){
@@ -42,10 +43,12 @@ export function rpcAdapter({url,contractAccount,network='testnet',transport=fetc
  const block=async blockId=>rpc('block',blockId?{block_id:blockId}:{finality:'final'});
  const source=async(result,knownBlock=null)=>{
   const finalized=knownBlock||await block(result.block_hash);
-  const timestamp=String(finalized.header.timestamp_nanosec);
+  if(!finalized?.header||finalized.header.hash!==result.block_hash)throw new ApiError(409,'Finalized block identity does not match the transaction outcome');
+  const timestamp=String(finalized.header.timestamp_nanosec),rawHeight=String(finalized.header.height);
+  if(!/^\d+$/.test(timestamp)||!/^\d+$/.test(rawHeight)||String(result.block_height)!==rawHeight)throw new ApiError(502,'Finalized block metadata is incomplete');
   const observed=now();
-  const ageMs=Math.max(0,observed.getTime()-Number(BigInt(timestamp)/1_000_000n)),height=BigInt(result.block_height),regressed=lastBlockHeight!==null&&height<lastBlockHeight;if(lastBlockHeight===null||height>lastBlockHeight)lastBlockHeight=height;
-  return {network,finality:'final',block_height:String(result.block_height),block_hash:result.block_hash,block_timestamp_ns:timestamp,observed_at:observed.toISOString(),age_ms:ageMs,regressed,stale:ageMs>staleAfterMs||regressed};
+  const ageMs=Math.max(0,observed.getTime()-Number(BigInt(timestamp)/1_000_000n)),height=BigInt(rawHeight),regressed=lastBlockHeight!==null&&height<lastBlockHeight;if(lastBlockHeight===null||height>lastBlockHeight)lastBlockHeight=height;
+  return {network,finality:'final',block_height:rawHeight,block_hash:result.block_hash,block_timestamp_ns:timestamp,observed_at:observed.toISOString(),age_ms:ageMs,regressed,stale:ageMs>staleAfterMs||regressed};
  };
  const query=async(method,args={})=>rpc('query',{request_type:'call_function',account_id:contractAccount,method_name:method,args_base64:Buffer.from(JSON.stringify(args)).toString('base64'),finality:'final'});
  const adapter={
@@ -71,10 +74,11 @@ export function rpcAdapter({url,contractAccount,network='testnet',transport=fetc
    const result=await rpc('tx',{tx_hash:hash,sender_account_id:account,wait_until:'FINAL'});
    const final=result.final_execution_status==='FINAL',transaction=result.transaction;
    if(final&&(!transaction||typeof transaction!=='object'||!result.transaction_outcome?.block_hash))throw new ApiError(502,'Finalized NEAR RPC response is incomplete');
-   if(transaction?.hash!==undefined&&transaction.hash!==hash)throw new ApiError(409,'NEAR RPC transaction hash does not match the requested hash');
+   if(final&&(!TX_HASH.test(transaction.hash||'')||transaction.hash!==hash))throw new ApiError(409,'NEAR RPC transaction hash is missing, malformed or does not match the requested hash');
+   if(final&&(transaction.signer_id!==account||transaction.receiver_id!==contractAccount))throw new ApiError(409,'NEAR RPC transaction signer or contract does not match the requested operation');
    const observedStatus=executionStatus(result.status),blockHash=result.transaction_outcome?.block_hash||null,finalizedBlock=blockHash?await block(blockHash):null,meta=finalizedBlock?await source({block_hash:blockHash,block_height:finalizedBlock.header.height},finalizedBlock):null;
-   const status=!final?'PENDING':observedStatus==='Failure'?'FAILED':['SuccessValue','SuccessReceiptId'].includes(observedStatus)?'CONFIRMED':'UNKNOWN';
-   return {network,tx_hash:hash,signer_id:transaction?.signer_id||account,final,finality:final?'final':'pending',success:status==='CONFIRMED',status,execution_status:observedStatus,finalized_block_hash:blockHash,finalized_block_height:meta?.block_height||null,finalized_block_timestamp_ns:meta?.block_timestamp_ns||null,stale:meta?.stale??false,regressed:meta?.regressed??false,result,observed_at:meta?.observed_at||now().toISOString()};
+   const status=!final?'PENDING':observedStatus==='Failure'?'FAILED':['SuccessValue','SuccessReceiptId'].includes(observedStatus)&&!meta?.stale?'CONFIRMED':'UNKNOWN';
+   return {network,tx_hash:final?transaction.hash:hash,signer_id:transaction?.signer_id||account,final,finality:final?'final':'pending',success:status==='CONFIRMED',status,execution_status:observedStatus,finalized_block_hash:blockHash,finalized_block_height:meta?.block_height||null,finalized_block_timestamp_ns:meta?.block_timestamp_ns||null,stale:meta?.stale??false,regressed:meta?.regressed??false,result,observed_at:meta?.observed_at||now().toISOString()};
   }
  };
  return adapter;
