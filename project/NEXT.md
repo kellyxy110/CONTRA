@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | Reviewer risk-map correction verification
+
+Publish `ci/reviewer-risk-map`, require Core, Security and full Integration on the correction head, then merge under the standing green-check policy. After merge, reviewer-control changes with their dedicated test file must route to focused Sandbox coverage unless another changed path independently requires full verification.
+
 ## Active next task | CI optimisation remote verification
 
 Publish `ci/optimise-sandbox-runtime`, open its focused PR into `implementation/oct28` and require fresh Core, Security and full Integration results. Verify the policy selects full because integration infrastructure and Sandbox timing changed. Confirm both isolated comprehensive jobs pass, inspect their timing artifacts and record actual wall-time improvement on the PR. Merge under the standing green-check policy only when the aggregate gate and required checks are green. Then reevaluate PR 3 against the advanced implementation branch and preserve the concurrent reviewer-control branch.
