@@ -1,5 +1,11 @@
 # Decision ledger
 
+## D-070 | Wallet handoff and receipt success require durable server evidence | 2026-11-07
+
+ACCEPTED: a prepared external-wallet intent is not signable. Persist a one-way `PREPARED` to `SIGNING` handoff before invoking the wallet, and release a signing request only when an explicit server authorization gate is enabled. After handoff, browser rejection, closure, timeout and missing redirect are not proof that broadcast did not occur and must lock `UNKNOWN` until the original hash is recovered. A transaction becomes `CONFIRMED` only when a matching finalized RPC response explicitly contains a supported NEAR success result and a current final block identity. Preserve unresolved browser recovery identifiers by account. Keep live signing disabled in normal runtime configuration.
+
+This decision corrects D-069's overly broad rejection wording. Terminal `FAILED` rejection is permitted only before signing handoff. After handoff, conservative `UNKNOWN` handling is mandatory.
+
 ## D-069 | Interrupted wallet authorization locks until evidence arrives | 2026-11-07
 
 ACCEPTED: persist and validate an external-wallet intent before invoking signing. Treat explicit rejection as FAILED only when no transaction hash exists. Treat a wallet timeout, closed redirect or other missing completion as UNKNOWN because broadcast cannot be disproved. Never redispatch that UNKNOWN operation. Permit only a delayed callback carrying the first valid transaction hash to move it into receipt reconciliation. Confirm only after finalized RPC evidence matches network, hash, signer, contract, single function-call method, arguments and deposit. Reject lower block observations and conflicting operation payloads or hashes. Preserve existing Sandbox UNKNOWN recovery unchanged.

@@ -84,18 +84,21 @@ export function validateWalletCall({network,contractAccount,signerId,call,caseRe
 
 export function classifyWalletError(error){
  const message=String(error?.message||error||'Wallet request failed');
- if(error?.code==='USER_REJECTED'||/reject|declin|cancel/i.test(message))return {status:'FAILED',code:'WALLET_REJECTED',message:'Wallet signing request was rejected. No transaction was broadcast.'};
- return {status:'UNKNOWN',code:'WALLET_INTERRUPTED',message:'Wallet signing did not return a transaction hash. Broadcast status is unknown and the operation must not be redispatched.'};
+ const code=error?.code==='USER_REJECTED'||/reject|declin|cancel/i.test(message)?'WALLET_REJECTION_UNVERIFIED':'WALLET_INTERRUPTED';
+ return {status:'UNKNOWN',code,message:'Wallet signing did not return a transaction hash. Broadcast status is unknown and the operation must not be redispatched.'};
 }
 
 export function receiptState(receipt){
  if(!receipt||receipt.final!==true)return {status:'PENDING',confirmed:false,reason:receipt?.status||'NOT_FINAL'};
- if(receipt.success===true&&receipt.status==='CONFIRMED')return {status:'CONFIRMED',confirmed:true,reason:'FINAL_SUCCESS'};
- if(receipt.success===false||receipt.status==='FAILED')return {status:'FAILED',confirmed:false,reason:'FINAL_FAILURE'};
+ if(receipt.execution_status==='Failure'&&receipt.success===false&&receipt.status==='FAILED')return {status:'FAILED',confirmed:false,reason:'FINAL_FAILURE'};
+ if(['SuccessValue','SuccessReceiptId'].includes(receipt.execution_status)&&receipt.success===true&&receipt.status==='CONFIRMED')return {status:'CONFIRMED',confirmed:true,reason:'FINAL_SUCCESS'};
  return {status:'UNKNOWN',confirmed:false,reason:'FINAL_STATUS_AMBIGUOUS'};
 }
 
 export function verifyReceiptIntent(receipt,payload,{expectedHash=null}={}){
+ if(receipt?.final!==true||receipt?.finality!=='final')throw new ApiError(409,'Receipt does not establish finalized execution');
+ if(receipt?.stale===true||receipt?.regressed===true)throw new ApiError(409,'Stale or regressed finalized receipt observation rejected');
+ if(!receipt?.finalized_block_hash||receipt?.finalized_block_height===null||receipt?.finalized_block_height===undefined)throw new ApiError(502,'Finalized receipt omitted block identity');
  if(receipt?.network!==payload.network)throw new ApiError(409,'Finalized receipt network does not match the prepared operation');
  if(expectedHash&&receipt?.tx_hash!==expectedHash)throw new ApiError(409,'Finalized receipt hash does not match the persisted transaction hash');
  const transaction=receipt?.result?.transaction;if(!transaction)throw new ApiError(502,'Finalized receipt omitted the signed transaction');
@@ -107,6 +110,6 @@ export function verifyReceiptIntent(receipt,payload,{expectedHash=null}={}){
 }
 
 export function walletSigningRequest(operation){
- if(!operation?.payload)throw new ApiError(409,'Persisted signing request is unavailable');
+ if(!operation?.payload||operation.status!=='SIGNING')throw new ApiError(409,'Persisted signing request is unavailable');
  return {operation_id:operation.operation_id,status:operation.status,transaction:{signerId:operation.payload.signerId,receiverId:operation.payload.receiverId,actions:[{type:'FunctionCall',params:{methodName:operation.payload.methodName,args:operation.payload.args,gas:operation.payload.gas,deposit:operation.payload.deposit}}]}};
 }

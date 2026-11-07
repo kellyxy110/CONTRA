@@ -13,6 +13,14 @@ function parseJson(bytes){
  catch{throw new ApiError(502,'NEAR contract returned invalid JSON');}
 }
 
+function executionStatus(status){
+ if(!status||typeof status!=='object'||Array.isArray(status))return null;
+ if(Object.hasOwn(status,'Failure')&&status.Failure&&typeof status.Failure==='object')return 'Failure';
+ if(Object.hasOwn(status,'SuccessValue')&&typeof status.SuccessValue==='string')return 'SuccessValue';
+ if(Object.hasOwn(status,'SuccessReceiptId')&&typeof status.SuccessReceiptId==='string'&&status.SuccessReceiptId.length>0)return 'SuccessReceiptId';
+ return null;
+}
+
 export function rpcAdapter({url,contractAccount,network='testnet',transport=fetch,timeoutMs=10000,staleAfterMs=120000,now=()=>new Date()}={}){
  if(network!=='testnet')throw Error('Only NEAR testnet RPC is supported');
  if(!ACCOUNT_ID.test(contractAccount||'')||!contractAccount.endsWith('.testnet'))throw Error('A valid testnet contract account is required');
@@ -32,8 +40,8 @@ export function rpcAdapter({url,contractAccount,network='testnet',transport=fetc
   return payload.result;
  }
  const block=async blockId=>rpc('block',blockId?{block_id:blockId}:{finality:'final'});
- const source=async result=>{
-  const finalized=await block(result.block_hash);
+ const source=async(result,knownBlock=null)=>{
+  const finalized=knownBlock||await block(result.block_hash);
   const timestamp=String(finalized.header.timestamp_nanosec);
   const observed=now();
   const ageMs=Math.max(0,observed.getTime()-Number(BigInt(timestamp)/1_000_000n)),height=BigInt(result.block_height),regressed=lastBlockHeight!==null&&height<lastBlockHeight;if(lastBlockHeight===null||height>lastBlockHeight)lastBlockHeight=height;
@@ -61,10 +69,12 @@ export function rpcAdapter({url,contractAccount,network='testnet',transport=fetc
   async hasAccessKey(account,publicKey){try{await rpc('query',{request_type:'view_access_key',account_id:account,public_key:publicKey,finality:'final'});return true;}catch{return false;}},
   async receipt(hash,account){
    const result=await rpc('tx',{tx_hash:hash,sender_account_id:account,wait_until:'FINAL'});
-   const final=result.final_execution_status==='FINAL';
-   const failure=result.status&&typeof result.status==='object'&&Object.hasOwn(result.status,'Failure');
-   const blockHash=result.transaction_outcome?.block_hash||null,finalizedBlock=blockHash?await block(blockHash):null;
-   return {network,tx_hash:hash,signer_id:account,final,finality:final?'final':'pending',success:final&&!failure,status:failure?'FAILED':final?'CONFIRMED':'PENDING',finalized_block_hash:blockHash,finalized_block_height:finalizedBlock?String(finalizedBlock.header.height):null,finalized_block_timestamp_ns:finalizedBlock?String(finalizedBlock.header.timestamp_nanosec):null,result,observed_at:now().toISOString()};
+   const final=result.final_execution_status==='FINAL',transaction=result.transaction;
+   if(final&&(!transaction||typeof transaction!=='object'||!result.transaction_outcome?.block_hash))throw new ApiError(502,'Finalized NEAR RPC response is incomplete');
+   if(transaction?.hash!==undefined&&transaction.hash!==hash)throw new ApiError(409,'NEAR RPC transaction hash does not match the requested hash');
+   const observedStatus=executionStatus(result.status),blockHash=result.transaction_outcome?.block_hash||null,finalizedBlock=blockHash?await block(blockHash):null,meta=finalizedBlock?await source({block_hash:blockHash,block_height:finalizedBlock.header.height},finalizedBlock):null;
+   const status=!final?'PENDING':observedStatus==='Failure'?'FAILED':['SuccessValue','SuccessReceiptId'].includes(observedStatus)?'CONFIRMED':'UNKNOWN';
+   return {network,tx_hash:hash,signer_id:transaction?.signer_id||account,final,finality:final?'final':'pending',success:status==='CONFIRMED',status,execution_status:observedStatus,finalized_block_hash:blockHash,finalized_block_height:meta?.block_height||null,finalized_block_timestamp_ns:meta?.block_timestamp_ns||null,stale:meta?.stale??false,regressed:meta?.regressed??false,result,observed_at:meta?.observed_at||now().toISOString()};
   }
  };
  return adapter;

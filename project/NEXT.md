@@ -1,5 +1,11 @@
 # Next execution task
 
+## Active next task | M06 Phase 1 wallet safety CI and owner review
+
+Preserve checkpoint `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-SAFETY`, PR 4, PR 3 and the original `stash@{0}`. Push the corrective wallet head, obtain fresh Core, Security and affected Linux Integration results, resolve any actionable failure and document the resolved review findings in PR 4. Do not merge either PR without explicit owner approval. Contract CI is required only if contract or protocol source changes; full financial P0 is required only if settlement or financial invariants change.
+
+After PR 4 passes and the owner authorizes its merge, create a separate reviewer-control feature branch and PR from the updated `implementation/oct28`. Recover only the reviewer portion of the preserved stash. Implement onboarding, registry verification, operator-control disclosure, frozen disjoint committees, evidence access, commitment and reveal failure cases, quorum timeout recovery and session continuity. Keep the six Sandbox keys described as single-process fixtures. Do not sign live transactions, deploy, use paid inference, change secrets, or start UI and demo work.
+
 ## Active next task | M06 Phase 1 wallet PR verification
 
 Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET`, wallet code commit `379ff4e0111336da33579357a08c341ce6273dcb`, PR 4 and the original `stash@{0}` until its reviewer and provider portions are safely recovered into their separate feature branches. Core `42373449517`, Security `42373449483` and affected Integration `42373449454` passed on the wallet code. Contract CI was not required because no contract or protocol code changed. Full P0 was not required because no financial invariant or settlement path changed.

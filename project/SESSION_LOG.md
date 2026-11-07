@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M06-P1 wallet safety corrections
+
+Started from verified PR 4 head `a42d1f0aa60558d82556f4ab7d7f927ccc7f2609` on `feat/m06-wallet-lifecycle` with `stash@{0}` preserved. Added regression tests before implementation and observed five expected failures: ambiguous final RPC status was confirmed, prepared and handed-off states were absent, post-handoff rejection became FAILED, and browser UNKNOWN recovery was deleted.
+
+Implemented durable `PREPARED` and `SIGNING` separation, atomic handoff, conservative restart recovery, first-hash-only delayed callbacks and repository-wide hash uniqueness. Added explicit NEAR success and failure classification, RPC hash verification, final block freshness checks, transaction intent matching and atomic external terminal persistence. Added the server authorization boundary for live handoff, kept it false in normal startup, and made health and configuration responses distinguish preparation from live signing. Browser storage now retains UNKNOWN state by account, restores outstanding operations after reload and invokes the wallet only after server handoff.
+
+Final local evidence: focused M05/wallet/browser tests 31/31, complete repository tests 66/66, M05 runtime 18/18, wallet bundle build passed, JavaScript syntax and diff checks passed, Core and Security policy scans passed, and the dependency audit retained 17 inherited findings with no new baseline failure. `npm run test:sandbox` was attempted and blocked before launch by the native-Linux preflight because the current process is Windows. No Sandbox test, contract change, full P0 run, signing, transaction, deployment, provider call, secret change or spending occurred. Fresh Linux Core, Security and Integration runs are required after push. PR 4 and PR 3 remain unmerged.
+
 ## 2026-11-07 UTC | IMPL-M06-P1 external wallet lifecycle local gate
 
 Verified `implementation/oct28` at `950ca25c8c5df35310a0cd61be5693df2a04b402`, created `feat/m06-wallet-lifecycle`, inspected `stash@{0}` without dropping it, and confirmed it contains wallet, reviewer and provider work. Applied it with the stash retained, then excluded reviewer/provider files and rebuilt the persistence migration as a wallet-only unit.

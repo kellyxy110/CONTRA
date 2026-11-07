@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-07 | IMPL-M06-P1 wallet safety corrections
+
+Added durable signing handoff state, restart-safe prepared intents, post-handoff UNKNOWN locking, unique transaction-hash ownership and atomic terminal receipt persistence. Added a server-only live-signing authorization gate while retaining non-billable preparation with live execution disabled by default. Tightened RPC result classification to explicit NEAR success and failure variants, validated returned transaction identity and final block freshness, and prevented ambiguous finality from becoming confirmation.
+
+Changed browser recovery to retain UNKNOWN operation IDs, account identity and known hashes across reloads; added account-scoped restoration and safe corrupt-storage handling. Added pre-fix regressions that failed in five places, then expanded focused coverage for restart before and after handoff, concurrent handoff, delayed callbacks, rejection authority, duplicate hashes, explicit finality, stale observations, wallet invocation order and account-isolated restoration. Final focused result is 31/31, repository result is 66/66, M05 runtime is 18/18, wallet build and local Core/Security policy checks pass. The dependency baseline remains 17 inherited findings with no new failure. Windows Sandbox preflight blocked before launch, so fresh Linux Integration CI remains pending. No contract, transaction, signing, deployment, paid provider, production secret or spend changed.
+
 ## 2026-11-07 | IMPL-M06-P1 external wallet lifecycle local gate
 
 Recovered the wallet portion of the preserved M06 stash onto `feat/m06-wallet-lifecycle` without applying its reviewer or provider work. Added strict external-call policy, durable pre-signing intents, session inspection, renewal and revocation, transaction-hash callbacks, finalized receipt reconciliation, network and payload matching, block-regression rejection and restart recovery. Added browser adapter helpers for stable operation identifiers, reload-visible pending operations, explicit rejection, interruption locking and delayed callback recovery.
