@@ -1,5 +1,25 @@
 # Decision ledger
 
+## D-065 | Rate controls and backup boundaries are explicit | 2026-11-07
+
+ACCEPTED: bound authentication challenges, signature verification, artifact writes, evaluator requests and transaction dispatch by remote address or authenticated account. A configured public origin overrides Host-based same-origin inference. Treat SQLite plus the content-addressed `objects` directory as one durable volume. Backups are offline, checkpointed, integrity-checked copies of the complete directory. Backup or restart never authorizes retry of an UNKNOWN operation.
+
+## D-064 | Remove visual-only tooling only after dependency mapping | 2026-11-07
+
+ACCEPTED: remove superseded standalone studies, capture wrappers and visual-only browser matrices from the active tree while preserving Git history, immutable references, financial evidence and functional browser coverage. Keep the UX3A styles, icons, font, texture and logo assets currently imported by the operational client. Do not turn design cleanup into a frontend rewrite during M05.
+
+## D-063 | Live hackathon rules govern eligibility and tracks | 2026-11-07
+
+ACCEPTED: treat the live `nearhackathon.com/HACKATHON.md` as the governing eligibility and submission source. Current Q-001 makes code since the 2026-10-19 announcement eligible. Preserve the factual 2026-10-28 CONTRA implementation start without relabelling history. Prioritize track `security` and include `open` as an additional applicable track. Recheck the live rules before submission, display the complete payload for owner approval and submit only once.
+
+## D-062 | Runtime selection and persistence fail closed | 2026-11-07
+
+ACCEPTED: application startup must explicitly select `unavailable`, `sandbox` or `testnet`. Testnet startup validates URL, network identity, node synchronization, contract account, deployed code and finalized block access before serving. Durable state uses versioned SQLite plus content-addressed files with integrity checks. Any interrupted nonterminal operation becomes `UNKNOWN` on restart and cannot be presented as confirmed or blindly retried.
+
+## D-061 | M05 through M07 product completion supersedes active visual gates | 2026-11-07
+
+ACCEPTED: suspend UI polish, radar refinement, screenshot comparison and demo production. Preserve completed M03 and M04 evidence and the minimal operational frontend. Complete runtime, persistence, authentication, wallet, reviewer, provider and full agreement-to-settlement verification first. Owner visual acceptance is deferred and is no longer the active next task. Testnet deployment, signing, paid provider usage and production-secret changes remain separately gated.
+
 ## D-060 | M04.3 local browser gate complete with owner acceptance separate | 2026-11-04
 
 ACCEPTED: complete the M04.3 local engineering gate because all three phases pass sequentially, actual rendered screenshots were inspected, three browser engines pass the full viewport matrix, and both real local Sandbox journeys still settle correctly. Keep owner visual acceptance and manual screen-reader review as separate open gates. Keep AC31 and AC32 blocked until their frozen testnet and live-provider requirements are separately authorized and proven. A local controlled six-account run is not reviewer independence evidence.

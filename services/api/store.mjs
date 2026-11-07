@@ -3,10 +3,48 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {createHash,randomUUID,randomBytes} from 'node:crypto';
 export const sha256=b=>createHash('sha256').update(b).digest('hex');
-export class ApiError extends Error{constructor(status,message){super(message);this.status=status;}}
+export class ApiError extends Error{constructor(status,message,details={}){super(message);this.status=status;Object.assign(this,details);}}
 export function canonical(value){if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';return JSON.stringify(value);}
+const SCHEMA_VERSION=2;
+const MIGRATIONS=[
+ `CREATE TABLE IF NOT EXISTS blobs(digest TEXT PRIMARY KEY,size INTEGER NOT NULL,media_type TEXT NOT NULL,created_at INTEGER NOT NULL);
+  CREATE TABLE IF NOT EXISTS links(case_id TEXT NOT NULL,digest TEXT NOT NULL,actor TEXT NOT NULL,kind TEXT NOT NULL,PRIMARY KEY(case_id,digest,actor,kind));
+  CREATE TABLE IF NOT EXISTS manifests(digest TEXT PRIMARY KEY,case_id TEXT NOT NULL,actor TEXT NOT NULL,correction_of TEXT,created_at INTEGER NOT NULL);
+  CREATE INDEX IF NOT EXISTS manifests_case ON manifests(case_id,created_at);
+  CREATE TABLE IF NOT EXISTS disclosures(digest TEXT PRIMARY KEY,reviewer_id TEXT NOT NULL,operator_id TEXT NOT NULL,created_at INTEGER NOT NULL);
+  CREATE INDEX IF NOT EXISTS disclosures_reviewer ON disclosures(reviewer_id,created_at);
+  CREATE TABLE IF NOT EXISTS jobs(id TEXT PRIMARY KEY,scope TEXT UNIQUE,payload_hash TEXT,provider TEXT,reserved INTEGER,status TEXT,finding_digest TEXT,error TEXT,created_at INTEGER);
+  CREATE TABLE IF NOT EXISTS challenges(id TEXT PRIMARY KEY,account TEXT,nonce TEXT,message TEXT,recipient TEXT,expires INTEGER,used INTEGER DEFAULT 0);
+  CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY,account TEXT,expires INTEGER);
+  CREATE TABLE IF NOT EXISTS receipts(tx_hash TEXT PRIMARY KEY,body TEXT);`,
+ `CREATE TABLE IF NOT EXISTS attempts(id TEXT PRIMARY KEY,account TEXT,payload_hash TEXT,status TEXT,receipt TEXT,created_at INTEGER,tx_hash TEXT,updated_at INTEGER,error TEXT);
+  CREATE TABLE IF NOT EXISTS attempt_events(attempt_id TEXT,status TEXT,tx_hash TEXT,error TEXT,observed_at INTEGER,PRIMARY KEY(attempt_id,status,observed_at));
+  CREATE INDEX IF NOT EXISTS attempts_account ON attempts(account,updated_at);`
+];
 export class Store{
- constructor(directory){fs.mkdirSync(directory,{recursive:true,mode:0o700});this.dir=directory;this.db=new DatabaseSync(path.join(directory,'contra.sqlite'));this.db.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS blobs(digest TEXT PRIMARY KEY,size INTEGER NOT NULL,media_type TEXT NOT NULL,created_at INTEGER NOT NULL);CREATE TABLE IF NOT EXISTS links(case_id TEXT, digest TEXT,actor TEXT,kind TEXT,PRIMARY KEY(case_id,digest,actor,kind));CREATE TABLE IF NOT EXISTS manifests(digest TEXT PRIMARY KEY,case_id TEXT NOT NULL,actor TEXT NOT NULL,correction_of TEXT,created_at INTEGER NOT NULL);CREATE INDEX IF NOT EXISTS manifests_case ON manifests(case_id,created_at);CREATE TABLE IF NOT EXISTS disclosures(digest TEXT PRIMARY KEY,reviewer_id TEXT NOT NULL,operator_id TEXT NOT NULL,created_at INTEGER NOT NULL);CREATE INDEX IF NOT EXISTS disclosures_reviewer ON disclosures(reviewer_id,created_at);CREATE TABLE IF NOT EXISTS jobs(id TEXT PRIMARY KEY,scope TEXT UNIQUE,payload_hash TEXT,provider TEXT,reserved INTEGER,status TEXT,finding_digest TEXT,error TEXT,created_at INTEGER);CREATE TABLE IF NOT EXISTS challenges(id TEXT PRIMARY KEY,account TEXT,nonce TEXT,message TEXT,recipient TEXT,expires INTEGER,used INTEGER DEFAULT 0);CREATE TABLE IF NOT EXISTS sessions(token_hash TEXT PRIMARY KEY,account TEXT,expires INTEGER);CREATE TABLE IF NOT EXISTS receipts(tx_hash TEXT PRIMARY KEY,body TEXT);`);fs.mkdirSync(path.join(directory,'objects'),{recursive:true,mode:0o700});}
+ constructor(directory){
+  this.dir=path.resolve(directory);fs.mkdirSync(this.dir,{recursive:true,mode:0o700});fs.mkdirSync(path.join(this.dir,'objects'),{recursive:true,mode:0o700});
+  this.db=new DatabaseSync(path.join(this.dir,'contra.sqlite'));
+  this.db.exec('PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL; PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000; CREATE TABLE IF NOT EXISTS schema_migrations(version INTEGER PRIMARY KEY,applied_at INTEGER NOT NULL);');
+  this.migrate();this.assertIntegrity();
+ }
+ migrate(){
+  const applied=new Set(this.db.prepare('SELECT version FROM schema_migrations').all().map(v=>v.version));
+  for(let index=0;index<MIGRATIONS.length;index++){const version=index+1;if(applied.has(version))continue;this.db.exec('BEGIN IMMEDIATE');try{this.db.exec(MIGRATIONS[index]);if(version===2){const columns=new Set(this.db.prepare('PRAGMA table_info(attempts)').all().map(v=>v.name));for(const [name,type]of [['tx_hash','TEXT'],['updated_at','INTEGER'],['error','TEXT']])if(!columns.has(name))this.db.exec(`ALTER TABLE attempts ADD COLUMN ${name} ${type}`);}this.db.prepare('INSERT INTO schema_migrations VALUES(?,?)').run(version,Date.now());this.db.exec('COMMIT');}catch(error){this.db.exec('ROLLBACK');throw error;}}
+ }
+ assertIntegrity(){const result=this.db.prepare('PRAGMA integrity_check').all();if(result.length!==1||result[0].integrity_check!=='ok')throw new ApiError(503,'SQLite integrity check failed');return true;}
+ audit(){
+  this.assertIntegrity();const missing=[],corrupt=[];
+  for(const row of this.db.prepare('SELECT digest,size FROM blobs ORDER BY digest').all()){const file=path.join(this.dir,'objects',row.digest);if(!fs.existsSync(file)){missing.push(row.digest);continue;}const bytes=fs.readFileSync(file);if(bytes.length!==row.size||sha256(bytes)!==row.digest)corrupt.push(row.digest);}
+  const result={schema_version:this.db.prepare('SELECT COALESCE(MAX(version),0) AS version FROM schema_migrations').get().version,integrity:'ok',blob_count:this.db.prepare('SELECT COUNT(*) AS count FROM blobs').get().count,missing_objects:missing,corrupt_objects:corrupt};
+  if(missing.length||corrupt.length)throw new ApiError(503,'Artifact store integrity check failed');return result;
+ }
+ prepareBackup(){const audit=this.audit(),checkpoint=this.db.prepare('PRAGMA wal_checkpoint(TRUNCATE)').get();if(checkpoint.busy)throw new ApiError(503,'SQLite backup checkpoint is busy');return {...audit,checkpointed:true,prepared_at:new Date().toISOString()};}
+ recoverInterrupted(reason='Process restarted before a final receipt was recorded'){
+  this.txTable();const rows=this.db.prepare("SELECT id,status,tx_hash FROM attempts WHERE status IN ('PREPARING','AWAITING_SIGNATURE','BROADCAST','PENDING')").all();
+  this.db.exec('BEGIN IMMEDIATE');try{for(const row of rows)this.updateTx(row.id,'UNKNOWN',{tx_hash:row.tx_hash,error:reason});this.db.exec('COMMIT');}catch(error){this.db.exec('ROLLBACK');throw error;}return rows.length;
+ }
+ health(){return {storage:'sqlite-and-content-addressed-files',schema_version:SCHEMA_VERSION,integrity:'ok'};}
  close(){this.db.close();}
  put(bytes,mediaType='application/json'){if(!Buffer.isBuffer(bytes))bytes=Buffer.from(bytes);if(bytes.length>1_000_000)throw new ApiError(413,'Artifact too large');const digest=sha256(bytes),file=path.join(this.dir,'objects',digest);try{const fd=fs.openSync(file,'wx',0o600);try{fs.writeFileSync(fd,bytes);fs.fsyncSync(fd);}finally{fs.closeSync(fd);}}catch(e){if(e.code!=='EEXIST')throw e;if(sha256(fs.readFileSync(file))!==digest)throw new ApiError(409,'Stored artifact integrity failure');}this.db.prepare('INSERT OR IGNORE INTO blobs VALUES(?,?,?,?)').run(digest,bytes.length,mediaType,Date.now());return {digest,size:bytes.length,media_type:mediaType};}
  read(digest){if(!/^[0-9a-f]{64}$/.test(digest))throw new ApiError(400,'Invalid digest');const row=this.db.prepare('SELECT * FROM blobs WHERE digest=?').get(digest);if(!row)throw new ApiError(404,'Artifact not found');const bytes=fs.readFileSync(path.join(this.dir,'objects',digest));if(sha256(bytes)!==digest)throw new ApiError(409,'Artifact integrity failure');return {bytes,...row};}
@@ -21,7 +59,7 @@ export class Store{
   if(!['meta','baseten','modal'].includes(provider)||!Number.isSafeInteger(maxCostMicro)||maxCostMicro<=0)throw new ApiError(400,'Invalid provider reservation');if(typeof key!=='string'||key.length<8||key.length>128)throw new ApiError(400,'Idempotency key required');const cap=provider==='modal'?5_000_000:3_000_000,scope=[actor,case_id,round_id,key].join(':'),payloadHash=sha256(canonical(payload));
   this.db.exec('BEGIN IMMEDIATE');try{const existing=this.db.prepare('SELECT * FROM jobs WHERE scope=?').get(scope);if(existing){if(existing.payload_hash!==payloadHash||existing.provider!==provider)throw new ApiError(409,'Idempotency payload conflict');this.db.exec('COMMIT');return {...existing,replayed:true};}const total=this.db.prepare('SELECT COALESCE(SUM(reserved),0) AS total FROM jobs WHERE provider=?').get(provider).total;if(total+maxCostMicro>cap)throw new ApiError(402,'Provider budget exhausted');const job={id:randomUUID(),scope,payload_hash:payloadHash,provider,reserved:maxCostMicro,status:'reserved',created_at:Date.now()};this.db.prepare('INSERT INTO jobs(id,scope,payload_hash,provider,reserved,status,created_at) VALUES(?,?,?,?,?,?,?)').run(job.id,scope,payloadHash,provider,maxCostMicro,'reserved',job.created_at);this.db.exec('COMMIT');return {...job,replayed:false};}catch(e){this.db.exec('ROLLBACK');throw e;}
  }
- txTable(){this.db.exec('CREATE TABLE IF NOT EXISTS attempts(id TEXT PRIMARY KEY,account TEXT,payload_hash TEXT,status TEXT,receipt TEXT,created_at INTEGER);CREATE TABLE IF NOT EXISTS attempt_events(attempt_id TEXT,status TEXT,tx_hash TEXT,error TEXT,observed_at INTEGER,PRIMARY KEY(attempt_id,status,observed_at))');const columns=new Set(this.db.prepare('PRAGMA table_info(attempts)').all().map(v=>v.name));for(const [name,type]of [['tx_hash','TEXT'],['updated_at','INTEGER'],['error','TEXT']])if(!columns.has(name))this.db.exec(`ALTER TABLE attempts ADD COLUMN ${name} ${type}`);}
+ txTable(){return true;}
  recordTxEvent(id,status,tx_hash,error,observed_at){const last=this.db.prepare('SELECT MAX(observed_at) AS value FROM attempt_events WHERE attempt_id=?').get(id).value;this.db.prepare('INSERT INTO attempt_events VALUES(?,?,?,?,?)').run(id,status,tx_hash,error,last!==null&&observed_at<=last?last+1:observed_at);}
  beginTx(id,account,payload){this.txTable();if(typeof id!=='string'||!/^[a-zA-Z0-9-]{8,80}$/.test(id))throw new ApiError(400,'Operation id required');const scoped=account+':'+id,hash=sha256(canonical(payload)),old=this.db.prepare('SELECT * FROM attempts WHERE id=?').get(scoped);if(old){if(old.payload_hash!==hash)throw new ApiError(409,'Operation payload conflict');return {...old,replayed:true};}const now=Date.now();this.db.prepare('INSERT INTO attempts(id,account,payload_hash,status,receipt,created_at,updated_at) VALUES(?,?,?,?,?,?,?)').run(scoped,account,hash,'PREPARING',null,now,now);this.recordTxEvent(scoped,'PREPARING',null,null,now);return {id:scoped,status:'PREPARING',replayed:false,created_at:now,updated_at:now};}
  updateTx(id,status,{tx_hash=null,error=null}={}){if(!['PREPARING','AWAITING_SIGNATURE','BROADCAST','PENDING','CONFIRMED','FAILED','UNKNOWN'].includes(status))throw new ApiError(400,'Invalid operation status');const now=Date.now();this.db.prepare('UPDATE attempts SET status=?,tx_hash=COALESCE(?,tx_hash),error=?,updated_at=? WHERE id=?').run(status,tx_hash,error,now,id);this.recordTxEvent(id,status,tx_hash,error,now);}
@@ -33,6 +71,7 @@ export class Store{
  budgets(){return ['meta','baseten','modal'].map(provider=>{const reserved=this.db.prepare('SELECT COALESCE(SUM(reserved),0) AS total FROM jobs WHERE provider=?').get(provider).total;return {provider,cap_micro_usd:provider==='modal'?5_000_000:3_000_000,reserved_micro_usd:reserved,actual_billed_micro_usd:null,actual_usage_verified:false};});}
  challenge(account,recipient){const id=randomUUID(),nonce=randomBytes(32).toString('base64'),expires=Date.now()+120000,message=`Sign in to CONTRA The Bench. Account: ${account}. Challenge: ${id}. Expires: ${expires}. This does not authorize a transaction.`;this.db.prepare('INSERT INTO challenges(id,account,nonce,message,recipient,expires) VALUES(?,?,?,?,?,?)').run(id,account,nonce,message,recipient,expires);return {id,account,nonce,message,recipient,expires};}
  session(account){const token=randomBytes(32).toString('base64url');this.db.prepare('INSERT INTO sessions VALUES(?,?,?)').run(sha256(token),account,Date.now()+3600000);return token;}
+ pruneExpired(now=Date.now()){const challenges=this.db.prepare('DELETE FROM challenges WHERE expires<?').run(now).changes,sessions=this.db.prepare('DELETE FROM sessions WHERE expires<?').run(now).changes;return {challenges,sessions};}
  account(token){return this.db.prepare('SELECT account FROM sessions WHERE token_hash=? AND expires>?').get(sha256(token||''),Date.now())?.account;}
  receipt(tx){this.db.prepare('INSERT OR REPLACE INTO receipts VALUES(?,?)').run(tx.tx_hash,JSON.stringify(tx));return tx;}
 }

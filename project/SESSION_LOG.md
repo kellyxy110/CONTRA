@@ -1,5 +1,27 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M05-R02 backend abuse controls and durable restore
+
+Continued directly from R01. Added bounded in-process rate controls keyed by remote address or authenticated account for NEP-413 challenges, signature verification, artifact writes, evaluator requests and transactions. Rate-limit responses include `Retry-After`. Made configured public origin authoritative so spoofing Host and Origin together cannot bypass the deployment origin policy.
+
+Added SQLite WAL checkpoint and full object audit preparation for offline backup. Documented the data directory as one durable volume and tested a complete copy and restore, including immutable bytes and case links. Added fail-closed coverage for a missing object, expiry pruning support, cross-case artifact access denial and explicit checks that every retained operational frontend asset still returns successfully after visual cleanup.
+
+Added abrupt child-process exit coverage after object persistence, provider reservation and BROADCAST operation state. The object and reservation persisted; restart recovery locked the operation as UNKNOWN with its hash retained. Added expiry pruning coverage that preserves active records, concurrent limiter coverage and an aborted partial-body test that writes no challenge and leaves health available. `npm test` passes 52/52. No external provider, signing, deployment, production secret, testnet transaction or Sandbox journey occurred. Exact next work is compatible-host P0 plus both local journey regressions before individual AC reevaluation.
+
+Attempted the local journey regression. The Windows process failed before launch because `ps` was unavailable. WSL had the required file limit, Node and Cargo, but the pinned Sandbox binary failed before launch because its GLIBC 2.38 and 2.39 requirements are absent. No transaction occurred. Strengthened the preflight to detect both blockers before reporting readiness.
+
+Reviewed all 33 acceptance criteria. M05 strengthens durable operations, stale and regressed read detection, artifact integrity, origin enforcement, rate controls, cross-case isolation and credential scanning. External wallet, independent operator, live provider, authorized testnet and manual screen-reader requirements remain open. Totals stay 21 PASS, 10 PARTIAL and 2 BLOCKED.
+
+## 2026-11-07 UTC | IMPL-M05-R01 runtime and backend foundation
+
+Resumed the verified `implementation/oct28` commit `bce586cf223c4120d42d6668c1c707ca84bcadf8` and fetched the live hackathon instructions before code changes. Recorded the owner directive that M05 through M07 core product work supersedes active visual acceptance and demo tasks. Current official Q-001 accepts code since the October 19 announcement; retained the factual October 28 implementation start. Recorded `security` as primary and `open` as additional track.
+
+Wired explicit unavailable, Sandbox and testnet modes into application startup. Testnet mode now validates the public RPC URL, testnet chain identity, sync state, contract account, deployed code and finalized head. Added finalized contract-read provenance, stale and block-regression detection, receipt inspection and genuine health responses. Added schema migrations, SQLite and object integrity checks, FULL synchronous mode and restart recovery that locks interrupted operations as UNKNOWN. Added API content-type, origin and security-header checks.
+
+Added M05 runtime tests for configuration validation, RPC identity and contract validation, RPC failure, pending/failed/confirmed receipts, stale block regression, migrations, restart recovery, multi-connection budget idempotency, health truthfulness and authenticated receipt access. `npm test` passes 44/44. A live read-only public RPC status call returned testnet and not syncing. An unavailable-mode process returned chain unavailable and persistence integrity ok. No configured contract read, transaction, Sandbox rerun, deployment, provider use, production secret or spending occurred.
+
+Mapped active design dependencies before cleanup. Removed superseded studies, capture pages and visual-only matrices while retaining the styles, icons, font, textures and logo imported by the operational frontend, all immutable references and historical Git evidence. Added MIT license, `.env.example`, hackathon checklist and M05 report. Next is M05 R02 rate limits, isolation and crash-fault coverage, durable-volume backup and restore documentation, then a complete Sandbox regression on the compatible Linux host.
+
 ## 2026-11-04 UTC | IMPL-M04.3-P3 browser verification and visual acceptance package
 
 Continued from Phase 2 commit `b9b41ea`. Added a three-engine browser matrix covering eight exact viewport sizes. Windows Chrome, Playwright Chromium and Firefox each pass 93 viewport assertions and 12 interaction assertions, for 315/315 total. The checks cover visible bounds, horizontal and vertical scroll ownership, complete radar placement, direct values, label overlap, readable text, console errors, every routed workspace, keyboard activation, browser Back, Escape focus restoration and reduced motion. The existing end-to-end suite passes 54/54 after correcting its navigation selectors for the compact Overview links.

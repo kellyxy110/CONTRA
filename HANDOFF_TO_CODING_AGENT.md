@@ -1,5 +1,11 @@
 # CONTRA agent handoff: blueprint and exact reference integration
 
+## Current owner directive | M05 through M07 product-first completion, 2026-11-07
+
+Suspend UI polish, radar refinement, screenshot comparison and demo production. Preserve the minimal usable operational client and immutable references, but prioritize runtime configuration, testnet read paths, finalized receipts, durable persistence, authentication, wallet integration, reviewer operations, non-billable provider interoperability and complete workflow verification. Do not restart completed M03 or M04 work. Visual acceptance is deferred and is not an active gate during M05 through M07.
+
+The live `https://nearhackathon.com/HACKATHON.md` governs eligibility and submission. Current Q-001 accepts code since the October 19 announcement; retain CONTRA's actual October 28 implementation start in history. Target tracks are `security` and `open`. Do not submit, publish, sign, deploy, add production secrets or incur paid usage without the required owner authorization. The active checkpoint and exact next task are in `project/STATUS.md` and `project/NEXT.md`.
+
 ## Latest execution handoff | M03, October 29
 
 Resume implementation/oct28 using docs/FINANCIAL_VERIFICATION_M03.md and the refreshed verification report. WSL Sandbox successes at c0800c8 supersede the older global blocker; this separate cloud host's local descriptor preflight still fails. Run npm run test:p0 on the compatible host and complete all eighteen financial categories before Priority 2 integration. SDK/build and neutral-avatar geometry passes do not accept AC01-AC33 or P0. Never retry UNKNOWN. No testnet deployment, paid provider or production-secret authorization has been granted.

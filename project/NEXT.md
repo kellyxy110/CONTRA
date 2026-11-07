@@ -1,5 +1,21 @@
 # Next execution task
 
+## Active next task | M05 R03 complete local regression and remaining backend fault tests
+
+Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R02`. Run `npm run test:p0` and `npm run test:m04:journeys` on the compatible Linux Sandbox host so the startup, migration, rate-control and persistence changes receive a full financial and two-journey regression. Save actual results without replacing the accepted M03 and M04 evidence if the host is unavailable.
+
+Reevaluate AC01 through AC33 individually after fresh compatible-host evidence. Configured CONTRA testnet contract reads remain blocked until deployment is separately authorized and a deployed account exists.
+
+Do not deploy, sign, use paid inference or change production secrets. Visual and demo work remains deferred.
+
+## Active next task | M05 R02 failure recovery, rate limits and Sandbox regression
+
+Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R01`. Add bounded request-rate enforcement for authentication, artifact writes, evaluation and transaction routes. Extend case-isolation and origin tests, including stale sessions, malicious host/origin combinations, cross-case object access and oversized request behavior. Add abrupt-process and write-fault tests around object persistence, transaction state and budget reservations. Document backup and restore for the durable SQLite plus object directory as one atomic deployment volume.
+
+On the compatible Linux host, rerun the complete local Sandbox financial and two-journey regressions against the new startup and migration path. Do not infer a Sandbox pass from the 44 service tests. A configured CONTRA testnet contract read remains blocked because deployment is not authorized and no deployed account exists. Do not deploy, sign, use paid providers or change production secrets. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED until individually reevaluated against fresh evidence.
+
+Visual polish, radar refinement, screenshot comparison and demo production remain suspended. Preserve the minimal operational client, immutable reference, The Bench naming and active UX3A dependencies. Current hackathon tracks are `security` and `open`; fetch the live rules again before submission.
+
 ## Active next task | M04.3 owner visual review
 
 Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P3. Present the inspected visible-viewport screenshots, three-state radar comparison, exact metric table and browser reports for explicit owner review. Do not mark visual acceptance without the owner's response. A manual assistive-technology screen-reader session remains open and must be recorded separately if performed. AC31 and AC32 remain blocked until authorized testnet deployment and live provider records prove their frozen scope. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without separate authorization.
