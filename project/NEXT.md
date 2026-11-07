@@ -1,5 +1,11 @@
 # Next execution task
 
+## Active next task | M06 controlled workflow verification
+
+Create a focused branch from `6900a94ae40a88c06cb03365cdd806cb9ecdb0e7`. Exercise the complete controlled wallet, reviewer and provider-fixture workflow across persistence restart, reviewer timeout or nonparticipation, contradictory evidence, provider failure and immutable proposal provenance. Confirm AI artifacts cannot become reviewer votes or settlement. Use the maintained risk map, open a dedicated PR, and merge only after current Core, Security and applicable Integration checks pass.
+
+Authorized live provider checks, paid inference, live testnet signing, deployment, production secrets and mainnet activity remain separately gated.
+
 ## Active next task | Provider interoperability PR and CI
 
 Publish `feat/m06-provider-interoperability` into `implementation/oct28`. Require Core, Security and the integration policy gate on the exact head. This provider-only unit should remain in the fast gate unless an independently risky path changes. Resolve actionable failures and merge under the standing green-check policy. Do not perform live inference, add production secrets or spend credits.
