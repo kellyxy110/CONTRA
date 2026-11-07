@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {classifyIntegrationRisk} from '../scripts/ci-integration-policy.mjs';
+import {planFastForwardBlocks} from '../services/chain/sandbox-time.mjs';
+const map=JSON.parse(fs.readFileSync(new URL('../ci/integration-risk-map.json',import.meta.url),'utf8'));
+const classify=(files,options={})=>classifyIntegrationRisk(files,map,options);
+test('wallet-only change selects maintained focused Sandbox coverage',()=>{const result=classify(['services/wallet/lifecycle.mjs']);assert.equal(result.level,'focused');assert.match(result.focused_patterns.join('|'),/successful native transfer/);});
+test('reviewer backend change selects committee and timeout coverage',()=>{const result=classify(['services/reviewers/control.mjs']);assert.equal(result.level,'focused');assert.match(result.focused_patterns.join('|'),/confirmed challenge/);assert.match(result.focused_patterns.join('|'),/fresh-review timeout/);});
+test('contract and settlement changes select comprehensive verification',()=>{assert.equal(classify(['contracts/adjudication/src/lib.rs']).level,'full');assert.equal(classify(['services/chain/sandbox.mjs']).level,'full');});
+test('documentation-only change stays in fast PR gate',()=>{assert.equal(classify(['docs/ARCHITECTURE.md','project/STATUS.md']).level,'fast');});
+test('main integration and unknown paths fail safe to comprehensive verification',()=>{assert.equal(classify(['README.md'],{baseRef:'main'}).level,'full');const unknown=classify(['new-area/unclassified.mjs']);assert.equal(unknown.level,'full');assert.match(unknown.reason,/Unclassified risk/);});
+test('missing diff and scheduled verification are comprehensive',()=>{assert.equal(classify([]).level,'full');assert.equal(classify(['README.md'],{event:'schedule'}).level,'full');});
+test('adaptive Sandbox advancement stays below the target and caps large jumps',()=>{assert.equal(planFastForwardBlocks(610_000_000_000n,1_000_000_000n),609);assert.equal(planFastForwardBlocks(50_000_000_000n,30_000_000_000n),1);assert.equal(planFastForwardBlocks(5_000_000_000_000n,1_000_000_000n),1000);});

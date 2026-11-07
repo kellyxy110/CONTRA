@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | CI optimisation remote verification
+
+Publish `ci/optimise-sandbox-runtime`, open its focused PR into `implementation/oct28` and require fresh Core, Security and full Integration results. Verify the policy selects full because integration infrastructure and Sandbox timing changed. Confirm both isolated comprehensive jobs pass, inspect their timing artifacts and record actual wall-time improvement on the PR. Merge under the standing green-check policy only when the aggregate gate and required checks are green. Then reevaluate PR 3 against the advanced implementation branch and preserve the concurrent reviewer-control branch.
+
 ## Active next task | M06 Phase 1 final owner merge gate
 
 Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-FINAL`, PR 4, PR 3 and `stash@{0}`. Obtain one fresh Core, Security and affected Linux Integration run on the intended final PR 4 head. Confirm branch protection, mergeability, final diff and review-conversation state. Do not merge until the owner explicitly authorizes it. If all checks pass, report M06 Phase 1 ready for owner merge approval with exact commit and run links. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED.

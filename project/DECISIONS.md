@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-072 | Integration CI uses explicit fail-safe risk routing | 2026-11-07
+
+Every pull request receives a recorded integration classification from a maintained path mapping. Fast means no Sandbox execution was required and does not claim a Sandbox pass. Focused runs named onchain scenarios. Full runs the nine-test baseline and both complete journeys on isolated parallel runners. Unknown paths, integration into `main`, release candidates and scheduled verification default to full. F01 through F18 remain a separate financial gate. The 90-minute Sandbox timeout remains until measured evidence supports a change.
+
 ## D-071 | Finalized transaction identity must come from independent RPC proof | 2026-11-07
 
 ACCEPTED: never infer a transaction hash from the hash used to make the RPC request. A finalized result must contain its own valid NEAR transaction hash and that hash must exactly equal the persisted operation hash. Before confirmation, independently verify network, final execution status, signer, contract receiver, exactly one expected FunctionCall action, method, canonical arguments, gas, deposit, final block identity and non-stale observation. Missing or contradictory integrity proof locks the operation UNKNOWN. A wallet-returned hash that has not reached the server is recovery evidence only: retain it by account and attach it through the idempotent callback after reload, without signing or broadcasting again.

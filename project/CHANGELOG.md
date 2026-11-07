@@ -1,5 +1,15 @@
 # Change log
 
+## 2026-11-07 | CI Sandbox optimisation
+
+- Recorded PR 4 merge head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f`, merge SHA `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` and its three passing pre-merge runs.
+- Added a versioned fast, focused and full integration risk map with fail-safe unclassified handling.
+- Added seven routing and adaptive block-planning tests and included them in the repository suite.
+- Split comprehensive baseline and journey verification into isolated parallel jobs with separate evidence and timing artifacts.
+- Added a truthful aggregate integration gate and preserved the 90-minute Sandbox timeout and separate F01 through F18 workflow.
+- Replaced repeated conservative block stepping with finalized-height calibration without shortening contract deadlines.
+- Local results: policy tests 7/7 and repository tests 76/76 passed; Core and Security policies and the wallet build passed. Fresh Linux Sandbox results remain pending on the optimisation PR.
+
 ## 2026-11-07 | IMPL-M06-P1 final wallet hardening
 
 Made finalized RPC transaction hash presence, format and exact equality mandatory. Added signer and contract checks in the RPC adapter, independent inner-hash and exact gas checks in lifecycle verification, final block identity validation, and UNKNOWN classification for stale or regressed success observations. Receipt-integrity exceptions now lock the durable operation UNKNOWN rather than being treated as ordinary RPC unavailability.
