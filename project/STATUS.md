@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-07-IMPL-M05.1-CI
+
+M05.1 local CI recovery is COMPLETE and remote verification is IN PROGRESS. Five GitHub Actions workflows now cover core, contract, security, Sandbox integration and risk-based full financial P0 verification. Supporting checks enforce clean dependency installation, JavaScript syntax, the no-em-dash policy, immutable reference integrity, restricted credentials, dependency-audit deltas, exact contract exports, production/fault separation, frozen commitment vectors and truthful historical evidence boundaries.
+
+Local verification passes 52/52 repository tests, 28/28 Rust contract tests, rustfmt, strict Clippy, the wallet build with pinned Playwright 1.65.0, 29 production plus four fault-only ABI exports, exact commitment vectors and the retrospective M03 through M05 evidence review. The contract was rustfmt-normalized and received two semantics-preserving Clippy rewrites. The historical M05 Wasm hash and rebuilt CI-formatted Wasm hash are both recorded without representing the latter as the original artifact.
+
+The dependency baseline openly reports 17 inherited findings: 14 low, two high and one critical. The direct Playwright advisory was removed by the pinned 1.65.0 update. No vulnerability is hidden or treated as fixed without evidence. A genuine GitHub Actions run and CI setup PR are still required before this checkpoint can be marked remotely complete. `main` remains unchanged. No deployment, signing, transaction, provider call, production secret, mainnet action or spending occurred.
+
 ## Current checkpoint | CONTRA-2026-11-07-IMPL-M05-R03
 
 M05 R03 is COMPLETE. The compatible `Ubuntu` WSL distribution passed the strengthened native-Linux, `ps`, executable and file-limit preflight, then completed the full P0 financial regression and both API-backed local Sandbox journeys. P0 passed all 28 Rust tests, 19 service/report tests, nine corrected baseline Sandbox tests and all 18 financial categories. It preserved 454 transactions, 753 receipt outcomes, 46 balance and storage snapshots, maximum transaction gas `35926618795729`, maximum callback gas `17002377317045`, maximum storage 17,470,225 bytes and zero gas-budget violations.

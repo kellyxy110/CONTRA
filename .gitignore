@@ -15,4 +15,5 @@ Thumbs.db
 *.log
 coverage/
 dist/
+ci-output/
 project/artifacts/m04/local-journeys/data/

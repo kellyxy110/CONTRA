@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-068 | CI checks are clean, risk-based and historically explicit | 2026-11-07
+
+ACCEPTED: use GitHub-hosted Ubuntu 24.04, exact Node 26.13.0, lockfiles and action commit pins. Cache package downloads only, never installed platform binaries. Require core and security checks for every integration pull request; additionally require contract, Sandbox integration and full P0 according to affected paths and financial risk. Keep the complete F01 through F18 gate off documentation-only and unrelated changes. Treat retrospective evidence review as a current integrity check against exact historical product SHAs, never as proof that Actions ran during M03, M04 or M05. Preserve both the historical M05 Wasm hash and the rustfmt-normalized CI build hash while enforcing exact production and fault-only exports. Do not merge `main`, enable automatic merge or weaken a failed assertion without owner authority.
+
 ## D-067 | Linux P0 wallet builds use isolated native dependencies | 2026-11-07
 
 ACCEPTED: when the P0 runner executes on Linux, install wallet build dependencies in a temporary Linux-native directory and never reuse the Windows `node_modules` tree. Preserve the original cross-platform failure transcript and require the same strict P0 predicate after reconciliation. A platform repair cannot override a failed financial category, missing receipt, missing balance observation, gas violation or failed Sandbox process.

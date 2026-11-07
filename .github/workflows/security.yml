@@ -1,0 +1,47 @@
+name: Security CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "release/**"
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  security-policy:
+    name: security-policy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out complete history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Use pinned Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install without package lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Secret, restricted-file and source-policy scan
+        run: node scripts/ci-policy.mjs security
+      - name: Dependency audit against accepted baseline
+        run: node scripts/ci-dependency-audit.mjs
+      - name: Upload security reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: security-ci-reports-${{ github.run_id }}
+          path: ci-output/
+          if-no-files-found: warn
+          retention-days: 30

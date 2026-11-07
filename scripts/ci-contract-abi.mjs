@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+
+const root=path.resolve(import.meta.dirname,'..'),baseline=JSON.parse(fs.readFileSync(path.join(root,'ci/contract-abi-baseline.json'))),target=path.join(root,'contracts/adjudication/target/wasm32-unknown-unknown'),productionFile=path.join(target,'release/contra_adjudication.wasm'),faultFile=path.join(target,'faults.wasm'),read=file=>WebAssembly.Module.exports(new WebAssembly.Module(fs.readFileSync(file))).map(v=>v.name).sort(),production=read(productionFile),fault=read(faultFile),expectedProduction=[...baseline.production_exports].sort(),expectedFault=[...baseline.production_exports,...baseline.fault_only_exports].sort();
+const digest=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex'),productionHash=digest(productionFile),faultHash=digest(faultFile);
+if(JSON.stringify(production)!==JSON.stringify(expectedProduction))throw Error(`Production ABI changed.\nExpected: ${expectedProduction.join(',')}\nActual: ${production.join(',')}`);
+if(JSON.stringify(fault)!==JSON.stringify(expectedFault))throw Error(`Fault-build ABI changed.\nExpected: ${expectedFault.join(',')}\nActual: ${fault.join(',')}`);
+const abi=fs.readFileSync(path.join(root,'docs/CONTRACT_ABI_V1.md'),'utf8');for(const method of expectedProduction.filter(v=>v!=='memory'&&v!=='contract_source_metadata'))if(!abi.includes(`| ${method} |`)&&!abi.includes(`\`${method}(`)&&!['get_case','get_committee','get_config','get_creation','get_events','get_payout','get_reviewer','get_round','list_cases','list_reviewers','preview_case'].includes(method))throw Error(`ABI document does not name contract method ${method}`);
+fs.mkdirSync(path.join(root,'ci-output'),{recursive:true});fs.writeFileSync(path.join(root,'ci-output/contract-abi.json'),`${JSON.stringify({schema:'CONTRA_CONTRACT_ABI_RESULT_V1',source_commit:baseline.source_commit,production_wasm_sha256:productionHash,fault_wasm_sha256:faultHash,production_exports:production,fault_only_exports:baseline.fault_only_exports},null,2)}\n`);
+console.log(`Contract ABI matches ${baseline.source_commit}: ${production.length} production exports and ${baseline.fault_only_exports.length} fault-only exports. Production SHA-256 ${productionHash}.`);
