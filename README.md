@@ -1,6 +1,6 @@
 # CONTRA
 
-> Product-first M05 work is active. M03 P0 financial verification and both M04 local Sandbox journeys remain accepted. M05 R01 adds explicit unavailable, Sandbox and testnet runtime modes, finalized RPC metadata, versioned SQLite migrations, restart recovery and backend health checks. UI polish and demo production are deferred until core verification is complete.
+> Product-first core work is active. M05 R03 freshly passes the complete 18-category P0 financial regression and both local Sandbox journeys. Runtime modes, finalized RPC metadata, durable SQLite plus object storage, restart recovery, backend controls and failure tests are implemented. External wallet, independent reviewer, live provider and configured testnet-contract gates remain open. UI polish and demo production are deferred until core verification is complete.
 
 ![Stage: mixed provenance](https://img.shields.io/badge/stage-mixed%20provenance-00EC97?style=flat-square&labelColor=0B1110)
 ![Network: NEAR testnet planned](https://img.shields.io/badge/network-NEAR%20testnet%20(planned)-0B1110?style=flat-square)

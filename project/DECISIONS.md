@@ -1,5 +1,13 @@
 # Decision ledger
 
+## D-067 | Linux P0 wallet builds use isolated native dependencies | 2026-11-07
+
+ACCEPTED: when the P0 runner executes on Linux, install wallet build dependencies in a temporary Linux-native directory and never reuse the Windows `node_modules` tree. Preserve the original cross-platform failure transcript and require the same strict P0 predicate after reconciliation. A platform repair cannot override a failed financial category, missing receipt, missing balance observation, gas violation or failed Sandbox process.
+
+## D-066 | Compatible Ubuntu is the verified local Sandbox host | 2026-11-07
+
+ACCEPTED: use the installed `Ubuntu` WSL distribution for reproducible local Sandbox execution because it satisfies the pinned binary's GLIBC and process requirements. Keep the Windows and Ubuntu-22.04 pre-launch failures as diagnostic evidence. A successful local journey run does not imply testnet readiness, external signer control or reviewer independence.
+
 ## D-065 | Rate controls and backup boundaries are explicit | 2026-11-07
 
 ACCEPTED: bound authentication challenges, signature verification, artifact writes, evaluator requests and transaction dispatch by remote address or authenticated account. A configured public origin overrides Host-based same-origin inference. Treat SQLite plus the content-addressed `objects` directory as one durable volume. Backups are offline, checkpointed, integrity-checked copies of the complete directory. Backup or restart never authorizes retry of an UNKNOWN operation.

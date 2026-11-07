@@ -1,5 +1,17 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-07-IMPL-M05-R03
+
+M05 R03 is COMPLETE. The compatible `Ubuntu` WSL distribution passed the strengthened native-Linux, `ps`, executable and file-limit preflight, then completed the full P0 financial regression and both API-backed local Sandbox journeys. P0 passed all 28 Rust tests, 19 service/report tests, nine corrected baseline Sandbox tests and all 18 financial categories. It preserved 454 transactions, 753 receipt outcomes, 46 balance and storage snapshots, maximum transaction gas `35926618795729`, maximum callback gas `17002377317045`, maximum storage 17,470,225 bytes and zero gas-budget violations.
+
+The original P0 parent exited 2 because the repository's Windows-installed esbuild dependency was not executable in WSL. Financial execution itself passed. A clean Linux-native `npm ci` under `/tmp`, without shared Windows `node_modules`, rebuilt esbuild 0.28.2 and reproduced the wallet bundle twice at SHA-256 `b2dae16e02c234a8ac162ae25e923831ffc9095cc98f9fe4a3a629d414d61143`. The unchanged strict `p0Complete` predicate then reconciled to exit 0. The runner now uses this isolated Linux build helper on future Linux executions and retains the original failure transcript.
+
+The journey run recorded 44 CONFIRMED operations, 44 unique operation transaction hashes and 44 matching successful receipts. The unchallenged case reached PRIMARY ACCEPT and paid the beneficiary exactly `1000000000000000000000000` yoctoNEAR. The challenged case reversed PRIMARY ACCEPT to FRESH REJECT and refunded the creator exactly `1000000000000000000000000` yoctoNEAR. Both payout intents finished `SUCCESS_VERIFIED` after authenticated callbacks.
+
+The generated journey report is timestamped `2026-11-07T03:48:16.497Z`. All six Sandbox reviewer accounts remain controlled by one local process, so this run does not establish independent adjudication. No paid provider, external wallet, testnet transaction, deployment, production secret or mainnet action occurred. The earlier Windows `ps` and Ubuntu-22.04 GLIBC failures remain recorded as pre-launch diagnostics; neither executed a transaction.
+
+`npm test` passes 52/52, both native and isolated Linux wallet builds pass, and the M05 runtime/backend changes have no observed P0 or two-journey Sandbox regression. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED because external wallet signing, independently controlled reviewers, live authorized providers, a configured testnet contract and manual screen-reader evidence remain incomplete. Spending remains $0.
+
 ## Current checkpoint | CONTRA-2026-11-07-IMPL-M05-R02
 
 M05 R02 is COMPLETE. Backend authentication challenges, signature verification, artifact writes, evaluation requests and transaction dispatch now have bounded per-address or per-account limits with `Retry-After` responses. When a public origin is configured, it is authoritative and a forged Host header cannot make an attacker origin appear same-origin. A new case-isolation test proves that a participant in two cases cannot retrieve case A evidence through case B.

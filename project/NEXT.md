@@ -1,5 +1,13 @@
 # Next execution task
 
+## Active next task | M06 non-billable wallet and reviewer preparation
+
+Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R03`, including the fresh 18/18 P0 matrix and two passing local journeys. Audit and complete the external wallet lifecycle in simulation first: NEP-413 session recovery, rejection, redirect recovery, timeout, stale reads, persisted transaction identifiers, finalized receipt reconciliation and idempotency under concurrent requests. Do not sign a live transaction.
+
+Then prepare actual reviewer account, permission, committee and signer-control procedures. Keep primary and fresh committees operator-disjoint, test invalid, duplicate, conflicting and late submissions, and retain truthful shared-control disclosure. Continue provider format and failure testing with non-billable fixtures only.
+
+Configured CONTRA testnet contract reads, testnet signing, deployment, paid inference and production-secret changes remain blocked pending separate owner authorization and the required external resources. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED.
+
 ## Active next task | M05 R03 complete local regression and remaining backend fault tests
 
 Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R02`. Run `npm run test:p0` and `npm run test:m04:journeys` on the compatible Linux Sandbox host so the startup, migration, rate-control and persistence changes receive a full financial and two-journey regression. Save actual results without replacing the accepted M03 and M04 evidence if the host is unavailable.

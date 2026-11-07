@@ -1,5 +1,17 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M05-R03 compatible-host Sandbox regression
+
+Selected the installed `Ubuntu` WSL distribution after the Windows and Ubuntu-22.04 attempts failed before launch. Its GLIBC 2.39 runtime, native Linux process tools and 1,048,576 file limit passed the strengthened preflight. `npm run test:m04:journeys` then completed both local Sandbox workflows and refreshed the structured journey report, operation journal and receipt journal.
+
+Reconciled the files directly: 44 operations are CONFIRMED, all 44 operation hashes are unique, all 44 receipts are successful and the operation and receipt hash sets match. The unchallenged case paid exactly 1 NEAR to the beneficiary after PRIMARY ACCEPT. The challenged case stored its counterexample, reversed PRIMARY ACCEPT to FRESH REJECT and paid exactly 1 NEAR to the creator. Both payout records are `SUCCESS_VERIFIED`. All six local reviewer accounts remain controlled by one process. No independent-reviewer claim, external transaction, testnet deployment, paid inference, secret change or spend occurred.
+
+Reran the complete P0 gate on the same compatible host without changing contract source. All 28 Rust tests, 19 service/report tests, nine corrected baseline Sandbox tests and 18 financial categories passed. The evidence contains 454 transactions, 753 receipt outcomes, 46 balance and storage snapshots, maximum transaction gas `35926618795729`, maximum callback gas `17002377317045`, maximum storage 17,470,225 bytes and no gas-budget violation.
+
+The first parent exit was 2 because WSL encountered the Windows esbuild binary in the shared repository dependency tree. Preserved that transcript. Installed dependencies under a clean Linux `/tmp` directory, rebuilt Linux esbuild 0.28.2, produced the wallet bundle twice with SHA-256 `b2dae16e02c234a8ac162ae25e923831ffc9095cc98f9fe4a3a629d414d61143`, and removed both temporary directories. Added a permanent isolated Linux helper and reconciled the unchanged strict P0 predicate to exit 0. `npm test` passes 52/52 and the native Windows wallet build also passes.
+
+Exact next work is M06 non-billable external-wallet simulation and reviewer signer-control preparation, while live signing, paid models and testnet deployment remain owner-gated.
+
 ## 2026-11-07 UTC | IMPL-M05-R02 backend abuse controls and durable restore
 
 Continued directly from R01. Added bounded in-process rate controls keyed by remote address or authenticated account for NEP-413 challenges, signature verification, artifact writes, evaluator requests and transactions. Rate-limit responses include `Retry-After`. Made configured public origin authoritative so spoofing Host and Origin together cannot bypass the deployment origin policy.

@@ -8,7 +8,7 @@ The live `https://nearhackathon.com/HACKATHON.md` governs eligibility and submis
 
 ## Latest execution handoff | M03, October 29
 
-Resume implementation/oct28 using docs/FINANCIAL_VERIFICATION_M03.md and the refreshed verification report. WSL Sandbox successes at c0800c8 supersede the older global blocker; this separate cloud host's local descriptor preflight still fails. Run npm run test:p0 on the compatible host and complete all eighteen financial categories before Priority 2 integration. SDK/build and neutral-avatar geometry passes do not accept AC01-AC33 or P0. Never retry UNKNOWN. No testnet deployment, paid provider or production-secret authorization has been granted.
+Resume `implementation/oct28` from checkpoint `CONTRA-2026-11-07-IMPL-M05-R03`. The fresh compatible-host P0 run passes all 18 financial categories and both local journeys pass with exact 1 NEAR callback-verified settlements. Continue M06 non-billable external-wallet simulation, reviewer signer-control preparation and provider failure coverage. Never retry UNKNOWN. The current 21 PASS, 10 PARTIAL and 2 BLOCKED acceptance totals remain unchanged. No testnet deployment, signing, paid provider or production-secret authorization has been granted.
 
 ## Current owner authorization - 2026-10-28 implementation
 

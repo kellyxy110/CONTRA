@@ -57,3 +57,21 @@ R02 result: `npm test` passes 52/52. No Sandbox, testnet transaction, deployment
 The first Windows attempt passed the old descriptor-only preflight but failed before Sandbox launch because the Unix `ps` utility was unavailable. The WSL retry used Linux x86_64 with a 1,048,576 hard file limit, Node and Cargo, but the pinned Sandbox binary could not start because that WSL distribution lacks GLIBC 2.38 and 2.39. Neither attempt started Sandbox or executed a transaction. The preflight now checks native Linux, `ps`, binary presence and binary executability in addition to the file limit, so these hosts fail early with an accurate blocker.
 
 The individual M05 review is in `docs/M05_AC_REVIEW.md`. Totals remain 21 PASS, 10 PARTIAL and 2 BLOCKED.
+
+## R03 compatible-host Sandbox result
+
+The installed `Ubuntu` WSL distribution provides GLIBC 2.39, native process tools and a hard file limit of 1,048,576. It passed the strengthened preflight and completed `npm run test:m04:journeys` at `2026-11-07T03:48:16.497Z`.
+
+- 44 of 44 persisted operations ended `CONFIRMED`.
+- All 44 operation transaction hashes were unique.
+- All 44 matching receipts reported success.
+- The unchallenged PRIMARY ACCEPT path paid the beneficiary exactly 1 NEAR.
+- The challenged path reversed PRIMARY ACCEPT to FRESH REJECT and paid the creator exactly 1 NEAR.
+- Both payout intents ended `SUCCESS_VERIFIED` after callbacks.
+- All six reviewer accounts were controlled by one local process. No independent-operator claim is made.
+
+This journey run is accompanied by a fresh complete P0 regression on the same compatible host. All 18 financial categories and nine corrected baseline Sandbox tests passed. The retained evidence records 454 transactions, 753 receipt outcomes, 46 balance/storage snapshots, maximum transaction gas `35926618795729`, maximum callback gas `17002377317045`, maximum storage 17,470,225 bytes and zero gas-budget violations.
+
+The initial P0 parent exited 2 because WSL attempted to use Windows-installed esbuild. The failed transcript is retained. A clean Linux-native dependency install under `/tmp` rebuilt esbuild 0.28.2 and reproduced the wallet bundle twice at SHA-256 `b2dae16e02c234a8ac162ae25e923831ffc9095cc98f9fe4a3a629d414d61143`. Reconciliation through the unchanged strict `p0Complete` predicate produced final gate exit 0. Future Linux P0 runs use the isolated helper automatically.
+
+No testnet transaction, signing, deployment, live provider request, production secret or spending occurred. Acceptance totals remain 21 PASS, 10 PARTIAL and 2 BLOCKED.
