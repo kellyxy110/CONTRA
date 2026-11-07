@@ -1,0 +1,173 @@
+name: Integration CI
+on:
+  pull_request:
+    branches: [main, implementation/oct28]
+  push:
+    branches: ["release/**"]
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+    inputs:
+      level:
+        description: Verification level
+        required: true
+        default: auto
+        type: choice
+        options: [auto, focused, full]
+permissions:
+  contents: read
+concurrency:
+  group: integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  policy:
+    name: integration-policy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      level: ${{ steps.classify.outputs.level }}
+      reason: ${{ steps.classify.outputs.reason }}
+      focused_pattern: ${{ steps.classify.outputs.focused_pattern }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Classify integration risk from maintained mappings
+        id: classify
+        run: node scripts/ci-integration-policy.mjs --event "${{ github.event_name }}" --base-ref "${{ github.base_ref || github.ref_name }}" --requested "${{ inputs.level || 'auto' }}"
+      - name: Explain routing decision
+        run: echo "Level ${{ steps.classify.outputs.level }} because ${{ steps.classify.outputs.reason }}" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: integration-policy-${{ github.run_id }}
+          path: ci-output/integration-policy.json
+          if-no-files-found: error
+          retention-days: 30
+  focused-sandbox:
+    name: focused-sandbox
+    needs: policy
+    if: needs.policy.outputs.level == 'focused'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: rustup show
+      - run: node scripts/build-contracts.mjs
+      - run: node scripts/setup-sandbox.mjs
+      - name: Run explicitly mapped Sandbox scenarios
+        env:
+          FOCUSED_PATTERN: ${{ needs.policy.outputs.focused_pattern }}
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p ci-output
+          if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
+          /usr/bin/time -p -o ci-output/focused-timing.txt node scripts/sandbox-preflight.mjs
+          /usr/bin/time -p -a -o ci-output/focused-timing.txt node --test --test-concurrency=1 --test-name-pattern "$FOCUSED_PATTERN" tests/escrow.sandbox.test.mjs 2>&1 | tee ci-output/focused-sandbox.txt
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: focused-sandbox-${{ github.run_id }}
+          path: ci-output/
+          if-no-files-found: error
+          retention-days: 30
+  full-baseline:
+    name: full-sandbox-baseline
+    needs: policy
+    if: needs.policy.outputs.level == 'full'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: rustup show
+      - run: node scripts/build-contracts.mjs
+      - run: node scripts/setup-sandbox.mjs
+      - name: Corrected nine-test Sandbox baseline
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p ci-output
+          if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
+          /usr/bin/time -p -o ci-output/sandbox-baseline-timing.txt npm run test:sandbox 2>&1 | tee ci-output/sandbox-baseline.txt
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sandbox-baseline-${{ github.run_id }}
+          path: |
+            ci-output/
+            project/artifacts/implementation/baseline-receipts.json
+          if-no-files-found: error
+          retention-days: 30
+  full-journeys:
+    name: full-adjudication-journeys
+    needs: policy
+    if: needs.policy.outputs.level == 'full'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: rustup show
+      - run: node scripts/build-contracts.mjs
+      - run: node scripts/setup-sandbox.mjs
+      - name: Complete unchallenged and challenged journeys
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p ci-output
+          if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
+          /usr/bin/time -p -o ci-output/m04-journeys-timing.txt npm run test:m04:journeys 2>&1 | tee ci-output/m04-journeys.txt
+      - run: node scripts/ci-historical-evidence.mjs
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: sandbox-journeys-${{ github.run_id }}
+          path: |
+            ci-output/
+            project/artifacts/m04/local-journeys/journey-report.json
+            project/artifacts/m04/local-journeys/operations.json
+            project/artifacts/m04/local-journeys/receipts.json
+          if-no-files-found: error
+          retention-days: 30
+  integration-gate:
+    name: integration-gate
+    if: always()
+    needs: [policy, focused-sandbox, full-baseline, full-journeys]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Enforce classified integration result
+        env:
+          LEVEL: ${{ needs.policy.outputs.level }}
+          POLICY_RESULT: ${{ needs.policy.result }}
+          FOCUSED_RESULT: ${{ needs.focused-sandbox.result }}
+          BASELINE_RESULT: ${{ needs.full-baseline.result }}
+          JOURNEYS_RESULT: ${{ needs.full-journeys.result }}
+        shell: bash
+        run: |
+          echo "level=$LEVEL policy=$POLICY_RESULT focused=$FOCUSED_RESULT baseline=$BASELINE_RESULT journeys=$JOURNEYS_RESULT"
+          test "$POLICY_RESULT" = "success"
+          if [ "$LEVEL" = "fast" ]; then
+            test "$FOCUSED_RESULT" = "skipped" && test "$BASELINE_RESULT" = "skipped" && test "$JOURNEYS_RESULT" = "skipped"
+            echo "Sandbox was not required. Core and Security remain executed PR gates."
+          elif [ "$LEVEL" = "focused" ]; then
+            test "$FOCUSED_RESULT" = "success" && test "$BASELINE_RESULT" = "skipped" && test "$JOURNEYS_RESULT" = "skipped"
+          elif [ "$LEVEL" = "full" ]; then
+            test "$FOCUSED_RESULT" = "skipped" && test "$BASELINE_RESULT" = "success" && test "$JOURNEYS_RESULT" = "success"
+          else
+            exit 1
+          fi

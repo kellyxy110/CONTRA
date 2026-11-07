@@ -1,0 +1,27 @@
+✔ financial gate rejects blocked, failed, missing and duplicate categories (0.914197ms)
+✔ financial gate rejects missing receipts, balances, callback gas or overflow proof (0.274811ms)
+✔ active frontend uses neutral avatar, without touching reference photographs (0.610203ms)
+✔ unknown transaction operations persist without duplicate dispatch permission (13.64124ms)
+✔ radar absence is N/A and cannot fabricate keyboard or review coverage (0.954327ms)
+✔ immutable evidence detects corruption and rejects traversal/oversize (9.481703ms)
+✔ cost reservations are atomic, idempotent and enforce all three caps (10.216964ms)
+✔ started calls cannot release reservations blindly (7.807268ms)
+✔ NEP-413 verifies signature/account ownership and rejects replay (58.363838ms)
+✔ NEP-413 rejects mismatched and expired challenges (8.111694ms)
+✔ inference is disabled without authorization and safe configuration (1.007527ms)
+✔ provider content cannot overwrite trusted case/round/provenance binding (22.824963ms)
+✔ HTTP duplicate unknown operation never dispatches a second transaction (56.61724ms)
+✔ test-transport finding is evidence-bound and never a contract verdict (13.576103ms)
+✔ ambiguous timeout retains reservation without a second provider call (9.894951ms)
+✔ invalid citations cannot become a proposed finding (10.174018ms)
+✔ HTTP unavailable chain blocks transactions and protects repository files (21.030939ms)
+✔ HTTP rejects cross-origin writes and unauthenticated artifact reads (12.472277ms)
+✔ Node/browser encoding matches frozen vote, case, terms and payout vectors (2.798436ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 395.306693

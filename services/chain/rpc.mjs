@@ -1,0 +1,85 @@
+import {ApiError} from '../api/store.mjs';
+
+const ACCOUNT_ID=/^(?=.{2,64}$)[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
+const TX_HASH=/^[1-9A-HJ-NP-Za-km-z]{32,64}$/;
+const ZERO_CODE_HASH='11111111111111111111111111111111';
+
+function rpcFailure(cause){
+ if(cause instanceof ApiError)return cause;
+ return new ApiError(503,'NEAR RPC unavailable; no finalized result is implied');
+}
+
+function parseJson(bytes){
+ try{return JSON.parse(Buffer.from(bytes).toString('utf8'));}
+ catch{throw new ApiError(502,'NEAR contract returned invalid JSON');}
+}
+
+function executionStatus(status){
+ if(!status||typeof status!=='object'||Array.isArray(status))return null;
+ if(Object.hasOwn(status,'Failure')&&status.Failure&&typeof status.Failure==='object')return 'Failure';
+ if(Object.hasOwn(status,'SuccessValue')&&typeof status.SuccessValue==='string')return 'SuccessValue';
+ if(Object.hasOwn(status,'SuccessReceiptId')&&typeof status.SuccessReceiptId==='string'&&status.SuccessReceiptId.length>0)return 'SuccessReceiptId';
+ return null;
+}
+
+export function rpcAdapter({url,contractAccount,network='testnet',transport=fetch,timeoutMs=10000,staleAfterMs=120000,now=()=>new Date()}={}){
+ if(network!=='testnet')throw Error('Only NEAR testnet RPC is supported');
+ if(!ACCOUNT_ID.test(contractAccount||'')||!contractAccount.endsWith('.testnet'))throw Error('A valid testnet contract account is required');
+ let endpoint;
+ try{endpoint=new URL(url);}catch{throw Error('A valid NEAR RPC URL is required');}
+ if(!['http:','https:'].includes(endpoint.protocol))throw Error('NEAR RPC URL must use HTTP or HTTPS');
+ let id=0,lastBlockHeight=null;
+ async function rpc(method,params){
+  let response,payload;
+  try{
+   response=await transport(endpoint,{method:'POST',signal:AbortSignal.timeout(timeoutMs),headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:`contra-${++id}`,method,params})});
+   if(!response.ok)throw new ApiError(503,'NEAR RPC returned HTTP '+response.status);
+   payload=await response.json();
+  }catch(cause){throw rpcFailure(cause);}
+  if(payload?.error)throw new ApiError(503,'NEAR RPC rejected '+method);
+  if(!payload||!Object.hasOwn(payload,'result'))throw new ApiError(502,'NEAR RPC response is incomplete');
+  return payload.result;
+ }
+ const block=async blockId=>rpc('block',blockId?{block_id:blockId}:{finality:'final'});
+ const source=async(result,knownBlock=null)=>{
+  const finalized=knownBlock||await block(result.block_hash);
+  if(!finalized?.header||finalized.header.hash!==result.block_hash)throw new ApiError(409,'Finalized block identity does not match the transaction outcome');
+  const timestamp=String(finalized.header.timestamp_nanosec),rawHeight=String(finalized.header.height);
+  if(!/^\d+$/.test(timestamp)||!/^\d+$/.test(rawHeight)||String(result.block_height)!==rawHeight)throw new ApiError(502,'Finalized block metadata is incomplete');
+  const observed=now();
+  const ageMs=Math.max(0,observed.getTime()-Number(BigInt(timestamp)/1_000_000n)),height=BigInt(rawHeight),regressed=lastBlockHeight!==null&&height<lastBlockHeight;if(lastBlockHeight===null||height>lastBlockHeight)lastBlockHeight=height;
+  return {network,finality:'final',block_height:rawHeight,block_hash:result.block_hash,block_timestamp_ns:timestamp,observed_at:observed.toISOString(),age_ms:ageMs,regressed,stale:ageMs>staleAfterMs||regressed};
+ };
+ const query=async(method,args={})=>rpc('query',{request_type:'call_function',account_id:contractAccount,method_name:method,args_base64:Buffer.from(JSON.stringify(args)).toString('base64'),finality:'final'});
+ const adapter={
+  network,contractAccount,url:endpoint.toString(),
+  async validate(){
+   const status=await rpc('status',[]);
+   if(status.chain_id!==network)throw new ApiError(503,`NEAR RPC network mismatch: expected ${network}`);
+   if(status.sync_info?.syncing)throw new ApiError(503,'NEAR RPC node is still syncing');
+   const account=await rpc('query',{request_type:'view_account',account_id:contractAccount,finality:'final'});
+   if(!account.code_hash||account.code_hash===ZERO_CODE_HASH)throw new ApiError(503,'Configured testnet account has no deployed contract');
+   const final=await block();
+   return {network,contract_account:contractAccount,rpc_chain_id:status.chain_id,rpc_version:status.version?.version||null,block_height:String(final.header.height),block_hash:final.header.hash,block_timestamp_ns:String(final.header.timestamp_nanosec),observed_at:now().toISOString()};
+  },
+  async health(){
+   try{const status=await rpc('status',[]),final=await block(),meta=await source({block_hash:final.header.hash,block_height:final.header.height});return {status:status.chain_id===network&&!status.sync_info?.syncing&&!meta.stale?'ready':'degraded',network,contract_account:contractAccount,rpc_chain_id:status.chain_id,syncing:!!status.sync_info?.syncing,source:meta};}
+   catch(error){return {status:'unavailable',network,contract_account:contractAccount,error:error.message};}
+  },
+  async view(method,args={}){const result=await query(method,args);return parseJson(result.result);},
+  async viewWithMeta(method,args={}){const result=await query(method,args);return {value:parseJson(result.result),source:await source(result)};},
+  async observation(){const final=await block();return source({block_hash:final.header.hash,block_height:final.header.height});},
+  async hasAccessKey(account,publicKey){try{await rpc('query',{request_type:'view_access_key',account_id:account,public_key:publicKey,finality:'final'});return true;}catch{return false;}},
+  async receipt(hash,account){
+   const result=await rpc('tx',{tx_hash:hash,sender_account_id:account,wait_until:'FINAL'});
+   const final=result.final_execution_status==='FINAL',transaction=result.transaction;
+   if(final&&(!transaction||typeof transaction!=='object'||!result.transaction_outcome?.block_hash))throw new ApiError(502,'Finalized NEAR RPC response is incomplete');
+   if(final&&(!TX_HASH.test(transaction.hash||'')||transaction.hash!==hash))throw new ApiError(409,'NEAR RPC transaction hash is missing, malformed or does not match the requested hash');
+   if(final&&(transaction.signer_id!==account||transaction.receiver_id!==contractAccount))throw new ApiError(409,'NEAR RPC transaction signer or contract does not match the requested operation');
+   const observedStatus=executionStatus(result.status),blockHash=result.transaction_outcome?.block_hash||null,finalizedBlock=blockHash?await block(blockHash):null,meta=finalizedBlock?await source({block_hash:blockHash,block_height:finalizedBlock.header.height},finalizedBlock):null;
+   const status=!final?'PENDING':observedStatus==='Failure'?'FAILED':['SuccessValue','SuccessReceiptId'].includes(observedStatus)&&!meta?.stale?'CONFIRMED':'UNKNOWN';
+   return {network,tx_hash:final?transaction.hash:hash,signer_id:transaction?.signer_id||account,final,finality:final?'final':'pending',success:status==='CONFIRMED',status,execution_status:observedStatus,finalized_block_hash:blockHash,finalized_block_height:meta?.block_height||null,finalized_block_timestamp_ns:meta?.block_timestamp_ns||null,stale:meta?.stale??false,regressed:meta?.regressed??false,result,observed_at:meta?.observed_at||now().toISOString()};
+  }
+ };
+ return adapter;
+}

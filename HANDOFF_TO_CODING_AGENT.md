@@ -1,5 +1,29 @@
 # CONTRA agent handoff: blueprint and exact reference integration
 
+## Current owner directive | M05 through M07 product-first completion, 2026-11-07
+
+Suspend UI polish, radar refinement, screenshot comparison and demo production. Preserve the minimal usable operational client and immutable references, but prioritize runtime configuration, testnet read paths, finalized receipts, durable persistence, authentication, wallet integration, reviewer operations, non-billable provider interoperability and complete workflow verification. Do not restart completed M03 or M04 work. Visual acceptance is deferred and is not an active gate during M05 through M07.
+
+The live `https://nearhackathon.com/HACKATHON.md` governs eligibility and submission. Current Q-001 accepts code since the October 19 announcement; retain CONTRA's actual October 28 implementation start in history. Target tracks are `security` and `open`. Do not submit, publish, sign, deploy, add production secrets or incur paid usage without the required owner authorization. The active checkpoint and exact next task are in `project/STATUS.md` and `project/NEXT.md`.
+
+## Latest execution handoff | M03, October 29
+
+Resume `implementation/oct28` from checkpoint `CONTRA-2026-11-07-IMPL-M05-R03`. The fresh compatible-host P0 run passes all 18 financial categories and both local journeys pass with exact 1 NEAR callback-verified settlements. Continue M06 non-billable external-wallet simulation, reviewer signer-control preparation and provider failure coverage. Never retry UNKNOWN. The current 21 PASS, 10 PARTIAL and 2 BLOCKED acceptance totals remain unchanged. No testnet deployment, signing, paid provider or production-secret authorization has been granted.
+
+## Current owner authorization - 2026-10-28 implementation
+
+The owner has removed the internal November 1 coding gate. Implement now on implementation/oct28 using frozen UX3C and UX3A, with The Bench naming. October 28 code is pre-event and must be disclosed. Sandbox is authorized; testnet deployment, paid usage and production secrets still need separate authorization. Earlier date restrictions below are preserved history and no longer govern implementation. See project/STATUS.md and docs/IMPLEMENTATION_OCT28.md for actual tests and blockers. Never retry an UNKNOWN payout.
+
+## Authoritative protocol handoff | UX3C
+
+Checkpoint CONTRA-2026-10-28-UX3C freezes G01-G07 at specification level. Start with docs/CONTRACT_ABI_V1.md and its five linked v1 companions, then the amended UX3B acceptance map. Earlier conceptual ABI/fallback/recovery and graph-first design instructions below are historical. UX3A stays approved/frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. Implementation begins October 28 by explicit owner authorization. Testnet deployment, production secrets and paid calls remain separately gated. The immediate task is Rust escrow/accounting and Sandbox financial-invariant proof including successful transfer with failed callback; NEVER retry an unknown transfer. New code is separate from pre-event design. Registry trust, buyer-favored base fallback, retained wrong-primary risk and stranded-unknown payout limitation must be disclosed. No claim of executed contract tests or safe mainnet readiness.
+
+
+## Current owner direction | UX3B, 2026-10-28
+
+UX3A is APPROVED and FROZEN at bee5a7481d56c86d4c9860280b8367f82af0cb5a. The approved sidebar/three-column dashboard, radar, cards, typography and NEAR colors supersede the older graph-first composition instructions below. Preserve design/ux3a and all original references unchanged. Read docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md and docs/UX3B_ENGINEERING_ACCEPTANCE.md before new engineering. UX3B delivers planning only, not implementation expansion. Keep contract/protocol invariants; the former date gate is removed by the October 28 authorization. Historical text below is preserved; earlier approval-pending and composition statements are superseded by this explicit owner direction.
+
+
 **Handoff ID:** CONTRA-HO-2026-10-27-V12  
 **Project checkpoint:** CONTRA-2026-10-27-VH1  
 **Status:** Blueprint handoff prepared. Source visual approved. New visual prototype NOT built or accepted. Contract NOT built.  
@@ -11,7 +35,7 @@
 
 Build CONTRA as a NEAR-native adjudication proof of concept. Conventional NEAR Rust contracts must coordinate escrow, reviewer authentication, votes, disputes, deadlines, appeals and settlement. Independent offchain evaluators generate evidence-bound judgments that can be falsified or challenged. Our research question is whether useful decentralized AI adjudication requires a specialized AI blockchain. Do not assert that this prototype matches GenLayer's full security model.
 
-**Immediate priority:** Turn the owner's exact accepted screenshot into a faithful, functional graph-first CONTRA Judgment Room design, while preserving the supplied image with ZERO modifications. Then use the accepted design as the November 1 engineering reference.
+**Immediate priority:** Turn the owner's exact accepted screenshot into a faithful, functional graph-first CONTRA The Bench design, while preserving the supplied image with ZERO modifications. Then use the accepted design as the November 1 engineering reference.
 
 ## Mandatory first reads
 
@@ -72,7 +96,7 @@ Do not confuse multiple reviewer accounts controlled by the same operator with i
 
 ## Timeline and execution sequence
 
-**Before Nov 1: Design only.** Build and validate a reference-faithful interactive visual study using local fixtures; do not claim it is hackathon implementation. Deliver screenshot comparisons, runnable desktop/mobile prototype, keyboard and responsive tests. Request owner acceptance once. Never edit the original screenshot.
+**October 28 onward: Owner-authorized implementation.** Build the working escrow, reviewer, service and frontend product against UX3C and approved UX3A. Label all pre-November-1 code as pre-event work. Deliver tests and screenshots without claiming unavailable Sandbox proof. Never edit the original screenshot.
 
 **Nov 1-2: Contract thin slice.** Create Rust `near-sdk` case/fund/refund/release scaffolding, sandbox tests for funded amounts, authorization, async payout callback failures and duplicate attempts; NEAR testnet transaction proof.
 
@@ -92,7 +116,7 @@ If a milestone slips, cut feature scope, not escrow correctness. The assistant b
 
 ## Required deliverables for the next agent checkpoint
 
-1. A visually faithful desktop CONTRA Judgment Room with real graph selection and dynamic inspector, implemented only as a pre-event design study until Nov 1.
+1. A visually faithful desktop CONTRA The Bench with real graph selection and dynamic inspector, implemented as a working product beginning October 28, with pre-event source provenance disclosed.
 2. A mobile alternative, accessible list fallback and working toolbar interactions.
 3. Source-vs-implementation visual review at 1200 x 900 and two additional responsive sizes. Report layout divergence honestly.
 4. Screenshots or a recording of the working prototype. Do not substitute a static image as evidence of functionality.
@@ -121,4 +145,4 @@ Avoid em dash characters in code, copy, documentation, metadata and commits. Pre
 
 
 ## Repository identity
-The owner assigned GitHub account `kellyxy110` and authorized creation of private repository `CONTRA` on 2026-10-28. Do not set repository secrets or deploy until separately approved.
+The owner assigned GitHub account `kellyxy110` and authorized repository `CONTRA` on 2026-10-28. GitHub verified its current visibility as public on 2026-11-03. Do not change repository visibility, set repository secrets or deploy until separately approved.

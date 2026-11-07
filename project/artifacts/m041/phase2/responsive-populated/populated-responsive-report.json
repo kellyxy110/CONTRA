@@ -1,0 +1,693 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04.1-P1",
+  "root": "http://172.31.169.173:4173",
+  "populated_case": "d3b67258309c992880dfa38dceae0163551ce1ebc350d981e7667e0514440ef3",
+  "checks": [
+    {
+      "name": "desktop-1200x900 has no page horizontal overflow",
+      "pass": true,
+      "detail": "1200px document at 1200px viewport"
+    },
+    {
+      "name": "desktop-1200x900 has no viewport-clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1200x900 buttons retain accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1200 x 900 preserves approved shell geometry",
+      "pass": true,
+      "detail": "{\"left\":60,\"top\":45,\"width\":1080,\"height\":810}"
+    },
+    {
+      "name": "laptop-1366x768 has no page horizontal overflow",
+      "pass": true,
+      "detail": "1366px document at 1366px viewport"
+    },
+    {
+      "name": "laptop-1366x768 has no viewport-clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "laptop-1366x768 buttons retain accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1440x900 has no page horizontal overflow",
+      "pass": true,
+      "detail": "1440px document at 1440px viewport"
+    },
+    {
+      "name": "desktop-1440x900 has no viewport-clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1440x900 buttons retain accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1920x1080 has no page horizontal overflow",
+      "pass": true,
+      "detail": "1920px document at 1920px viewport"
+    },
+    {
+      "name": "desktop-1920x1080 has no viewport-clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-1920x1080 buttons retain accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet-768x1024 has no page horizontal overflow",
+      "pass": true,
+      "detail": "768px document at 768px viewport"
+    },
+    {
+      "name": "tablet-768x1024 has no viewport-clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet-768x1024 buttons retain accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet-768x1024 touch targets are at least 44px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "mobile-390x844 has no page horizontal overflow",
+      "pass": true,
+      "detail": "390px document at 390px viewport"
+    },
+    {
+      "name": "mobile-390x844 has no viewport-clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-390x844 buttons retain accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-390x844 touch targets are at least 44px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "mobile-320x844 has no page horizontal overflow",
+      "pass": true,
+      "detail": "320px document at 320px viewport"
+    },
+    {
+      "name": "mobile-320x844 has no viewport-clipped section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-320x844 buttons retain accessible names",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-320x844 touch targets are at least 44px",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "name": "browser console remains error-free",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "measurements": {
+    "desktop-1200x900": {
+      "viewport": {
+        "width": 1200,
+        "height": 900
+      },
+      "document": {
+        "width": 1200,
+        "height": 945
+      },
+      "shell": {
+        "left": 60,
+        "top": 45,
+        "width": 1080,
+        "height": 810
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 114,
+          "right": 368,
+          "width": 254,
+          "height": 271
+        },
+        {
+          "className": "time",
+          "left": 114,
+          "right": 368,
+          "width": 254,
+          "height": 120
+        },
+        {
+          "className": "feedback",
+          "left": 114,
+          "right": 368,
+          "width": 254,
+          "height": 365
+        },
+        {
+          "className": "path",
+          "left": 369,
+          "right": 840,
+          "width": 471,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 369,
+          "right": 840,
+          "width": 471,
+          "height": 379
+        },
+        {
+          "className": "materials",
+          "left": 369,
+          "right": 840,
+          "width": 471,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 841,
+          "right": 1140,
+          "width": 299,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 841,
+          "right": 1140,
+          "width": 299,
+          "height": 346
+        }
+      ],
+      "horizontal_overflow": false,
+      "clipped_sections": [],
+      "nav_scrollable": true,
+      "minimum_named_button": true,
+      "undersized_touch_targets": []
+    },
+    "laptop-1366x768": {
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "document": {
+        "width": 1366,
+        "height": 768
+      },
+      "shell": {
+        "left": 60,
+        "top": 20,
+        "width": 1246,
+        "height": 728
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 114,
+          "right": 393,
+          "width": 279,
+          "height": 271
+        },
+        {
+          "className": "time",
+          "left": 114,
+          "right": 393,
+          "width": 279,
+          "height": 120
+        },
+        {
+          "className": "feedback",
+          "left": 114,
+          "right": 393,
+          "width": 279,
+          "height": 365
+        },
+        {
+          "className": "path",
+          "left": 410,
+          "right": 941,
+          "width": 531,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 410,
+          "right": 941,
+          "width": 531,
+          "height": 379
+        },
+        {
+          "className": "materials",
+          "left": 410,
+          "right": 941,
+          "width": 531,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 959,
+          "right": 1289,
+          "width": 330,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 959,
+          "right": 1289,
+          "width": 330,
+          "height": 346
+        }
+      ],
+      "horizontal_overflow": false,
+      "clipped_sections": [],
+      "nav_scrollable": true,
+      "minimum_named_button": true,
+      "undersized_touch_targets": []
+    },
+    "desktop-1440x900": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "document": {
+        "width": 1440,
+        "height": 900
+      },
+      "shell": {
+        "left": 60,
+        "top": 20,
+        "width": 1320,
+        "height": 810
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 114,
+          "right": 411,
+          "width": 297,
+          "height": 271
+        },
+        {
+          "className": "time",
+          "left": 114,
+          "right": 411,
+          "width": 297,
+          "height": 120
+        },
+        {
+          "className": "feedback",
+          "left": 114,
+          "right": 411,
+          "width": 297,
+          "height": 365
+        },
+        {
+          "className": "path",
+          "left": 429,
+          "right": 993,
+          "width": 565,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 429,
+          "right": 993,
+          "width": 565,
+          "height": 379
+        },
+        {
+          "className": "materials",
+          "left": 429,
+          "right": 993,
+          "width": 565,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 1011,
+          "right": 1362,
+          "width": 352,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 1011,
+          "right": 1362,
+          "width": 352,
+          "height": 346
+        }
+      ],
+      "horizontal_overflow": false,
+      "clipped_sections": [],
+      "nav_scrollable": true,
+      "minimum_named_button": true,
+      "undersized_touch_targets": []
+    },
+    "desktop-1920x1080": {
+      "viewport": {
+        "width": 1920,
+        "height": 1080
+      },
+      "document": {
+        "width": 1920,
+        "height": 1080
+      },
+      "shell": {
+        "left": 180,
+        "top": 20,
+        "width": 1560,
+        "height": 810
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 234,
+          "right": 591,
+          "width": 357,
+          "height": 271
+        },
+        {
+          "className": "time",
+          "left": 234,
+          "right": 591,
+          "width": 357,
+          "height": 120
+        },
+        {
+          "className": "feedback",
+          "left": 234,
+          "right": 591,
+          "width": 357,
+          "height": 365
+        },
+        {
+          "className": "path",
+          "left": 608,
+          "right": 1283,
+          "width": 675,
+          "height": 105
+        },
+        {
+          "className": "signals",
+          "left": 608,
+          "right": 1283,
+          "width": 675,
+          "height": 379
+        },
+        {
+          "className": "materials",
+          "left": 608,
+          "right": 1283,
+          "width": 675,
+          "height": 272
+        },
+        {
+          "className": "tasks",
+          "left": 1301,
+          "right": 1722,
+          "width": 421,
+          "height": 410
+        },
+        {
+          "className": "activity",
+          "left": 1301,
+          "right": 1722,
+          "width": 421,
+          "height": 346
+        }
+      ],
+      "horizontal_overflow": false,
+      "clipped_sections": [],
+      "nav_scrollable": true,
+      "minimum_named_button": true,
+      "undersized_touch_targets": []
+    },
+    "tablet-768x1024": {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "document": {
+        "width": 768,
+        "height": 2603
+      },
+      "shell": {
+        "left": 8,
+        "top": 8,
+        "width": 752,
+        "height": 2587
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 229
+        },
+        {
+          "className": "time",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 141
+        },
+        {
+          "className": "feedback",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 467
+        },
+        {
+          "className": "path",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 120
+        },
+        {
+          "className": "signals",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 553
+        },
+        {
+          "className": "materials",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 188
+        },
+        {
+          "className": "tasks",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 440
+        },
+        {
+          "className": "activity",
+          "left": 74,
+          "right": 744,
+          "width": 670,
+          "height": 323
+        }
+      ],
+      "horizontal_overflow": false,
+      "clipped_sections": [],
+      "nav_scrollable": true,
+      "minimum_named_button": true,
+      "undersized_touch_targets": []
+    },
+    "mobile-390x844": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "width": 390,
+        "height": 2478
+      },
+      "shell": {
+        "left": 0,
+        "top": 0,
+        "width": 390,
+        "height": 2478
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 229
+        },
+        {
+          "className": "time",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 141
+        },
+        {
+          "className": "feedback",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 467
+        },
+        {
+          "className": "path",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 120
+        },
+        {
+          "className": "signals",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 390
+        },
+        {
+          "className": "materials",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 191
+        },
+        {
+          "className": "tasks",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 440
+        },
+        {
+          "className": "activity",
+          "left": 10,
+          "right": 380,
+          "width": 370,
+          "height": 323
+        }
+      ],
+      "horizontal_overflow": false,
+      "clipped_sections": [],
+      "nav_scrollable": true,
+      "minimum_named_button": true,
+      "undersized_touch_targets": []
+    },
+    "mobile-320x844": {
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "document": {
+        "width": 320,
+        "height": 2454
+      },
+      "shell": {
+        "left": 0,
+        "top": 0,
+        "width": 320,
+        "height": 2453
+      },
+      "sections": [
+        {
+          "className": "profile",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 229
+        },
+        {
+          "className": "time",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 141
+        },
+        {
+          "className": "feedback",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 467
+        },
+        {
+          "className": "path",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 120
+        },
+        {
+          "className": "signals",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 365
+        },
+        {
+          "className": "materials",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 191
+        },
+        {
+          "className": "tasks",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 440
+        },
+        {
+          "className": "activity",
+          "left": 8,
+          "right": 312,
+          "width": 304,
+          "height": 323
+        }
+      ],
+      "horizontal_overflow": false,
+      "clipped_sections": [],
+      "nav_scrollable": true,
+      "minimum_named_button": true,
+      "undersized_touch_targets": []
+    }
+  },
+  "console_errors": []
+}

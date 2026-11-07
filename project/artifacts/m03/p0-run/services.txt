@@ -1,0 +1,39 @@
+✔ financial gate rejects blocked, failed, missing and duplicate categories (2.802994ms)
+✔ financial gate rejects missing receipts, balances, callback gas or overflow proof (0.976628ms)
+✔ active frontend uses neutral avatar, without touching reference photographs (21.568311ms)
+(node:1227) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ transaction lifecycle persists hashes and blocks duplicate dispatch (99.695209ms)
+✔ unknown transaction remains locked with its observation error (65.916447ms)
+✔ radar absence is unavailable and cannot fabricate keyboard or review coverage (1.369897ms)
+✔ immutable evidence detects corruption and rejects traversal/oversize (50.866978ms)
+✔ structured manifest covers each frozen criterion and binds exact source bytes (60.02319ms)
+✔ manifest corrections are append-only and cannot cross cases (88.78533ms)
+✔ evidence API exposes actual manifests only to authenticated case participants (176.917876ms)
+✔ reviewer disclosure binds control facts to stable operator and exact digest (56.82695ms)
+✔ reviewer disclosure API joins exact onchain registry digest and warns about Sandbox control (83.644697ms)
+✔ appointed reviewer findings and participant counterexamples are immutable and citation-bound (155.665485ms)
+✔ cost reservations are atomic, idempotent and enforce all three caps (55.964316ms)
+✔ started calls cannot release reservations blindly (53.008842ms)
+✔ NEP-413 verifies signature/account ownership and rejects replay (211.223232ms)
+✔ NEP-413 rejects mismatched and expired challenges (50.219421ms)
+✔ inference is disabled without authorization and safe configuration (0.512097ms)
+✔ provider content cannot overwrite trusted case/round/provenance binding (92.089653ms)
+✔ HTTP duplicate unknown operation never dispatches a second transaction (109.738598ms)
+✔ view envelope records final block source and observation time (45.488421ms)
+✔ test-transport finding is evidence-bound and never a contract verdict (93.219524ms)
+✔ Meta, Baseten and Modal fixture shapes stay citation-bound and ignore evidence commands (163.301126ms)
+✔ Meta fresh fixture receives original structured sources as untrusted cited data (99.063539ms)
+✔ ambiguous timeout retains reservation without a second provider call (67.249253ms)
+✔ invalid citations cannot become a proposed finding (70.272122ms)
+✔ HTTP unavailable chain blocks transactions and protects repository files (79.136289ms)
+✔ HTTP rejects cross-origin writes and unauthenticated artifact reads (49.116141ms)
+✔ Node/browser encoding matches frozen vote, case, terms and payout vectors (7.70735ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3186.546721

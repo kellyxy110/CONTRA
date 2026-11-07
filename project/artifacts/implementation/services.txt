@@ -1,0 +1,24 @@
+✔ unknown transaction operations persist without duplicate dispatch permission (12.70401ms)
+✔ radar absence is N/A and cannot fabricate keyboard or review coverage (3.450936ms)
+✔ immutable evidence detects corruption and rejects traversal/oversize (9.947842ms)
+✔ cost reservations are atomic, idempotent and enforce all three caps (9.661586ms)
+✔ started calls cannot release reservations blindly (13.103714ms)
+✔ NEP-413 verifies signature/account ownership and rejects replay (51.485085ms)
+✔ NEP-413 rejects mismatched and expired challenges (6.936935ms)
+✔ inference is disabled without authorization and safe configuration (0.367196ms)
+✔ provider content cannot overwrite trusted case/round/provenance binding (16.214465ms)
+✔ HTTP duplicate unknown operation never dispatches a second transaction (51.440669ms)
+✔ test-transport finding is evidence-bound and never a contract verdict (14.498273ms)
+✔ ambiguous timeout retains reservation without a second provider call (9.510832ms)
+✔ invalid citations cannot become a proposed finding (11.62738ms)
+✔ HTTP unavailable chain blocks transactions and protects repository files (23.866328ms)
+✔ HTTP rejects cross-origin writes and unauthenticated artifact reads (11.234135ms)
+✔ Node/browser encoding matches frozen vote, case, terms and payout vectors (2.999329ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 372.033184

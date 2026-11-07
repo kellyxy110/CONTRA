@@ -1,0 +1,5 @@
+
+> test:p0
+> node scripts/run-p0.mjs
+
+P0 financial matrix PASS; AC acceptance remains separate.

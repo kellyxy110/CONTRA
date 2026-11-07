@@ -1,0 +1,58 @@
+name: Full Financial P0
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "release/**"
+    paths:
+      - "contracts/adjudication/**"
+      - "services/chain/sandbox.mjs"
+      - "scripts/run-p0.mjs"
+      - "tests/financial-categories.mjs"
+      - "tests/financial.sandbox.test.mjs"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: financial-p0-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  financial-p0:
+    name: financial-p0
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Use pinned Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Install pinned Rust toolchain
+        run: rustup show
+      - name: Install pinned NEAR Sandbox binary
+        run: node scripts/setup-sandbox.mjs
+      - name: Run F01 through F18 without weakened assertions
+        shell: bash
+        run: |
+          set -o pipefail
+          if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
+          echo "Open-file limits: soft=$(ulimit -Sn) hard=$(ulimit -Hn)"
+          npm run test:p0
+      - name: Upload complete P0 evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: financial-p0-${{ github.run_id }}
+          path: |
+            project/artifacts/m03/p0-run/
+            project/artifacts/implementation/verification.json
+          if-no-files-found: error
+          retention-days: 60

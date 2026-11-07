@@ -1,0 +1,81 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04.1-P2",
+  "checks": [
+    {
+      "name": "zero coverage is N/A rather than fabricated zero",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Provenance\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Review\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Finality\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Challenge\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Quorum\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Criteria\",\"numerator\":0,\"denominator\":0,\"ratio\":0}]"
+    },
+    {
+      "name": "zero radar has accessible state text",
+      "pass": true,
+      "detail": "Radar: no chain data available; all sectors are not applicable."
+    },
+    {
+      "name": "criteria radar is sourced and fully covered",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Provenance\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Review\",\"numerator\":7,\"denominator\":7,\"ratio\":1},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Challenge\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Quorum\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Keyboard\",\"numerator\":3,\"denominator\":3,\"ratio\":1},{\"label\":\"Criteria\",\"numerator\":3,\"denominator\":3,\"ratio\":1}]"
+    },
+    {
+      "name": "canvas follows device pixel ratio",
+      "pass": true,
+      "detail": "{\"metrics\":[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Provenance\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Review\",\"numerator\":7,\"denominator\":7,\"ratio\":1},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Challenge\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Quorum\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Keyboard\",\"numerator\":3,\"denominator\":3,\"ratio\":1},{\"label\":\"Criteria\",\"numerator\":3,\"denominator\":3,\"ratio\":1}],\"dpr\":2.0000000298023224,\"renderSize\":\"470x340\",\"pixels\":{\"width\":940,\"height\":680},\"css\":{\"width\":470,\"height\":340},\"label\":\"Radar: Criteria coverage from recorded case data. Open Details for numerator, denominator and source.\"}"
+    },
+    {
+      "name": "case heading is short with full ID available",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "NEAR amount is readable with exact yoctoNEAR detail",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "completed review window is closed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "technical payout status is translated",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "activity names and timestamps are readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reviewer role and control are disclosed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "overall radar preserves genuine partial coverage",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Provenance\",\"numerator\":2,\"denominator\":2,\"ratio\":1},{\"label\":\"Review\",\"numerator\":2,\"denominator\":3,\"ratio\":0.6666666666666666},{\"label\":\"Finality\",\"numerator\":6,\"denominator\":6,\"ratio\":1},{\"label\":\"Challenge\",\"numerator\":6,\"denominator\":8,\"ratio\":0.75},{\"label\":\"Quorum\",\"numerator\":2,\"denominator\":2,\"ratio\":1},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Criteria\",\"numerator\":0,\"denominator\":0,\"ratio\":0}]"
+    },
+    {
+      "name": "N/A sectors remain denominator zero",
+      "pass": true,
+      "detail": "[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Provenance\",\"numerator\":2,\"denominator\":2,\"ratio\":1},{\"label\":\"Review\",\"numerator\":2,\"denominator\":3,\"ratio\":0.6666666666666666},{\"label\":\"Finality\",\"numerator\":6,\"denominator\":6,\"ratio\":1},{\"label\":\"Challenge\",\"numerator\":6,\"denominator\":8,\"ratio\":0.75},{\"label\":\"Quorum\",\"numerator\":2,\"denominator\":2,\"ratio\":1},{\"label\":\"Keyboard\",\"numerator\":0,\"denominator\":0,\"ratio\":0},{\"label\":\"Criteria\",\"numerator\":0,\"denominator\":0,\"ratio\":0}]"
+    },
+    {
+      "name": "mobile radar resizes without fixed desktop buffer",
+      "pass": true,
+      "detail": "{\"metrics\":[{\"label\":\"Evidence\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Provenance\",\"numerator\":1,\"denominator\":1,\"ratio\":1},{\"label\":\"Review\",\"numerator\":7,\"denominator\":7,\"ratio\":1},{\"label\":\"Finality\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Challenge\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Quorum\",\"numerator\":4,\"denominator\":4,\"ratio\":1},{\"label\":\"Keyboard\",\"numerator\":3,\"denominator\":3,\"ratio\":1},{\"label\":\"Criteria\",\"numerator\":3,\"denominator\":3,\"ratio\":1}],\"dpr\":2.0000000298023224,\"renderSize\":\"304x240\",\"pixels\":{\"width\":608,\"height\":480},\"css\":{\"width\":304,\"height\":240},\"label\":\"Radar: Criteria coverage from recorded case data. Open Details for numerator, denominator and source.\"}"
+    },
+    {
+      "name": "mobile radar remains inside viewport",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser console remains error-free",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "console_errors": []
+}

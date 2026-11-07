@@ -1,0 +1,10 @@
+@font-face{font-family:Inter;src:url(inter-latin.ttf) format('truetype');font-weight:400;font-display:swap}
+body{font-family:Inter,Arial,sans-serif;background-color:#16221D;background-image:linear-gradient(#16221De8,#16221De8),url(grain.png)}
+.shell{background-image:linear-gradient(#0B1110fa,#0B1110fa),url(grain.png)}
+.task.compact p{-webkit-line-clamp:1}
+.materials .tabs{margin-bottom:10px}
+.nav-bottom{padding-bottom:16px;gap:7px}
+.tasks{padding-top:5px}.tasks>#today .task{margin-bottom:12px}
+.brand{background:url(logo.png) center center / 30px 30px no-repeat}.brand>i{visibility:hidden}
+.nav-top img.source-icon,.nav-bottom img.source-icon{width:18px;height:18px;border-radius:0;vertical-align:middle}
+body{background-image:url(backdrop.png);background-repeat:no-repeat;background-position:center 0;background-size:1200px 900px}

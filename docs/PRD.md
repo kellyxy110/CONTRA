@@ -34,7 +34,7 @@ All named prototype accounts, amounts, case IDs and results are sample data unti
 - One bounded challenge review round with fresh reviewer set.
 - Timeout and unresolved fallback selected and frozen at funding time.
 - Escrow payout and payout failure recovery.
-- A case workspace, Judgment Room, Challenge Arena and small benchmark view.
+- A case workspace, The Bench, Challenge Arena and small benchmark view.
 - Clear measurement dashboard with real sample size and methodology.
 
 ## Out of scope for hackathon

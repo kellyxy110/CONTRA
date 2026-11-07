@@ -1,0 +1,223 @@
+{
+  "resolution": [
+    1200,
+    900
+  ],
+  "reference": "Frozen UX3A with authorized The Bench naming",
+  "implementation": "Real unavailable-chain state",
+  "referenceGeometry": [
+    {
+      "height": 810,
+      "selector": "shell",
+      "width": 1080,
+      "x": 60,
+      "y": 45
+    },
+    {
+      "height": 53,
+      "selector": "HEADER",
+      "width": 1025,
+      "x": 114,
+      "y": 46
+    },
+    {
+      "height": 756,
+      "selector": "MAIN",
+      "width": 1025,
+      "x": 114,
+      "y": 99
+    },
+    {
+      "height": 756,
+      "selector": "left",
+      "width": 255,
+      "x": 114,
+      "y": 99
+    },
+    {
+      "height": 271,
+      "selector": "profile",
+      "width": 254,
+      "x": 114,
+      "y": 99
+    },
+    {
+      "height": 120,
+      "selector": "time",
+      "width": 254,
+      "x": 114,
+      "y": 370
+    },
+    {
+      "height": 365,
+      "selector": "feedback",
+      "width": 254,
+      "x": 114,
+      "y": 490
+    },
+    {
+      "height": 756,
+      "selector": "middle",
+      "width": 472,
+      "x": 369,
+      "y": 99
+    },
+    {
+      "height": 105,
+      "selector": "path",
+      "width": 471,
+      "x": 369,
+      "y": 99
+    },
+    {
+      "height": 379,
+      "selector": "signals",
+      "width": 471,
+      "x": 369,
+      "y": 204
+    },
+    {
+      "height": 340,
+      "selector": "radar",
+      "width": 470,
+      "x": 369,
+      "y": 238
+    },
+    {
+      "height": 272,
+      "selector": "materials",
+      "width": 471,
+      "x": 369,
+      "y": 583
+    },
+    {
+      "height": 756,
+      "selector": "right",
+      "width": 299,
+      "x": 841,
+      "y": 99
+    },
+    {
+      "height": 410,
+      "selector": "tasks",
+      "width": 299,
+      "x": 841,
+      "y": 99
+    },
+    {
+      "height": 346,
+      "selector": "activity",
+      "width": 299,
+      "x": 841,
+      "y": 509
+    }
+  ],
+  "implementationGeometry": [
+    {
+      "height": 810,
+      "selector": "shell",
+      "width": 1080,
+      "x": 60,
+      "y": 45
+    },
+    {
+      "height": 53,
+      "selector": "HEADER",
+      "width": 1025,
+      "x": 114,
+      "y": 46
+    },
+    {
+      "height": 756,
+      "selector": "MAIN",
+      "width": 1025,
+      "x": 114,
+      "y": 99
+    },
+    {
+      "height": 756,
+      "selector": "left",
+      "width": 255,
+      "x": 114,
+      "y": 99
+    },
+    {
+      "height": 271,
+      "selector": "profile",
+      "width": 254,
+      "x": 114,
+      "y": 99
+    },
+    {
+      "height": 120,
+      "selector": "time",
+      "width": 254,
+      "x": 114,
+      "y": 370
+    },
+    {
+      "height": 365,
+      "selector": "feedback",
+      "width": 254,
+      "x": 114,
+      "y": 490
+    },
+    {
+      "height": 756,
+      "selector": "middle",
+      "width": 472,
+      "x": 369,
+      "y": 99
+    },
+    {
+      "height": 105,
+      "selector": "path",
+      "width": 471,
+      "x": 369,
+      "y": 99
+    },
+    {
+      "height": 379,
+      "selector": "signals",
+      "width": 471,
+      "x": 369,
+      "y": 204
+    },
+    {
+      "height": 340,
+      "selector": "radar",
+      "width": 470,
+      "x": 369,
+      "y": 238
+    },
+    {
+      "height": 272,
+      "selector": "materials",
+      "width": 471,
+      "x": 369,
+      "y": 583
+    },
+    {
+      "height": 756,
+      "selector": "right",
+      "width": 299,
+      "x": 841,
+      "y": 99
+    },
+    {
+      "height": 410,
+      "selector": "tasks",
+      "width": 299,
+      "x": 841,
+      "y": 99
+    },
+    {
+      "height": 346,
+      "selector": "activity",
+      "width": 299,
+      "x": 841,
+      "y": 509
+    }
+  ],
+  "exactGeometryMatch": true
+}

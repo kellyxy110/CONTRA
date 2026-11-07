@@ -1,0 +1,16 @@
+command=clean isolated Linux-native npm install and wallet build
+clean_directory=/tmp/contra-wallet-build.dW9eP1
+shared_windows_node_modules=false
+install=203 packages added in 38s
+esbuild_rebuild=successful
+esbuild_version=0.28.2
+build_command=esbuild apps/web/wallet-source.mjs --bundle --format=esm --outfile=apps/web/wallet.bundle.js
+bundle_size=980.3kb
+bundle_sha256=b2dae16e02c234a8ac162ae25e923831ffc9095cc98f9fe4a3a629d414d61143
+platform=linux x64 v24.0.1
+temporary_directory_removed=true
+helper_verification_directory=/tmp/contra-wallet-build.fx3Wld
+helper_verification_install=203 packages added in 27s
+helper_verification_bundle_sha256=b2dae16e02c234a8ac162ae25e923831ffc9095cc98f9fe4a3a629d414d61143
+helper_verification_temporary_directory_removed=true
+exit_code=0
