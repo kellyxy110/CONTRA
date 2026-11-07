@@ -1,12 +1,10 @@
 # Next execution task
 
-## Active next task | Reviewer risk-map correction verification
+## Active next task | M06 Phase 2 reviewer-control PR and CI
 
-Publish `ci/reviewer-risk-map`, require Core, Security and full Integration on the correction head, then merge under the standing green-check policy. After merge, reviewer-control changes with their dedicated test file must route to focused Sandbox coverage unless another changed path independently requires full verification.
+PR 6 is open from `feat/m06-reviewer-control` into the updated `implementation/oct28`. Run Core and Security CI plus the focused integration policy selected by the merged CI optimisation unit. Contract CI is required only if contract or protocol code changes; full Sandbox and financial P0 are not required for this service-only unit unless the risk policy classifies a later change as financially sensitive. Resolve actionable failures and merge under the standing green-check policy. Preserve `stash@{0}` until its provider content is recovered separately.
 
-## Active next task | CI optimisation remote verification
-
-Publish `ci/optimise-sandbox-runtime`, open its focused PR into `implementation/oct28` and require fresh Core, Security and full Integration results. Verify the policy selects full because integration infrastructure and Sandbox timing changed. Confirm both isolated comprehensive jobs pass, inspect their timing artifacts and record actual wall-time improvement on the PR. Merge under the standing green-check policy only when the aggregate gate and required checks are green. Then reevaluate PR 3 against the advanced implementation branch and preserve the concurrent reviewer-control branch.
+After merge, begin M06 provider interoperability on its own feature branch using non-billable Meta, Baseten and Modal fixtures. Validate exact provider envelopes, strict structured outputs, evidence citations, prompt-injection boundaries, failure recovery, provenance and budget reservations. Do not enable paid inference, live signing, deployment, mainnet activity or production secrets.
 
 ## Active next task | M06 Phase 1 final owner merge gate
 

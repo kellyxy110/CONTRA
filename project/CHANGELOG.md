@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-07 | IMPL-M06-P2 reviewer control local gate
+
+Added reviewer-control operations for exact active registry and disclosure matching, six-account and six-operator committee disjointness, phase-aware commit and reveal validation, missing-reviewer and quorum diagnostics, frozen vote commitment construction, and evidence-bound finding verification. Corrected reviewer confirmation preparation so the signer, active registry revision and disclosure digest must all match.
+
+Advanced SQLite to schema version 5 with durable encrypted reveal recovery packages, finalized registry observations and append-only reviewer audit records. Recovery packages are account and round scoped, idempotent for identical metadata, reject conflicting commitments or findings, survive restart and never expose another reviewer's ciphertext. Added protected reviewer control, workspace, recovery and audit endpoints. All outputs preserve the statement that distinct fixture accounts and declared operators do not prove independent control.
+
+Dedicated reviewer tests pass 7/7, combined reviewer and wallet integration tests pass 17/17 and the repository suite passes 76/76. Wallet bundle, syntax, diff, Core policy, Security policy and dependency baseline checks pass. The inherited dependency baseline remains 17 findings. PR 4 was merged into `implementation/oct28` as `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` before this unit. No live signing, transaction, deployment, paid inference, production secret or spending occurred.
+
 ## 2026-11-07 | Reviewer CI risk-map correction
 
 - Added `tests/m06-reviewer*.test.mjs` to the explicit reviewer focused mapping.
@@ -14,7 +22,7 @@
 - Split comprehensive baseline and journey verification into isolated parallel jobs with separate evidence and timing artifacts.
 - Added a truthful aggregate integration gate and preserved the 90-minute Sandbox timeout and separate F01 through F18 workflow.
 - Replaced repeated conservative block stepping with finalized-height calibration without shortening contract deadlines.
-- Local results: policy tests 7/7 and repository tests 76/76 passed; Core and Security policies and the wallet build passed. Fresh Linux Sandbox results remain pending on the optimisation PR.
+- Local results: policy tests 7/7 and repository tests 76/76 passed; Core and Security policies and the wallet build passed. GitHub run `42418916525` passed policy, the isolated nine-test baseline, both complete journeys and the aggregate gate. PR 5 merged as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`.
 
 ## 2026-11-07 | IMPL-M06-P1 final wallet hardening
 

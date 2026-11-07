@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-07 UTC | IMPL-M06-P2 reviewer control local gate
+
+Started `feat/m06-reviewer-control` from the merged wallet target `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`. Inspected `stash@{0}` and its untracked parent without applying it. Recovered only the reviewer operations design; the provider and remaining wallet stash records were not changed or dropped.
+
+Implemented exact committee account, operator, revision and disclosure inspection; active reviewer confirmation binding; phase-aware commitment and reveal validation; missing-reviewer, quorum and timeout advisory status; frozen commitment generation; and exact case, terms, round, evidence, reviewer and disposition checks for findings. Added schema version 5 for encrypted account-scoped recovery packages, registry observations and append-only audit events. Packages are idempotent for identical identity, reject conflicts, remain durable after restart and cannot be read by a reviewer outside the appointed round.
+
+Focused reviewer tests pass 7/7. Combined M06 reviewer and wallet tests pass 17/17. After merging the CI optimisation target, the combined focused set passes 24/24 and the repository suite passes 83/83. The wallet production bundle, JavaScript syntax, diff check, Core policy, Security policy and dependency audit pass. The dependency baseline remains 14 low, two high and one critical inherited finding. The superseded old full Integration run `42419712122` was cancelled before expensive execution. PR 6 now requires the focused classified gate on its updated head. No Sandbox transaction, live signing, testnet deployment, mainnet activity, provider call, secret change or spending occurred.
+
 ## 2026-11-07 UTC | Reviewer CI risk-map correction
 
 Started `ci/reviewer-risk-map` from `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. Added the missing reviewer test-file pattern and a combined-diff routing regression. No contract, financial assertion, runtime transaction path, deployment, signing, provider call, secret or spending changed.
@@ -8,7 +16,7 @@ Started `ci/reviewer-risk-map` from `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. 
 
 Merged PR 4 under the owner's standing green-check policy. The reviewed head was `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f`; Core `42408934722`, Security `42408934686` and Integration `42408934712` passed. The resulting `implementation/oct28` merge commit is `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`, created at `2026-11-07T21:48:15Z`.
 
-Created `ci/optimise-sandbox-runtime` and implemented maintained risk routing, a visible policy artifact, focused named Sandbox scenarios, isolated parallel full jobs and a strict aggregate gate. Unclassified work defaults to full. Added adaptive finalized-block advancement that calibrates against the observed block interval and retains exact contract deadlines. Local routing tests pass 7/7, repository tests pass 76/76, Core and Security policy scans pass and the wallet build passes. The current Windows process cannot execute the Linux Sandbox. GitHub Linux full verification and timing artifacts are the remaining gate. No transaction, deployment, signing, provider call, secret change or spending occurred.
+Created `ci/optimise-sandbox-runtime` and implemented maintained risk routing, a visible policy artifact, focused named Sandbox scenarios, isolated parallel full jobs and a strict aggregate gate. Unclassified work defaults to full. Added adaptive finalized-block advancement that calibrates against the observed block interval and retains exact contract deadlines. Local routing tests pass 7/7, repository tests pass 76/76, Core and Security policy scans pass and the wallet build passes. GitHub run `42418916525` passed the policy, isolated comprehensive jobs and aggregate gate. PR 5 merged as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. No transaction, deployment, signing, provider call, secret change or spending occurred.
 
 ## 2026-11-07 UTC | IMPL-M06-P1 final wallet hardening
 

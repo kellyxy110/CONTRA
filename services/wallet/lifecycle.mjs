@@ -77,7 +77,10 @@ export function validateWalletCall({network,contractAccount,signerId,call,caseRe
   if(!caseRecord.terms.criteria?.some(item=>item.criterion_id===args.criterion_id))throw new ApiError(400,'Challenge criterion is not frozen in this case');
  }
  if(call.method==='retry_payout'&&(caseRecord?.payout?.payout_intent_id!==args.payout_intent_id||Number(caseRecord?.payout?.attempt)!==args.expected_attempt))throw new ApiError(409,'Retry arguments do not match the current payout intent and attempt');
- if(policy.role==='self'&&configRecord?.reviewer_id!==signerId)throw new ApiError(403,'Reviewer confirmation must be signed by a registered matching reviewer');
+ if(policy.role==='self'){
+  if(configRecord?.reviewer_id!==signerId)throw new ApiError(403,'Reviewer confirmation must be signed by a registered matching reviewer');
+  if(configRecord.active!==true||String(configRecord.revision)!==args.revision||configRecord.disclosure_digest!==args.disclosure_digest)throw new ApiError(409,'Reviewer confirmation must match the active registry revision and disclosure digest');
+ }
  const request={network,receiverId:contractAccount,signerId,methodName:call.method,args,gas:policy.gas,deposit};
  return {...request,payload_hash:sha256(canonical(request))};
 }

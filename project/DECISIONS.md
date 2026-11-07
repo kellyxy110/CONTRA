@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-074 | Reviewer continuity is account-scoped, encrypted and subordinate to frozen contract state | 2026-11-07
+
+ACCEPTED. Reviewer onboarding and participation records must retain exact account, declared operator, disclosure digest and registry revision. Primary and fresh committees require six distinct accounts and six distinct declared operator IDs. This is an operational control check, not proof of independent real-world control. Reveal recovery may store only reviewer-supplied ciphertext plus immutable identity metadata. It must be account-scoped, durable, idempotent and conflict-safe. Service workspace, quorum and timeout outputs are advisory; only confirmed contract state can accept commitments, reveals, verdicts or settlement.
+
 ## D-073 | Reviewer regression paths are focused integration inputs | 2026-11-07
 
 Reviewer source and `tests/m06-reviewer*.test.mjs` changes select the maintained focused committee coverage. This prevents a new reviewer test file from being treated as ambiguous comprehensive risk while preserving full verification for risk-map changes and unknown paths.
