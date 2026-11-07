@@ -1,7 +1,13 @@
 node_modules/
+.data/
+.tools/
+**/target/
 .env
 .env.*
 !.env.example
+apps/web/wallet.bundle.js
+*.pem
+*.key
 .vscode/
 .idea/
 .DS_Store
@@ -9,3 +15,5 @@ Thumbs.db
 *.log
 coverage/
 dist/
+ci-output/
+project/artifacts/m04/local-journeys/data/

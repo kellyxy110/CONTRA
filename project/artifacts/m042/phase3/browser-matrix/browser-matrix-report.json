@@ -1,0 +1,82 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04.2-P3",
+  "root": "http://127.0.0.1:4176",
+  "targets": [
+    {
+      "name": "windows-chrome",
+      "checks": [
+        {
+          "name": "stable Cases view",
+          "pass": true
+        },
+        {
+          "name": "no horizontal overflow",
+          "pass": true
+        },
+        {
+          "name": "single visible main landmark",
+          "pass": true
+        },
+        {
+          "name": "no application console error",
+          "pass": true,
+          "detail": ""
+        }
+      ],
+      "console_errors": [],
+      "pass": true
+    },
+    {
+      "name": "windows-playwright-chromium",
+      "checks": [
+        {
+          "name": "stable Cases view",
+          "pass": true
+        },
+        {
+          "name": "no horizontal overflow",
+          "pass": true
+        },
+        {
+          "name": "single visible main landmark",
+          "pass": true
+        },
+        {
+          "name": "no application console error",
+          "pass": true,
+          "detail": ""
+        }
+      ],
+      "console_errors": [],
+      "pass": true
+    },
+    {
+      "name": "windows-firefox",
+      "checks": [
+        {
+          "name": "stable Cases view",
+          "pass": true
+        },
+        {
+          "name": "no horizontal overflow",
+          "pass": true
+        },
+        {
+          "name": "single visible main landmark",
+          "pass": true
+        },
+        {
+          "name": "no application console error",
+          "pass": true,
+          "detail": ""
+        }
+      ],
+      "console_errors": [],
+      "pass": true
+    }
+  ],
+  "linux_chromium": {
+    "status": "BLOCKED",
+    "reason": "Playwright Chromium download on WSL failed at the network boundary: Azure Edge timed out, then alternate hosts returned EAI_AGAIN."
+  }
+}

@@ -1,4 +1,4 @@
-# CONTRA UX architecture and Judgment Room
+# CONTRA UX architecture and The Bench
 
 Status: Initial design, pending owner acceptance
 
@@ -6,7 +6,7 @@ Status: Initial design, pending owner acceptance
 
 - Overview: active and completed cases, risk at a glance, quick creation.
 - Cases: searchable cases; case creation and funding wizard.
-- Judgment Room: evidence-bound decision inspection and event timeline.
+- The Bench: evidence-bound decision inspection and event timeline.
 - Challenge Arena: counterexample creation, dispute review and response.
 - CONTRA Lab: methodology, baseline comparisons, measured trials and failures.
 
@@ -16,7 +16,7 @@ Start > Connect NEAR testnet wallet > Name agreement > Define claimant and payou
 
 Every money-moving action shows receiver, amount, network, escrow terms and fees before signature. Errors return the user to a safe editable step before funding, never to an ambiguous success state.
 
-## Judgment Room screen anatomy
+## The Bench screen anatomy
 
 Desktop:
 
@@ -26,7 +26,7 @@ Desktop:
 |                +---------------------------------------------------------------------+
 | Overview       | CASE 0042  Accessible web delivery      [PROVISIONAL]    5.00 NEAR  |
 | Cases          | Required checks / immutable rules / review deadline                  |
-| Judgment Room  +----------------------------------------------+----------------------+
+| The Bench  +----------------------------------------------+----------------------+
 | Challenge      | Primary findings                              | Settlement control   |
 | Lab            |-----------------------------------------------|----------------------|
 |                | Reviewers: proposer, independent, challenger | Locked escrow        |

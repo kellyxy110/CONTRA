@@ -1,5 +1,10 @@
 # CONTRA protocol and settlement state machine
 
+## UX3C authoritative freeze notice | 2026-10-28
+
+The conceptual specification below is preserved as history. The v1 implementation authority is docs/CONTRACT_ABI_V1.md, docs/STATE_MACHINE_V1.md, docs/COMMITTEE_POLICY_V1.md, docs/SETTLEMENT_RECOVERY_V1.md, docs/COMMITMENT_TEST_VECTORS.md and docs/THREAT_MODEL_V1.md. UX3C resolves G01-G07 under the owner's protocol-freeze instruction. In particular, creator-only cancel_case and beneficiary accept_terms are explicit; committees are frozen six distinct declared operators (3+3); fresh inconclusive review retains the primary decisive verdict instead of the old automatic creator-refund interpretation; RefundPending is removed; unknown payout outcomes are not recoverable in MVP. I7/I10 liveness is explicitly qualified in STATE_MACHINE_V1 and THREAT_MODEL_V1; I2 is never bypassed. No documentation check is a smart contract test.
+
+
 Status: Design proposal, not deployed or security audited
 
 ## Trust boundary

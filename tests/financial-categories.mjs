@@ -1,0 +1,20 @@
+export const financialCategories=[
+ ['F01','Creation identity, immutable terms and beneficiary consent',['I3']],
+ ['F02','Exact principal, unauthorized and duplicate funding',['I1','I3']],
+ ['F03','Creator-only unfunded cancellation and expiry',['I3']],
+ ['F04','Unchallenged ACCEPT, exact beneficiary balance and callback',['SR03']],
+ ['F05','Decisive REJECT, exact creator refund',['I1','I4']],
+ ['F06','Missing evidence and no-quorum base refunds',['I7']],
+ ['F07','Challenge lock and disjoint fresh reversal',['I5','I6']],
+ ['F08','Fresh timeout retains primary, cannot profit from challenge',['I7','I8']],
+ ['F09','Concurrent finalize and duplicate successful payment guards',['SR03']],
+ ['F10','Verified failed native transfer and concurrent same-intent retry',['SR04']],
+ ['F11','Successful transfer plus failed callback locks UNKNOWN',['SR05','SR08']],
+ ['F12','Failed transfer plus failed callback locks UNKNOWN',['SR06']],
+ ['F13','Callback authorization, wrong/stale attempt, multiple results, redeploy',['SR01','SR02','SR07','SR09','SR10','SR12']],
+ ['F14','Multiple funded cases and independent principal reserves',['SR13']],
+ ['F15','Sponsor top-ups and unsolicited donations are not escrow',['SR13']],
+ ['F16','Gas and liquidity rejection roll back without dispatch',['SR11']],
+ ['F17','Before/at/after funding, submission, review and challenge boundaries',['I5','I6','I7']],
+ ['F18','Counter/wire overflow, capacity and maximum bounded state',['SR11']]
+].map(([id,label,requirements])=>({id,label,requirements}));

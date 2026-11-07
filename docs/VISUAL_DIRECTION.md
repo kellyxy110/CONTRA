@@ -27,7 +27,7 @@ Decision ID: D-015
 
 - Replace left sidebar and stacked cards with graph-first full-screen composition.
 - Replace right generic settlement column with source-image-style tall contextual rail.
-- Keep Cases, Agreement Builder, Judgment Room, Challenge Arena, and Lab as product capabilities, but navigate them through graph and compact toolbar where appropriate.
+- Keep Cases, Agreement Builder, The Bench, Challenge Arena, and Lab as product capabilities, but navigate them through graph and compact toolbar where appropriate.
 - Keep contract state labels, evidence provenance, reviewer authentication, appeal restrictions, settlement callbacks and case-level history prominent.
 - Use real graph interaction in the eventual implementation; static screenshot imitation is not acceptable as the working hackathon demo.
 

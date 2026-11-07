@@ -1,0 +1,403 @@
+{
+  "checkpoint": "CONTRA-2026-11-04-IMPL-M04.3-P1",
+  "root": "http://127.0.0.1:4176",
+  "viewports": [
+    [
+      "desktop-short",
+      1536,
+      676
+    ],
+    [
+      "laptop",
+      1366,
+      768
+    ],
+    [
+      "desktop-reference",
+      1200,
+      900
+    ],
+    [
+      "desktop-wide",
+      1440,
+      900
+    ],
+    [
+      "desktop-full-hd",
+      1920,
+      1080
+    ],
+    [
+      "tablet",
+      768,
+      1024
+    ],
+    [
+      "mobile",
+      390,
+      844
+    ],
+    [
+      "mobile-effective",
+      320,
+      844
+    ]
+  ],
+  "checks": [
+    {
+      "name": "desktop-short has no horizontal overflow",
+      "pass": true,
+      "detail": "1536/1536"
+    },
+    {
+      "name": "desktop-short has no console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-short shell fits visible viewport",
+      "pass": true,
+      "detail": "bottom 664.0 of 676"
+    },
+    {
+      "name": "desktop-short nav is fully visible",
+      "pass": true,
+      "detail": "bottom 663.0"
+    },
+    {
+      "name": "desktop-short profile is fully visible",
+      "pass": true,
+      "detail": "bottom 310.8"
+    },
+    {
+      "name": "desktop-short progress is fully visible",
+      "pass": true,
+      "detail": "bottom 154.0"
+    },
+    {
+      "name": "desktop-short signals is fully visible",
+      "pass": true,
+      "detail": "bottom 571.0"
+    },
+    {
+      "name": "desktop-short canvas is fully visible",
+      "pass": true,
+      "detail": "bottom 525.0"
+    },
+    {
+      "name": "desktop-short tasks is fully visible",
+      "pass": true,
+      "detail": "bottom 430.2"
+    },
+    {
+      "name": "desktop-short uses no document scrollbar",
+      "pass": true,
+      "detail": "676/676"
+    },
+    {
+      "name": "desktop-short uses no independent column scrollbar",
+      "pass": true,
+      "detail": "[{\"clientHeight\":597,\"scrollHeight\":597,\"overflowY\":\"hidden\"},{\"clientHeight\":597,\"scrollHeight\":597,\"overflowY\":\"hidden\"},{\"clientHeight\":597,\"scrollHeight\":597,\"overflowY\":\"hidden\"}]"
+    },
+    {
+      "name": "desktop-short primary controls are visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-short primary copy remains at least 10px",
+      "pass": true,
+      "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10}]"
+    },
+    {
+      "name": "laptop has no horizontal overflow",
+      "pass": true,
+      "detail": "1366/1366"
+    },
+    {
+      "name": "laptop has no console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "laptop shell fits visible viewport",
+      "pass": true,
+      "detail": "bottom 756.0 of 768"
+    },
+    {
+      "name": "laptop nav is fully visible",
+      "pass": true,
+      "detail": "bottom 755.0"
+    },
+    {
+      "name": "laptop profile is fully visible",
+      "pass": true,
+      "detail": "bottom 348.5"
+    },
+    {
+      "name": "laptop progress is fully visible",
+      "pass": true,
+      "detail": "bottom 154.0"
+    },
+    {
+      "name": "laptop signals is fully visible",
+      "pass": true,
+      "detail": "bottom 663.0"
+    },
+    {
+      "name": "laptop canvas is fully visible",
+      "pass": true,
+      "detail": "bottom 525.0"
+    },
+    {
+      "name": "laptop tasks is fully visible",
+      "pass": true,
+      "detail": "bottom 486.3"
+    },
+    {
+      "name": "laptop uses no document scrollbar",
+      "pass": true,
+      "detail": "768/768"
+    },
+    {
+      "name": "laptop uses no independent column scrollbar",
+      "pass": true,
+      "detail": "[{\"clientHeight\":689,\"scrollHeight\":689,\"overflowY\":\"hidden\"},{\"clientHeight\":689,\"scrollHeight\":689,\"overflowY\":\"hidden\"},{\"clientHeight\":689,\"scrollHeight\":689,\"overflowY\":\"hidden\"}]"
+    },
+    {
+      "name": "laptop primary controls are visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "laptop primary copy remains at least 10px",
+      "pass": true,
+      "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10}]"
+    },
+    {
+      "name": "desktop-reference has no horizontal overflow",
+      "pass": true,
+      "detail": "1200/1200"
+    },
+    {
+      "name": "desktop-reference has no console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-reference shell fits visible viewport",
+      "pass": true,
+      "detail": "bottom 855.0 of 900"
+    },
+    {
+      "name": "desktop-reference nav is fully visible",
+      "pass": true,
+      "detail": "bottom 854.0"
+    },
+    {
+      "name": "desktop-reference profile is fully visible",
+      "pass": true,
+      "detail": "bottom 370.0"
+    },
+    {
+      "name": "desktop-reference progress is fully visible",
+      "pass": true,
+      "detail": "bottom 204.0"
+    },
+    {
+      "name": "desktop-reference signals is fully visible",
+      "pass": true,
+      "detail": "bottom 614.0"
+    },
+    {
+      "name": "desktop-reference canvas is fully visible",
+      "pass": true,
+      "detail": "bottom 578.0"
+    },
+    {
+      "name": "desktop-reference tasks is fully visible",
+      "pass": true,
+      "detail": "bottom 509.0"
+    },
+    {
+      "name": "desktop-reference uses no document scrollbar",
+      "pass": true,
+      "detail": "900/900"
+    },
+    {
+      "name": "desktop-reference uses no independent column scrollbar",
+      "pass": true,
+      "detail": "[{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"},{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"},{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"}]"
+    },
+    {
+      "name": "desktop-reference primary controls are visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-reference primary copy remains at least 10px",
+      "pass": true,
+      "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10}]"
+    },
+    {
+      "name": "desktop-wide has no horizontal overflow",
+      "pass": true,
+      "detail": "1440/1440"
+    },
+    {
+      "name": "desktop-wide has no console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-wide shell fits visible viewport",
+      "pass": true,
+      "detail": "bottom 855.0 of 900"
+    },
+    {
+      "name": "desktop-wide nav is fully visible",
+      "pass": true,
+      "detail": "bottom 854.0"
+    },
+    {
+      "name": "desktop-wide profile is fully visible",
+      "pass": true,
+      "detail": "bottom 370.0"
+    },
+    {
+      "name": "desktop-wide progress is fully visible",
+      "pass": true,
+      "detail": "bottom 204.0"
+    },
+    {
+      "name": "desktop-wide signals is fully visible",
+      "pass": true,
+      "detail": "bottom 614.0"
+    },
+    {
+      "name": "desktop-wide canvas is fully visible",
+      "pass": true,
+      "detail": "bottom 578.0"
+    },
+    {
+      "name": "desktop-wide tasks is fully visible",
+      "pass": true,
+      "detail": "bottom 509.0"
+    },
+    {
+      "name": "desktop-wide uses no document scrollbar",
+      "pass": true,
+      "detail": "900/900"
+    },
+    {
+      "name": "desktop-wide uses no independent column scrollbar",
+      "pass": true,
+      "detail": "[{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"},{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"},{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"}]"
+    },
+    {
+      "name": "desktop-wide primary controls are visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-wide primary copy remains at least 10px",
+      "pass": true,
+      "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10}]"
+    },
+    {
+      "name": "desktop-full-hd has no horizontal overflow",
+      "pass": true,
+      "detail": "1920/1920"
+    },
+    {
+      "name": "desktop-full-hd has no console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-full-hd shell fits visible viewport",
+      "pass": true,
+      "detail": "bottom 945.0 of 1080"
+    },
+    {
+      "name": "desktop-full-hd nav is fully visible",
+      "pass": true,
+      "detail": "bottom 944.0"
+    },
+    {
+      "name": "desktop-full-hd profile is fully visible",
+      "pass": true,
+      "detail": "bottom 460.0"
+    },
+    {
+      "name": "desktop-full-hd progress is fully visible",
+      "pass": true,
+      "detail": "bottom 294.0"
+    },
+    {
+      "name": "desktop-full-hd signals is fully visible",
+      "pass": true,
+      "detail": "bottom 704.0"
+    },
+    {
+      "name": "desktop-full-hd canvas is fully visible",
+      "pass": true,
+      "detail": "bottom 668.0"
+    },
+    {
+      "name": "desktop-full-hd tasks is fully visible",
+      "pass": true,
+      "detail": "bottom 599.0"
+    },
+    {
+      "name": "desktop-full-hd uses no document scrollbar",
+      "pass": true,
+      "detail": "1080/1080"
+    },
+    {
+      "name": "desktop-full-hd uses no independent column scrollbar",
+      "pass": true,
+      "detail": "[{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"},{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"},{\"clientHeight\":756,\"scrollHeight\":756,\"overflowY\":\"visible\"}]"
+    },
+    {
+      "name": "desktop-full-hd primary controls are visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "desktop-full-hd primary copy remains at least 10px",
+      "pass": true,
+      "detail": "[{\"selector\":\".profile p\",\"size\":11},{\"selector\":\".pathlabels p\",\"size\":11},{\"selector\":\".task p\",\"size\":11},{\"selector\":\".section-link\",\"size\":10}]"
+    },
+    {
+      "name": "tablet has no horizontal overflow",
+      "pass": true,
+      "detail": "768/768"
+    },
+    {
+      "name": "tablet has no console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile has no horizontal overflow",
+      "pass": true,
+      "detail": "390/390"
+    },
+    {
+      "name": "mobile has no console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile-effective has no horizontal overflow",
+      "pass": true,
+      "detail": "320/320"
+    },
+    {
+      "name": "mobile-effective has no console errors",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

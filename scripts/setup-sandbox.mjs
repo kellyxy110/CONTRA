@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+if(process.platform!=='linux'||process.arch!=='x64')throw Error('This pinned artifact supports Linux x86_64 only.');
+const root=path.resolve(import.meta.dirname,'..'),dir=path.join(root,'.tools');fs.mkdirSync(dir,{recursive:true});
+const url='https://s3-us-west-1.amazonaws.com/build.nearprotocol.com/nearcore/Linux-x86_64/2.13.4/near-sandbox.tar.gz';
+const response=await fetch(url);if(!response.ok)throw Error('Official Sandbox download failed');const bytes=Buffer.from(await response.arrayBuffer());
+if(createHash('sha256').update(bytes).digest('hex')!=='5690a4635172263cf026683f75965cac09dd916912584f12709974fed620163f')throw Error('Sandbox archive checksum mismatch');
+const archive=path.join(dir,'sandbox.tar.gz');fs.writeFileSync(archive,bytes);execFileSync('tar',['--no-same-owner','-xzf',archive,'-C',dir]);fs.unlinkSync(archive);console.log('Installed pinned official NEAR Sandbox 2.13.4. Host preflight still required.');

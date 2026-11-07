@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> test:sandbox
+> node scripts/sandbox-preflight.mjs && node --test --test-concurrency=1 tests/escrow.sandbox.test.mjs
+
+BLOCKED: NEAR Sandbox requires 65535 file descriptors; host hard limit is 16384. Run on a compatible host. No Sandbox test or receipt has been verified.

@@ -1,0 +1,303 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04.1-P3",
+  "root": "http://172.31.169.173:4173",
+  "checks": [
+    {
+      "name": "connect creator.test.near",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unchallenged case can be selected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "challenged case switching updates canonical state",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "all material tabs render selected-case records",
+      "pass": true,
+      "detail": "[[\"Evidence\",47],[\"Reviews\",72],[\"Criteria\",44],[\"Protocol\",88]]"
+    },
+    {
+      "name": "signal tab Criteria updates accessible chart",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "signal tab Evidence updates accessible chart",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "signal tab Overall updates accessible chart",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Goals mode remains data-bound",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "search filters task records",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "activity pagination advances",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "activity pagination returns",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "keyboard opens case dialog",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Agreement & escrow; invocations 6 to 6"
+    },
+    {
+      "name": "Escape restores focus to opener",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser Back closes dialog without leaving case",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "navigation Overview opens its mapped view",
+      "pass": true,
+      "detail": "Cases"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Cases; invocations 8 to 8"
+    },
+    {
+      "name": "navigation Cases opens its mapped view",
+      "pass": true,
+      "detail": "Cases"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Cases; invocations 9 to 9"
+    },
+    {
+      "name": "navigation Challenges opens its mapped view",
+      "pass": true,
+      "detail": "Adversarial challenge"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Adversarial challenge; invocations 10 to 10"
+    },
+    {
+      "name": "navigation Evidence opens its mapped view",
+      "pass": true,
+      "detail": "Evidence submission"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Evidence submission; invocations 11 to 11"
+    },
+    {
+      "name": "navigation Reviewers opens its mapped view",
+      "pass": true,
+      "detail": "Reviewer registry & frozen committee"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Reviewer registry & frozen committee; invocations 12 to 12"
+    },
+    {
+      "name": "navigation Protocol opens its mapped view",
+      "pass": true,
+      "detail": "Frozen protocol v1"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Frozen protocol v1; invocations 13 to 13"
+    },
+    {
+      "name": "navigation Lab opens its mapped view",
+      "pass": true,
+      "detail": "Independent review"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Independent review; invocations 14 to 14"
+    },
+    {
+      "name": "navigation Activity opens its mapped view",
+      "pass": true,
+      "detail": "Contract events"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Contract events; invocations 15 to 15"
+    },
+    {
+      "name": "navigation Settings opens its mapped view",
+      "pass": true,
+      "detail": "Settings & cost controls"
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Settings & cost controls; invocations 16 to 16"
+    },
+    {
+      "name": "settled payout cannot expose retry",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Settlement & recovery; invocations 17 to 17"
+    },
+    {
+      "name": "persisted transaction reconciles after reload",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Transaction reconciliation; invocations 4 to 4"
+    },
+    {
+      "name": "disconnect clears signing session",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "dialog remains closed after Escape",
+      "pass": true,
+      "detail": "Account connection; invocations 5 to 5"
+    },
+    {
+      "name": "disconnect preserves read-only case display",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unauthenticated evidence access is rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "landmarks and chart semantics are present",
+      "pass": "ref: <Node>",
+      "detail": ""
+    },
+    {
+      "name": "connect creator.test.near",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "injected stale final read is disclosed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "loading failure produces explicit service state",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion preference is observed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "connect creator.test.near",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "zoom-125-effective-960x720 has no horizontal overflow",
+      "pass": true,
+      "detail": "960"
+    },
+    {
+      "name": "zoom-125-effective-960x720 keeps critical sections reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "connect creator.test.near",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "zoom-200-effective-320x422 has no horizontal overflow",
+      "pass": true,
+      "detail": "320"
+    },
+    {
+      "name": "zoom-200-effective-320x422 keeps critical sections reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "connect creator.test.near",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "connect creator.test.near",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "soft white text contrast exceeds 4.5 to 1",
+      "pass": true,
+      "detail": "17.70"
+    },
+    {
+      "name": "NEAR mint contrast exceeds 4.5 to 1",
+      "pass": true,
+      "detail": "12.20"
+    },
+    {
+      "name": "browser tests contain no machine-specific path",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser console remains error-free",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "console_errors": [],
+  "journeys": {
+    "unchallenged": "09006893b15ef0827d69fa080166091ffef49bd1f2a695bcbcb729a7a133f3c9",
+    "challenged": "d3b67258309c992880dfa38dceae0163551ce1ebc350d981e7667e0514440ef3",
+    "operations": 44,
+    "receipts": 44
+  }
+}

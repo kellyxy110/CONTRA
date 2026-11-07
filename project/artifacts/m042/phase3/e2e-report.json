@@ -1,0 +1,284 @@
+{
+  "checkpoint": "CONTRA-2026-11-03-IMPL-M04.2-P3",
+  "root": "http://127.0.0.1:4176",
+  "checks": [
+    {
+      "name": "genuine challenged case is selected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Overview is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cases is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cases view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Challenges is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Challenges view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Evidence is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Evidence view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reviewers is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reviewers view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settlement is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settlement view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Lab is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Lab view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Activity is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Activity view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settings is a stable navigable view",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Settings view exposes its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser Back restores the prior major view",
+      "pass": true,
+      "detail": "http://127.0.0.1:4176/#view=Cases&case=e97ff99942388b0e490e057435228fa82709ec76f2849b5c8c1bec579eca6e9c · Cases"
+    },
+    {
+      "name": "view navigation moves focus to its heading",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "direct navigation restores selected-case context",
+      "pass": true,
+      "detail": "http://127.0.0.1:4176/#view=Evidence&case=756d7a074c66104dcdf563f5a02a3a719bd41545a6953c1639184622244cf072 · Evidence · 756d7a074c66104dcdf563f5a02a3a719bd41545a6953c1639184622244cf072"
+    },
+    {
+      "name": "focused action uses its evidence dialog",
+      "pass": true,
+      "detail": "Evidence submission"
+    },
+    {
+      "name": "focused action dialog restores focus",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Evidence materials remain data-bound",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reviews materials remain data-bound",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Criteria materials remain data-bound",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Protocol materials remain data-bound",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Criteria radar tab keeps chart semantics",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Evidence radar tab keeps chart semantics",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Overall radar tab keeps chart semantics",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "search filters genuine tasks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "activity pagination advances",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "settled payout keeps retry disabled",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reload reconciliation finds the confirmed transaction",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "settings discloses gated spending",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "disconnect removes signing session",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "disconnect preserves read-only selected case",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "unauthenticated evidence remains protected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "visible view has one main landmark",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "connected empty state is explicit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "settlement pending state is distinct",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "verified transfer failure is distinct",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "chain unavailable state is explicit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "service failure is explicit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reduced motion preference is observed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "zoom-125-effective-960x720 has no horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "zoom-125-effective-960x720 keeps navigation and view content reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "zoom-200-effective-320x422 has no horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "zoom-200-effective-320x422 keeps navigation and view content reachable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tablet stable view has no horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile stable view has no horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "soft white contrast exceeds 4.5 to 1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "NEAR mint contrast exceeds 4.5 to 1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "browser console remains error-free",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "console_errors": [],
+  "manual_screen_reader": "PARTIAL: automated semantics verified; no manual assistive-technology session was available.",
+  "journeys": {
+    "operations": 44,
+    "receipts": 44,
+    "unchallenged": "756d7a074c66104dcdf563f5a02a3a719bd41545a6953c1639184622244cf072",
+    "challenged": "e97ff99942388b0e490e057435228fa82709ec76f2849b5c8c1bec579eca6e9c"
+  }
+}
