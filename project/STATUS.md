@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-08-M06-P1-P3-MERGED
+
+M06 wallet, reviewer control and non-billable provider interoperability are merged into `implementation/oct28`. PR 4 merged wallet head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f` as `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`. PR 5 merged CI optimisation as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`; its full gate reduced wall time from 70m51s to 8m02s without removing coverage. PR 7 merged the reviewer risk-map correction as `4f5c03234c3b2b01aa2e8765e64da465f0b02eaa`. PR 6 merged reviewer head `867c0678733571f9b3fbab8a662d177c52302f38` as `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc`. PR 8 merged provider head `e0437e9794c7b6c9ac630580edc1e2e910cdda66` as `6900a94ae40a88c06cb03365cdd806cb9ecdb0e7`.
+
+PR 3 integrated accumulated implementation head `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc` into `main` as `278efcffaca499f22ae775999c0ef2879f32920d`. Core, Security, Contract, the nine-test Sandbox baseline, both complete adjudication journeys and the aggregate Integration gate passed on that exact head in run `42422676322` and companion runs. Main post-merge Security run `42423325559` passed. Provider PR 8 passed Core `42423468952`, Security `42423468917` and focused Integration `42423469021`; the focused route completed in 4m57s. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED pending authorized live interoperability evidence. No live signing, provider request, deployment, secret change, mainnet activity or spending occurred.
+
 ## Current checkpoint | CONTRA-2026-11-08-IMPL-M06-P3-PROVIDERS
 
 M06 provider interoperability is implemented on `feat/m06-provider-interoperability` with mocked transports only. Meta primary and fresh review, Baseten adversarial review and Modal proposal verification now use distinct strict request envelopes. Meta Muse Spark 1.3 is recorded as the proposed primary model and Muse Wonder 1.0 as optional escalation metadata, with access explicitly unverified. Every live provider remains disabled unless owner authorization, credits, pricing, model interface, endpoint, key and request cap gates are all satisfied.
