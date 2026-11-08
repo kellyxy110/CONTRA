@@ -1,10 +1,10 @@
 # Next execution task
 
-## Active next task | M06 controlled workflow verification
+## Active next task | M07 controlled release-readiness audit
 
-Complete `test/m06-controlled-workflow`, based on verified implementation head `46ba7521ef96c58060f7b21b821a553f076382d8`. Exercise the connected wallet, reviewer and provider-fixture workflow across persistence restart, reviewer timeout or nonparticipation, contradictory evidence, provider failure, challenge, settlement and immutable proposal provenance. Confirm AI artifacts cannot become reviewer votes, transactions, verdicts or settlement. Use real local NEAR Sandbox for contract-sensitive execution and explicitly simulated external wallet and provider transports. Open a dedicated PR, require current Core, Security and full risk-classified Integration checks, and merge under the standing green-check policy. Promote the accepted merge to `main` so completed work is not stranded.
+Preserve the controlled M06 implementation merged through PR 11 as `721964b2f4fb5c6b69767e864bb717e8b32c9afb` and promoted through PR 12 to `main` as `b32cd8868470b5b2ad41a5ee5503752f95c54d17`. Evaluate AC01 through AC33 individually against the fresh wallet, reviewer, provider-fixture and local Sandbox artifacts. Audit README reproducibility, public repository accessibility, license, dependency findings, credential history, key-control disclosure and deployment boundaries. Correct only demonstrated functional, security or reproducibility defects through focused PRs and the maintained risk policy.
 
-Promotion PR 10 merged the accepted provider and project-record implementation into `main` as `c3fcdf3a5dea8a5a34673d4e1f6b27c4b95f157c`. The controlled workflow remains the only active execution unit. Earlier instructions below are retained as historical records.
+Testnet signing, funded transactions, deployment, live provider calls, paid inference, production secrets, submission, X publication and demo work remain separately gated. Fetch the official hackathon instructions again before submission. Earlier instructions below are retained as historical records.
 
 Authorized live provider checks, paid inference, live testnet signing, deployment, production secrets and mainnet activity remain separately gated.
 
