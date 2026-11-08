@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-08 | M06 controlled workflow complete and promoted
+
+- PR 11 merged controlled workflow head `184768e0d36a5be6bb2dd2ffc587e22f5c2d86fb` into `implementation/oct28` as `721964b2f4fb5c6b69767e864bb717e8b32c9afb`.
+- Core `42471496896`, Security `42471496910` and Integration `42471496909` passed. The controlled Sandbox job archived 46 receipts, 47 operations, reviewer audit events, failure evidence and durable SQLite plus immutable objects.
+- Protected ancestry sync PR 13 passed Core, Security and full Integration `42472276558`, then merged as `1844eb9017bbda265a029d2d6bbc533ad69db951`.
+- Promotion PR 12 passed Core `42472865448`, Security `42472865451` and full Integration `42472865460`, then merged into `main` as `b32cd8868470b5b2ad41a5ee5503752f95c54d17`.
+- Both protected branches contain the accepted M06 milestone. No deployment, live signing, live provider call, secret change or spending occurred.
+
 ## 2026-11-08 | M06 controlled workflow gate in progress
 
 - Created `test/m06-controlled-workflow` from verified implementation commit `46ba7521ef96c58060f7b21b821a553f076382d8`.
