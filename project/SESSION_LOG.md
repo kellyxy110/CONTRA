@@ -1,5 +1,17 @@
 # CONTRA session log
 
+## 2026-11-08 UTC | M06 consolidated merge checkpoint
+
+Merged PR 7 as `4f5c03234c3b2b01aa2e8765e64da465f0b02eaa`, PR 6 as `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc`, PR 3 into `main` as `278efcffaca499f22ae775999c0ef2879f32920d`, and PR 8 as `6900a94ae40a88c06cb03365cdd806cb9ecdb0e7`. Exact current-head CI was green before every merge. PR 3 run `42422676322` passed the complete Sandbox baseline and both journeys. PR 8 run `42423469021` passed focused Sandbox coverage in 4m57s. Main post-merge Security run `42423325559` passed.
+
+The preserved stash remains intact. No live transaction, signing, endpoint call, provider charge, deployment, mainnet action or production-secret change occurred. Total spending and credit usage remain $0. The next engineering unit is the controlled cross-component M06 workflow on a separate branch and PR.
+
+## 2026-11-08 UTC | IMPL-M06-P3 provider interoperability
+
+Started `feat/m06-provider-interoperability` from reviewer merge `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc`. Inspected `stash@{0}` without applying it and recovered only the provider-response provenance concept. The stash remains intact.
+
+Implemented strict provider-specific request and response adapters, criterion-complete evidence findings, fail-closed contradiction handling, immutable raw response provenance, model-interface availability gates and Modal proposal verification. All transports are fixtures. No endpoint was contacted, no API key or production secret was used, and spending remains $0.
+
 ## 2026-11-07 UTC | IMPL-M06-P2 reviewer control local gate
 
 Started `feat/m06-reviewer-control` from the merged wallet target `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`. Inspected `stash@{0}` and its untracked parent without applying it. Recovered only the reviewer operations design; the provider and remaining wallet stash records were not changed or dropped.

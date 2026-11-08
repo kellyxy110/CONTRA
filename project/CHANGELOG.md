@@ -1,5 +1,22 @@
 # Change log
 
+## 2026-11-08 | M06 consolidated merge checkpoint
+
+- Merged PR 7 reviewer risk routing at `4f5c03234c3b2b01aa2e8765e64da465f0b02eaa` after full Integration passed.
+- Merged PR 6 reviewer control at `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc` after Core, Security and focused Integration passed.
+- Merged PR 3 into `main` at `278efcffaca499f22ae775999c0ef2879f32920d` after Core, Security, Contract and comprehensive Integration passed.
+- Merged PR 8 provider interoperability at `6900a94ae40a88c06cb03365cdd806cb9ecdb0e7` after Core, Security and focused Integration passed.
+- Preserved the inherited dependency baseline, financial assertions, provider stash, zero-spend status and all restricted-action gates.
+
+## 2026-11-08 | IMPL-M06-P3 provider interoperability
+
+- Added strict Meta, Baseten and Modal request adapters and provider-specific response extraction.
+- Added criterion-complete finding validation, evidence-state consistency and exact citation checks.
+- Added immutable raw response provenance and bounded usage metadata.
+- Added Modal verification bound to an existing AI proposal without voting or settlement authority.
+- Added explicit model-interface gating and unverified proposed Meta model metadata.
+- Expanded non-billable provider tests for request shapes, injection isolation, malformed output, contradictions, idempotency, timeout retention, budgets and provenance.
+
 ## 2026-11-07 | IMPL-M06-P2 reviewer control local gate
 
 Added reviewer-control operations for exact active registry and disclosure matching, six-account and six-operator committee disjointness, phase-aware commit and reveal validation, missing-reviewer and quorum diagnostics, frozen vote commitment construction, and evidence-bound finding verification. Corrected reviewer confirmation preparation so the signer, active registry revision and disclosure digest must all match.
