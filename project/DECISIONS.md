@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-077 | The controlled workflow preserves explicit execution boundaries | 2026-11-08
+
+ACCEPTED. The M06 connected gate must use actual local NEAR Sandbox transactions for contract-sensitive creation, funding, reviewer commit and reveal, challenge, finalization and payout assertions. External-wallet handoff and callback behavior remains a simulation with zero signing or broadcast. Meta, Baseten and Modal remain deterministic mocked transports with zero endpoint access or billing. AI artifacts are immutable proposals only and must not create commitments, reveals, transactions, verdicts or settlement. The complete runner records receipts, durable operations, reviewer audit history, failure paths and exact balance changes as CI artifacts. Changes to this runner and its routing default to the full Integration gate.
+
 ## D-076 | Green protected engineering units merge without a repeated approval cycle | 2026-11-08
 
 ACCEPTED. Core, Security and the risk-classified Integration gate must be current and green, the pull request must be clean and mergeable, and blocking review or safety findings must be resolved. Under those conditions normal source, CI, documentation and feature units merge under the standing owner policy. Deployment, live signing, paid inference, spending, weakened financial guarantees or bypassing checks remain separately restricted.

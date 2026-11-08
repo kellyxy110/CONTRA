@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-08 UTC | M06 controlled workflow
+
+Resumed implementation head `46ba7521ef96c58060f7b21b821a553f076382d8` and created `test/m06-controlled-workflow`. Implemented one connected application, persistence and Sandbox runner instead of repeating isolated unit tests. The runner retains a simulated external-wallet operation across handoff, restart and delayed hash callback without redispatch; exercises six disclosed single-process reviewer fixtures with disjoint committees; submits immutable evidence; creates valid Meta, contradictory Baseten and malformed provider fixture responses; binds Modal verification to the original proposal digest; proves AI output leaves contract commitments unchanged; restarts durable storage; rejects cross-account artifact access; exercises primary and fresh human fixture votes, challenge reversal, quorum timeout and exact one-NEAR creator refunds. Local repository tests passed 89/89 and the wallet, Core and Security gates passed. Linux Sandbox execution remains assigned to the focused PR's full Integration job. Promotion PR 10 merged into main as `c3fcdf3a5dea8a5a34673d4e1f6b27c4b95f157c` after all applicable checks passed. Transactions, deployments and paid calls: none outside local Sandbox; spending: $0.
+
 ## 2026-11-08 UTC | M06 consolidated merge checkpoint
 
 Merged PR 7 as `4f5c03234c3b2b01aa2e8765e64da465f0b02eaa`, PR 6 as `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc`, PR 3 into `main` as `278efcffaca499f22ae775999c0ef2879f32920d`, and PR 8 as `6900a94ae40a88c06cb03365cdd806cb9ecdb0e7`. Exact current-head CI was green before every merge. PR 3 run `42422676322` passed the complete Sandbox baseline and both journeys. PR 8 run `42423469021` passed focused Sandbox coverage in 4m57s. Main post-merge Security run `42423325559` passed.

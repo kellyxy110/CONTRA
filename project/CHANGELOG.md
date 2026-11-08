@@ -1,5 +1,15 @@
 # Change log
 
+## 2026-11-08 | M06 controlled workflow gate in progress
+
+- Created `test/m06-controlled-workflow` from verified implementation commit `46ba7521ef96c58060f7b21b821a553f076382d8`.
+- Added a connected M06 runner covering wallet handoff interruption, durable restart recovery, duplicate callbacks, account isolation, reviewer disclosure and committee separation, immutable evidence, strict Meta and Baseten proposals, Modal proposal verification, malformed provider output, quorum timeout, human fixture votes, challenge reversal and exact creator refund.
+- Added dependency-injected provider transport at the API composition boundary so the connected HTTP route can be verified without network calls or secrets.
+- Added a full-risk Integration job that executes the runner on an isolated Linux NEAR Sandbox host and uploads receipts, operations, reviewer audit history, failure evidence and the consolidated report.
+- Passed 89/89 local repository tests, the wallet production bundle, Core policy and Security policy. The Windows host did not execute Sandbox.
+- Merged promotion PR 10 after Core `42466893121`, Security `42466893179` and full Integration `42466893124` passed. Main merge commit is `c3fcdf3a5dea8a5a34673d4e1f6b27c4b95f157c`.
+- No live signing, provider endpoint, testnet or mainnet transaction, deployment, production secret or spending occurred.
+
 ## 2026-11-08 | M06 consolidated merge checkpoint
 
 - Merged PR 7 reviewer risk routing at `4f5c03234c3b2b01aa2e8765e64da465f0b02eaa` after full Integration passed.
