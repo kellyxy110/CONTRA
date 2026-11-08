@@ -2,7 +2,7 @@
   "version": 1,
   "full": [
     {"name": "contract and protocol invariants", "paths": ["contracts/adjudication/**", "packages/protocol/**", "docs/COMMITMENT_TEST_VECTORS.md"]},
-    {"name": "settlement and Sandbox infrastructure", "paths": ["services/chain/sandbox*.mjs", "tests/escrow.sandbox.test.mjs", "scripts/run-m04-journeys.mjs", "scripts/run-p0.mjs", "tests/financial.sandbox.test.mjs", "tests/financial-categories.mjs"]},
+    {"name": "settlement and Sandbox infrastructure", "paths": ["services/chain/sandbox*.mjs", "tests/escrow.sandbox.test.mjs", "scripts/run-m04-journeys.mjs", "scripts/run-m06-controlled-workflow.mjs", "scripts/run-p0.mjs", "tests/financial.sandbox.test.mjs", "tests/financial-categories.mjs"]},
     {"name": "integration routing infrastructure", "paths": [".github/workflows/integration.yml", "ci/integration-risk-map.json", "scripts/ci-integration-policy.mjs", "tests/ci-integration-policy.test.mjs"]}
   ],
   "focused": [
