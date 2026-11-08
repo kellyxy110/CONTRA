@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-078 | M06 controlled integration is accepted without live-integration claims | 2026-11-08
+
+ACCEPTED. The green connected gate establishes that the durable wallet simulation, reviewer-control services, provider fixtures, persistence and real local NEAR Sandbox contract can operate together through challenge, timeout and settlement. It does not establish live wallet signing, external provider interoperability, independent reviewer operators, testnet deployment or production readiness. Preserve the archived environment boundary and keep the acceptance baseline unchanged until AC01 through AC33 are individually reevaluated. Full Financial P0 is unnecessary for this gate because it changed no contract or financial invariant; the passing nine-test Sandbox baseline and prior F01 through F18 evidence remain intact.
+
 ## D-077 | The controlled workflow preserves explicit execution boundaries | 2026-11-08
 
 ACCEPTED. The M06 connected gate must use actual local NEAR Sandbox transactions for contract-sensitive creation, funding, reviewer commit and reveal, challenge, finalization and payout assertions. External-wallet handoff and callback behavior remains a simulation with zero signing or broadcast. Meta, Baseten and Modal remain deterministic mocked transports with zero endpoint access or billing. AI artifacts are immutable proposals only and must not create commitments, reveals, transactions, verdicts or settlement. The complete runner records receipts, durable operations, reviewer audit history, failure paths and exact balance changes as CI artifacts. Changes to this runner and its routing default to the full Integration gate.

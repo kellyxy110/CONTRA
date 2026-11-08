@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-08-M06-CONTROLLED-WORKFLOW-COMPLETE
+
+The M06 controlled workflow gate is complete. PR 11 tested head `184768e0d36a5be6bb2dd2ffc587e22f5c2d86fb` and merged it into `implementation/oct28` as `721964b2f4fb5c6b69767e864bb717e8b32c9afb`. Protected-branch ancestry sync PR 13 merged as `1844eb9017bbda265a029d2d6bbc533ad69db951`. Promotion PR 12 then merged the synchronized implementation into `main` as `b32cd8868470b5b2ad41a5ee5503752f95c54d17`.
+
+Local verification passed 89/89 repository tests, the wallet production bundle, Core policy, Security policy and 8/8 integration-routing tests. PR 11 passed Core `42471496896`, Security `42471496910` and full Integration `42471496909`. Its controlled Linux Sandbox job passed in 5m18s and archived 46 genuine Sandbox receipts, 47 persisted operations, four mocked provider calls, four reviewer audit events and two explicit failure responses. It proved zero wallet redispatch after restart, zero AI-created commitments, a digest-bound Modal proposal check, a fresh-review reversal and an exact `1000000000000000000000000` yoctoNEAR creator refund. PR 13 passed full run `42472276558`; final main promotion passed Core `42472865448`, Security `42472865451` and full Integration `42472865460`.
+
+External wallet activity and provider transports remained simulated. All six reviewer accounts remained one-process fixtures. No testnet or mainnet signing, funded transaction, deployment, live provider request, secret change or spending occurred. The inherited dependency baseline remains 17 findings: 14 low, two high and one critical. No dependency changed. F01 through F18 were not rerun because no contract, escrow, payout or financial invariant changed; the complete existing nine-test Sandbox baseline and both journeys passed repeatedly. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED until an individual M07 reevaluation supports changes.
+
 ## Current checkpoint | CONTRA-2026-11-08-M06-CONTROLLED-WORKFLOW
 
 The complete controlled M06 workflow is under verification on `test/m06-controlled-workflow`, based on implementation commit `46ba7521ef96c58060f7b21b821a553f076382d8`. The connected runner combines durable external-wallet handoff and restart recovery, reviewer disclosure and committee checks, immutable evidence, Meta and Baseten fixture proposals, Modal digest-bound verification, human fixture commit and reveal, quorum timeout, challenge reversal and exact Sandbox settlement. External wallet signing and provider HTTP calls remain simulated. Contract-sensitive execution is assigned to an isolated Linux NEAR Sandbox CI job that preserves receipts, operation identities, reviewer audit events and failure evidence.
