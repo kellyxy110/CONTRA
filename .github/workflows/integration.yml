@@ -143,10 +143,40 @@ jobs:
             project/artifacts/m04/local-journeys/receipts.json
           if-no-files-found: error
           retention-days: 30
+  full-controlled-workflow:
+    name: full-m06-controlled-workflow
+    needs: policy
+    if: needs.policy.outputs.level == 'full'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: rustup show
+      - run: node scripts/build-contracts.mjs
+      - run: node scripts/setup-sandbox.mjs
+      - name: Complete controlled M06 cross-component workflow
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p ci-output
+          if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
+          /usr/bin/time -p -o ci-output/m06-controlled-timing.txt npm run test:m06:controlled 2>&1 | tee ci-output/m06-controlled.txt
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m06-controlled-workflow-${{ github.run_id }}
+          path: ci-output/m06-controlled-workflow/
+          if-no-files-found: error
+          retention-days: 30
   integration-gate:
     name: integration-gate
     if: always()
-    needs: [policy, focused-sandbox, full-baseline, full-journeys]
+    needs: [policy, focused-sandbox, full-baseline, full-journeys, full-controlled-workflow]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -157,17 +187,18 @@ jobs:
           FOCUSED_RESULT: ${{ needs.focused-sandbox.result }}
           BASELINE_RESULT: ${{ needs.full-baseline.result }}
           JOURNEYS_RESULT: ${{ needs.full-journeys.result }}
+          CONTROLLED_RESULT: ${{ needs.full-controlled-workflow.result }}
         shell: bash
         run: |
-          echo "level=$LEVEL policy=$POLICY_RESULT focused=$FOCUSED_RESULT baseline=$BASELINE_RESULT journeys=$JOURNEYS_RESULT"
+          echo "level=$LEVEL policy=$POLICY_RESULT focused=$FOCUSED_RESULT baseline=$BASELINE_RESULT journeys=$JOURNEYS_RESULT controlled=$CONTROLLED_RESULT"
           test "$POLICY_RESULT" = "success"
           if [ "$LEVEL" = "fast" ]; then
-            test "$FOCUSED_RESULT" = "skipped" && test "$BASELINE_RESULT" = "skipped" && test "$JOURNEYS_RESULT" = "skipped"
+            test "$FOCUSED_RESULT" = "skipped" && test "$BASELINE_RESULT" = "skipped" && test "$JOURNEYS_RESULT" = "skipped" && test "$CONTROLLED_RESULT" = "skipped"
             echo "Sandbox was not required. Core and Security remain executed PR gates."
           elif [ "$LEVEL" = "focused" ]; then
-            test "$FOCUSED_RESULT" = "success" && test "$BASELINE_RESULT" = "skipped" && test "$JOURNEYS_RESULT" = "skipped"
+            test "$FOCUSED_RESULT" = "success" && test "$BASELINE_RESULT" = "skipped" && test "$JOURNEYS_RESULT" = "skipped" && test "$CONTROLLED_RESULT" = "skipped"
           elif [ "$LEVEL" = "full" ]; then
-            test "$FOCUSED_RESULT" = "skipped" && test "$BASELINE_RESULT" = "success" && test "$JOURNEYS_RESULT" = "success"
+            test "$FOCUSED_RESULT" = "skipped" && test "$BASELINE_RESULT" = "success" && test "$JOURNEYS_RESULT" = "success" && test "$CONTROLLED_RESULT" = "success"
           else
             exit 1
           fi

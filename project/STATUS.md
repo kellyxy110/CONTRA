@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-08-M06-CONTROLLED-WORKFLOW
+
+The complete controlled M06 workflow is under verification on `test/m06-controlled-workflow`, based on implementation commit `46ba7521ef96c58060f7b21b821a553f076382d8`. The connected runner combines durable external-wallet handoff and restart recovery, reviewer disclosure and committee checks, immutable evidence, Meta and Baseten fixture proposals, Modal digest-bound verification, human fixture commit and reveal, quorum timeout, challenge reversal and exact Sandbox settlement. External wallet signing and provider HTTP calls remain simulated. Contract-sensitive execution is assigned to an isolated Linux NEAR Sandbox CI job that preserves receipts, operation identities, reviewer audit events and failure evidence.
+
+Local non-Sandbox verification passes 89/89 repository tests, the wallet production bundle, Core policy and Security policy. No contract, payout or financial invariant changed, so F01 through F18 are preserved and are not rerun for this test-only integration unit. Promotion PR 10 passed Core `42466893121`, Security `42466893179` and full Integration `42466893124`, then merged accepted provider and record commits into `main` as `c3fcdf3a5dea8a5a34673d4e1f6b27c4b95f157c`. No live signing, provider request, testnet or mainnet transaction, deployment, secret change or spending occurred. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED pending complete CI evidence and separately authorized live interoperability.
+
 ## Current checkpoint | CONTRA-2026-11-08-M06-P1-P3-MERGED
 
 M06 wallet, reviewer control and non-billable provider interoperability are merged into `implementation/oct28`. PR 4 merged wallet head `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f` as `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`. PR 5 merged CI optimisation as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`; its full gate reduced wall time from 70m51s to 8m02s without removing coverage. PR 7 merged the reviewer risk-map correction as `4f5c03234c3b2b01aa2e8765e64da465f0b02eaa`. PR 6 merged reviewer head `867c0678733571f9b3fbab8a662d177c52302f38` as `b4c86ec0d8bd2ab18c1f02534ce0eb2ce9d88fdc`. PR 8 merged provider head `e0437e9794c7b6c9ac630580edc1e2e910cdda66` as `6900a94ae40a88c06cb03365cdd806cb9ecdb0e7`.
