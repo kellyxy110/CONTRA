@@ -1,0 +1,17 @@
+{
+  "schema": "CONTRA_TESTNET_DEPLOYMENT_V1",
+  "network": "testnet",
+  "rpc_url": "https://rpc.testnet.near.org",
+  "contract_account": null,
+  "signer_account": null,
+  "signer_public_key": null,
+  "custody_method": null,
+  "artifact_path": "contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm",
+  "artifact_sha256": null,
+  "expected_current_code_hash": null,
+  "max_total_cost_yocto": null,
+  "minimum_account_balance_yocto": null,
+  "initial_owner_account": null,
+  "creator_allowlist": [],
+  "owner_authorisation": null
+}
