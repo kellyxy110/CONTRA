@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M08 promoted and M09 durable runtime ownership
+
+Merged deployment-preflight PR 18 as `38470d1e26d0714b99dbda979eb6e7d285db940f` and promotion PR 19 into `main` as `5041df54f3700a6594469faf8972b370cb14800f`. Exact-head Core, Security and comprehensive Integration passed on both boundaries. No deployment, signing or funded transaction occurred.
+
+Started the separate M09 runtime-operations unit. Added an exclusive durable-data lease, live-process exclusion, safe same-host terminated-process reclamation, failed-start cleanup and graceful request-draining shutdown. Added four focused tests and updated storage and reproducibility guidance. Local results are 102/102 repository tests, 4/4 focused runtime tests, wallet build, Core and Security policy, 50-document link validation and documentation-impact coverage. Contract, settlement and financial logic are unchanged; spending remains $0.
+
 ## 2026-11-09 | M08 deployment preflight preparation
 
 Added a fail-closed, non-signing testnet deployment plan, validator, read-only target inspection and five regression tests. Owner authorisation now binds the exact public deployment intent by SHA-256. The validator rejects secret-bearing plans, mainnet, signer-account mismatches, artifact changes, incompatible full-access keys, contradictory code hashes, inadequate funding and stale final blocks. Added explicit fast-gate routing for this preparation-only path and updated deployment, reproducibility, blocker and README guidance. Local results: 98/98 repository tests, 14/14 focused routing and preflight tests, wallet build, Core policy, Security policy and 50-document link validation passed. A read-only public RPC status call observed a synced NEAR testnet node at block `276888350`; no account was queried and no transaction was signed or sent.

@@ -1,8 +1,16 @@
 # Next execution task
 
-## Active next task | M08 deployment authorisation gate
+## Active next task | M09 runtime operations
 
-Complete and merge the fail-closed deployment-preflight PR. Preserve the preparation-only boundary. Collect the dedicated `.testnet` contract account, signer public key, custody classification, expected current code hash, testnet funding ceiling, minimum account balance, initial owner, creator allowlist and an expiring owner authorisation bound to the exact plan digest in one consolidated owner response. Never request or store private signing material in repository files or chat.
+Complete the focused runtime-operations PR from the accepted M08 baseline. Verify exclusive durable-volume ownership, same-host crash recovery, graceful shutdown, clean restart and documentation. Then implement verifiable offline backup and restore packaging, liveness and readiness separation, and a deployment-compatible single-instance service definition in separate focused units. Do not select or deploy to a hosting provider without approved access.
+
+M08 preparation is merged into both protected branches. B-M08-01 remains the external deployment gate. Collect the dedicated `.testnet` contract account, signer public key, custody classification, expected current code hash, testnet funding ceiling, minimum account balance, initial owner, creator allowlist and an expiring owner authorisation bound to the exact plan digest in one consolidated owner response. Never request or store private signing material in repository files or chat.
+
+Until B-M08-01 is satisfied, testnet work remains limited to dry runs, artifact verification, ABI checks, read-only RPC validation and deployment documentation. Do not deploy, sign, fund, change production secrets or represent the public RPC health observation as a deployed contract.
+
+## Historical next task | M08 deployment authorisation gate
+
+The fail-closed deployment-preflight PR is merged. Preserve the preparation-only boundary and consolidated external-input requirement.
 
 Until B-M08-01 is satisfied, continue only dry runs, artifact verification, ABI checks, read-only RPC validation and deployment documentation. Do not deploy, sign, fund, change production secrets or represent the public RPC health observation as a deployed contract.
 
