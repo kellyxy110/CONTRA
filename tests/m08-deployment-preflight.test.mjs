@@ -4,12 +4,12 @@ import {createHash} from 'node:crypto';
 import {assessDeploymentPlan,deploymentCommand,deploymentIntentDigest,verifyDeploymentTarget} from '../services/deployment/preflight.mjs';
 
 const bytes=Buffer.from([0,97,115,109,1,0,0,0]),abi={production_exports:['new'],fault_only_exports:['set_callback_fault']},sha=createHash('sha256').update(bytes).digest('hex'),key='ed25519:11111111111111111111111111111111';
-const ready=()=>{const plan={schema:'CONTRA_TESTNET_DEPLOYMENT_V1',network:'testnet',rpc_url:'https://rpc.testnet.near.org',contract_account:'contra.testnet',signer_account:'contra.testnet',signer_public_key:key,custody_method:'os-keychain',artifact_path:'contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm',artifact_sha256:sha,expected_current_code_hash:'EMPTY',max_total_cost_yocto:'1000000000000000000000000',minimum_account_balance_yocto:'2000000000000000000000000',initial_owner_account:'owner.testnet',creator_allowlist:['creator.testnet'],owner_authorisation:{id:'OWNER-M08-1',approved_by:'owner',approved_at:'2026-11-09T00:00:00.000Z',expires_at:'2026-11-10T00:00:00.000Z'}};plan.owner_authorisation.approved_plan_sha256=deploymentIntentDigest(plan);return plan;};
+const ready=()=>{const plan={schema:'CONTRA_TESTNET_DEPLOYMENT_V1',network:'testnet',rpc_url:'https://rpc.testnet.near.org',contract_account:'contra.testnet',signer_account:'contra.testnet',signer_public_key:key,custody_method:'os-keychain',artifact_path:'contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm',artifact_sha256:sha,expected_current_code_hash:'EMPTY',max_total_cost_yocto:'1000000000000000000000000',minimum_account_balance_yocto:'2000000000000000000000000',minimum_balance_is_pre_existing_prerequisite:true,opening_balance_funding_requires_separate_authorisation:true,maximum_combined_owner_exposure_yocto:'3000000000000000000000000',initial_owner_account:'owner.testnet',creator_allowlist:['creator.testnet'],owner_authorisation:{id:'OWNER-M08-1',approved_by:'owner',approved_at:'2026-11-09T00:00:00.000Z',expires_at:'2026-11-10T00:00:00.000Z'}};plan.owner_authorisation.approved_plan_sha256=deploymentIntentDigest(plan);return plan;};
 const options={artifactBytes:bytes,artifactExports:['new'],abi,now:()=>new Date('2026-11-09T12:00:00.000Z')};
 
 test('preparation plan reports every owner-controlled deployment blocker',()=>{
- const plan={...ready(),contract_account:null,signer_account:null,signer_public_key:null,custody_method:null,expected_current_code_hash:null,max_total_cost_yocto:null,minimum_account_balance_yocto:null,initial_owner_account:null,creator_allowlist:[],owner_authorisation:null};
- const result=assessDeploymentPlan(plan,options);assert.equal(result.ready,false);assert.equal(result.blockers.length,10);assert.equal(result.deployment_intent_sha256,deploymentIntentDigest(plan));
+ const plan={...ready(),contract_account:null,signer_account:null,signer_public_key:null,custody_method:null,expected_current_code_hash:null,max_total_cost_yocto:null,minimum_account_balance_yocto:null,minimum_balance_is_pre_existing_prerequisite:null,opening_balance_funding_requires_separate_authorisation:null,maximum_combined_owner_exposure_yocto:null,initial_owner_account:null,creator_allowlist:[],owner_authorisation:null};
+ const result=assessDeploymentPlan(plan,options);assert.equal(result.ready,false);assert.equal(result.blockers.length,13);assert.equal(result.deployment_intent_sha256,deploymentIntentDigest(plan));
 });
 
 test('authorised offline plan binds exact production artifact and emits a complete testnet command',()=>{
@@ -24,6 +24,7 @@ test('preflight refuses mainnet, embedded secrets, signer mismatch and artifact 
  assert.throws(()=>assessDeploymentPlan({...ready(),signer_account:'other.testnet'},options),/must be the contract account/);
  assert.throws(()=>assessDeploymentPlan({...ready(),artifact_sha256:'0'.repeat(64)},options),/SHA-256/);
  const changed=ready();changed.creator_allowlist=['other.testnet'];assert.throws(()=>assessDeploymentPlan(changed,options),/does not bind/);
+ const exposure=ready();exposure.maximum_combined_owner_exposure_yocto='2000000000000000000000000';exposure.owner_authorisation.approved_plan_sha256=deploymentIntentDigest(exposure);assert.equal(assessDeploymentPlan(exposure,options).ready,false);
 });
 
 test('read-only target verification binds testnet, full-access key, empty code and fresh final block',async()=>{

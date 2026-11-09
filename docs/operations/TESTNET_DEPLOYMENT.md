@@ -6,6 +6,10 @@ Status: preparation only. No deployment or funded signing is authorised or claim
 
 Before any external action, record the dedicated testnet contract account, account owner, access-key permissions, custody method, funding ceiling and explicit owner authorisation in the deployment evidence record. Never place a private key or seed phrase in this repository, a command transcript or browser configuration.
 
+M08 readiness is independent of M09 hosting and M10 provider usage. Missing hosting or provider authority cannot block a complete M08 plan and cannot satisfy any M08 requirement.
+
+The minimum 8 NEAR account balance is a pre-existing deployment prerequisite. It is separate from the 5 NEAR execution-cost ceiling. Account creation and opening funding require explicit owner authorisation, and the maximum combined owner exposure is 13 NEAR. The preflight rejects a plan that does not bind all three values.
+
 ## Environment separation
 
 - `unavailable` is the safe default and permits no chain transaction.

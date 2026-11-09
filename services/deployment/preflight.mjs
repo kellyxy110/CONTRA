@@ -25,7 +25,7 @@ function positiveYocto(value){return typeof value==='string'&&/^[1-9][0-9]*$/.te
 function rpcError(body){if(body?.error)throw Error(`NEAR RPC rejected preflight: ${body.error.message||JSON.stringify(body.error)}`);return body?.result;}
 
 export function deploymentIntentDigest(plan){
- const intent={schema:plan.schema,network:plan.network,rpc_url:plan.rpc_url,contract_account:plan.contract_account,signer_account:plan.signer_account,signer_public_key:plan.signer_public_key,custody_method:plan.custody_method,artifact_path:plan.artifact_path,artifact_sha256:plan.artifact_sha256,expected_current_code_hash:plan.expected_current_code_hash,max_total_cost_yocto:plan.max_total_cost_yocto,minimum_account_balance_yocto:plan.minimum_account_balance_yocto,initial_owner_account:plan.initial_owner_account,creator_allowlist:plan.creator_allowlist};
+ const intent={schema:plan.schema,network:plan.network,rpc_url:plan.rpc_url,contract_account:plan.contract_account,signer_account:plan.signer_account,signer_public_key:plan.signer_public_key,custody_method:plan.custody_method,artifact_path:plan.artifact_path,artifact_sha256:plan.artifact_sha256,expected_current_code_hash:plan.expected_current_code_hash,max_total_cost_yocto:plan.max_total_cost_yocto,minimum_account_balance_yocto:plan.minimum_account_balance_yocto,minimum_balance_is_pre_existing_prerequisite:plan.minimum_balance_is_pre_existing_prerequisite,opening_balance_funding_requires_separate_authorisation:plan.opening_balance_funding_requires_separate_authorisation,maximum_combined_owner_exposure_yocto:plan.maximum_combined_owner_exposure_yocto,initial_owner_account:plan.initial_owner_account,creator_allowlist:plan.creator_allowlist};
  return digest(Buffer.from(JSON.stringify(intent)));
 }
 
@@ -70,6 +70,9 @@ export function assessDeploymentPlan(plan,{root=process.cwd(),now=()=>new Date()
  if(plan.expected_current_code_hash!=='EMPTY'&&!CODE_HASH.test(plan.expected_current_code_hash||''))blockers.push('expected current contract code hash or EMPTY');
  if(!positiveYocto(plan.max_total_cost_yocto))blockers.push('authorised testnet cost ceiling');
  if(!positiveYocto(plan.minimum_account_balance_yocto))blockers.push('minimum funded account balance');
+ if(plan.minimum_balance_is_pre_existing_prerequisite!==true)blockers.push('opening balance classified as a pre-existing prerequisite');
+ if(plan.opening_balance_funding_requires_separate_authorisation!==true)blockers.push('separate opening balance funding authorisation');
+ if(!positiveYocto(plan.maximum_combined_owner_exposure_yocto)||positiveYocto(plan.max_total_cost_yocto)&&positiveYocto(plan.minimum_account_balance_yocto)&&BigInt(plan.maximum_combined_owner_exposure_yocto)!==BigInt(plan.max_total_cost_yocto)+BigInt(plan.minimum_account_balance_yocto))blockers.push('exact maximum combined owner exposure');
  if(!account(plan.initial_owner_account))blockers.push('initial contract owner account');
  if(!Array.isArray(plan.creator_allowlist)||!plan.creator_allowlist.length||plan.creator_allowlist.some(value=>!account(value)))blockers.push('initial creator allowlist');
  const authorisation=plan.owner_authorisation;

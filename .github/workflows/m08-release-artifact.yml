@@ -1,0 +1,63 @@
+name: M08 Release Artifact
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/m08-release-artifact.yml"
+      - "contracts/contestation/**"
+      - "rust-toolchain.toml"
+      - "scripts/build-contracts.mjs"
+      - "services/deployment/**"
+      - "scripts/external-authorisation-packet.mjs"
+      - "scripts/probe-testnet-account.mjs"
+      - "config/testnet-authorisation-proposal.json"
+      - "tests/m08-*.test.mjs"
+      - "tests/external-authorisation-packet.test.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-artifact-and-ledger-cli:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.0
+      - name: Install pinned Rust toolchain
+        run: rustup show
+      - name: Build verified production and fault artifacts
+        run: node scripts/build-contracts.mjs
+      - name: Record production artifact identity
+        shell: bash
+        run: |
+          mkdir -p ci-output
+          artifact=contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm
+          sha=$(sha256sum "$artifact" | cut -d ' ' -f 1)
+          size=$(stat -c '%s' "$artifact")
+          printf '{"schema":"CONTRA_M08_LINUX_ARTIFACT_V1","source_sha":"%s","runner":"ubuntu-24.04","artifact_path":"%s","artifact_sha256":"%s","size_bytes":%s}\n' "$GITHUB_SHA" "$artifact" "$sha" "$size" | tee ci-output/m08-linux-artifact.json
+      - name: Install checksum-pinned near-cli-rs with Ledger support
+        shell: bash
+        run: |
+          archive=near-cli-rs-x86_64-unknown-linux-gnu.tar.gz
+          curl --fail --location --proto '=https' --tlsv1.2 --output "$archive" "https://github.com/near/near-cli-rs/releases/download/v0.30.1/$archive"
+          echo '996e9f390d1cc446d17ea24e39c48f6ff906507f2d1dba96fc41f596a7e5de14  near-cli-rs-x86_64-unknown-linux-gnu.tar.gz' | sha256sum --check
+          tar -xzf "$archive"
+          install -m 0755 near-cli-rs-x86_64-unknown-linux-gnu/near "$RUNNER_TEMP/near"
+          "$RUNNER_TEMP/near" --version | tee ci-output/near-cli-version.txt
+      - name: Verify the non-broadcast Ledger command surface
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/near" contract deploy contra-contestation.testnet use-file contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm without-init-call network-config testnet sign-with-ledger --help > ci-output/near-ledger-help.txt
+          grep -qi 'ledger' ci-output/near-ledger-help.txt
+          printf '{"schema":"CONTRA_M08_LEDGER_CLI_V1","near_cli_version":"0.30.1","ledger_command_available":true,"device_connected":false,"transaction_signed":false,"transaction_broadcast":false}\n' > ci-output/m08-ledger-cli.json
+      - name: Upload release preparation evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m08-release-preparation-${{ github.run_id }}
+          path: ci-output/
+          if-no-files-found: error
+          retention-days: 30

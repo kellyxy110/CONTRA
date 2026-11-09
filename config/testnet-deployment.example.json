@@ -11,6 +11,9 @@
   "expected_current_code_hash": null,
   "max_total_cost_yocto": null,
   "minimum_account_balance_yocto": null,
+  "minimum_balance_is_pre_existing_prerequisite": true,
+  "opening_balance_funding_requires_separate_authorisation": true,
+  "maximum_combined_owner_exposure_yocto": null,
   "initial_owner_account": null,
   "creator_allowlist": [],
   "owner_authorisation": null

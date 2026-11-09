@@ -16,9 +16,22 @@
     "expected_current_code_hash": "EMPTY",
     "max_total_cost_yocto": "5000000000000000000000000",
     "minimum_account_balance_yocto": "8000000000000000000000000",
+    "minimum_balance_is_pre_existing_prerequisite": true,
+    "opening_balance_funding_requires_separate_authorisation": true,
+    "maximum_combined_owner_exposure_yocto": "13000000000000000000000000",
     "initial_owner_account": "contra-contestation.testnet",
     "creator_allowlist": ["contra-contestation.testnet"],
     "owner_authorisation": null
+  },
+  "account_observation": {
+    "status": "UNKNOWN_ACCOUNT",
+    "observed_at": "2026-11-09T17:44:00.000Z",
+    "official_rpc_final_block_height": "276958725",
+    "fallback_rpc_final_block_height": "276958726",
+    "ownership_verified": false,
+    "balance_verified": false,
+    "code_state_verified": false,
+    "signer_key_verified": false
   },
   "permitted_actions": [
     "Run read-only testnet RPC and account preflight",
