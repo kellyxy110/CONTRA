@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | Service-readiness promotion and frontend interface
+
+- Merged service-readiness PR 24 as `6a327e68a95d409f9dcc914fb02b3b88e05d7db9` after exact-head Core `42619092396`, Security `42619092408` and comprehensive Integration `42619092337` passed.
+- Promoted it through PR 25 to `main` as `737e034e41b2fa24a8db9651f9173fac7c9d1a77` after Core `42620546576`, Security `42620546479` and comprehensive Integration `42620546482` passed.
+- Verified protected tree `6f088ea2add6c81ccb3ab22857728d2f517ea377` and implementation ancestry.
+- Started `docs/m09-frontend-interface`. Added a 35-route machine contract, wallet and provenance states, accessibility and recovery guidance, plus route-drift verification. Service tests pass 32/32.
+- Transactions, deployments, live provider calls and spending: none.
+
 ## 2026-11-09 UTC | Backup promotion and service readiness
 
 - Merged backup PR 22 as `803f26e32cd650ac097325786bb951c3f23a0f05` after Core `42596444044`, Security `42596444011` and comprehensive Integration `42596444025` passed.
