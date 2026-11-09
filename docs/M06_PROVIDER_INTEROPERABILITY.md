@@ -30,3 +30,9 @@ Official references: [Meta overview](https://dev.meta.ai/docs/overview), [Meta m
 ## Authorisation status
 
 No paid inference, live provider request, production secret or provider-side account change is authorised by this checkpoint.
+
+## Machine readiness gate
+
+[`config/m10-external-readiness.example.json`](../config/m10-external-readiness.example.json) records only public readiness facts and boolean evidence results. It must never contain an API key, credential or bearer token. `assessProviderReadiness` reports Meta, Baseten and Modal independently and requires official documentation, account access, an exact model or function identifier, a non-billable interface smoke test, credits, current pricing, a provider-side billing limit, a configured server secret and explicit owner authorisation within the USD 3, USD 3 and USD 5 programme ceilings.
+
+One blocked provider does not change another provider's result. No provider result authorises contract deployment, reviewer independence, wallet signing or settlement. The checked-in example is deliberately unavailable for every provider.
