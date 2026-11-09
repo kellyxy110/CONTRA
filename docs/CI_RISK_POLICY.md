@@ -1,5 +1,7 @@
 # CI integration risk policy
 
+Runtime operation helpers under `services/operations/` and their focused regression tests are explicitly classified by the fast gate. A change to the API runtime in `services/api/server.mjs` still selects focused Sandbox coverage. Changes to this maintained mapping remain comprehensive so routing changes cannot silently reduce verification.
+
 Checkpoint: `CONTRA-2026-11-07-CI-SANDBOX-OPT`
 
 The maintained mapping in `ci/integration-risk-map.json` classifies the complete pull request diff. Unknown paths fail safe to full verification. The policy job publishes the selected level and reason as an artifact. The integration gate verifies that the required jobs executed and succeeded. A skipped Sandbox job is never described as an executed pass.
