@@ -1,5 +1,12 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | M10 external readiness gates
+
+- Added non-billable readiness checks for six distinct reviewer operators and disjoint committees.
+- Added separate Meta, Baseten and Modal readiness checks with exact provenance, billing and owner-authorisation requirements.
+- Passed 4/4 focused readiness tests and 122/122 repository tests locally.
+- Provider calls, reviewer signatures, transactions, deployments and spending: none.
+
 ## 2026-11-09 UTC | Release audit and external execution preparation
 
 - Confirmed judge promotion already reached `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302` and corrected stale active-task records.

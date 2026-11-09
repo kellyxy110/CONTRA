@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active supporting task | Supply M10 external evidence
+
+Recruit three independently controlled primary reviewers and three independently controlled fresh reviewers, then collect signed control disclosures, conflicts and availability. For each provider, confirm the exact account and model, credits, pricing and billing controls before requesting one bounded spend approval. Continue fixtures until those external conditions are met. M10 remains independent of M08 deployment readiness.
+
 ## Active next task | External M08 authorisation and execution
 
 The judge quick-start is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. Preserve its green release evidence.

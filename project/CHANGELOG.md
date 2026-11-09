@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-09 | M10 external readiness gates
+
+Added fail-closed reviewer and provider readiness validation. The reviewer gate enforces six distinct controlling operators, disjoint committees, signed disclosures and availability. Provider gates remain separate and enforce the existing Meta USD 3, Baseten USD 3 and Modal USD 5 programme ceilings without authorising spend. No external provider call or reviewer-independence claim occurred.
+
 ## 2026-11-09 | Release audit and consolidated external preparation
 
 Corrected stale current-task records after the judge route reached `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. Added a digest-bound single external-authorisation packet, a proposed Ledger-controlled `contra-contestation.testnet` deployment with 5 NEAR ceiling, a single-writer Fly.io hosting design, independent-reviewer onboarding and current official provider-interface references. Corrected Meta's allowed host to `api.meta.ai` and required the Baseten model identity in its request envelope. Added focused regressions. No external action or spending was authorised.

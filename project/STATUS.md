@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M10-EXTERNAL-READINESS
+
+M10 now has machine-checked fail-closed readiness gates for independently controlled reviewers and live providers. Six distinct operators, disjoint three-member committees, signed disclosures, conflicts and availability are required. Meta, Baseten and Modal are evaluated independently for account, exact model, non-billable smoke, credits, pricing, billing controls, server-side secret custody and bounded owner approval. Current fixtures do not satisfy those live gates. No provider call, reviewer signature, transaction or spending occurred.
+
 ## Current checkpoint | CONTRA-2026-11-09-M11-RELEASE-AUDIT-AND-EXTERNAL-PREP
 
 The accepted judge route is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. The remaining release audit is active on `audit/m11-release-candidate`. Licence, immutable design reference, Git object integrity, documentation links, source policies and the 15-low dependency baseline are verified. No high or critical dependency finding remains. Historical evidence and large receipt artifacts remain preserved.
