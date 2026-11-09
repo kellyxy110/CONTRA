@@ -14,6 +14,8 @@ test('preparation plan reports every owner-controlled deployment blocker',()=>{
 
 test('authorised offline plan binds exact production artifact and emits a complete testnet command',()=>{
  const plan=ready(),result=assessDeploymentPlan(plan,options);assert.equal(result.ready,true);assert.equal(result.artifact.sha256,sha);assert.match(deploymentCommand(plan),/^near contract deploy contra\.testnet /);assert.match(deploymentCommand(plan),/network-config testnet sign-with-keychain send$/);
+ const ledger={...plan,custody_method:'ledger'};assert.match(deploymentCommand(ledger),/sign-with-ledger send$/);
+ const offline={...plan,custody_method:'offline-custody'};assert.match(deploymentCommand(offline),/network-config testnet sign-later$/);
 });
 
 test('preflight refuses mainnet, embedded secrets, signer mismatch and artifact mismatch',()=>{

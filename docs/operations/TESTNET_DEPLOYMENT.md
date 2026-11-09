@@ -54,7 +54,7 @@ After a complete plan is separately authorised, the read-only network check is:
 node scripts/testnet-deployment-preflight.mjs path/to/approved-plan.json --online-readonly
 ```
 
-This validates the live chain ID, final block freshness, current code hash, account balance and exact full-access public key. It writes `ci-output/testnet-deployment-preflight.json` and prints the complete `near` deployment command for inspection. It never invokes the command, accesses a private key, signs or broadcasts.
+This validates the live chain ID, final block freshness, current code hash, account balance and exact full-access public key. It writes `ci-output/testnet-deployment-preflight.json` and prints the complete `near` deployment command for inspection. The command uses keychain, Ledger or unsigned `sign-later` handling exactly as approved in the plan. The preflight never invokes the command, accesses a private key, signs or broadcasts.
 
 ## Evidence required after authorisation
 

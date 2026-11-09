@@ -104,7 +104,13 @@ export async function verifyDeploymentTarget(plan,{transport=fetch,now=()=>new D
 
 export function deploymentCommand(plan){
  const args=JSON.stringify({owner_id:plan.initial_owner_account,chain_id:'testnet',creator_allowlist:plan.creator_allowlist});
- return `near contract deploy ${plan.contract_account} use-file ${ARTIFACT} with-init-call new json-args '${args}' prepaid-gas '100 Tgas' attached-deposit '0 NEAR' network-config testnet sign-with-keychain send`;
+ const signing={
+  'os-keychain':'sign-with-keychain send',
+  ledger:'sign-with-ledger send',
+  'offline-custody':'sign-later'
+ }[plan.custody_method];
+ if(!signing)throw Error('Deployment custody method is unsupported');
+ return `near contract deploy ${plan.contract_account} use-file ${ARTIFACT} with-init-call new json-args '${args}' prepaid-gas '100 Tgas' attached-deposit '0 NEAR' network-config testnet ${signing}`;
 }
 
 export const deploymentArtifactPath=ARTIFACT;
