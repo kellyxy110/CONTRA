@@ -6,6 +6,8 @@ The judge quick-start is already promoted to `main` at `024eef7ec9e684eaab53e2a8
 
 Complete and approve the single packet in `config/testnet-authorisation-proposal.json`. Confirm the proposed `contra-contestation.testnet` account, owner-controlled Ledger public key, exact production artifact hash, 5 NEAR total ceiling, 8 NEAR minimum balance and expiry. Recompute the final packet and deployment-intent digests, then bind owner approval to that exact final deployment intent. Do not execute the draft digest.
 
+In parallel, complete the Cloudflare API route migration, recovery export and import, account-scoped authentication and readiness checks on Workers Free. Public deployment remains blocked until the exact Cloudflare account, Worker and least-privilege deployment credential are approved. The hosting ceiling is USD 0 and no automatic paid upgrade is allowed.
+
 After the packet and secure signing access are valid, run the existing read-only preflight and execute the bounded M08 deployment and acceptance plan. Public hosting, live wallet signing, independent reviewer participation and provider spend remain separately disabled until their packet fields are expressly approved.
 
 ## Historical next task | M11 judge promotion and public repository audit
