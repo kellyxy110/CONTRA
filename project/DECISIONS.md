@@ -1,5 +1,13 @@
 # Decision ledger
 
+## D-082 | M07 Contestation migration is accepted without protocol change | 2026-11-09
+
+ACCEPTED. The protected branches contain the identical accepted M07 tree. Contract source is a byte-for-byte move, public exports match the frozen baseline, production excludes fault hooks and F01 through F18 pass on the renamed build path. Current active source and documentation contain no obsolete protocol terminology. Historical machine evidence retains its original bytes. The dependency graph now has 15 low findings and no moderate, high or critical finding; residual NEAR JavaScript risks remain disclosed.
+
+## D-081 | Testnet authority binds an immutable public deployment plan | 2026-11-09
+
+ACCEPTED. Deployment preparation may store only public identities, public keys, custody classification, artifact and code hashes, funding limits, initial state and expiring owner-authorisation metadata. The authorisation digest binds the complete intent. Private keys, seed phrases and credentials are forbidden in the plan. Read-only target verification may confirm testnet identity, final block freshness, account state, balance and exact full-access key. The tool may print a complete `near` command but must never invoke, sign or broadcast it. External deployment remains blocked until B-M08-01 is explicitly satisfied.
+
 ## D-080 | Contestation is the canonical protocol identity | 2026-11-09
 
 ACCEPTED. Current product, source, build and documentation language uses Contestation. The active Rust package is `contra-contestation` in `contracts/contestation/`, and the production artifact is `contra_contestation.wasm`. Reviewers remain Reviewers; AI components are evaluators and never resolution authorities. The migration does not change contract methods, state layout, serialized data, commitment domains, transaction identities, deadlines, settlement or payout rules. Machine-generated historical evidence retains its original bytes and names. Active-tree CI rejects the obsolete term outside that evidence boundary.

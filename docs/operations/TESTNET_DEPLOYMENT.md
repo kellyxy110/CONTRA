@@ -38,6 +38,24 @@ The deployment command must refuse to proceed unless all of the following match 
 6. Expected current code hash or explicit empty-account state is confirmed.
 7. Funding and attached deposit remain within the authorised ceiling.
 
+The versioned plan template is [`config/testnet-deployment.example.json`](../../config/testnet-deployment.example.json). It contains no signing material. Copy it outside the repository or to an ignored local path, then fill only the checksum of the exact release artifact, public account, public key, custody classification, funding ceiling and owner-authorisation metadata. Do not reuse a checksum from a different runner or build. The owner authorisation must contain `approved_plan_sha256`, which binds the exact network, account, public key, artifact, cost limits and initial contract configuration.
+
+Run the offline assessment after building the production artifact:
+
+```sh
+node scripts/testnet-deployment-preflight.mjs path/to/approved-plan.json
+```
+
+Before authorisation, the example exits with status 2, lists every missing owner-controlled input and prints `deployment_intent_sha256`. After filling the public plan fields, copy that digest into the separately approved `owner_authorisation.approved_plan_sha256` field. Any later change to the network, accounts, public key, custody, artifact, limits or initial state invalidates the approval. The blocked exit is expected, not a deployment failure.
+
+After a complete plan is separately authorised, the read-only network check is:
+
+```sh
+node scripts/testnet-deployment-preflight.mjs path/to/approved-plan.json --online-readonly
+```
+
+This validates the live chain ID, final block freshness, current code hash, account balance and exact full-access public key. It writes `ci-output/testnet-deployment-preflight.json` and prints the complete `near` deployment command for inspection. The command uses keychain, Ledger or unsigned `sign-later` handling exactly as approved in the plan. The preflight never invokes the command, accesses a private key, signs or broadcasts.
+
 ## Evidence required after authorisation
 
 Archive the account, signer identity without secret material, artifact checksum, deployment transaction hash, finalised receipts, deployed code hash, RPC block identity, ABI result and explorer links. Read the deployed state through the real RPC and compare the onchain code hash with the tested artifact.

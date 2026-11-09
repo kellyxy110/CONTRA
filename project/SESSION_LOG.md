@@ -1,5 +1,15 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | M07 completion and M08 deployment preflight
+
+- Merged Contestation migration PR 16 into `implementation/oct28` as `6cc9416119e773e022c0bbcc9c5646544ba25e5b`, then promotion PR 17 into `main` as `4d284ae51a89eeefa17b871636152cb9989de94d`.
+- Verified Core `42573377309`, Security `42573377260`, Contract `42573377248`, comprehensive Integration `42573377299` and Financial P0 `42573405407` on source head `c9b00547be0deaa801a7ffbf5181114036acfbac`. Main promotion Integration `42578517604` passed on merge head `6cc9416119e773e022c0bbcc9c5646544ba25e5b`.
+- Financial P0 passed F01 through F18, nine baseline tests, 28 Rust tests and 34 service/report tests with 454 transactions, 753 root receipts, 46 balance/storage snapshots and zero gas-budget violations.
+- Recorded GitHub Linux production checksum `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f` and fault checksum `d3b8d3f452c6e07916e7c693615657bd657a2ad3281a0f5783462546b36ce00e` without replacing historical artifact evidence.
+- Implemented M08's offline deployment-plan validator, public plan template, immutable owner-authorisation digest, read-only testnet target checks and five focused tests. The complete repository suite passes 98/98.
+- Observed public RPC chain identity `testnet`, `syncing: false`, block `276888350`, hash `AdHYRrsF2skUdSJqHMknCCBjemudFtukU2JQyU5UBYRR` and nearcore `2.14.0-rc.5` at `2026-11-09T07:11:56.254Z`. This was read-only and queried no account.
+- Transactions and deployments: none outside local Sandbox. Provider usage and spend: $0. B-M08-01 remains blocked by missing owner-controlled account, public-key, custody, funding and authorisation fields.
+
 ## 2026-11-09 UTC | M07 Contestation migration and release audit
 
 - Based `refactor/contestation-terminology` on `main` commit `7b44e2c795a01eb1064c8b47ef381f1294eca6ad`; no open pull request existed at start.

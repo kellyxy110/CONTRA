@@ -6,7 +6,7 @@ The maintained mapping in `ci/integration-risk-map.json` classifies the complete
 
 | Change category | Required level | Executed coverage |
 | --- | --- | --- |
-| Documentation, provider fixtures and frontend-only work | Fast | Core and Security, including repository tests and affected builds |
+| Documentation, provider fixtures, offline deployment preflight and frontend-only work | Fast | Core and Security, including repository tests and affected builds |
 | Wallet, RPC, reviewer and backend interaction | Focused | Explicitly mapped Sandbox transaction, committee, timeout and UNKNOWN scenarios |
 | Contract, protocol, settlement, Sandbox harness or unclassified work | Full | Nine-test baseline and both complete contestation journeys |
 | Pull request into `main`, release branch, schedule or manual full request | Full | Nine-test baseline and both complete contestation journeys |

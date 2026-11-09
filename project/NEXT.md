@@ -1,10 +1,14 @@
 # Next execution task
 
-## Active next task | M07 Contestation release candidate
+## Active next task | M08 deployment authorisation gate
 
-Complete the local Rust, ABI, commitment and artifact checksum gates, then run the full GitHub Core, Security, Contract, Integration and Financial P0 checks on the focused terminology and professionalisation pull request. Resolve any compatibility defect in the `near-sandbox@0.3.5` override without weakening financial assertions. Merge green work through `implementation/oct28`, promote it to `main`, verify remote heads and repository description, and record the exact run and merge evidence.
+Complete and merge the fail-closed deployment-preflight PR. Preserve the preparation-only boundary. Collect the dedicated `.testnet` contract account, signer public key, custody classification, expected current code hash, testnet funding ceiling, minimum account balance, initial owner, creator allowlist and an expiring owner authorisation bound to the exact plan digest in one consolidated owner response. Never request or store private signing material in repository files or chat.
 
-After M07 reaches `main`, continue every non-signing M08 preparation task. External deployment remains blocked by the single consolidated owner request in `project/BLOCKERS.md`; do not deploy, sign or fund a transaction until that gate is explicitly satisfied.
+Until B-M08-01 is satisfied, continue only dry runs, artifact verification, ABI checks, read-only RPC validation and deployment documentation. Do not deploy, sign, fund, change production secrets or represent the public RPC health observation as a deployed contract.
+
+## Historical next task | M07 Contestation release candidate
+
+M07 completed through PR 16 and promotion PR 17. Preserve source head `c9b00547be0deaa801a7ffbf5181114036acfbac`, implementation merge `6cc9416119e773e022c0bbcc9c5646544ba25e5b`, main merge `4d284ae51a89eeefa17b871636152cb9989de94d` and the linked Core, Security, Contract, Integration and Financial P0 evidence. Current source and product documentation use Contestation terminology; immutable historical machine evidence remains unchanged.
 
 ## Historical next task | M07 controlled release-readiness audit
 

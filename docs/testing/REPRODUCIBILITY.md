@@ -22,6 +22,16 @@ node scripts/ci-policy.mjs security
 npm run check:docs
 ```
 
+The repository suite currently contains 98 tests, including five deployment-preflight cases that verify secret rejection, authorisation binding, artifact identity, network identity, full-access key scope, account funding and stale-chain failure, plus explicit CI routing coverage for this non-signing path.
+
+The preparation-only deployment assessment is expected to remain blocked until the owner-controlled fields are supplied:
+
+```sh
+node scripts/testnet-deployment-preflight.mjs config/testnet-deployment.example.json
+```
+
+It exits with status 2 and writes a blocker report. It does not sign or broadcast.
+
 ## Local NEAR execution
 
 ```sh

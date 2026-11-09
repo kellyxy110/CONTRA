@@ -67,7 +67,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Capability | Current evidence |
 | --- | --- |
 | Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 92 tests pass on the M07 working tree |
+| Repository tests | 98 tests pass on the M08 deployment-preflight working tree |
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
@@ -93,7 +93,7 @@ node scripts/build-contracts.mjs
 npm run build:wallet
 ```
 
-Expected results are 92 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
+Expected results are 98 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
 
 The API defaults to safe unavailable mode:
 
@@ -148,7 +148,7 @@ Secrets belong only in server environments. No private key, seed phrase or provi
 
 [The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the future authorised testnet route. Until testnet deployment exists, the live route is explicitly blocked rather than simulated.
 
-[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) defines the fail-closed preflight, custody requirements, artifact verification and evidence record. Deployment, funded signing, provider spend and production-secret changes require separate owner authorisation.
+[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) defines the fail-closed preflight, custody requirements, artifact verification and evidence record. The checked-in public plan template and offline validator report missing owner-controlled inputs without accessing a key. Deployment, funded signing, provider spend and production-secret changes require separate owner authorisation.
 
 ## Benchmarks
 
