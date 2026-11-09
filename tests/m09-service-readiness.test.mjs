@@ -11,7 +11,9 @@ const listen=async(app,t)=>{await new Promise(resolve=>app.server.listen(0,'127.
 
 test('liveness does not claim chain or storage readiness',async t=>{
  const store=new Store(directory(t)),app=createApp({store}),base=await listen(app,t),response=await fetch(base+'/api/live'),body=await response.json();
- assert.equal(response.status,200);assert.equal(body.live,true);assert.equal('ready' in body,false);store.close();
+ assert.equal(response.status,200);assert.equal(body.live,true);assert.equal('ready' in body,false);
+ for(const route of ['/api/live','/api/ready'])assert.equal((await fetch(base+route,{method:'POST',headers:{'content-type':'application/json'},body:'{}'})).status,405);
+ store.close();
 });
 
 test('readiness requires a healthy chain and intact durable storage',async t=>{
