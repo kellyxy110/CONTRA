@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M08 deployment preflight preparation
+
+Added a fail-closed, non-signing testnet deployment plan, validator, read-only target inspection and five regression tests. Owner authorisation now binds the exact public deployment intent by SHA-256. The validator rejects secret-bearing plans, mainnet, signer-account mismatches, artifact changes, incompatible full-access keys, contradictory code hashes, inadequate funding and stale final blocks. Added explicit fast-gate routing for this preparation-only path and updated deployment, reproducibility, blocker and README guidance. Local results: 98/98 repository tests, 14/14 focused routing and preflight tests, wallet build, Core policy, Security policy and 50-document link validation passed. A read-only public RPC status call observed a synced NEAR testnet node at block `276888350`; no account was queried and no transaction was signed or sent.
+
+M07 completed before this unit. PR 16 merged source head `c9b00547be0deaa801a7ffbf5181114036acfbac` as `6cc9416119e773e022c0bbcc9c5646544ba25e5b`; PR 17 promoted it to `main` as `4d284ae51a89eeefa17b871636152cb9989de94d`. Runs `42573377309`, `42573377260`, `42573377248`, `42573377299` and `42573405407` passed Core, Security, Contract, comprehensive Integration and F01 through F18. The main promotion passed comprehensive run `42578517604` plus its companion checks. Actual spend remained $0.
+
 ## 2026-11-09 | M07 Contestation release-candidate preparation
 
 Renamed the active contract directory, Rust crate, production WASM and full journey job to the canonical Contestation identity. Updated all build, Sandbox, test, policy and artifact paths while leaving Rust semantics, ABI, state, commitment vectors and settlement invariants unchanged. Added active-tree terminology enforcement, documentation-link and documentation-impact checks, programme blocker tracking, repository audit classification, dependency assessment, testnet deployment preparation, reproducibility instructions and a three-route judge guide. Rebuilt the README as the current product entrypoint. Preserved immutable historical evidence without moving or rewriting it.
