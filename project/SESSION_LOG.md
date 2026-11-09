@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | Frontend interface promotion and M11 acceptance review
+
+- Merged frontend-interface PR 26 as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd` after Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed.
+- Promoted it through PR 27 to `main` as `a74445527dd66f2ff0c684887849346f7951416e` after Core `42624205902`, Security `42624205805` and comprehensive Integration `42624205937` passed.
+- Verified protected tree `6528bccef703008371d076475c7b4da55115b2f4` and implementation ancestry.
+- Started `docs/m11-acceptance-review`. Reclassified AC06 and AC24 only, based on durable controlled wallet and genuine local Sandbox evidence. Current result: 23 PASS, 8 PARTIAL and 2 BLOCKED.
+- Transactions, deployments, live provider calls and spending: none.
+
 ## 2026-11-09 UTC | Service-readiness promotion and frontend interface
 
 - Merged service-readiness PR 24 as `6a327e68a95d409f9dcc914fb02b3b88e05d7db9` after exact-head Core `42619092396`, Security `42619092408` and comprehensive Integration `42619092337` passed.

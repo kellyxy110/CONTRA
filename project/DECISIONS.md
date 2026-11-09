@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-087 | Acceptance status follows the required evidence class | 2026-11-09
+
+ACCEPTED. AC06 and AC24 move to PASS because current Sandbox and controlled external-wallet evidence covers confirmed creation, stable request identity, rejection, interrupted handoff, browser reload, account switching, restart, hash recovery, explicit receipt states and zero redispatch. Fixture evidence cannot upgrade criteria that explicitly require live providers, independent operators, a deployed testnet contract or manual final-frontend assistive-technology review. The current result is 23 PASS, 8 PARTIAL and 2 BLOCKED.
+
 ## D-086 | The frontend consumes a versioned non-authoritative interface | 2026-11-09
 
 ACCEPTED. The implemented API route inventory, browser views, authentication classes, provenance fields and recovery states are frozen in `CONTRA_FRONTEND_INTERFACE_V1`. Frontend state is never authority for reviewer eligibility, transaction finality, verdict or settlement. UNKNOWN operations remain locked, provider artifacts remain proposals and protected case data must be discarded on account change. A route-drift test requires every literal API route to remain represented in the machine contract. Visual implementation remains owner-controlled.

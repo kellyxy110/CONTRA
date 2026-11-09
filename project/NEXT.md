@@ -1,8 +1,14 @@
 # Next execution task
 
-## Active next task | M09 frontend integration contract
+## Active next task | M11 acceptance review
 
-Complete the focused interface-contract PR. Keep the inventory of implemented API routes mechanically aligned with `services/api/server.mjs`, document account switching, provenance, wallet recovery, evidence, reviewer, provider and error states, and preserve the future owner's control over visual design. Run Core, Security and the risk-selected Integration gate, then merge and promote under the standing green policy.
+Complete the focused AC01 to AC33 evidence-review PR. Require one classified row per frozen criterion, exact environment boundaries, current commit and CI links, and mechanical totals. Upgrade only criteria whose complete text is supported. Merge and promote under the standing green policy.
+
+After promotion, strengthen the judge quick-start with a maintained one-command local runner and machine-verifiable expected output. External M08 to M10 gates remain blocked by the consolidated owner inputs in `project/BLOCKERS.md`.
+
+## Historical next task | M09 frontend integration contract
+
+The focused interface-contract PR is merged and promoted. Preserve the machine-aligned API route inventory, exact Rust states, account-switching, provenance, wallet recovery, evidence, reviewer, provider and error-state requirements, and the future owner's control over visual design.
 
 After promotion, all currently independent M09 engineering is complete. Public hosting, testnet deployment and a real wallet journey remain blocked by B-M08-01, B-M09-01 and B-M09-02. Continue with M11 acceptance and judge-reproducibility work that does not require those external resources, while preserving one consolidated owner access request.
 
