@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-083 | One process owns a durable CONTRA data directory | 2026-11-09
+
+ACCEPTED. The operational runtime must acquire a persisted exclusive lease before SQLite opens. A live lease blocks concurrent runtime or backup ownership. A terminated process on the same host may be reclaimed only after its process identifier is confirmed absent; unreadable and different-host leases fail closed. Graceful termination drains accepted requests, closes SQLite and the chain adapter, then releases the verified lease. This does not make a shared SQLite volume safe for multiple replicas.
+
 ## D-082 | M07 Contestation migration is accepted without protocol change | 2026-11-09
 
 ACCEPTED. The protected branches contain the identical accepted M07 tree. Contract source is a byte-for-byte move, public exports match the frozen baseline, production excludes fault hooks and F01 through F18 pass on the renamed build path. Current active source and documentation contain no obsolete protocol terminology. Historical machine evidence retains its original bytes. The dependency graph now has 15 low findings and no moderate, high or critical finding; residual NEAR JavaScript risks remain disclosed.
