@@ -12,7 +12,7 @@
     "signer_public_key": null,
     "custody_method": "ledger",
     "artifact_path": "contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm",
-    "artifact_sha256": null,
+    "artifact_sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f",
     "expected_current_code_hash": "EMPTY",
     "max_total_cost_yocto": "5000000000000000000000000",
     "minimum_account_balance_yocto": "8000000000000000000000000",
@@ -54,9 +54,11 @@
     "repository_or_chat_secret_transfer": false
   },
   "hosting": {
-    "proposal": "One Fly.io Machine with one encrypted Fly Volume, HTTPS ingress and external encrypted backup storage",
+    "proposal": "Cloudflare Workers Free with Static Assets and SQLite-backed Durable Objects",
+    "maximum_cost_usd": 0,
+    "automatic_paid_upgrade_allowed": false,
     "deployment_authorised": false,
-    "required_owner_inputs": ["Fly.io organisation and application", "approved region", "public hostname", "backup destination", "secret-management access"]
+    "required_owner_inputs": ["Cloudflare account ID", "approved Worker name", "optional public hostname", "recovery export destination", "least-privilege deployment token through secret management"]
   },
   "reviewers": {
     "required_distinct_operators": 6,

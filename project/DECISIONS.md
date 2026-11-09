@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-090 | External milestone readiness is independent | 2026-11-09
+
+ACCEPTED. M08 deployment readiness depends only on an existing authorised contract account, its public Ledger signer key, the Linux artifact identity and owner approval bound to the final deployment digest. M09 Cloudflare authority and M10 provider spending are separate gates and cannot block or authorise M08. The 8 NEAR opening balance is separately authorised pre-existing funding outside the 5 NEAR execution ceiling, for a maximum combined exposure of 13 NEAR.
+
 ## D-089 | External authority is one digest-bound packet | 2026-11-09
 
 ACCEPTED. M08 execution uses one bounded packet that identifies the contract and signer account, public key, Ledger custody, exact artifact, expected code state, initial state, 5 NEAR total ceiling, 8 NEAR minimum balance, permitted actions and expiry. The current draft digest is not executable because the public key, artifact hash and owner approval are absent. M09 uses one Machine and one volume because current SQLite is single-writer. M10 requires six distinct reviewer operators and separate provider spending approval. Any material packet change invalidates prior approval.

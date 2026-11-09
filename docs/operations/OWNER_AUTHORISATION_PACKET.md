@@ -8,9 +8,9 @@ The machine-readable proposal is [`config/testnet-authorisation-proposal.json`](
 node scripts/external-authorisation-packet.mjs config/testnet-authorisation-proposal.json
 ```
 
-Current draft packet SHA-256: `ecbb22daff344f64638a724b741f2b765a67ffba0aec7385dbc960f1354ac228`.
+Current draft packet SHA-256: `06c2e0389a56354e2a6c5e731d084450831fbfe6a104171c7a24a66794657d7f`.
 
-Current draft deployment-intent SHA-256: `7e4b2fd3c66a5fba9dc429837654d4fb9e5f5e6177c4e9b667306ad3bfba50df`.
+Current draft deployment-intent SHA-256: `559c3063282ee90ffb1e0c0318611c4ceb30920129ca28e6fe124aca7ef9be8b`.
 
 The proposal names `contra-contestation.testnet` as both contract account and signer and uses an owner-controlled Ledger. Read-only queries through the official NEAR RPC and FastNEAR at final blocks `276958725` and `276958726` both returned `UNKNOWN_ACCOUNT`. The account does not yet provide ownership, balance, code or public-key evidence and must be created and funded through a separately authorised owner action before approval.
 
@@ -27,15 +27,15 @@ Packet readiness is separated by milestone. M08 contract deployment can become r
 5. The owner approves that exact deployment-intent digest, with approval and expiry timestamps. Any field change invalidates approval.
 6. Within that scope, execution may deploy once, initialise once, inspect code and state, and run the bounded acceptance journey. UNKNOWN financial operations are never blindly redispatched.
 
-The checked-in draft deliberately lacks an existing account, public key, Linux artifact hash and owner signature. Its digest is exact for the draft, but it is not an executable approval. This prevents a preliminary proposal from being reused after material fields change.
+The checked-in draft deliberately lacks an existing account, public key and owner signature. Its digest is exact for the draft, but it is not an executable approval. This prevents a preliminary proposal from being reused after material fields change.
 
-near-cli-rs `0.30.1` is checksum-pinned for the Linux release gate. CI verifies the `sign-with-ledger` command surface without connecting a device, signing or broadcasting. Actual device control remains an external authority boundary.
+GitHub run `42700073759` built the production WASM on Ubuntu 24.04 from tested source and recorded SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`, size 631190 bytes. near-cli-rs `0.30.1` is checksum-pinned for the Linux release gate. CI verifies the `sign-with-ledger` command surface without connecting a device, signing or broadcasting. Actual device control remains an external authority boundary.
 
 ## Hosting, reviewers and providers
 
 The same packet consolidates the remaining inputs:
 
-- approve one Fly.io Machine, one encrypted Fly Volume, HTTPS ingress and an external encrypted backup destination, with a proposed infrastructure ceiling of USD 15 per month;
+- approve one Cloudflare Workers Free destination, the `ContraState` SQLite Durable Object class, Static Assets and a recovery export destination, with a hard infrastructure ceiling of USD 0 and no automatic paid upgrade;
 - name three primary and three fresh reviewers under six distinct operators, with no operator overlap;
 - separately authorise any provider account and amount, never exceeding programme ceilings of USD 3 Meta, USD 3 Baseten and USD 5 Modal.
 

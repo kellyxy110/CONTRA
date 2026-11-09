@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M08-INDEPENDENT-READINESS
+
+M08 now has an independently evaluated readiness state. Its production WASM was built on Ubuntu 24.04 in run `42700073759` with SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`. The proposed account returned `UNKNOWN_ACCOUNT` through the official and fallback RPCs, so ownership, balance, current code and signer key are not verified. The current packet digest is `06c2e0389a56354e2a6c5e731d084450831fbfe6a104171c7a24a66794657d7f`; deployment intent is `559c3063282ee90ffb1e0c0318611c4ceb30920129ca28e6fe124aca7ef9be8b`. Both remain non-executable. No transaction, deployment, signing or spending occurred.
+
 ## Current checkpoint | CONTRA-2026-11-09-M11-RELEASE-AUDIT-AND-EXTERNAL-PREP
 
 The accepted judge route is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. The remaining release audit is active on `audit/m11-release-candidate`. Licence, immutable design reference, Git object integrity, documentation links, source policies and the 15-low dependency baseline are verified. No high or critical dependency finding remains. Historical evidence and large receipt artifacts remain preserved.

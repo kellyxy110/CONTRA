@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | Supply the bounded M08 external authority
+
+The production artifact is verified. The proposed `contra-contestation.testnet` account was absent at final blocks `276958725` and `276958726`. Create and fund the chosen account only through separately authorised owner action, provide its public Ledger key, then approve the recomputed deployment-intent digest with an expiry. M09 Cloudflare hosting and M10 provider access remain separate and do not block M08 readiness.
+
 ## Active next task | External M08 authorisation and execution
 
 The judge quick-start is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. Preserve its green release evidence.
