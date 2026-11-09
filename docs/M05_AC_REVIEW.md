@@ -14,9 +14,9 @@ This review preserves the exact criteria in `docs/UX3B_ENGINEERING_ACCEPTANCE.md
 | AC06 | PARTIAL | Restart recovery now locks interrupted creation operations as UNKNOWN. External wallet rejection and redirect recovery remain missing. |
 | AC07 | PASS | Financial rules and accepted P0 evidence are unchanged. No M05 transaction occurred. |
 | AC08 | PASS | Startup audits immutable object presence, size and SHA-256. Backup and restore preserve bytes and links. |
-| AC09 | PASS | Evidence authorization and onchain digest rules are unchanged. |
-| AC10 | PARTIAL | Provider fixtures remain evidence-bound. Actual provider interoperability remains unauthorized and unverified. |
-| AC11 | PARTIAL | Reservations remain atomic across two SQLite connections and survive abrupt process exit. Billing reconciliation still requires authorized usage. |
+| AC09 | PASS | Evidence authorisation and onchain digest rules are unchanged. |
+| AC10 | PARTIAL | Provider fixtures remain evidence-bound. Actual provider interoperability remains unauthorised and unverified. |
+| AC11 | PARTIAL | Reservations remain atomic across two SQLite connections and survive abrupt process exit. Billing reconciliation still requires authorised usage. |
 | AC12 | PASS | Commitment encoding and appointed reviewer rules are unchanged. |
 | AC13 | PASS | Reveal and quorum requirements are unchanged. |
 | AC14 | PARTIAL | Committee disjointness remains implemented. Independent controlling operators remain unavailable. |
@@ -30,14 +30,14 @@ This review preserves the exact criteria in `docs/UX3B_ENGINEERING_ACCEPTANCE.md
 | AC22 | PASS | Interrupted BROADCAST and PENDING operations recover only as UNKNOWN with hashes retained. No blind retry was added. |
 | AC23 | PASS | Cancellation rules are unchanged. |
 | AC24 | PARTIAL | Versioned durable operations, restart recovery, receipt states and hash persistence are stronger. External wallet rejection, redirect and signed recovery remain missing. |
-| AC25 | PARTIAL | Finalized block height, hash, timestamp, age, stale state and block regression are now explicit. Complete field-by-field source review against a deployed contract remains unavailable. |
+| AC25 | PARTIAL | Finalised block height, hash, timestamp, age, stale state and block regression are now explicit. Complete field-by-field source review against a deployed contract remains unavailable. |
 | AC26 | PASS | Explicit unavailable mode, failed startup validation and RPC failure never fall back to fixtures or successful state. |
 | AC27 | PASS | Operational coverage logic remains tested. Visual refinement is suspended without changing authority or semantics. |
 | AC28 | PARTIAL | Canonical case isolation remains. Broader duplicate-event and multipage data coverage remains incomplete. |
 | AC29 | PASS | Configured-origin validation defeats forged Host matching. Rate limits, aborted-body safety, session expiry, challenge expiry, replay checks and cross-case artifact denial pass. Credential-pattern scans found no current-tree or Git-history match. |
 | AC30 | PARTIAL | Existing keyboard and responsive evidence remains. Manual screen-reader verification is still incomplete and deferred with UI work. |
-| AC31 | BLOCKED | Authorized testnet journey and actual provider records do not exist. Local Sandbox evidence cannot substitute. |
-| AC32 | BLOCKED | Authorized challenged testnet journey and actual provider records do not exist. Local Sandbox evidence cannot substitute. |
+| AC31 | BLOCKED | Authorised testnet journey and actual provider records do not exist. Local Sandbox evidence cannot substitute. |
+| AC32 | BLOCKED | Authorised challenged testnet journey and actual provider records do not exist. Local Sandbox evidence cannot substitute. |
 | AC33 | PASS | Startup modes, RPC read and receipt routes, rate failures, storage recovery and operational client entries retain explicit mappings and failure states. |
 
 Result: 21 PASS, 10 PARTIAL, 2 BLOCKED. No criterion was weakened or upgraded from incomplete evidence.

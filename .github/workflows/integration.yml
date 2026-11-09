@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: 26.13.0
           cache: npm
-      - run: npm ci --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: rustup show
       - run: node scripts/build-contracts.mjs
       - run: node scripts/setup-sandbox.mjs
@@ -88,7 +88,7 @@ jobs:
         with:
           node-version: 26.13.0
           cache: npm
-      - run: npm ci --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: rustup show
       - run: node scripts/build-contracts.mjs
       - run: node scripts/setup-sandbox.mjs
@@ -109,7 +109,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
   full-journeys:
-    name: full-adjudication-journeys
+    name: full-contestation-journeys
     needs: policy
     if: needs.policy.outputs.level == 'full'
     runs-on: ubuntu-24.04
@@ -120,7 +120,7 @@ jobs:
         with:
           node-version: 26.13.0
           cache: npm
-      - run: npm ci --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: rustup show
       - run: node scripts/build-contracts.mjs
       - run: node scripts/setup-sandbox.mjs
@@ -155,7 +155,7 @@ jobs:
         with:
           node-version: 26.13.0
           cache: npm
-      - run: npm ci --no-audit --no-fund
+      - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: rustup show
       - run: node scripts/build-contracts.mjs
       - run: node scripts/setup-sandbox.mjs

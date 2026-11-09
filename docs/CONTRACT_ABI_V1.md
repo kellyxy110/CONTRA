@@ -6,7 +6,7 @@ Freeze: CONTRA-2026-10-28-UX3C. Starting commit af0dd97558f134ac9269c7fb58cc7613
 
 This is the authoritative method/type/event/serialization definition. [STATE_MACHINE_V1.md](STATE_MACHINE_V1.md) owns transitions and deadlines; [COMMITTEE_POLICY_V1.md](COMMITTEE_POLICY_V1.md) owns selection; [SETTLEMENT_RECOVERY_V1.md](SETTLEMENT_RECOVERY_V1.md) owns money movement; [COMMITMENT_TEST_VECTORS.md](COMMITMENT_TEST_VECTORS.md) owns vote bytes; [THREAT_MODEL_V1.md](THREAT_MODEL_V1.md) owns risks and acceptance traceability. These six documents replace conceptual ABI/state ambiguities in PROTOCOL.md and UX3B, not the frozen UX3A visual baseline bee5a74. UX3B A01-A23 and AC01-AC33 remain integration/verification obligations with the explicit amendments in the threat model.
 
-Single Rust adjudication contract, native NEAR testnet only. No model calls, arbitrary cross-contract execution, fungible token, slashing, upgrade, admin payout, forced recovery, arbitrary recipient or terms-edit method. The target SDK API reference reviewed is near-sdk 5.29.1; pin exact dependencies/toolchain in the first eligible implementation commit. No source implementation is created by this specification.
+Single Rust contestation contract, native NEAR testnet only. No model calls, arbitrary cross-contract execution, fungible token, slashing, upgrade, admin payout, forced recovery, arbitrary recipient or terms-edit method. The target SDK API reference reviewed is near-sdk 5.29.1; pin exact dependencies/toolchain in the first eligible implementation commit. No source implementation is created by this specification.
 
 ## Wire types and limits
 
@@ -43,9 +43,9 @@ Pilot caps: 128 cases for contract lifetime, 32 reviewer records, 16 criteria pe
 
 ## Public change methods
 
-All role checks use env::predecessor_account_id(), not an account argument or signer alone. Calls through multisig contracts are allowed when that predecessor is the authorized account. One yocto is an intentional confirmation deposit and belongs to nonwithdrawable operating funds, never escrow. Owner is a registry administrator, not a settlement authority.
+All role checks use env::predecessor_account_id(), not an account argument or signer alone. Calls through multisig contracts are allowed when that predecessor is the authorised account. One yocto is an intentional confirmation deposit and belongs to nonwithdrawable operating funds, never escrow. Owner is a registry administrator, not a settlement authority.
 
-| Method | Exact JSON arguments | Authorization / attached deposit | Success return / gas requirement |
+| Method | Exact JSON arguments | Authorisation / attached deposit | Success return / gas requirement |
 | --- | --- | --- | --- |
 | new | owner_id:AccountId, chain_id:String, creator_allowlist:Vec<AccountId> | Initialization once by predecessor=current account; chain_id=testnet; 1..8 sorted unique allowed creators; deposit 0; existing deployment account balance covers global budget, current code/storage and operating floor | Initializes Self; external successful result is empty (void); 50 Tgas |
 | sponsor_storage | none | Owner only; positive attached deposit, retained as nonwithdrawable sponsor reserve | ReserveView; 30 Tgas |
@@ -115,7 +115,7 @@ Fixed error vocabulary: E_INIT, E_AUTH, E_DEPOSIT, E_NETWORK, E_INPUT, E_CAPACIT
 
 ## Events v1.0.0
 
-Use NEP-297 `EVENT_JSON:` with {standard:"contra",version:"1.0.0",event:<name>,data:[<typed payload>]}. Emit through JSON serialization, not interpolated evidence text. Common fields: seq:U64 (per-case or global stream), case_id:Hash32 or null, actor_id:AccountId, at_ns:U64, block_height:U64, case_revision:U64 or null. Indexers add network, executor contract, block/receipt/transaction hashes from execution metadata, never from a fabricated contract field. Stable event identity=(network,contract,case_id-or-global,seq); accept logs only from successful receipts on finalized chain. Global registry events and per-case events use separate sequence spaces. Ring EventPage includes items, oldest_seq, next_after_seq, gap:bool; old cursors return gap=true, allowing index backfill from logs. Never claim full history from an evicted ring.
+Use NEP-297 `EVENT_JSON:` with {standard:"contra",version:"1.0.0",event:<name>,data:[<typed payload>]}. Emit through JSON serialization, not interpolated evidence text. Common fields: seq:U64 (per-case or global stream), case_id:Hash32 or null, actor_id:AccountId, at_ns:U64, block_height:U64, case_revision:U64 or null. Indexers add network, executor contract, block/receipt/transaction hashes from execution metadata, never from a fabricated contract field. Stable event identity=(network,contract,case_id-or-global,seq); accept logs only from successful receipts on finalised chain. Global registry events and per-case events use separate sequence spaces. Ring EventPage includes items, oldest_seq, next_after_seq, gap:bool; old cursors return gap=true, allowing index backfill from logs. Never claim full history from an evicted ring.
 
 | Event name | Extra payload fields |
 | --- | --- |
@@ -142,5 +142,5 @@ Case/registry mutations increment their revision once per business change, and e
 - [NEAR callback failures](https://docs.near.org/smart-contracts/security/cross-contract-calls/callback-failures): callback failure does not undo earlier committed receipts; keep cleanup bounded.
 - [near-sdk bounded promise result](https://docs.rs/near-sdk/latest/near_sdk/env/fn.promise_result_checked.html): distinguish explicit failed result from unexpected/oversized result.
 - [NEAR serialization](https://docs.near.org/smart-contracts/anatomy/serialization), [Borsh specification](https://borsh.io/): JSON boundary and deterministic binary field encoding.
-- [NEP-297](https://github.com/near/NEPs/blob/master/neps/nep-0297.md): event envelope, not an authority to accept unfinalized logs.
+- [NEP-297](https://github.com/near/NEPs/blob/master/neps/nep-0297.md): event envelope, not an authority to accept unfinalised logs.
 - [Storage staking](https://docs.near.org/protocol/storage/storage-staking), [gas](https://docs.near.org/protocol/transactions/gas), [one yocto](https://docs.near.org/smart-contracts/security/one_yocto): storage/gas/deposit assumptions must be measured against the implementation runtime.

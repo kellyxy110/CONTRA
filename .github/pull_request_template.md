@@ -10,6 +10,14 @@ Describe the scoped change and its exact product-source baseline.
 - [ ] No secret, private key or signer material is committed.
 - [ ] Documentation and the five project logs are updated when this is a checkpoint.
 
+## Documentation impact
+
+List the README and supporting documents updated for interface, API, runtime, deployment, test, security, provider or judge-facing changes.
+
+If no documentation change is required, include one specific line in this exact form:
+
+`Documentation impact: none - <specific reason>`
+
 ## Contract and financial impact
 
 - [ ] No contract or financial invariant changes.
@@ -28,4 +36,4 @@ Explain every selected or unselected item that is relevant. Never weaken an asse
 
 ## Merge recommendation
 
-State the required checks, unresolved blockers and whether owner authorization is still required.
+State the required checks, unresolved blockers and whether owner authorisation is still required.

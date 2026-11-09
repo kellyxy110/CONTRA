@@ -8,8 +8,8 @@ The maintained mapping in `ci/integration-risk-map.json` classifies the complete
 | --- | --- | --- |
 | Documentation, provider fixtures and frontend-only work | Fast | Core and Security, including repository tests and affected builds |
 | Wallet, RPC, reviewer and backend interaction | Focused | Explicitly mapped Sandbox transaction, committee, timeout and UNKNOWN scenarios |
-| Contract, protocol, settlement, Sandbox harness or unclassified work | Full | Nine-test baseline and both complete adjudication journeys |
-| Pull request into `main`, release branch, schedule or manual full request | Full | Nine-test baseline and both complete adjudication journeys |
+| Contract, protocol, settlement, Sandbox harness or unclassified work | Full | Nine-test baseline and both complete contestation journeys |
+| Pull request into `main`, release branch, schedule or manual full request | Full | Nine-test baseline and both complete contestation journeys |
 
 F01 through F18 remain in the separate Full Financial P0 workflow. This routing does not remove or weaken that gate.
 
@@ -19,7 +19,7 @@ The previous Integration job ran the baseline and journeys serially. Run `424089
 
 Full verification now runs those suites on isolated GitHub-hosted runners in parallel. Each runner performs its own checkout, dependency installation, contract build, Sandbox install and artifact upload. No worker, account, database or artifact path is shared. Wall time is bounded by the slower suite instead of their sum.
 
-Sandbox deadline advancement still targets the exact contract timestamps. The helper first observes the finalized timestamp and height change from one fast-forwarded block, then calculates a bounded jump that remains below the target. It recalibrates after every jump and rejects non-advancing or non-positive observations. Contract deadlines and adjudication semantics are unchanged.
+Sandbox deadline advancement still targets the exact contract timestamps. The helper first observes the finalised timestamp and height change from one fast-forwarded block, then calculates a bounded jump that remains below the target. It recalibrates after every jump and rejects non-advancing or non-positive observations. Contract deadlines and contestation semantics are unchanged.
 
 Every Sandbox job retains the 90-minute timeout. Timing files are uploaded with job artifacts. The optimisation PR supplies the first after-change measurements; its remote results are recorded on the PR because adding a result-only commit would unnecessarily repeat comprehensive verification.
 

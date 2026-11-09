@@ -9,7 +9,7 @@ const LENS_SECTORS = {
 
 export const COVERAGE_LENSES = {
   Criteria: 'Acceptance-record lens: linked criterion evidence, source provenance, verified keyboard results and criterion completion.',
-  Evidence: 'Adjudication-readiness lens: retrievable evidence, provenance, selected-round participation and quorum.',
+  Evidence: 'Contestation-readiness lens: retrievable evidence, provenance, selected-round participation and quorum.',
   Overall: 'Lifecycle lens: all eight evidence, review, challenge and settlement measurements.'
 };
 
