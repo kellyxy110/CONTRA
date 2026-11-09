@@ -24,17 +24,17 @@ Only one CONTRA process may own a data directory. A second process fails before 
 
 1. Stop the CONTRA process cleanly so no API request can mutate storage.
    Confirm `.contra-data.lock` was removed by the graceful shutdown. Never remove a live process lease to force a backup.
-2. Run `npm run check:storage -- <absolute-data-directory>`.
-3. Confirm `integrity` is `ok`, `checkpointed` is true and both object error lists are empty.
-4. Snapshot or copy the entire data directory as one unit, including `contra.sqlite`, any SQLite side files and `objects/`.
-5. Store the backup with access control appropriate for private evidence.
+2. Create a new backup directory with `npm run backup:storage -- create <absolute-data-directory> <new-backup-directory>`.
+3. Confirm `integrity` is `ok`, `checkpointed` is true and the command reports a `CONTRA_BACKUP_V1` manifest plus `manifest_sha256`. Record that manifest digest in a separate protected operations record. The digest detects later replacement of both data and its local manifest.
+4. Verify the completed package independently with `npm run backup:storage -- verify <backup-directory>`.
+5. Store the complete backup directory with access control appropriate for private evidence.
 
-Do not copy only the SQLite file or only the objects directory.
+The creation command acquires the same exclusive data lease as the runtime, checkpoints SQLite, audits every registered content-addressed object, copies the complete storage unit and records the size and SHA-256 of every file. A live runtime blocks the backup. Nested source and destination paths, symbolic links, existing non-empty destinations and partial packages are rejected. Do not copy only the SQLite file or only the objects directory.
 
 ## Restore verification
 
 1. Restore the complete directory to a new dedicated path while the service is stopped.
-2. Run `npm run check:storage -- <restored-directory>`.
+2. Run `npm run backup:storage -- verify <restored-directory>`. Verification rejects any changed, missing or additional file before opening SQLite, then performs database and object integrity checks under an exclusive lease.
 3. Start with `CONTRA_DATA_DIR=<restored-directory>` in `unavailable` mode first.
 4. Inspect `/api/health` and confirm schema version and integrity before enabling Sandbox or testnet reads.
 

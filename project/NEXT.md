@@ -1,8 +1,14 @@
 # Next execution task
 
-## Active next task | M09 runtime operations
+## Active next task | M09 backup and restore
 
-Complete the focused runtime-operations PR from the accepted M08 baseline. Verify exclusive durable-volume ownership, same-host crash recovery, graceful shutdown, clean restart and documentation. Then implement verifiable offline backup and restore packaging, liveness and readiness separation, and a deployment-compatible single-instance service definition in separate focused units. Do not select or deploy to a hosting provider without approved access.
+Complete the focused backup-and-restore PR. Require manifest-bound copying of the complete SQLite and immutable-object unit, exclusive offline ownership, tamper detection and clean restore verification. Run Core, Security and risk-selected Integration, then merge and promote under the standing green policy.
+
+After promotion, implement liveness and readiness separation plus a deployment-compatible single-instance service definition. Hosting selection and deployment remain blocked by B-M09-01.
+
+## Historical next task | M09 runtime operations
+
+The runtime-operations PR is merged and promoted. Preserve its exclusive durable-volume ownership, same-host crash recovery and graceful shutdown guarantees.
 
 M08 preparation is merged into both protected branches. B-M08-01 remains the external deployment gate. Collect the dedicated `.testnet` contract account, signer public key, custody classification, expected current code hash, testnet funding ceiling, minimum account balance, initial owner, creator allowlist and an expiring owner authorisation bound to the exact plan digest in one consolidated owner response. Never request or store private signing material in repository files or chat.
 

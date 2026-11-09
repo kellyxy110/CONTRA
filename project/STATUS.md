@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M09-BACKUP-RESTORE
+
+M09 runtime ownership is merged. PR 20 tested head `3a84c4bfbab957676c98ecfbf446a7af66639e23` and merged it into `implementation/oct28` as `d083c9a2602205e56219d0d8d204d2ab1b0dc228`. Core `42588657676`, Security `42588657855` and comprehensive Integration `42588657590` passed. Promotion PR 21 merged the accepted tree into `main` as `f76f2765ce29c076e512d799531271210df882f8` after Core `42592062881`, Security `42592062883` and comprehensive Integration `42592062838` passed. The protected branches have identical tree `d2d89acb061e7e40405c12f136ec5a0efa8fd873`; implementation is an ancestor of main.
+
+The next focused M09 unit adds offline backup and restore packaging. A `CONTRA_BACKUP_V1` manifest binds the complete SQLite and content-addressed storage unit with per-file sizes and SHA-256 values. Creation holds the exclusive data lease, checkpoints and audits SQLite, and refuses live ownership, nested paths, symbolic links and non-empty destinations. Restore verification rejects changed, missing and extra files before auditing SQLite and objects. Local verification passes 108/108 repository tests, including 4/4 focused backup tests, plus wallet and policy checks. No network, contract, financial, signing or provider behaviour changed.
+
 ## Current checkpoint | CONTRA-2026-11-09-M09-RUNTIME-OPERATIONS
 
 M08 deployment preparation is merged. PR 18 tested head `bdd3cd5b40808147b0d929261a8e935a2c2ab29a` and merged it into `implementation/oct28` as `38470d1e26d0714b99dbda979eb6e7d285db940f`. Core `42583280382`, Security `42583280234` and comprehensive Integration `42583280329` passed. Promotion PR 19 merged the accepted tree into `main` as `5041df54f3700a6594469faf8972b370cb14800f` after Core `42585793787`, Security `42585793850` and comprehensive Integration `42585793906` passed. The protected branches have identical tree `abd4b777f0bb125f4a543d99a8e65f57733e22a6`; implementation is an ancestor of main.

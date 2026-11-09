@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M09 backup and restore package
+
+Added an offline backup command that acquires exclusive storage ownership, checkpoints and audits SQLite, copies the complete database and immutable object store, and writes a per-file SHA-256 manifest. Added independent restore verification that rejects changed, missing, additional and symbolic-link entries before database and artifact integrity checks. Four focused tests cover a clean restored package plus live-owner, nested-path, non-empty-destination, corruption, omission, addition and symbolic-link failure paths. The full repository passes 108/108 tests. No contract, transaction or financial behaviour changed.
+
+Before this unit, PR 20 merged M09 runtime ownership as `d083c9a2602205e56219d0d8d204d2ab1b0dc228` and PR 21 promoted it to `main` as `f76f2765ce29c076e512d799531271210df882f8`. Runs `42588657676`, `42588657855`, `42588657590`, `42592062881`, `42592062883` and `42592062838` passed. No deployment, signing, provider usage or spending occurred.
+
 ## 2026-11-09 | M08 promoted and M09 durable runtime ownership
 
 Merged deployment-preflight PR 18 as `38470d1e26d0714b99dbda979eb6e7d285db940f` and promotion PR 19 into `main` as `5041df54f3700a6594469faf8972b370cb14800f`. Exact-head Core, Security and comprehensive Integration passed on both boundaries. No deployment, signing or funded transaction occurred.

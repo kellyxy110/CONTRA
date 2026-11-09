@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | M09 runtime promotion and backup package
+
+- Merged runtime-ownership PR 20 as `d083c9a2602205e56219d0d8d204d2ab1b0dc228` after exact-head Core `42588657676`, Security `42588657855` and comprehensive Integration `42588657590` passed.
+- Promoted it through PR 21 to `main` as `f76f2765ce29c076e512d799531271210df882f8` after Core `42592062881`, Security `42592062883` and comprehensive Integration `42592062838` passed.
+- Verified protected tree `d2d89acb061e7e40405c12f136ec5a0efa8fd873` and implementation ancestry.
+- Started `feat/m09-backup-restore`. Added manifest-bound complete storage copying and independent restore verification. The first regression exposed an empty destination left by a lease-blocked attempt; reordered lease acquisition before destination mutation. Four focused tests now pass.
+- Transactions, deployments, live provider calls and spending: none.
+
 ## 2026-11-09 UTC | M08 promotion and M09 runtime operations
 
 - Merged PR 18 head `bdd3cd5b40808147b0d929261a8e935a2c2ab29a` into `implementation/oct28` as `38470d1e26d0714b99dbda979eb6e7d285db940f` after Core `42583280382`, Security `42583280234` and Integration `42583280329` passed.
