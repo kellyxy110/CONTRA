@@ -15,10 +15,10 @@ NEAR contracts enforce account authentication, case terms, deadlines, committee 
 
 - Creator: deposits escrow, freezes criteria and selects fallback policy.
 - Beneficiary: performs work and submits deliverables.
-- Reviewer: authorized account for a specific adjudication round. No reviewer can vote twice for a round.
-- Challenger: authorized creator or beneficiary, submits evidence-backed challenge before deadline.
+- Reviewer: authorised account for a specific contestation round. No reviewer can vote twice for a round.
+- Challenger: authorised creator or beneficiary, submits evidence-backed challenge before deadline.
 - Keeper: permissionless caller that advances timed transitions. No special settlement privilege.
-- Contract: sole source of monetary state and adjudication deadlines.
+- Contract: sole source of monetary state and contestation deadlines.
 
 ## Main states
 
@@ -36,7 +36,7 @@ NEAR contracts enforce account authentication, case terms, deadlines, committee 
 | SettlementPending | Final decision plus dispatch of transfer | Wait for callback; do not initiate another transfer | Settled or TransferFailed |
 | TransferFailed | Verified failed callback | Keeper retries same payout intent; fixed receiver and amount | SettlementPending |
 | Settled | Verified success callback | Read only | Terminal |
-| Cancelled | Authorized cancellation before funding | Read only | Terminal |
+| Cancelled | Authorised cancellation before funding | Read only | Terminal |
 
 ## Settlement decision policy for v1
 
@@ -47,7 +47,7 @@ Frozen when funded:
 - Review deadline and challenge deadline are absolute, bounded timestamps.
 - No settlement occurs while a valid challenge remains in review.
 
-Consequence: A buyer-favored unresolved default is a contract choice for the prototype, not a universal fairness rule. Both parties see and accept it before escrow funding.
+Consequence: A buyer-favoured unresolved default is a contract choice for the prototype, not a universal fairness rule. Both parties see and accept it before escrow funding.
 
 ## Reviewer quorum
 

@@ -7,7 +7,7 @@ Decision ID: D-015
 ## Non-negotiable layout anatomy
 
 1. **Atmospheric full-viewport charcoal/near-black background** with dim deep-teal ambient lighting, restrained grain/depth, and no bright app shell.
-2. **Wide graph canvas** consuming approximately two thirds of desktop viewport; primary agreement root anchored left, clustered criterion/evidence nodes near center, downstream reviewer and challenge outcome branches extending right.
+2. **Wide graph canvas** consuming approximately two thirds of desktop viewport; primary agreement root anchored left, clustered criterion/evidence nodes near centre, downstream reviewer and challenge outcome branches extending right.
 3. **Thin, animated-on-change cubic connectors**, varied opacity and soft luminous junctions. Avoid permanently moving decorative animation; respect `prefers-reduced-motion`.
 4. **Compact floating controls** pinned to top: menu, graph layouts, fit, zoom, add case, filter, search, wallet/network indicator. Functions must work in the finished product.
 5. **Right contextual inspection rail**, rounded dark surfaces, clear selected-node heading, state indicator, outcome/evidence details, actor/reviewer info, case metrics, verifiable transaction links, and next permissible action.
@@ -17,11 +17,11 @@ Decision ID: D-015
 ## Graph semantics
 
 - Root node: funded agreement/case; retain clear case id, wallet and status.
-- Center category nodes: acceptance criteria, evidence bundles, adjudicator rounds, challenge events, settlement actions.
+- Centre category nodes: acceptance criteria, evidence bundles, reviewer rounds, challenge events, settlement actions.
 - Leaf nodes: specific evidence objects, model findings, counterclaims, verified checks, votes, tx receipts.
 - Lines: direction of provenance or dependency, not unspecified visual associations. Every line needs a legend and link details.
 - Click or keyboard select node -> inspector updates to actual case data; hover only enhances and never carries unique information.
-- Color and text: #00EC97 for verified/permitted action, #FF8678 for challenge/contradiction, #F4BD68 for undecided/provisional, #F5F7F5 for readable text. Background #0B1110 / #16221D. Non-color labels and shapes disambiguate statuses.
+- Colour and text: #00EC97 for verified/permitted action, #FF8678 for challenge/contradiction, #F4BD68 for undecided/provisional, #F5F7F5 for readable text. Background #0B1110 / #16221D. Non-colour labels and shapes disambiguate statuses.
 
 ## What changes from v1.0
 
@@ -42,7 +42,7 @@ Decision ID: D-015
 ## Acceptance checkpoints
 
 - Produce reference-faithful high-fidelity desktop screen and mobile alternate, grounded in case state semantics.
-- Review proportions, lighting, typography, canvas density and inspector behavior against the uploaded image.
+- Review proportions, lighting, typography, canvas density and inspector behaviour against the uploaded image.
 - Prototype controls for selecting nodes and switching case categories without live AI usage.
-- Maintain cross-links between graph evidence nodes, adjudicator assertions and source/tx references.
+- Maintain cross-links between graph evidence nodes, reviewer assertions and source/tx references.
 - Have user visually accept the redesigned prototype before using it as November 1 implementation guidance.

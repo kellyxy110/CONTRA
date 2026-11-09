@@ -51,7 +51,7 @@ Automated checks cover:
 - Empty, chain-unavailable and genuine populated states.
 - Connect, disconnect, case switching, all sidebar views, all radar and material tabs, task mode, search and activity pagination.
 - Dialog keyboard entry, Escape close, browser Back close and focus restoration.
-- Persisted transaction reconciliation after reload, stale-read disclosure, unavailable service state and unauthorized evidence rejection.
+- Persisted transaction reconciliation after reload, stale-read disclosure, unavailable service state and unauthorised evidence rejection.
 - Named controls, landmarks, chart semantics, 44px coarse-pointer targets, reduced motion, soft-white contrast and NEAR-mint contrast.
 - Portable Playwright imports with no user-specific browser or module path.
 
@@ -61,8 +61,8 @@ The browser report is `project/artifacts/m041/phase3/e2e-report.json`. Final des
 
 - Explicit owner visual acceptance is pending.
 - A manual screen-reader session with assistive technology remains pending. Automated semantics pass, but this is not represented as a manual audit.
-- AC31 and AC32 remain blocked at their frozen exact scope because testnet and paid provider activity are not authorized.
-- External wallet rejection and redirect behavior remains gated with testnet use.
+- AC31 and AC32 remain blocked at their frozen exact scope because testnet and paid provider activity are not authorised.
+- External wallet rejection and redirect behaviour remains gated with testnet use.
 - Six independently controlled reviewer operators are not available. Local accounts share one process.
 - Cargo dependency retrieval failed on this Windows host because `index.crates.io` DNS resolution failed. No contract source changed.
 - `npm audit --omit=dev` reports 14 low, 2 high and 1 critical production-tree finding, primarily through `near-workspaces`, `near-sandbox` and its pinned `tar` dependency. No nonbreaking upstream fix is available from the current dependency graph. Do not process untrusted tar archives through that development dependency.

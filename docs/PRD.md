@@ -9,7 +9,7 @@ Every consequential AI judgment should be open to a structured, auditable challe
 
 ## Falsifiable research hypothesis
 
-A general-purpose blockchain and an application-level review protocol can provide useful evidence-based adjudication and challenge handling without requiring a specialized AI blockchain. This is not a claim of security equivalence to GenLayer. We must measure reliability, latency, costs and reviewer independence under aligned conditions.
+A general-purpose blockchain and an application-level review protocol can provide useful evidence-based contestation and challenge handling without requiring a specialized AI blockchain. This is not a claim of security equivalence to GenLayer. We must measure reliability, latency, costs and reviewer independence under aligned conditions.
 
 ## Users and jobs
 
@@ -21,7 +21,7 @@ A general-purpose blockchain and an application-level review protocol can provid
 
 ## MVP case
 
-A payer commissions an accessible web interface. The deliverer submits a repository commit, a hosted build, and test evidence. A primary evaluator proposes that requirements are met. A counterexample evaluator identifies a keyboard navigation failure. The recorded challenge blocks ordinary finalization. Fresh reviewers independently judge the contested claim. The NEAR contract enforces the agreed resolution.
+A payer commissions an accessible web interface. The deliverer submits a repository commit, a hosted build, and test evidence. A primary evaluator proposes that requirements are met. A counterexample evaluator identifies a keyboard navigation failure. The recorded challenge blocks ordinary finalisation. Fresh reviewers independently judge the contested claim. The NEAR contract enforces the agreed resolution.
 
 All named prototype accounts, amounts, case IDs and results are sample data until verified by testnet transactions.
 
@@ -44,11 +44,11 @@ All named prototype accounts, amounts, case IDs and results are sample data unti
 - Arbitrary multi-asset and cross-chain escrow.
 - Private evidence proofs and fully verified confidential inference claims.
 - Complex multiple-level appeals beyond one fresh challenge review.
-- Claim that all GenLayer behaviors or security properties have been reproduced.
+- Claim that all GenLayer behaviours or security properties have been reproduced.
 
 ## Primary user journey
 
-1. Creator specifies job, binary acceptance criteria, evidence types, adjudicator set, review windows, dispute fallback and payout accounts.
+1. Creator specifies job, binary acceptance criteria, evidence types, reviewer set, review windows, dispute fallback and payout accounts.
 2. Creator reviews exact immutable terms and sends native NEAR to the contract.
 3. Deliverer submits an evidence manifest digest and source references before submission deadline.
 4. Reviewers commit, then reveal signed or directly authenticated verdicts with evidence references.
@@ -60,10 +60,10 @@ All named prototype accounts, amounts, case IDs and results are sample data unti
 
 ## MVP measurable acceptance
 
-- One fund-to-finalization test using genuine NEAR testnet transactions.
+- One fund-to-finalisation test using genuine NEAR testnet transactions.
 - Challenge before deadline prevents the first provisional verdict from settling.
-- Replay, duplicate vote and unauthorized caller tests fail safely.
-- Evidence and criteria are immutable once funded; amendments require a new case or mutually authorized replacement before funding.
+- Replay, duplicate vote and unauthorised caller tests fail safely.
+- Evidence and criteria are immutable once funded; amendments require a new case or mutually authorised replacement before funding.
 - A failed transfer does not mark the case paid, and retries cannot duplicate payouts.
 - 30 designed test cases documented and a clearly labelled executed subset evaluated.
 - Cost ledger shows real provider usage, credits remaining when accessible, and unknowns explicitly.

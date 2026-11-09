@@ -1,5 +1,17 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | M07 Contestation migration and release audit
+
+- Based `refactor/contestation-terminology` on `main` commit `7b44e2c795a01eb1064c8b47ef381f1294eca6ad`; no open pull request existed at start.
+- Renamed the active contract directory, crate, production WASM and full journey job.
+- Verified the Rust source move contains no content change and preserved all public ABI, state, commitment and financial identities.
+- Preserved machine-generated historical evidence containing original names under `project/artifacts/`.
+- Added terminology, link and documentation-impact policy enforcement and tests.
+- Rebuilt README and added security, operations, testing, judge, history and blocker documents without speculative frontend work.
+- Replaced the vulnerable Sandbox archive parser with `tar@7.5.22`. A clean Linux install rejected a broader `near-sandbox@0.3.5` override because `near-workspaces@5.0.0` imports the legacy `near-sandbox/install` subpath; the compatible Sandbox package was restored. `npm audit` changed from 14 low, two high and one critical to 15 low and no higher-severity finding.
+- Executed `npm test` with 92/92 passing, 28/28 Rust tests, strict Clippy, Rust formatting, wallet bundle, Core policy, Security policy, Markdown links, ABI separation and commitment vectors. The renamed production WASM SHA-256 is `117ab8b854fad4d13d31e4e930b85f88c365c7d285273c66a361c1f46cfaa196`. Complete remote Sandbox and financial gates remain pending on the intended final commit.
+- Transactions and deployments: none. Provider usage and spend: $0.
+
 ## 2026-11-08 UTC | M06 controlled workflow completion
 
 Completed the connected M06 gate end to end. PR 11 passed Core `42471496896`, Security `42471496910` and full Integration `42471496909`, then merged as `721964b2f4fb5c6b69767e864bb717e8b32c9afb`. The archived report records 46 genuine local Sandbox receipts, 47 persisted operations, zero simulated wallet redispatches, four provider fixture calls, unchanged AI commitment count, a Modal verification bound to the original proposal digest, account isolation, restart recovery, primary ACCEPT, fresh REJECT, exact one-NEAR creator refund and BASE_REFUND timeout recovery. An ancestry-only protected sync passed full run `42472276558` and merged as `1844eb9017bbda265a029d2d6bbc533ad69db951`. PR 12 passed final main-bound Core `42472865448`, Security `42472865451` and Integration `42472865460`, then merged as `b32cd8868470b5b2ad41a5ee5503752f95c54d17`. No live signing, external provider request, testnet or mainnet transaction, deployment, production secret or spending occurred. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED pending the M07 individual evidence audit.
@@ -36,13 +48,13 @@ Started `ci/reviewer-risk-map` from `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. 
 
 Merged PR 4 under the owner's standing green-check policy. The reviewed head was `3ef42d08ef29897e9d48c599dd311ce8d5dd9d6f`; Core `42408934722`, Security `42408934686` and Integration `42408934712` passed. The resulting `implementation/oct28` merge commit is `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03`, created at `2026-11-07T21:48:15Z`.
 
-Created `ci/optimise-sandbox-runtime` and implemented maintained risk routing, a visible policy artifact, focused named Sandbox scenarios, isolated parallel full jobs and a strict aggregate gate. Unclassified work defaults to full. Added adaptive finalized-block advancement that calibrates against the observed block interval and retains exact contract deadlines. Local routing tests pass 7/7, repository tests pass 76/76, Core and Security policy scans pass and the wallet build passes. GitHub run `42418916525` passed the policy, isolated comprehensive jobs and aggregate gate. PR 5 merged as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. No transaction, deployment, signing, provider call, secret change or spending occurred.
+Created `ci/optimise-sandbox-runtime` and implemented maintained risk routing, a visible policy artifact, focused named Sandbox scenarios, isolated parallel full jobs and a strict aggregate gate. Unclassified work defaults to full. Added adaptive finalised-block advancement that calibrates against the observed block interval and retains exact contract deadlines. Local routing tests pass 7/7, repository tests pass 76/76, Core and Security policy scans pass and the wallet build passes. GitHub run `42418916525` passed the policy, isolated comprehensive jobs and aggregate gate. PR 5 merged as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`. No transaction, deployment, signing, provider call, secret change or spending occurred.
 
 ## 2026-11-07 UTC | IMPL-M06-P1 final wallet hardening
 
-Resumed PR 4 at verified SHA `c24d236506f29d8efd0952463aff44f2e9fbe213` with a clean worktree and preserved `stash@{0}`. Added failing regressions before implementation. The first run proved a finalized RPC response without `result.transaction.hash` was accepted. The cross-layer audit then reproduced two related defects: a stale regressed success still left the RPC adapter as CONFIRMED, and a wallet-returned hash was lost locally when its server callback failed.
+Resumed PR 4 at verified SHA `c24d236506f29d8efd0952463aff44f2e9fbe213` with a clean worktree and preserved `stash@{0}`. Added failing regressions before implementation. The first run proved a finalised RPC response without `result.transaction.hash` was accepted. The cross-layer audit then reproduced two related defects: a stale regressed success still left the RPC adapter as CONFIRMED, and a wallet-returned hash was lost locally when its server callback failed.
 
-Required independent transaction hash proof in the RPC adapter and lifecycle validator. Added exact signer, configured contract, one-action FunctionCall, method, arguments, gas, deposit, finality, execution status, final block identity and freshness checks. Changed malformed or contradictory finalized proof to durable UNKNOWN locking. Preserved explicit final failure, ordinary RPC-unavailable PENDING observation, first-hash-only recovery, unique cross-operation hashes, atomic terminal persistence and all prior PREPARED and SIGNING handoff protections.
+Required independent transaction hash proof in the RPC adapter and lifecycle validator. Added exact signer, configured contract, one-action FunctionCall, method, arguments, gas, deposit, finality, execution status, final block identity and freshness checks. Changed malformed or contradictory finalised proof to durable UNKNOWN locking. Preserved explicit final failure, ordinary RPC-unavailable PENDING observation, first-hash-only recovery, unique cross-operation hashes, atomic terminal persistence and all prior PREPARED and SIGNING handoff protections.
 
 Persisted wallet-returned hashes before callback delivery and added account-scoped reload attachment through the idempotent callback. Controlled tests cover missing, empty, malformed and different hashes; signer and contract mismatch; extra actions; changed arguments; gas and deposit mismatch; missing finality; unknown and explicit-failure status; stale and regressed blocks; integrity-error locking; callback failure and reload recovery. Final focused result is 34/34 and full repository result is 69/69. Wallet production bundle, syntax, diff, Core policy, Security policy and dependency audit pass locally. The dependency audit retains 14 low, two high and one critical inherited finding with no new failure. Fresh PR 4 CI remains the final external gate. No transaction, signing, deployment, provider request, secret change or spending occurred. PR 3 remains open and unmerged.
 
@@ -50,7 +62,7 @@ Persisted wallet-returned hashes before callback delivery and added account-scop
 
 Started from verified PR 4 head `a42d1f0aa60558d82556f4ab7d7f927ccc7f2609` on `feat/m06-wallet-lifecycle` with `stash@{0}` preserved. Added regression tests before implementation and observed five expected failures: ambiguous final RPC status was confirmed, prepared and handed-off states were absent, post-handoff rejection became FAILED, and browser UNKNOWN recovery was deleted.
 
-Implemented durable `PREPARED` and `SIGNING` separation, atomic handoff, conservative restart recovery, first-hash-only delayed callbacks and repository-wide hash uniqueness. Added explicit NEAR success and failure classification, RPC hash verification, final block freshness checks, transaction intent matching and atomic external terminal persistence. Added the server authorization boundary for live handoff, kept it false in normal startup, and made health and configuration responses distinguish preparation from live signing. Browser storage now retains UNKNOWN state by account, restores outstanding operations after reload and invokes the wallet only after server handoff.
+Implemented durable `PREPARED` and `SIGNING` separation, atomic handoff, conservative restart recovery, first-hash-only delayed callbacks and repository-wide hash uniqueness. Added explicit NEAR success and failure classification, RPC hash verification, final block freshness checks, transaction intent matching and atomic external terminal persistence. Added the server authorisation boundary for live handoff, kept it false in normal startup, and made health and configuration responses distinguish preparation from live signing. Browser storage now retains UNKNOWN state by account, restores outstanding operations after reload and invokes the wallet only after server handoff.
 
 Final local evidence: focused M05/wallet/browser tests 31/31, complete repository tests 66/66, M05 runtime 18/18, wallet bundle build passed, JavaScript syntax and diff checks passed, Core and Security policy scans passed, and the dependency audit retained 17 inherited findings with no new baseline failure. `npm run test:sandbox` was attempted and blocked before launch by the native-Linux preflight because the current process is Windows. No Sandbox test, contract change, full P0 run, signing, transaction, deployment, provider call, secret change or spending occurred. Fresh Linux Core, Security and Integration runs are required after push. PR 4 and PR 3 remain unmerged.
 
@@ -58,7 +70,7 @@ Final local evidence: focused M05/wallet/browser tests 31/31, complete repositor
 
 Verified `implementation/oct28` at `950ca25c8c5df35310a0cd61be5693df2a04b402`, created `feat/m06-wallet-lifecycle`, inspected `stash@{0}` without dropping it, and confirmed it contains wallet, reviewer and provider work. Applied it with the stash retained, then excluded reviewer/provider files and rebuilt the persistence migration as a wallet-only unit.
 
-Implemented persisted external-wallet intent before signing, exact call and role policy, session reload/renew/disconnect, stable operation identity, conflicting-payload prevention, persistent transaction hashes, finalized receipt matching and conservative restart behavior. Missing redirects and non-rejection interruptions lock UNKNOWN with no blind retry. A later callback may attach only the first hash and resume observation. Lower block observations, mismatched network, hash, signer, contract, method, arguments or deposit fail closed.
+Implemented persisted external-wallet intent before signing, exact call and role policy, session reload/renew/disconnect, stable operation identity, conflicting-payload prevention, persistent transaction hashes, finalised receipt matching and conservative restart behaviour. Missing redirects and non-rejection interruptions lock UNKNOWN with no blind retry. A later callback may attach only the first hash and resume observation. Lower block observations, mismatched network, hash, signer, contract, method, arguments or deposit fail closed.
 
 Controlled simulations cover duplicate buttons and tabs through concurrent shared operation IDs, repeated callbacks, conflicts, rejection, interruption, reload, restart, RPC failure, delayed finality, stale regression, session expiry and account switching. `npm test` passes 60/60. The focused M05, service and wallet run passes 51/51, and the wallet bundle builds. Published code commit `379ff4e0111336da33579357a08c341ce6273dcb` as PR 4 into `implementation/oct28`. Genuine Core `42373449517`, Security `42373449483` and Integration `42373449454` passed. Integration completed the corrected nine-test baseline, both journeys, receipt and balance validation and artifact upload. No contract or financial invariant changed, so full P0 was not rerun. No live signing, transaction, deployment, provider call, secret change or spending occurred.
 
@@ -98,13 +110,13 @@ Added abrupt child-process exit coverage after object persistence, provider rese
 
 Attempted the local journey regression. The Windows process failed before launch because `ps` was unavailable. WSL had the required file limit, Node and Cargo, but the pinned Sandbox binary failed before launch because its GLIBC 2.38 and 2.39 requirements are absent. No transaction occurred. Strengthened the preflight to detect both blockers before reporting readiness.
 
-Reviewed all 33 acceptance criteria. M05 strengthens durable operations, stale and regressed read detection, artifact integrity, origin enforcement, rate controls, cross-case isolation and credential scanning. External wallet, independent operator, live provider, authorized testnet and manual screen-reader requirements remain open. Totals stay 21 PASS, 10 PARTIAL and 2 BLOCKED.
+Reviewed all 33 acceptance criteria. M05 strengthens durable operations, stale and regressed read detection, artifact integrity, origin enforcement, rate controls, cross-case isolation and credential scanning. External wallet, independent operator, live provider, authorised testnet and manual screen-reader requirements remain open. Totals stay 21 PASS, 10 PARTIAL and 2 BLOCKED.
 
 ## 2026-11-07 UTC | IMPL-M05-R01 runtime and backend foundation
 
 Resumed the verified `implementation/oct28` commit `bce586cf223c4120d42d6668c1c707ca84bcadf8` and fetched the live hackathon instructions before code changes. Recorded the owner directive that M05 through M07 core product work supersedes active visual acceptance and demo tasks. Current official Q-001 accepts code since the October 19 announcement; retained the factual October 28 implementation start. Recorded `security` as primary and `open` as additional track.
 
-Wired explicit unavailable, Sandbox and testnet modes into application startup. Testnet mode now validates the public RPC URL, testnet chain identity, sync state, contract account, deployed code and finalized head. Added finalized contract-read provenance, stale and block-regression detection, receipt inspection and genuine health responses. Added schema migrations, SQLite and object integrity checks, FULL synchronous mode and restart recovery that locks interrupted operations as UNKNOWN. Added API content-type, origin and security-header checks.
+Wired explicit unavailable, Sandbox and testnet modes into application startup. Testnet mode now validates the public RPC URL, testnet chain identity, sync state, contract account, deployed code and finalised head. Added finalised contract-read provenance, stale and block-regression detection, receipt inspection and genuine health responses. Added schema migrations, SQLite and object integrity checks, FULL synchronous mode and restart recovery that locks interrupted operations as UNKNOWN. Added API content-type, origin and security-header checks.
 
 Added M05 runtime tests for configuration validation, RPC identity and contract validation, RPC failure, pending/failed/confirmed receipts, stale block regression, migrations, restart recovery, multi-connection budget idempotency, health truthfulness and authenticated receipt access. `npm test` passes 44/44. A live read-only public RPC status call returned testnet and not syncing. An unavailable-mode process returned chain unavailable and persistence integrity ok. No configured contract read, transaction, Sandbox rerun, deployment, provider use, production secret or spending occurred.
 
@@ -122,15 +134,15 @@ The first journey attempt failed because the retained local server already owned
 
 Continued from Phase 1 commit `f14c87f`. Audited the coverage module and found two semantic defects: evidence retrieval exceptions were collapsed into `false`, and Criteria, Evidence and Overall changed only a label while preserving the same profile. The chart also required users to infer values solely from wedge depth.
 
-Introduced explicit measured, not-applicable, inaccessible, unavailable and missing states. Updated source verification to distinguish a genuine missing artifact from authorization or network failure. Disconnected users retain public chain measurements while protected evidence sectors show Locked. Each metric now carries numerator, denominator, source, status, reason and observation time. Criteria, Evidence and Overall now apply documented scopes, with Overall as the default.
+Introduced explicit measured, not-applicable, inaccessible, unavailable and missing states. Updated source verification to distinguish a genuine missing artifact from authorisation or network failure. Disconnected users retain public chain measurements while protected evidence sectors show Locked. Each metric now carries numerator, denominator, source, status, reason and observation time. Criteria, Evidence and Overall now apply documented scopes, with Overall as the default.
 
-Redrew the canvas labels with direct values and status colors while preserving independent wedges, four reference rings, spokes and boundaries. Added exact label-box metadata and assertions. `npm test` passes 35/35. `npm run test:frontend:radar:m043` passes 17/17 rendered checks, including three deterministic profiles, label overlap, accessible values, distinct tabs, disconnected evidence locking and genuine two-case refresh. The Phase 1 desktop matrix still passes. Screenshots were inspected, not accepted from numerical checks alone. No new transaction, contract, provider, deployment, secret, testnet or mainnet action occurred.
+Redrew the canvas labels with direct values and status colours while preserving independent wedges, four reference rings, spokes and boundaries. Added exact label-box metadata and assertions. `npm test` passes 35/35. `npm run test:frontend:radar:m043` passes 17/17 rendered checks, including three deterministic profiles, label overlap, accessible values, distinct tabs, disconnected evidence locking and genuine two-case refresh. The Phase 1 desktop matrix still passes. Screenshots were inspected, not accepted from numerical checks alone. No new transaction, contract, provider, deployment, secret, testnet or mainnet action occurred.
 
 ## 2026-11-04 UTC | IMPL-M04.3-P1 visible desktop workspace
 
 Resumed `implementation/oct28` at `99ecb891518208ce39a9fd032428b233419c5a9d` after the owner rejected M04.2 visual acceptance. The initial 1536 x 676 viewport measured an 842px shell, 787px main area and 882px document height. The cause was the M04.2 `min-height:810px` shell, `min-height:756px` columns and cumulative fixed section minimums.
 
-Implemented a short-desktop grid with a 652px shell and 597px main area, keeping the complete radar, case summary, progress and all primary actions visible. Moved extended reviewer, evidence and activity records behind direct links to their existing stable workspaces while retaining sourced summaries on Overview. The first full matrix exposed 31px of concealed middle-column overflow and a document scrollbar at 1200 x 900; flexible grid rows and true viewport centering corrected both.
+Implemented a short-desktop grid with a 652px shell and 597px main area, keeping the complete radar, case summary, progress and all primary actions visible. Moved extended reviewer, evidence and activity records behind direct links to their existing stable workspaces while retaining sourced summaries on Overview. The first full matrix exposed 31px of concealed middle-column overflow and a document scrollbar at 1200 x 900; flexible grid rows and true viewport centreing corrected both.
 
 The final `npm run test:frontend:desktop:m043` run passes visible-boundary, horizontal-overflow, document-scroll, column-scroll, control, typography and console checks across eight target viewports. The corrected 1536 x 676, 1200 x 900, tablet and mobile captures were visually inspected. No Rust, protocol, payout, Sandbox receipt, paid provider, deployment, secret, testnet or mainnet change occurred. Phase 2 radar correction is next; owner acceptance remains pending.
 
@@ -138,7 +150,7 @@ The final `npm run test:frontend:desktop:m043` run passes visible-boundary, hori
 
 Continued from Phase 2 commit `117bd5ea4fb82ed83d2bb05d08cf27f9b43a0774`. Replaced major workflow dialogs with stable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Added hash routing, browser Back and direct-route synchronization, selected-case context and focused-action dialog retention. Audited every visible dashboard component and mapped its source, interaction, states and verification evidence.
 
-The final end-to-end suite passes 54/54 checks across genuine and injected states, keyboard and focus behavior, search, tabs, pagination, navigation, reload recovery, settlement safety, reduced motion, contrast, effective zoom, tablet and mobile layouts and console output. Responsive results are 46/46 empty and 46/46 populated. Radar checks pass 13/13 and deterministic coverage tests pass 3/3. Windows Google Chrome, Playwright Chromium and Firefox each pass 4/4 matrix checks. Linux Chromium remains blocked because WSL browser download attempts timed out or failed DNS resolution. Manual screen-reader verification remains PARTIAL.
+The final end-to-end suite passes 54/54 checks across genuine and injected states, keyboard and focus behaviour, search, tabs, pagination, navigation, reload recovery, settlement safety, reduced motion, contrast, effective zoom, tablet and mobile layouts and console output. Responsive results are 46/46 empty and 46/46 populated. Radar checks pass 13/13 and deterministic coverage tests pass 3/3. Windows Google Chrome, Playwright Chromium and Firefox each pass 4/4 matrix checks. Linux Chromium remains blocked because WSL browser download attempts timed out or failed DNS resolution. Manual screen-reader verification remains PARTIAL.
 
 Reexecuted both local Sandbox journeys and retained 44 operation and receipt records. Each payout settled exactly 1 NEAR through an observed callback, and the challenged case reversed ACCEPT to REJECT under fresh review. No contract source, protocol, P0 safeguard, deployment, paid provider, production secret, testnet or mainnet state changed. Owner visual acceptance remains pending.
 
@@ -170,7 +182,7 @@ Refined readable NEAR amounts with exact yoctoNEAR details, short case identity 
 
 Resumed `implementation/oct28` at `533506063ea60d65b742dd7ce15b61f89d069c6a`. Audited the fixed 1080 x 810 shell, fixed section heights, 900px stacked breakpoint and mobile sidebar compression. Added responsive wide-desktop columns, bounded short-screen panel scrolling, height-safe tablet stacking and a full-width phone flow with scrollable navigation. Preserved the exact approved 1200 x 900 shell rectangle. Added an environment-configured Chromium matrix for seven target viewports and both empty and real populated case states.
 
-The empty matrix passed 26/26. The first populated run found undersized reviewer disclosure, signal tab, pager and tablet brand controls. Raised those controls to a measured 44px minimum and reran the full populated matrix at 29/29, with zero page horizontal overflow, clipped sections or console errors. Saved fourteen screenshots and exact layout measurements in `project/artifacts/m041/phase1/`. Reexecuted the two authorized local Sandbox journeys to retain genuine records: 44 confirmed operations, 44 successful receipts, unchallenged ACCEPT settlement to beneficiary and challenged fresh REJECT settlement to creator, each with an exact 1 NEAR receiver delta. No paid inference, external transaction, deployment, secret, testnet or mainnet action occurred. Phase 2 radar and information refinement is next.
+The empty matrix passed 26/26. The first populated run found undersized reviewer disclosure, signal tab, pager and tablet brand controls. Raised those controls to a measured 44px minimum and reran the full populated matrix at 29/29, with zero page horizontal overflow, clipped sections or console errors. Saved fourteen screenshots and exact layout measurements in `project/artifacts/m041/phase1/`. Reexecuted the two authorised local Sandbox journeys to retain genuine records: 44 confirmed operations, 44 successful receipts, unchallenged ACCEPT settlement to beneficiary and challenged fresh REJECT settlement to creator, each with an exact 1 NEAR receiver delta. No paid inference, external transaction, deployment, secret, testnet or mainnet action occurred. Phase 2 radar and information refinement is next.
 
 ## 2026-11-03 UTC | IMPL-M04 full local product integration
 
@@ -202,16 +214,16 @@ Resumed remote c0800c8, synchronized its corrected harness and WSL evidence. Thi
 
 ## 2026-10-28 UTC | CONTRA-2026-10-28-IMPL-M02
 
-Continued implementation from M01 commit 5401cbf without reopening design. Added callback/registry/storage/serialization negative tests, fixed persistent case capacity, and implemented API/auth/evidence/provider controls plus approved-layout workflows. Result: 20 Rust SDK tests and 16 service/encoding tests pass; production/fault Wasm and gated wallet adapter build. Browser review measured all 15 desktop rectangles equal to frozen reference and inspected responsive agreement form; fixed source icon routing and close-button validation. Saved comparison and test evidence. Sandbox preflight fails (host hard limit 16384, required 65535), so no financial Sandbox or live adjudication proof is claimed. No paid calls, deployment, production secrets or mainnet. All work remains disclosed October 28 pre-event implementation; owner acceptance and AC01-AC33 completion remain open.
+Continued implementation from M01 commit 5401cbf without reopening design. Added callback/registry/storage/serialization negative tests, fixed persistent case capacity, and implemented API/auth/evidence/provider controls plus approved-layout workflows. Result: 20 Rust SDK tests and 16 service/encoding tests pass; production/fault Wasm and gated wallet adapter build. Browser review measured all 15 desktop rectangles equal to frozen reference and inspected responsive agreement form; fixed source icon routing and close-button validation. Saved comparison and test evidence. Sandbox preflight fails (host hard limit 16384, required 65535), so no financial Sandbox or live contestation proof is claimed. No paid calls, deployment, production secrets or mainnet. All work remains disclosed October 28 pre-event implementation; owner acceptance and AC01-AC33 completion remain open.
 
 ## 2026-10-28 UTC | CONTRA-2026-10-28-IMPL-M01
 
-Owner explicitly authorized coding October 28. Continued from UX3C plus naming continuation on implementation/oct28. Authored Rust escrow and adjudication, canonical encoding, Sandbox tests and backend foundation. Fourteen Rust SDK mocked-environment tests pass; production Wasm compiles. Stock Sandbox fails host precondition: 65535 required file descriptors versus hard limit 16384. No real chain test claimed, no deployment, no paid inference, no production secrets. Unknown transfer retries remain prohibited. This is pre-event implementation.
+Owner explicitly authorised coding October 28. Continued from UX3C plus naming continuation on implementation/oct28. Authored Rust escrow and contestation, canonical encoding, Sandbox tests and backend foundation. Fourteen Rust SDK mocked-environment tests pass; production Wasm compiles. Stock Sandbox fails host precondition: 65535 required file descriptors versus hard limit 16384. No real chain test claimed, no deployment, no paid inference, no production secrets. Unknown transfer retries remain prohibited. This is pre-event implementation.
 
 
 - UX3C verification record: project/artifacts/ux3c/spec-validation.json, including six specification SHA-256 values, 33 acceptance/10 invariant/7 gap coverage checks and 16 independent byte/hash fixture results. Contract/sandbox acceptance remains NOT RUN.
 
-UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
+UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recoloured derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
 ## 2026-10-27 | VH1 | Immutable-image blueprint handoff
 
 - Request: Agent handoff for full CONTRA blueprint, including exact supplied design image with no alteration.
@@ -224,7 +236,7 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 
 ## 2026-10-27 | UX2A | Graph-first local design study
 
-- Request: Begin the assigned first task, use NEAR colors, preserve the supplied reference, remove em dash characters and generic marketing copy, and include truthful GitHub badges.
+- Request: Begin the assigned first task, use NEAR colours, preserve the supplied reference, remove em dash characters and generic marketing copy, and include truthful GitHub badges.
 - Work performed: rebuilt the standalone Judgment Room with a typed provenance graph, dynamic inspector, graph and list modes, search, filtering, zoom, fit, keyboard list navigation, responsive layouts and fixture-only case questions.
 - Identity: recorded `kellyxy110` as the assigned GitHub owner. No remote name or URL was supplied or created.
 - Source verified: SHA-256 `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a` after implementation.
@@ -240,7 +252,7 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - Captured actual 1200 x 900 desktop, 768 x 1024 tablet and 390 x 844 mobile viewport images and a 2460 x 960 side-by-side desktop comparison.
 - First browser run found the assistant dock intercepting the inspector challenge button. Added desktop bottom clearance and verified the action afterward.
 - Removed a favicon 404 with an inline data favicon.
-- Final result: all 22 automated checks passed, including responsive overflow, interaction behavior, keyboard navigation, reduced motion and zero console errors.
+- Final result: all 22 automated checks passed, including responsive overflow, interaction behaviour, keyboard navigation, reduced motion and zero console errors.
 - Visual inspection: composition, curved connections, selected-node emphasis, right rail, compact controls, dark atmosphere and NEAR mint accents match the approved direction. The fixture graph is intentionally less dense than the source and mobile relies on its list fallback for hidden leaf nodes.
 - Reference SHA-256 remained `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`.
 - No Git initialization, remote operation, deployment, paid API use, contract implementation or blockchain transaction occurred.
@@ -251,7 +263,7 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - Input: owner rejected UX2B visual fidelity and supplied the UX2C recovery package.
 - Preserved: original 1200 x 900 JPEG, existing interactions, fixture semantics, NEAR palette, budget rules and pre-November-1 implementation gate.
 - Rebuilt: desktop geometry, root treatment, group spacing, fan-out leaf rhythm, SVG branch rendering, control scale, inspector footprint and assistant separation.
-- Root center now sits near x=120 and y=470. Group centers sit near x=355. Leaf labels begin near x=620 and form a compact vertical evidence and state column.
+- Root centre now sits near x=120 and y=470. Group centres sit near x=355. Leaf labels begin near x=620 and form a compact vertical evidence and state column.
 - Additional visible points are truthful fields from the existing fixture, not new external evidence or reviewers.
 - Verified defect: the SVG layer initially intercepted the Fit control after zoom. Set the edge layer to ignore pointer input.
 - Verified defect: drawing edges while list view hid the graph produced invalid SVG path values. Added a zero-dimension guard.
@@ -263,10 +275,10 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 
 ## 2026-10-28 | Repository baseline
 
-- Owner authorized creation of private GitHub repository `kellyxy110/CONTRA`.
+- Owner authorised creation of private GitHub repository `kellyxy110/CONTRA`.
 - Current workspace will be committed and pushed as the redesign baseline.
 - Current visual implementation is not accepted as the final design. UX2B and UX2C remain preserved verification history.
-- Deployment, repository secrets, paid APIs and smart contract implementation remain outside this authorization.
+- Deployment, repository secrets, paid APIs and smart contract implementation remain outside this authorisation.
 - Next: establish the product redesign brief from the preserved baseline.
 - Verified result: private repository `https://github.com/kellyxy110/CONTRA` created, `main` pushed and local branch configured to track `origin/main`.
 
@@ -277,7 +289,7 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - `npm ci --ignore-scripts` completed in a native ext4 execution copy. The install reported 17 dependency audit findings and a deprecated transitive tar package; these remain a dependency-maintenance item.
 - `npm run test:contract` passed 20 of 20. Production and fault Wasm rebuilt with export separation. The SHA-256 pinned NEAR Sandbox 2.13.4 binary launched successfully.
 - Real receipts verified creation, consent, creator cancellation, exact funding, immutable funded terms, evidence submission, primary commit/reveal, ordinary finality rejection before deadline, payout dispatch and callback-confirmed settlement. Beneficiary balance increased by exactly 1 NEAR.
-- Real challenged execution verified an unauthorized challenge rejection, creator challenge acceptance, ordinary settlement blocking, fresh committee commit/reveal, original ACCEPT reversal to fresh REJECT, and creator settlement with `FRESH` resolution basis.
+- Real challenged execution verified an unauthorised challenge rejection, creator challenge acceptance, ordinary settlement blocking, fresh committee commit/reveal, original ACCEPT reversal to fresh REJECT, and creator settlement with `FRESH` resolution basis.
 - Diagnosed false live-test failures from treating forwarded blocks as seconds. A later run proved that large jumps can also expire transaction hashes. Replaced this with bounded timestamp-checked advancement and valid 610-second test intervals.
 - Targeted fresh-review timeout then passed with `KEEP_PRIMARY`, beneficiary payout and callback-confirmed settlement.
 - Preserved raw logs as `sandbox-test-attempt-2026-10-29.txt`, `sandbox-timeout-attempt-2026-10-29.txt` and `sandbox-timeout-pass-2026-10-29.txt` under the implementation artifact directory.
@@ -287,7 +299,7 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 ## 2026-10-28 | UX3A | Exact dashboard reference study
 
 - Read existing agent/handoff instructions, status, decisions, logs and product/protocol/UX blueprint through GitHub.
-- Direct git clone lacked credentials; used authorized GitHub connector reads and a separate design/ux3a branch based on 828bca32ab882dc7687dccd53c91d79842b538de. Existing remote files remain intact.
+- Direct git clone lacked credentials; used authorised GitHub connector reads and a separate design/ux3a branch based on 828bca32ab882dc7687dccd53c91d79842b538de. Existing remote files remain intact.
 - The attached AdobeExpressPhotos JPG is the supplied dashboard reference, copied unchanged as IMG_7409.jpeg. SHA-256 before/after: 1d4b982d638e86829387c87bef61d7b121f59b1e87913d4606b73142e0e15480.
 - Implemented fixture-backed functional dashboard and source-resolution capture/comparison pages.
 - Verified in cloud Chromium: actual DOM geometry, Inter loaded, record search, evidence/review material tabs, radar tab, both pagers, challenge inspector and session-only note saving. JavaScript parse checks passed.
@@ -313,9 +325,9 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 ## 2026-10-28 | UX3C | Protocol freeze handoff
 
 - Verified plan/ux3b head af0dd97558f134ac9269c7fb58cc7613df6b8202 and read governing agent instructions, protocol/UX3B/AC01-AC33 and existing logs. UX3A baseline bee5a74 preserved.
-- Finalized G01-G07 in six authoritative v1 documents, with ABI/state/committee/independence/event/recovery definitions and corresponding future acceptance tests.
+- Finalised G01-G07 in six authoritative v1 documents, with ABI/state/committee/independence/event/recovery definitions and corresponding future acceptance tests.
 - Explicit decisions include beneficiary consent, permissioned creator admission, preselected 3+3 six-operator jury, fresh-inconclusive keep-primary fallback to limit creator timeout abuse, and no authenticated MVP unknown-outcome recovery. No second transfer while prior result is unknown.
-- Reviewed primary NEAR callback/privacy/failure, serialization, storage, gas, one-yocto, NEP-297 and Borsh documentation. These informed contract constraints; deployment/runtime behavior is not claimed tested.
+- Reviewed primary NEAR callback/privacy/failure, serialization, storage, gas, one-yocto, NEP-297 and Borsh documentation. These informed contract constraints; deployment/runtime behaviour is not claimed tested.
 - Prepared and independently reconstructed 12 vote vectors, one challenge bundle and creation/terms/payout golden fixtures using Node and Python, then checked all 16 hashes with OpenSSL. Initial hex-decoder tool absence was detected and corrected; final checks agree. This is fixture preparation, not competition contract code or sandbox testing.
 - Reviewed full AC01-AC33/I1-I10 matrix; wrote negative SR05/SR06 cases for transfer/callback split failures and explicit I7/I10 liveness limitations. All future contract/browser/service acceptance tests remain NOT RUN.
 - Updated authoritative notices and five project logs, retaining prior history. No approved visual source changes, production implementation, model calls, live transactions, deployment, secrets or mainnet actions. Actual spending $0; approved $3/$3/$5 provider envelopes unchanged.

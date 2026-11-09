@@ -2,26 +2,26 @@
 
 ## Current owner directive | M05 through M07 product-first completion, 2026-11-07
 
-Suspend UI polish, radar refinement, screenshot comparison and demo production. Preserve the minimal usable operational client and immutable references, but prioritize runtime configuration, testnet read paths, finalized receipts, durable persistence, authentication, wallet integration, reviewer operations, non-billable provider interoperability and complete workflow verification. Do not restart completed M03 or M04 work. Visual acceptance is deferred and is not an active gate during M05 through M07.
+Suspend UI polish, radar refinement, screenshot comparison and demo production. Preserve the minimal usable operational client and immutable references, but prioritise runtime configuration, testnet read paths, finalised receipts, durable persistence, authentication, wallet integration, reviewer operations, non-billable provider interoperability and complete workflow verification. Do not restart completed M03 or M04 work. Visual acceptance is deferred and is not an active gate during M05 through M07.
 
-The live `https://nearhackathon.com/HACKATHON.md` governs eligibility and submission. Current Q-001 accepts code since the October 19 announcement; retain CONTRA's actual October 28 implementation start in history. Target tracks are `security` and `open`. Do not submit, publish, sign, deploy, add production secrets or incur paid usage without the required owner authorization. The active checkpoint and exact next task are in `project/STATUS.md` and `project/NEXT.md`.
+The live `https://nearhackathon.com/HACKATHON.md` governs eligibility and submission. Current Q-001 accepts code since the October 19 announcement; retain CONTRA's actual October 28 implementation start in history. Target tracks are `security` and `open`. Do not submit, publish, sign, deploy, add production secrets or incur paid usage without the required owner authorisation. The active checkpoint and exact next task are in `project/STATUS.md` and `project/NEXT.md`.
 
 ## Latest execution handoff | M03, October 29
 
-Resume `implementation/oct28` from checkpoint `CONTRA-2026-11-07-IMPL-M05-R03`. The fresh compatible-host P0 run passes all 18 financial categories and both local journeys pass with exact 1 NEAR callback-verified settlements. Continue M06 non-billable external-wallet simulation, reviewer signer-control preparation and provider failure coverage. Never retry UNKNOWN. The current 21 PASS, 10 PARTIAL and 2 BLOCKED acceptance totals remain unchanged. No testnet deployment, signing, paid provider or production-secret authorization has been granted.
+Resume `implementation/oct28` from checkpoint `CONTRA-2026-11-07-IMPL-M05-R03`. The fresh compatible-host P0 run passes all 18 financial categories and both local journeys pass with exact 1 NEAR callback-verified settlements. Continue M06 non-billable external-wallet simulation, reviewer signer-control preparation and provider failure coverage. Never retry UNKNOWN. The current 21 PASS, 10 PARTIAL and 2 BLOCKED acceptance totals remain unchanged. No testnet deployment, signing, paid provider or production-secret authorisation has been granted.
 
-## Current owner authorization - 2026-10-28 implementation
+## Current owner authorisation - 2026-10-28 implementation
 
-The owner has removed the internal November 1 coding gate. Implement now on implementation/oct28 using frozen UX3C and UX3A, with The Bench naming. October 28 code is pre-event and must be disclosed. Sandbox is authorized; testnet deployment, paid usage and production secrets still need separate authorization. Earlier date restrictions below are preserved history and no longer govern implementation. See project/STATUS.md and docs/IMPLEMENTATION_OCT28.md for actual tests and blockers. Never retry an UNKNOWN payout.
+The owner has removed the internal November 1 coding gate. Implement now on implementation/oct28 using frozen UX3C and UX3A, with The Bench naming. October 28 code is pre-event and must be disclosed. Sandbox is authorised; testnet deployment, paid usage and production secrets still need separate authorisation. Earlier date restrictions below are preserved history and no longer govern implementation. See project/STATUS.md and docs/IMPLEMENTATION_OCT28.md for actual tests and blockers. Never retry an UNKNOWN payout.
 
 ## Authoritative protocol handoff | UX3C
 
-Checkpoint CONTRA-2026-10-28-UX3C freezes G01-G07 at specification level. Start with docs/CONTRACT_ABI_V1.md and its five linked v1 companions, then the amended UX3B acceptance map. Earlier conceptual ABI/fallback/recovery and graph-first design instructions below are historical. UX3A stays approved/frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. Implementation begins October 28 by explicit owner authorization. Testnet deployment, production secrets and paid calls remain separately gated. The immediate task is Rust escrow/accounting and Sandbox financial-invariant proof including successful transfer with failed callback; NEVER retry an unknown transfer. New code is separate from pre-event design. Registry trust, buyer-favored base fallback, retained wrong-primary risk and stranded-unknown payout limitation must be disclosed. No claim of executed contract tests or safe mainnet readiness.
+Checkpoint CONTRA-2026-10-28-UX3C freezes G01-G07 at specification level. Start with docs/CONTRACT_ABI_V1.md and its five linked v1 companions, then the amended UX3B acceptance map. Earlier conceptual ABI/fallback/recovery and graph-first design instructions below are historical. UX3A stays approved/frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. Implementation begins October 28 by explicit owner authorisation. Testnet deployment, production secrets and paid calls remain separately gated. The immediate task is Rust escrow/accounting and Sandbox financial-invariant proof including successful transfer with failed callback; NEVER retry an unknown transfer. New code is separate from pre-event design. Registry trust, buyer-favoured base fallback, retained wrong-primary risk and stranded-unknown payout limitation must be disclosed. No claim of executed contract tests or safe mainnet readiness.
 
 
 ## Current owner direction | UX3B, 2026-10-28
 
-UX3A is APPROVED and FROZEN at bee5a7481d56c86d4c9860280b8367f82af0cb5a. The approved sidebar/three-column dashboard, radar, cards, typography and NEAR colors supersede the older graph-first composition instructions below. Preserve design/ux3a and all original references unchanged. Read docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md and docs/UX3B_ENGINEERING_ACCEPTANCE.md before new engineering. UX3B delivers planning only, not implementation expansion. Keep contract/protocol invariants; the former date gate is removed by the October 28 authorization. Historical text below is preserved; earlier approval-pending and composition statements are superseded by this explicit owner direction.
+UX3A is APPROVED and FROZEN at bee5a7481d56c86d4c9860280b8367f82af0cb5a. The approved sidebar/three-column dashboard, radar, cards, typography and NEAR colours supersede the older graph-first composition instructions below. Preserve design/ux3a and all original references unchanged. Read docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md and docs/UX3B_ENGINEERING_ACCEPTANCE.md before new engineering. UX3B delivers planning only, not implementation expansion. Keep contract/protocol invariants; the former date gate is removed by the October 28 authorisation. Historical text below is preserved; earlier approval-pending and composition statements are superseded by this explicit owner direction.
 
 
 **Handoff ID:** CONTRA-HO-2026-10-27-V12  
@@ -33,7 +33,7 @@ UX3A is APPROVED and FROZEN at bee5a7481d56c86d4c9860280b8367f82af0cb5a. The app
 
 ## Your mission
 
-Build CONTRA as a NEAR-native adjudication proof of concept. Conventional NEAR Rust contracts must coordinate escrow, reviewer authentication, votes, disputes, deadlines, appeals and settlement. Independent offchain evaluators generate evidence-bound judgments that can be falsified or challenged. Our research question is whether useful decentralized AI adjudication requires a specialized AI blockchain. Do not assert that this prototype matches GenLayer's full security model.
+Build CONTRA as a NEAR-native contestation proof of concept. Conventional NEAR Rust contracts must coordinate escrow, reviewer authentication, votes, disputes, deadlines, appeals and settlement. Independent offchain evaluators generate evidence-bound judgments that can be falsified or challenged. Our research question is whether useful decentralized AI contestation requires a specialized AI blockchain. Do not assert that this prototype matches GenLayer's full security model.
 
 **Immediate priority:** Turn the owner's exact accepted screenshot into a faithful, functional graph-first CONTRA The Bench design, while preserving the supplied image with ZERO modifications. Then use the accepted design as the November 1 engineering reference.
 
@@ -52,11 +52,11 @@ Do not reopen accepted naming, thesis, palette, visual direction, spending alloc
 
 ## Absolute source-image preservation rule
 
-- The file `design/reference/control-ai-policy-dashboard.jpeg` is the **exact user-uploaded image**. Copy and store it unchanged. Do not crop, resize, recompress, recolor, filter, redraw, annotate, overlay, enhance, denoise, generate a substitute, or edit its bytes in any way.
+- The file `design/reference/control-ai-policy-dashboard.jpeg` is the **exact user-uploaded image**. Copy and store it unchanged. Do not crop, resize, recompress, recolour, filter, redraw, annotate, overlay, enhance, denoise, generate a substitute, or edit its bytes in any way.
 - Original format: JPEG, 1200 x 900 pixels. Original SHA-256: `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`.
 - Before and after any branch, packaging or handoff, check `sha256sum design/reference/control-ai-policy-dashboard.jpeg` against that checksum. A mismatch is an immediate failure. Do not commit a changed image.
 - The source screenshot is an immutable **design reference**, not a substitute for live product UI. Render the visual components as new code, using true CONTRA data and the approved NEAR palette. Do not embed the screenshot as a fake product screen or use it to conceal nonfunctional interactions.
-- For side-by-side QA, show the source image in its original 4:3 aspect ratio with `object-fit: contain` and no color effects. Preserve the file unchanged even when the browser scales it for display.
+- For side-by-side QA, show the source image in its original 4:3 aspect ratio with `object-fit: contain` and no colour effects. Preserve the file unchanged even when the browser scales it for display.
 
 ## Exact design mapping
 
@@ -65,8 +65,8 @@ The accepted reference is a 1200 x 900 dark cinematic control dashboard. Preserv
 | Source position | CONTRA implementation | Faithfulness requirement |
 | --- | --- | --- |
 | Top-left tiny icon, brand and hamburger | CONTRA mark, menu, `Built on NEAR` ecosystem attribution | Small, unobtrusive top bar, no bulky header |
-| Top-center floating controls | Graph/list toggle, zoom, fit, evidence filters, layout and search | Compact dark buttons with fine borders, subtle focus and real interactions |
-| Main left/center canvas | Root agreement node with category nodes for criteria, evidence, reviewers, challenges and settlement | Broad open negative space, fine curved luminous links, small precise nodes |
+| Top-centre floating controls | Graph/list toggle, zoom, fit, evidence filters, layout and search | Compact dark buttons with fine borders, subtle focus and real interactions |
+| Main left/centre canvas | Root agreement node with category nodes for criteria, evidence, reviewers, challenges and settlement | Broad open negative space, fine curved luminous links, small precise nodes |
 | Source's highlighted category card | Currently selected evidence or review cluster | Warm/mint perimeter glow, one clear selection, not a wall of cards |
 | Right-top context label | Case identifier, status, round and NEAR network | Single compact contextual title |
 | Tall right-side card | Selected-node evidence/protocol inspector | Same spatial weight, corner treatment, hierarchy and stacked facts |
@@ -76,7 +76,7 @@ The accepted reference is a 1200 x 900 dark cinematic control dashboard. Preserv
 
 **Approximate desktop proportions at 1200 x 900:** graph canvas starts at the left edge and uses about 65% of the width; right context rail occupies about 33%, beginning around x=800 and y=120; first graph/root node sits roughly 12% from the left and 50% down; middle grouping near x=300 to 440; linked leaf column around x=630 to 730; assistant dock near bottom right. The screenshot is the authority for the exact visual balance, not these approximate coordinates.
 
-**The screenshot itself retains its original colors.** Rebuild the product *in code* with approved CONTRA/NEAR tokens: `#00EC97` mint, `#0B1110` obsidian, `#16221D` deep slate, `#F5F7F5` soft white, `#FF8678` challenge coral, `#F4BD68` pending amber. Keep highlights restrained and reserve coral for actual disputes. No gratuitous gradients or generic SaaS card walls.
+**The screenshot itself retains its original colours.** Rebuild the product *in code* with approved CONTRA/NEAR tokens: `#00EC97` mint, `#0B1110` obsidian, `#16221D` deep slate, `#F5F7F5` soft white, `#FF8678` challenge coral, `#F4BD68` pending amber. Keep highlights restrained and reserve coral for actual disputes. No gratuitous gradients or generic SaaS card walls.
 
 ## Functionality must follow the visual graph
 
@@ -84,11 +84,11 @@ The graph is a real evidence/provenance explorer. Edges represent explicitly typ
 
 Case concepts must map correctly: `Agreement -> acceptance criterion -> evidence artifact -> evaluator finding -> objection/challenge -> fresh review -> final settlement`. Do not imply a model's assertion means the case has settled. Show distinct statuses `AI proposed`, `reviewer accepted`, `challenged`, `unresolved`, `transfer pending`, `settled`, and `transfer failed`.
 
-For mobile, preserve the composition's identity using a compact graph, accessible case list and a collapsible bottom-sheet inspector. Keep operation-critical information available at 320px width and 200% text zoom. Ensure keyboard controls, visible focus, reduced-motion mode, and WCAG-conscious contrast. Do not rely on green/red color alone.
+For mobile, preserve the composition's identity using a compact graph, accessible case list and a collapsible bottom-sheet inspector. Keep operation-critical information available at 320px width and 200% text zoom. Ensure keyboard controls, visible focus, reduced-motion mode, and WCAG-conscious contrast. Do not rely on green/red colour alone.
 
 ## Product blueprint and security gates
 
-The MVP is one complete, NEAR-testnet-native escrow case: creator freezes requirements and funds agreement, submitter adds evidence digest, authorized reviewers commit and reveal, provisional judgment triggers a challenge window, independent review can overturn it, and contract settles or refunds only after proper finality. NEAR asynchronous transfers require a verified callback and idempotent recovery; record `SettlementPending` before transferring, and `Settled` only after success.
+The MVP is one complete, NEAR-testnet-native escrow case: creator freezes requirements and funds agreement, submitter adds evidence digest, authorised reviewers commit and reveal, provisional judgment triggers a challenge window, independent review can overturn it, and contract settles or refunds only after proper finality. NEAR asynchronous transfers require a verified callback and idempotent recovery; record `SettlementPending` before transferring, and `Settled` only after success.
 
 The AI workers use Meta for primary evaluation, Baseten for an adversarial second model, and Modal for short-lived verification tasks, subject to actual credit eligibility and verified provider limits. Initial allocations are Meta $3, Baseten $3, Modal $5 out of user-reported $10, $10 and $30 monthly allowances. No unapproved cash spending; no always-on GPUs. Use a server-side budget governor with provider allowlists, token caps, timeouts, idempotency, atomic budget reservations, a persistent usage ledger and fail-closed refusal after budget depletion. An application cap does not replace a provider-side billing hard stop.
 
@@ -96,9 +96,9 @@ Do not confuse multiple reviewer accounts controlled by the same operator with i
 
 ## Timeline and execution sequence
 
-**October 28 onward: Owner-authorized implementation.** Build the working escrow, reviewer, service and frontend product against UX3C and approved UX3A. Label all pre-November-1 code as pre-event work. Deliver tests and screenshots without claiming unavailable Sandbox proof. Never edit the original screenshot.
+**October 28 onward: Owner-authorised implementation.** Build the working escrow, reviewer, service and frontend product against UX3C and approved UX3A. Label all pre-November-1 code as pre-event work. Deliver tests and screenshots without claiming unavailable Sandbox proof. Never edit the original screenshot.
 
-**Nov 1-2: Contract thin slice.** Create Rust `near-sdk` case/fund/refund/release scaffolding, sandbox tests for funded amounts, authorization, async payout callback failures and duplicate attempts; NEAR testnet transaction proof.
+**Nov 1-2: Contract thin slice.** Create Rust `near-sdk` case/fund/refund/release scaffolding, sandbox tests for funded amounts, authorisation, async payout callback failures and duplicate attempts; NEAR testnet transaction proof.
 
 **Nov 3-4: Reviewer protocol.** Commit/reveal with domain-separated hashes, quorum, deadlines, authenticated reviewers and tamper-resistant evidence commitments.
 
@@ -112,7 +112,7 @@ Do not confuse multiple reviewer accounts controlled by the same operator with i
 
 **Nov 13: Submission.** Publish reproducible repo, truthful badges, short screen recording, X demo and official form. Official close is Nov 14 at 23:59 UTC.
 
-If a milestone slips, cut feature scope, not escrow correctness. The assistant box, animated camera polish and complex graph layouts are secondary to a complete adjudication and settlement flow.
+If a milestone slips, cut feature scope, not escrow correctness. The assistant box, animated camera polish and complex graph layouts are secondary to a complete contestation and settlement flow.
 
 ## Required deliverables for the next agent checkpoint
 
@@ -145,4 +145,4 @@ Avoid em dash characters in code, copy, documentation, metadata and commits. Pre
 
 
 ## Repository identity
-The owner assigned GitHub account `kellyxy110` and authorized repository `CONTRA` on 2026-10-28. GitHub verified its current visibility as public on 2026-11-03. Do not change repository visibility, set repository secrets or deploy until separately approved.
+The owner assigned GitHub account `kellyxy110` and authorised repository `CONTRA` on 2026-10-28. GitHub verified its current visibility as public on 2026-11-03. Do not change repository visibility, set repository secrets or deploy until separately approved.

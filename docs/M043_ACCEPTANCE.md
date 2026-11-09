@@ -17,7 +17,7 @@ The initial correction also exposed 31px of concealed middle-column overflow at 
 - The primary Overview keeps case summary, progress, complete radar, primary actions and navigation visible.
 - Overview shows two reviewer summaries, a compact materials count and one recent activity.
 - Full reviewer, evidence and activity records remain available through stable routed workspaces.
-- Desktops at 850px or taller use a centered 810px shell without document-margin overflow.
+- Desktops at 850px or taller use a centreed 810px shell without document-margin overflow.
 - No desktop column uses an independent scrollbar.
 
 ## Phase 1 verification
@@ -60,7 +60,7 @@ Measured zero has a nonzero denominator and displays `0%`. N/A means the measure
 ## Phase 2 lens definitions
 
 - Criteria: Evidence, Provenance, Keyboard and Criteria acceptance records.
-- Evidence: Evidence, Provenance, Review and Quorum adjudication readiness.
+- Evidence: Evidence, Provenance, Review and Quorum contestation readiness.
 - Overall: all eight lifecycle measurements. This is the default.
 
 An excluded sector displays N/A for the selected lens while its underlying numerator, denominator, source and status remain in the metric record.
@@ -91,7 +91,7 @@ The genuine unchallenged case differs at Challenge, which is N/A, and uses prima
 - Label overlap: none in zero, partial and complete rendered states.
 - Case switching: all eight genuine metrics refresh and the two profiles differ.
 
-The required comparison is `project/artifacts/m043/phase2/radar-three-state-comparison.png`. It contains clearly labeled deterministic created/unfunded zero, incomplete fresh-review partial and settled challenged complete fixtures. Individual fixture screenshots, genuine case screenshots and the exact report are stored beside it. Deterministic fixtures are not transactions.
+The required comparison is `project/artifacts/m043/phase2/radar-three-state-comparison.png`. It contains clearly labelled deterministic created/unfunded zero, incomplete fresh-review partial and settled challenged complete fixtures. Individual fixture screenshots, genuine case screenshots and the exact report are stored beside it. Deterministic fixtures are not transactions.
 
 ## Phase 2 gate
 
@@ -101,7 +101,7 @@ PASS. The actual screenshots were inspected after the calculations passed. Phase
 
 Windows Chrome, Playwright Chromium and Firefox each passed 93 viewport checks and 12 interaction checks. The resulting total is 315/315. The matrix uses actual visible browser viewports, not full-page screenshots, at 1536 x 676, 1366 x 768, 1200 x 900, 1440 x 900, 1920 x 1080, 768 x 1024, 390 x 844 and 320 x 844.
 
-Verified behavior includes horizontal overflow, desktop document and column scroll ownership, primary-section boundaries, full radar placement, eight direct metric values, label overlap, readable text, console errors, keyboard navigation through all workspaces, browser Back, Escape, focus restoration and reduced motion. The report is `project/artifacts/m043/phase3/browser-matrix/browser-matrix-report.json`.
+Verified behaviour includes horizontal overflow, desktop document and column scroll ownership, primary-section boundaries, full radar placement, eight direct metric values, label overlap, readable text, console errors, keyboard navigation through all workspaces, browser Back, Escape, focus restoration and reduced motion. The report is `project/artifacts/m043/phase3/browser-matrix/browser-matrix-report.json`.
 
 The existing complete end-to-end suite also passes 54/54 checks. Manual screen-reader testing was not run, is recorded as NOT RUN, and remains an open acceptance item.
 
@@ -135,4 +135,4 @@ All six local reviewer accounts were controlled by one process. This is function
 
 ## Phase 3 gate
 
-PASS at the authorized local engineering scope. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED. AC31 and AC32 remain blocked. Owner visual acceptance is pending and is not claimed.
+PASS at the authorised local engineering scope. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED. AC31 and AC32 remain blocked. Owner visual acceptance is pending and is not claimed.

@@ -58,7 +58,7 @@ PASS. Phase 3 navigation, state, accessibility and full browser verification may
 
 ## Phase 3 result
 
-Major workflows now use stable navigable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Hash routes preserve the selected case, support direct entry and keep browser Back behavior predictable. Dialogs remain limited to focused actions such as account connection, evidence submission and settlement action confirmation.
+Major workflows now use stable navigable views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity. Hash routes preserve the selected case, support direct entry and keep browser Back behaviour predictable. Dialogs remain limited to focused actions such as account connection, evidence submission and settlement action confirmation.
 
 The final end-to-end browser suite passes 54/54 checks. It covers account connect and disconnect, genuine case switching, every stable view, direct navigation, browser Back, focus restoration, evidence actions, material and radar tabs, search, pagination, reload reconciliation, stale reads, unavailable chain, permission denial, service failure, pending and failed transfer states, UNKNOWN payout locking, reduced motion, contrast, effective zoom, tablet and mobile layouts and zero console errors.
 
@@ -72,4 +72,4 @@ Final captures are `project/artifacts/m042/phase3/final-desktop-1200x900.png`, `
 
 ## Phase 3 gate
 
-PASS at the authorized local scope. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED because the new local evidence does not satisfy the separately gated testnet, live provider, external wallet, independent operator or manual screen-reader requirements. Owner visual acceptance remains pending.
+PASS at the authorised local scope. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED because the new local evidence does not satisfy the separately gated testnet, live provider, external wallet, independent operator or manual screen-reader requirements. Owner visual acceptance remains pending.

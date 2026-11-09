@@ -18,7 +18,7 @@ Writes allowed strictly BEFORE their end timestamp. At equality, that phase is e
 
 ## Transition table
 
-| Current state / guard | Authorized method | New state / deterministic effect |
+| Current state / guard | Authorised method | New state / deterministic effect |
 | --- | --- | --- |
 | No case, valid unique request | create_case | Draft with immutable terms/snapshots; beneficiary_accepted=false; no principal |
 | Draft, beneficiary matches digest, now<fund_by | accept_terms | Draft, beneficiary_accepted=true; no principal |
@@ -43,26 +43,26 @@ Writes allowed strictly BEFORE their end timestamp. At equality, that phase is e
 | Unresolved base, now>=fresh_reveal_end | finalize_case | Final disposition=REJECT, basis=BASE_REFUND -> SettlementPending for creator refund |
 | Unresolved fresh, now>=fresh_reveal_end | finalize_case | Final disposition=original decisive primary, basis=KEEP_PRIMARY -> SettlementPending for corresponding recipient |
 | Resolved, now>=fresh_reveal_end | finalize_case | Fresh final disposition/basis=FRESH -> SettlementPending |
-| SettlementPending, matching authorized callback, actual transfer successful | on_payout_complete | Settled; record successful intent/attempt, no further payment |
-| SettlementPending, matching authorized callback, actual transfer Failed | on_payout_complete | TransferFailed; mark attempt FAILED; retain immutable claim for same recipient |
+| SettlementPending, matching authorised callback, actual transfer successful | on_payout_complete | Settled; record successful intent/attempt, no further payment |
+| SettlementPending, matching authorised callback, actual transfer Failed | on_payout_complete | TransferFailed; mark attempt FAILED; retain immutable claim for same recipient |
 | SettlementPending, callback missing/failed/unexpected result | No safe outcome transition in MVP | Remain SettlementPending, last attempt UNKNOWN, no retry; receipt monitor may flag unknown without changing payout authority |
 | TransferFailed, matching intent/attempt, liquidity/gas available | retry_payout | SettlementPending, increment attempt; schedule same amount/recipient only |
 
 advance_round normalizes directly to the phase/result due NOW, with at most two rounds and bounded fixed-size checks. It never opens a fresh round without a recorded challenge. finalize_case runs the same bounded normalization first so a missing keeper cannot force stale-state denial; no native transfer until resulting state is eligible. file_challenge and vote methods do NOT pretend that an earlier client phase is valid: if phase needs advancing first, E_PHASE, refresh/advance and retry only if still before deadline. Failed normalization inside a rejected transaction cannot be treated as persisted state by UI.
 
-Once primary decisive result is calculated, store primary_disposition permanently even when finalization is much later. Never discard its validity merely because the observer called advance_round after challenge_end. Once fresh resolution is calculated, store final outcome immutably; subsequent methods cannot choose new votes/policy. Terminal Cancelled and Settled are read-only except idempotent matching replays. No admin path changes funded terms, committee, recipient, final verdict or pending status.
+Once primary decisive result is calculated, store primary_disposition permanently even when finalisation is much later. Never discard its validity merely because the observer called advance_round after challenge_end. Once fresh resolution is calculated, store final outcome immutably; subsequent methods cannot choose new votes/policy. Terminal Cancelled and Settled are read-only except idempotent matching replays. No admin path changes funded terms, committee, recipient, final verdict or pending status.
 
 ## Challenge-abuse safeguard and fallback amendment
 
 The old single creator-refund fallback is economically exploitable: a creator loses primary review (ACCEPT), challenges and induces fresh reviewers to withhold, then receives the principal on timeout. A fixed deadline or one-challenge cap alone limits delay but does not remove this financial incentive. Requiring a digest cannot prove a counterexample has merit.
 
-UX3C therefore narrows the fallback. BASE_REFUND_V1 applies only when the original adjudication never produced a decisive quorum, including absent delivery. KEEP_PRIMARY_V1 applies when a valid decisive primary result is challenged but fresh review is inconclusive. An inconclusive challenge does not convert ACCEPT to a creator refund, or REJECT to a beneficiary payment. Only a decisive fresh quorum can change the recipient. This is a deliberate documented amendment to the old fresh-review unresolved refund interpretation, not a silent reuse of it. State Unresolved can coexist with a payout based on the preserved primary decision; UI must say `Fresh review inconclusive; prior verdict retained`, never `fresh reviewers accepted`.
+UX3C therefore narrows the fallback. BASE_REFUND_V1 applies only when the original contestation never produced a decisive quorum, including absent delivery. KEEP_PRIMARY_V1 applies when a valid decisive primary result is challenged but fresh review is inconclusive. An inconclusive challenge does not convert ACCEPT to a creator refund, or REJECT to a beneficiary payment. Only a decisive fresh quorum can change the recipient. This is a deliberate documented amendment to the old fresh-review unresolved refund interpretation, not a silent reuse of it. State Unresolved can coexist with a payout based on the preserved primary decision; UI must say `Fresh review inconclusive; prior verdict retained`, never `fresh reviewers accepted`.
 
 Other safeguards: exactly one challenge per case; only the party disadvantaged by the primary result may file; specific existing criterion and distinct nonzero counterexample digest; six eligible distinct-operator reviewers selected/snapshotted before funding; no replacements or outcome-dependent appointment; immutable maximum deadline; both parties consent to the two fallback policies. No new token, challenge bond, slashable stake or automated merit filter in v1. Challenger pays only normal gas and one-yocto confirmation. Frivolous challenge can still delay payout until the fixed fresh deadline. Corrupt fresh reviewers can still reverse outcomes; the protocol cannot guarantee factual truth. See threat model for this residual risk.
 
 ## Invariant interpretation
 
-I1-I6/I8-I9 retain their original meanings. I7's bounded liveness applies to adjudication, not unknowable asynchronous payment outcome: every review path has a bounded decision policy once someone calls a keeper method; it cannot promise payment finality under callback failure. I10 recovery guarantees apply to VERIFIED_FAILED transfer attempts only. Unknown transfer results deliberately sacrifice liveness to preserve I2 (no double payout). The owner explicitly permits documenting this MVP limitation; no timeout, admin assertion or RPC observation is a substitute for contract-authenticated outcome evidence.
+I1-I6/I8-I9 retain their original meanings. I7's bounded liveness applies to contestation, not unknowable asynchronous payment outcome: every review path has a bounded decision policy once someone calls a keeper method; it cannot promise payment finality under callback failure. I10 recovery guarantees apply to VERIFIED_FAILED transfer attempts only. Unknown transfer results deliberately sacrifice liveness to preserve I2 (no double payout). The owner explicitly permits documenting this MVP limitation; no timeout, admin assertion or RPC observation is a substitute for contract-authenticated outcome evidence.
 
 ## Required state tests (not executed)
 

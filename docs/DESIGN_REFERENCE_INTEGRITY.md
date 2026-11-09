@@ -22,8 +22,8 @@ Expected digest:
 ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a
 ```
 
-Do not crop, replace, adjust color, modify metadata, compress, annotate or upscale the file. Any re-encoding that changes bytes fails the check. Render it unmodified as an internal design reference; implement a separate coded CONTRA UI that adopts the layout and NEAR-aligned palette. Do not present the static screenshot as an interactive product.
+Do not crop, replace, adjust colour, modify metadata, compress, annotate or upscale the file. Any re-encoding that changes bytes fails the check. Render it unmodified as an internal design reference; implement a separate coded CONTRA UI that adopts the layout and NEAR-aligned palette. Do not present the static screenshot as an interactive product.
 
-The source screenshot's original colors and contents must stay intact in the reference file. Changing colors in the newly implemented interface is authorized. Changing colors inside the image is not.
+The source screenshot's original colours and contents must stay intact in the reference file. Changing colours in the newly implemented interface is authorised. Changing colours inside the image is not.
 
 Both reference files must retain exactly this SHA-256: `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`.
