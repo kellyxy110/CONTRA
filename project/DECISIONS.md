@@ -1,12 +1,20 @@
 # Decision ledger
 
+## D-080 | Contestation is the canonical protocol identity | 2026-11-09
+
+ACCEPTED. Current product, source, build and documentation language uses Contestation. The active Rust package is `contra-contestation` in `contracts/contestation/`, and the production artifact is `contra_contestation.wasm`. Reviewers remain Reviewers; AI components are evaluators and never resolution authorities. The migration does not change contract methods, state layout, serialized data, commitment domains, transaction identities, deadlines, settlement or payout rules. Machine-generated historical evidence retains its original bytes and names. Active-tree CI rejects the obsolete term outside that evidence boundary.
+
+## D-079 | Remediate the Sandbox archive chain with tested transitive overrides | 2026-11-09
+
+ACCEPTED. Retain the `near-workspaces` compatible `near-sandbox@0.1.5` interface and override its transitive archive parser to `tar@7.5.22`. Replacing the Sandbox package broke its required legacy install subpath during a clean Linux install. The prior tar path contained one critical and two high findings and was reachable during installation. The patched path must pass complete Linux Sandbox, journey and financial verification before M07 completion. Fifteen low findings remain in the NEAR JavaScript cryptography and wallet graph and stay disclosed.
+
 ## D-078 | M06 controlled integration is accepted without live-integration claims | 2026-11-08
 
 ACCEPTED. The green connected gate establishes that the durable wallet simulation, reviewer-control services, provider fixtures, persistence and real local NEAR Sandbox contract can operate together through challenge, timeout and settlement. It does not establish live wallet signing, external provider interoperability, independent reviewer operators, testnet deployment or production readiness. Preserve the archived environment boundary and keep the acceptance baseline unchanged until AC01 through AC33 are individually reevaluated. Full Financial P0 is unnecessary for this gate because it changed no contract or financial invariant; the passing nine-test Sandbox baseline and prior F01 through F18 evidence remain intact.
 
 ## D-077 | The controlled workflow preserves explicit execution boundaries | 2026-11-08
 
-ACCEPTED. The M06 connected gate must use actual local NEAR Sandbox transactions for contract-sensitive creation, funding, reviewer commit and reveal, challenge, finalization and payout assertions. External-wallet handoff and callback behavior remains a simulation with zero signing or broadcast. Meta, Baseten and Modal remain deterministic mocked transports with zero endpoint access or billing. AI artifacts are immutable proposals only and must not create commitments, reveals, transactions, verdicts or settlement. The complete runner records receipts, durable operations, reviewer audit history, failure paths and exact balance changes as CI artifacts. Changes to this runner and its routing default to the full Integration gate.
+ACCEPTED. The M06 connected gate must use actual local NEAR Sandbox transactions for contract-sensitive creation, funding, reviewer commit and reveal, challenge, finalisation and payout assertions. External-wallet handoff and callback behaviour remains a simulation with zero signing or broadcast. Meta, Baseten and Modal remain deterministic mocked transports with zero endpoint access or billing. AI artifacts are immutable proposals only and must not create commitments, reveals, transactions, verdicts or settlement. The complete runner records receipts, durable operations, reviewer audit history, failure paths and exact balance changes as CI artifacts. Changes to this runner and its routing default to the full Integration gate.
 
 ## D-076 | Green protected engineering units merge without a repeated approval cycle | 2026-11-08
 
@@ -28,19 +36,19 @@ Reviewer source and `tests/m06-reviewer*.test.mjs` changes select the maintained
 
 Every pull request receives a recorded integration classification from a maintained path mapping. Fast means no Sandbox execution was required and does not claim a Sandbox pass. Focused runs named onchain scenarios. Full runs the nine-test baseline and both complete journeys on isolated parallel runners. Unknown paths, integration into `main`, release candidates and scheduled verification default to full. F01 through F18 remain a separate financial gate. The 90-minute Sandbox timeout remains until measured evidence supports a change.
 
-## D-071 | Finalized transaction identity must come from independent RPC proof | 2026-11-07
+## D-071 | Finalised transaction identity must come from independent RPC proof | 2026-11-07
 
-ACCEPTED: never infer a transaction hash from the hash used to make the RPC request. A finalized result must contain its own valid NEAR transaction hash and that hash must exactly equal the persisted operation hash. Before confirmation, independently verify network, final execution status, signer, contract receiver, exactly one expected FunctionCall action, method, canonical arguments, gas, deposit, final block identity and non-stale observation. Missing or contradictory integrity proof locks the operation UNKNOWN. A wallet-returned hash that has not reached the server is recovery evidence only: retain it by account and attach it through the idempotent callback after reload, without signing or broadcasting again.
+ACCEPTED: never infer a transaction hash from the hash used to make the RPC request. A finalised result must contain its own valid NEAR transaction hash and that hash must exactly equal the persisted operation hash. Before confirmation, independently verify network, final execution status, signer, contract receiver, exactly one expected FunctionCall action, method, canonical arguments, gas, deposit, final block identity and non-stale observation. Missing or contradictory integrity proof locks the operation UNKNOWN. A wallet-returned hash that has not reached the server is recovery evidence only: retain it by account and attach it through the idempotent callback after reload, without signing or broadcasting again.
 
 ## D-070 | Wallet handoff and receipt success require durable server evidence | 2026-11-07
 
-ACCEPTED: a prepared external-wallet intent is not signable. Persist a one-way `PREPARED` to `SIGNING` handoff before invoking the wallet, and release a signing request only when an explicit server authorization gate is enabled. After handoff, browser rejection, closure, timeout and missing redirect are not proof that broadcast did not occur and must lock `UNKNOWN` until the original hash is recovered. A transaction becomes `CONFIRMED` only when a matching finalized RPC response explicitly contains a supported NEAR success result and a current final block identity. Preserve unresolved browser recovery identifiers by account. Keep live signing disabled in normal runtime configuration.
+ACCEPTED: a prepared external-wallet intent is not signable. Persist a one-way `PREPARED` to `SIGNING` handoff before invoking the wallet, and release a signing request only when an explicit server authorisation gate is enabled. After handoff, browser rejection, closure, timeout and missing redirect are not proof that broadcast did not occur and must lock `UNKNOWN` until the original hash is recovered. A transaction becomes `CONFIRMED` only when a matching finalised RPC response explicitly contains a supported NEAR success result and a current final block identity. Preserve unresolved browser recovery identifiers by account. Keep live signing disabled in normal runtime configuration.
 
 This decision corrects D-069's overly broad rejection wording. Terminal `FAILED` rejection is permitted only before signing handoff. After handoff, conservative `UNKNOWN` handling is mandatory.
 
-## D-069 | Interrupted wallet authorization locks until evidence arrives | 2026-11-07
+## D-069 | Interrupted wallet authorisation locks until evidence arrives | 2026-11-07
 
-ACCEPTED: persist and validate an external-wallet intent before invoking signing. Treat explicit rejection as FAILED only when no transaction hash exists. Treat a wallet timeout, closed redirect or other missing completion as UNKNOWN because broadcast cannot be disproved. Never redispatch that UNKNOWN operation. Permit only a delayed callback carrying the first valid transaction hash to move it into receipt reconciliation. Confirm only after finalized RPC evidence matches network, hash, signer, contract, single function-call method, arguments and deposit. Reject lower block observations and conflicting operation payloads or hashes. Preserve existing Sandbox UNKNOWN recovery unchanged.
+ACCEPTED: persist and validate an external-wallet intent before invoking signing. Treat explicit rejection as FAILED only when no transaction hash exists. Treat a wallet timeout, closed redirect or other missing completion as UNKNOWN because broadcast cannot be disproved. Never redispatch that UNKNOWN operation. Permit only a delayed callback carrying the first valid transaction hash to move it into receipt reconciliation. Confirm only after finalised RPC evidence matches network, hash, signer, contract, single function-call method, arguments and deposit. Reject lower block observations and conflicting operation payloads or hashes. Preserve existing Sandbox UNKNOWN recovery unchanged.
 
 VERIFIED: PR 4 Core `42373449517`, Security `42373449483` and Integration `42373449454` passed on code commit `379ff4e0111336da33579357a08c341ce6273dcb`. Keep the PR unmerged until explicit owner approval.
 
@@ -66,11 +74,11 @@ ACCEPTED: remove superseded standalone studies, capture wrappers and visual-only
 
 ## D-063 | Live hackathon rules govern eligibility and tracks | 2026-11-07
 
-ACCEPTED: treat the live `nearhackathon.com/HACKATHON.md` as the governing eligibility and submission source. Current Q-001 makes code since the 2026-10-19 announcement eligible. Preserve the factual 2026-10-28 CONTRA implementation start without relabelling history. Prioritize track `security` and include `open` as an additional applicable track. Recheck the live rules before submission, display the complete payload for owner approval and submit only once.
+ACCEPTED: treat the live `nearhackathon.com/HACKATHON.md` as the governing eligibility and submission source. Current Q-001 makes code since the 2026-10-19 announcement eligible. Preserve the factual 2026-10-28 CONTRA implementation start without relabelling history. Prioritise track `security` and include `open` as an additional applicable track. Recheck the live rules before submission, display the complete payload for owner approval and submit only once.
 
 ## D-062 | Runtime selection and persistence fail closed | 2026-11-07
 
-ACCEPTED: application startup must explicitly select `unavailable`, `sandbox` or `testnet`. Testnet startup validates URL, network identity, node synchronization, contract account, deployed code and finalized block access before serving. Durable state uses versioned SQLite plus content-addressed files with integrity checks. Any interrupted nonterminal operation becomes `UNKNOWN` on restart and cannot be presented as confirmed or blindly retried.
+ACCEPTED: application startup must explicitly select `unavailable`, `sandbox` or `testnet`. Testnet startup validates URL, network identity, node synchronization, contract account, deployed code and finalised block access before serving. Durable state uses versioned SQLite plus content-addressed files with integrity checks. Any interrupted nonterminal operation becomes `UNKNOWN` on restart and cannot be presented as confirmed or blindly retried.
 
 ## D-061 | M05 through M07 product completion supersedes active visual gates | 2026-11-07
 
@@ -78,11 +86,11 @@ ACCEPTED: suspend UI polish, radar refinement, screenshot comparison and demo pr
 
 ## D-060 | M04.3 local browser gate complete with owner acceptance separate | 2026-11-04
 
-ACCEPTED: complete the M04.3 local engineering gate because all three phases pass sequentially, actual rendered screenshots were inspected, three browser engines pass the full viewport matrix, and both real local Sandbox journeys still settle correctly. Keep owner visual acceptance and manual screen-reader review as separate open gates. Keep AC31 and AC32 blocked until their frozen testnet and live-provider requirements are separately authorized and proven. A local controlled six-account run is not reviewer independence evidence.
+ACCEPTED: complete the M04.3 local engineering gate because all three phases pass sequentially, actual rendered screenshots were inspected, three browser engines pass the full viewport matrix, and both real local Sandbox journeys still settle correctly. Keep owner visual acceptance and manual screen-reader review as separate open gates. Keep AC31 and AC32 blocked until their frozen testnet and live-provider requirements are separately authorised and proven. A local controlled six-account run is not reviewer independence evidence.
 
 ## D-059 | Radar status and lens semantics are explicit | 2026-11-04
 
-ACCEPTED: measured zero is a valid `0%` with a nonzero denominator. `N/A` means the measurement does not apply, `Locked` means protected records require participant authorization, `Unavailable` means retrieval failed, and `Missing` means an expected record was not returned. None of these non-measured states may render as measured zero. Criteria, Evidence and Overall are scoped lenses, not cosmetic tabs: Criteria covers acceptance records, Evidence covers adjudication readiness and Overall covers all eight lifecycle sectors. Each rendered metric retains exact numerator, denominator, source, status and observation time. Coverage remains separate from model confidence, evidence truthfulness and settlement authority.
+ACCEPTED: measured zero is a valid `0%` with a nonzero denominator. `N/A` means the measurement does not apply, `Locked` means protected records require participant authorisation, `Unavailable` means retrieval failed, and `Missing` means an expected record was not returned. None of these non-measured states may render as measured zero. Criteria, Evidence and Overall are scoped lenses, not cosmetic tabs: Criteria covers acceptance records, Evidence covers contestation readiness and Overall covers all eight lifecycle sectors. Each rendered metric retains exact numerator, denominator, source, status and observation time. Coverage remains separate from model confidence, evidence truthfulness and settlement authority.
 
 ## D-058 | Primary desktop workspace must fit the visible short viewport | 2026-11-04
 
@@ -90,7 +98,7 @@ ACCEPTED: the Overview at 1536 x 676 must fit case summary, progress, complete r
 
 ## D-057 | Stable routed workspaces complete the M04.2 local frontend gate | 2026-11-03
 
-ACCEPTED: major workflows use stable navigable views with direct hash routes and selected-case context. Dialogs remain for focused actions only. Complete the M04.2 local frontend gate because the sequential responsive, operational radar and end-to-end verification gates pass without changing UX3C protocol or P0 financial safeguards. Keep owner visual acceptance, manual assistive-technology review, external wallet behavior, authorized testnet execution, paid providers and genuinely independent reviewer operators as separate gates. Record Linux Chromium as blocked when its browser binary cannot be downloaded; do not infer a pass from Windows Chromium.
+ACCEPTED: major workflows use stable navigable views with direct hash routes and selected-case context. Dialogs remain for focused actions only. Complete the M04.2 local frontend gate because the sequential responsive, operational radar and end-to-end verification gates pass without changing UX3C protocol or P0 financial safeguards. Keep owner visual acceptance, manual assistive-technology review, external wallet behaviour, authorised testnet execution, paid providers and genuinely independent reviewer operators as separate gates. Record Linux Chromium as blocked when its browser binary cannot be downloaded; do not infer a pass from Windows Chromium.
 
 ## D-056 | Radar progress requires operational records | 2026-11-03
 
@@ -102,7 +110,7 @@ ACCEPTED: the owner rejected the three independently scrolling desktop columns i
 
 ## D-054 | M04.1 local frontend gate complete with external acceptance separate | 2026-11-03
 
-ACCEPTED: complete M04.1 at the local frontend scope because all three sequential gates pass against empty and genuine populated states, browser tooling is portable, the approved 1200 geometry is exact, responsive and radar acceptance matrices pass, and the complete local journeys remain valid. Keep owner visual acceptance, manual assistive-technology review, external wallet behavior, testnet cases, paid providers and independent reviewer operators separate. Do not convert the failed Cargo dependency-fetch attempt into a contract test result; preserve the accepted M03 evidence because no contract source changed. Record unresolved upstream NEAR Sandbox dependency audit findings without applying breaking downgrades that weaken the verified environment.
+ACCEPTED: complete M04.1 at the local frontend scope because all three sequential gates pass against empty and genuine populated states, browser tooling is portable, the approved 1200 geometry is exact, responsive and radar acceptance matrices pass, and the complete local journeys remain valid. Keep owner visual acceptance, manual assistive-technology review, external wallet behaviour, testnet cases, paid providers and independent reviewer operators separate. Do not convert the failed Cargo dependency-fetch attempt into a contract test result; preserve the accepted M03 evidence because no contract source changed. Record unresolved upstream NEAR Sandbox dependency audit findings without applying breaking downgrades that weaken the verified environment.
 
 ## D-053 | Radar coverage remains a sourced segmented measurement | 2026-11-03
 
@@ -114,7 +122,7 @@ ACCEPTED: keep the approved 1200 x 900 UX3A shell geometry exact while allowing 
 
 ## D-051 | M04 local integration complete, external acceptance gates remain | 2026-11-03
 
-ACCEPTED: complete M04 Priority 2 at the authorized local scope because both required Sandbox journeys pass through the integrated API with structured evidence, authenticated reviewer operations, persisted transaction histories, exact balance deltas and callback-confirmed settlement. The challenged journey produces a different final verdict. Keep AC01-AC33 statuses separate: 20 PASS, 11 PARTIAL and 2 BLOCKED. Do not mark AC31 or AC32 passed because their frozen text requires authorized testnet and actual provider records. Do not claim the six local reviewer accounts are independent. Repository visibility is a verified public fact, not a setting changed by this milestone. Owner visual acceptance remains separate.
+ACCEPTED: complete M04 Priority 2 at the authorised local scope because both required Sandbox journeys pass through the integrated API with structured evidence, authenticated reviewer operations, persisted transaction histories, exact balance deltas and callback-confirmed settlement. The challenged journey produces a different final verdict. Keep AC01-AC33 statuses separate: 20 PASS, 11 PARTIAL and 2 BLOCKED. Do not mark AC31 or AC32 passed because their frozen text requires authorised testnet and actual provider records. Do not claim the six local reviewer accounts are independent. Repository visibility is a verified public fact, not a setting changed by this milestone. Owner visual acceptance remains separate.
 
 ## D-050 | Reviewer control is disclosed separately from account count | 2026-11-03
 
@@ -122,7 +130,7 @@ ACCEPTED: reviewer registry records are joined to canonical disclosure artifacts
 
 ## D-049 | Persist transaction lifecycle and final-read provenance | 2026-11-03
 
-ACCEPTED: every local signed operation records an ordered lifecycle from preparation through a terminal or unknown state. Operation ID and payload hash enforce idempotency; transaction hash and receipt remain linked to the initiating account. Reload reconciliation reads the durable server record. UNKNOWN remains locked and is never translated into failure or retry permission. Contract views used by The Bench carry finality, block identity and observation time so stale data can be disclosed. External testnet signing remains disabled without separate authorization.
+ACCEPTED: every local signed operation records an ordered lifecycle from preparation through a terminal or unknown state. Operation ID and payload hash enforce idempotency; transaction hash and receipt remain linked to the initiating account. Reload reconciliation reads the durable server record. UNKNOWN remains locked and is never translated into failure or retry permission. Contract views used by The Bench carry finality, block identity and observation time so stale data can be disclosed. External testnet signing remains disabled without separate authorisation.
 
 ## D-048 | Structured evidence manifests are append-only case records | 2026-11-03
 
@@ -130,7 +138,7 @@ ACCEPTED: `CONTRA_EVIDENCE_V1` is the Priority 2 evidence envelope. Every manife
 
 ## D-047 | P0 financial gate complete, AC acceptance remains separate | 2026-11-03
 
-The clean compatible-host `npm run test:p0` execution exited 0 with the nine-test baseline at 9/9 and F01-F18 at 18/18. Accept this as completion of the M03 P0 financial verification gate, supported by raw receipts, account snapshots, gas and storage measurements. Do not treat it as automatic AC01-AC33 acceptance, testnet authorization, independent reviewer proof or provider readiness. Preserve UNKNOWN payout locks and production/fault export separation. Priority 2 may begin under existing wallet, reviewer, provider, secret and spending restrictions. October 28 implementation remains pre-event; the F17 timeout correction and final verification are November 3 competition-window work.
+The clean compatible-host `npm run test:p0` execution exited 0 with the nine-test baseline at 9/9 and F01-F18 at 18/18. Accept this as completion of the M03 P0 financial verification gate, supported by raw receipts, account snapshots, gas and storage measurements. Do not treat it as automatic AC01-AC33 acceptance, testnet authorisation, independent reviewer proof or provider readiness. Preserve UNKNOWN payout locks and production/fault export separation. Priority 2 may begin under existing wallet, reviewer, provider, secret and spending restrictions. October 28 implementation remains pre-event; the F17 timeout correction and final verification are November 3 competition-window work.
 
 ## D-045 | M03 financial gate and execution evidence | 2026-10-29
 
@@ -142,25 +150,25 @@ Owner explicitly requested removal of hardcoded human photographs from active fr
 
 ## D-043 - Preserve financial execution gate and truthful integration states
 
-Accepted 2026-10-28: continue owner-authorized source implementation while Sandbox is blocked by the host hard descriptor limit. SDK tests, Wasm builds and browser geometry do not authorize financial acceptance. No alternate runtime result, fixture receipt or blind UNKNOWN payout retry may substitute for real Sandbox proof. Frontend source reuses frozen UX3A geometry/assets with disclosed October 28 pre-event provenance; reference files remain unchanged. Missing chain/service/per-criterion evidence is unavailable/N/A. External wallets and paid providers remain gated and unverified, with initial credit ceilings unchanged.
+Accepted 2026-10-28: continue owner-authorised source implementation while Sandbox is blocked by the host hard descriptor limit. SDK tests, Wasm builds and browser geometry do not authorize financial acceptance. No alternate runtime result, fixture receipt or blind UNKNOWN payout retry may substitute for real Sandbox proof. Frontend source reuses frozen UX3A geometry/assets with disclosed October 28 pre-event provenance; reference files remain unchanged. Missing chain/service/per-criterion evidence is unavailable/N/A. External wallets and paid providers remain gated and unverified, with initial credit ceilings unchanged.
 
 ## D-042 - Owner authorizes October 28 implementation
 
-Accepted 2026-10-28: remove the internal November 1 implementation restriction. Start actual engineering now against frozen UX3C and approved UX3A, retaining The Bench naming and historical records. All October 28 implementation is pre-event work. Sandbox only; testnet deployment, paid inference and production secrets still require separate authorization. Credit ceilings remain Meta $3, Baseten $3, Modal $5. SDK tests do not establish Sandbox financial correctness; UNKNOWN payouts remain non-retryable.
+Accepted 2026-10-28: remove the internal November 1 implementation restriction. Start actual engineering now against frozen UX3C and approved UX3A, retaining The Bench naming and historical records. All October 28 implementation is pre-event work. Sandbox only; testnet deployment, paid inference and production secrets still require separate authorisation. Credit ceilings remain Meta $3, Baseten $3, Modal $5. SDK tests do not establish Sandbox financial correctness; UNKNOWN payouts remain non-retryable.
 
 Use ACCEPTED, PROPOSED or BLOCKED as the status. Do not silently change an accepted decision. Supersede it by appending a new decision entry.
 
 | ID | Status | Decision | Reason | Date |
 | --- | --- | --- | --- | --- |
 | D-001 | ACCEPTED | Project name: CONTRA | Short, adversarial, protocol-ready | 2026-10-27 |
-| D-002 | ACCEPTED | Core thesis: adjudication via conventional NEAR contracts and offchain AI | Challenge architectural necessity of specialized AI blockchain | 2026-10-27 |
+| D-002 | ACCEPTED | Core thesis: contestation via conventional NEAR contracts and offchain AI | Challenge architectural necessity of specialized AI blockchain | 2026-10-27 |
 | D-003 | ACCEPTED | NEAR testnet first | Safe, demonstrable transactions | 2026-10-27 |
 | D-004 | ACCEPTED | Dark-first palette: #00EC97, #0B1110, #16221D, #F5F7F5, #FF8678, #F4BD68 | Recognizable NEAR mint plus CONTRA challenge identity | 2026-10-27 |
 | D-005 | ACCEPTED | Meta $10 credits; Baseten $10 credits; Modal $30 monthly | User-reported resource pools | 2026-10-27 |
-| D-006 | ACCEPTED | Start with credit allocations $3 Meta, $3 Baseten, $5 Modal; no unauthorized cash spending | Conservative budget and headroom | 2026-10-27 |
+| D-006 | ACCEPTED | Start with credit allocations $3 Meta, $3 Baseten, $5 Modal; no unauthorised cash spending | Conservative budget and headroom | 2026-10-27 |
 | D-007 | ACCEPTED | Versioned logs and checkpoints required for every milestone | Prevent repeated decisions and context loss | 2026-10-27 |
 | D-008 | ACCEPTED | Official submission deadline November 14, 2026 at 23:59 UTC, target November 13 | Leave margin for failed deploys and submission issues | 2026-10-27 |
-| D-009 | PROPOSED | Single Rust escrow and adjudication contract for MVP | Reduce integration risk | 2026-10-27 |
+| D-009 | PROPOSED | Single Rust escrow and contestation contract for MVP | Reduce integration risk | 2026-10-27 |
 | D-010 | PROPOSED | Permissioned three-reviewer pilot with quorum and one challenge review | Honest scoped security model | 2026-10-27 |
 | D-011 | PROPOSED | One native NEAR escrow use case with no token issuance | Complete vertical slice | 2026-10-27 |
 | D-012 | PROPOSED | Browser-first Judgment Room as signature screen | Makes evidence, disagreement and enforcement visible | 2026-10-27 |
@@ -177,7 +185,7 @@ Use ACCEPTED, PROPOSED or BLOCKED as the status. Do not silently change an accep
 
 | ID | Status | Decision | Reason | Date |
 | --- | --- | --- | --- | --- |
-| D-015 | ACCEPTED | User-supplied `design/reference/control-ai-policy-dashboard.jpeg` is the exact visual composition reference for CONTRA. Use cinematic dark graph-first canvas; spatial root-to-leaf relations; low-glow curved links; compact top control bar; contextual right inspection rail; bottom-right assistant input. Recolor with approved NEAR mint, dark teal, coral and amber tokens. | Specific user-selected target supersedes generic dashboard wireframe | 2026-10-27 |
+| D-015 | ACCEPTED | User-supplied `design/reference/control-ai-policy-dashboard.jpeg` is the exact visual composition reference for CONTRA. Use cinematic dark graph-first canvas; spatial root-to-leaf relations; low-glow curved links; compact top control bar; contextual right inspection rail; bottom-right assistant input. Recolour with approved NEAR mint, dark teal, coral and amber tokens. | Specific user-selected target supersedes generic dashboard wireframe | 2026-10-27 |
 | D-016 | PROPOSED | Desktop case view uses a 66/34 graph-and-context split with responsive inspector drawer on mobile. The graph remains a real navigation and evidence inspection system, with text/list accessibility fallback. | Preserve the reference while preventing decorative, unreadable, or inaccessible workflow | 2026-10-27 |
 
 The visual reference supersedes the layout guidance in `docs/UX.md` and the previous `design/judgment-room.html` **for aesthetic and layout direction only**. The original contract/escrow safety logic, states, palette, cost budget and hackathon schedule remain in force. No claim of visual fidelity or browser verification has been established for the legacy prototype.
@@ -186,7 +194,7 @@ The visual reference supersedes the layout guidance in `docs/UX.md` and the prev
 
 | ID | Status | Decision | Reason | Date |
 | --- | --- | --- | --- | --- |
-| D-017 | ACCEPTED | Preserve exact user-uploaded reference image byte-for-byte; no crop, recolor, resize, re-encode, annotations or replacements | Owner explicitly forbade altering the image | 2026-10-27 |
+| D-017 | ACCEPTED | Preserve exact user-uploaded reference image byte-for-byte; no crop, recolour, resize, re-encode, annotations or replacements | Owner explicitly forbade altering the image | 2026-10-27 |
 | D-018 | ACCEPTED | Recreate the image's composition as actual interactive CONTRA UI with approved NEAR palette, never use static source as faux product | Respect visual fidelity and functional integrity simultaneously | 2026-10-27 |
 
 D-017 clarifies D-015. Palette adaptations apply to the newly coded UI ONLY, not the original asset.
@@ -201,7 +209,7 @@ D-017 clarifies D-015. Palette adaptations apply to the newly coded UI ONLY, not
 
 | ID | Status | Decision | Reason | Date |
 | --- | --- | --- | --- | --- |
-| D-020 | ACCEPTED | UX2B browser artifacts and Playwright results are the verification record for the current design study. They do not constitute owner visual acceptance. | Separates measured browser behavior from the owner's approval decision | 2026-10-28 |
+| D-020 | ACCEPTED | UX2B browser artifacts and Playwright results are the verification record for the current design study. They do not constitute owner visual acceptance. | Separates measured browser behaviour from the owner's approval decision | 2026-10-28 |
 
 ## UX2B owner verdict and UX2C recovery | 2026-10-28
 
@@ -210,11 +218,11 @@ D-017 clarifies D-015. Palette adaptations apply to the newly coded UI ONLY, not
 | D-021 | ACCEPTED | UX2B is rejected for visual fidelity. Its 22 passing browser checks remain useful regression evidence only. | The sparse flowchart, oversized inspector, altered relationship rhythm and missing compact fan-out did not reproduce the approved reference | 2026-10-28 |
 | D-022 | PROPOSED | UX2C is the corrected visual candidate for owner review. Do not treat it as accepted until the owner explicitly approves its fresh renders. | Visual acceptance is an owner gate, separate from functional verification | 2026-10-28 |
 
-## Repository creation authorization | 2026-10-28
+## Repository creation authorisation | 2026-10-28
 
 | ID | Status | Decision | Reason | Date |
 | --- | --- | --- | --- | --- |
-| D-023 | ACCEPTED | Create private GitHub repository `kellyxy110/CONTRA`, initialize the current workspace and push the redesign baseline. | Owner explicitly authorized repository creation | 2026-10-28 |
+| D-023 | ACCEPTED | Create private GitHub repository `kellyxy110/CONTRA`, initialize the current workspace and push the redesign baseline. | Owner explicitly authorised repository creation | 2026-10-28 |
 | D-024 | ACCEPTED | Product redesign will follow repository creation. UX2C remains historical visual evidence, not an accepted final design. | Owner rejected the current implementation and stated the product will be redesigned | 2026-10-28 |
 
 
@@ -230,38 +238,38 @@ D-017 clarifies D-015. Palette adaptations apply to the newly coded UI ONLY, not
 
 | ID | Status | Decision | Reason | Date |
 | --- | --- | --- | --- | --- |
-| D-028 | ACCEPTED | UX3A visual design is owner-approved and frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. Preserve its sidebar, three-column layout, radar, cards, typography and NEAR colors. | Explicit owner statement in UX3B request supersedes pending approval records | 2026-10-28 |
+| D-028 | ACCEPTED | UX3A visual design is owner-approved and frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a. Preserve its sidebar, three-column layout, radar, cards, typography and NEAR colours. | Explicit owner statement in UX3B request supersedes pending approval records | 2026-10-28 |
 | D-029 | ACCEPTED | UX3B first delivers functional integration map and engineering acceptance criteria before implementation expands. Complete case-to-settlement journey takes priority; navigation, drawers and workflow screens use frozen visual system. | Explicit owner scope | 2026-10-28 |
 | D-030 | ACCEPTED | Protocol UI must distinguish local/service work, AI proposed findings, contract provisional/challenged states and callback-confirmed settlement. Replace fixtures only as verified live sources become available. | Truthful state requirement | 2026-10-28 |
 | D-031 | PROPOSED | Resolve G01-G07 in the UX3B map: cancellation ABI, committee assignment, refund-state normalization, creation idempotency/events, serialization/deposits, operator independence and callback reconciliation. | Exposes blueprint gaps before dependent implementation without silently changing protocol | 2026-10-28 |
 
-Pre-event design remains separate from eligible-window implementation. No new spending, deployment, secrets or mainnet authorization. API routes and ABI refinements in UX3B are proposals, not deployed interfaces.
+Pre-event design remains separate from eligible-window implementation. No new spending, deployment, secrets or mainnet authorisation. API routes and ABI refinements in UX3B are proposals, not deployed interfaces.
 
 ## UX3C definitive protocol freeze | 2026-10-28
 
-Status ACCEPTED below records engineering decisions finalized under the owner's explicit UX3C instruction, not a claim of deployed/tested code or a new independent security approval. D-031's alternatives are resolved/superseded by this freeze.
+Status ACCEPTED below records engineering decisions finalised under the owner's explicit UX3C instruction, not a claim of deployed/tested code or a new independent security approval. D-031's alternatives are resolved/superseded by this freeze.
 
 | ID | Status | Definitive decision | Engineering test obligation |
 | --- | --- | --- | --- |
 | D-032 | ACCEPTED | G01: creator-only cancel_case in Draft, rejects after funding; beneficiary must accept immutable terms digest before exact funding | ST01/ST08, AC07/23 |
 | D-033 | ACCEPTED | G02: owner-attested and reviewer-confirmed registry; deterministic six eligible distinct declared operators, fixed 3+3, 2-of-3, no funded replacements; insufficient six rejects funding | CM01-CM07, AC12-14/17/18 |
 | D-034 | ACCEPTED | G03: one canonical payout pipeline, no RefundPending; original unresolved -> base creator refund; fresh inconclusive retains primary decisive verdict; decisive fresh result can overturn | ST02-ST08, AC13/16-19 |
-| D-035 | ACCEPTED | G04: creator/request identity persists; immutable Borsh terms digest; exact payload idempotency and successful finalized-receipt typed event streams; immutable creator allowlist for sponsor-funded pilot admission | ID01-ID05/ABI01, AC04-07/24/25/28 |
+| D-035 | ACCEPTED | G04: creator/request identity persists; immutable Borsh terms digest; exact payload idempotency and successful finalised-receipt typed event streams; immutable creator allowlist for sponsor-funded pilot admission | ID01-ID05/ABI01, AC04-07/24/25/28 |
 | D-036 | ACCEPTED | G05: ABI v1 public/private method/type/deposit/serialization/gas policy and domain-separated SHA-256 with shared vote, bundle, creation, terms and intent vectors frozen in six v1 documents | ABI01-ABI04/CV01-CV08, AC05/12/13/33 |
 | D-037 | ACCEPTED | G06: declared operator identities/control disclosures, account confirmations and operator-disjoint fresh review; permissioned pilot is not Sybil-proof or independently decentralized by account count | CM01-CM08, AC10/14/26/29 |
 | D-038 | ACCEPTED | G07: unique immutable intent/recipient/amount, directly linked self-only native-transfer callback, retry only authentic Failed result; no unknown-outcome recovery or unsafe retry in MVP | SR01-SR13, AC19-22/24 |
 | D-039 | ACCEPTED | Challenge abuse: only losing party, one criterion-bound challenge, fixed preselected fresh jury/deadline and KEEP_PRIMARY_V1 on inconclusive fresh review; no new token/bond. Explicitly supersedes fresh-unresolved automatic refund interpretation | ST05/ST06, AC16-18/32 |
-| D-040 | ACCEPTED | I7 bounds adjudication, not payment under callback uncertainty; I10 recovery is verified-failure only. Callback-unknown may strand payment state/funds indefinitely; I2 never bypassed by admin/manual retry | SR05/SR06/SR08, AC22 |
+| D-040 | ACCEPTED | I7 bounds contestation, not payment under callback uncertainty; I10 recovery is verified-failure only. Callback-unknown may strand payment state/funds indefinitely; I2 never bypassed by admin/manual retry | SR05/SR06/SR08, AC22 |
 
-All tests above are specifications and NOT RUN in contract. State/method authority is docs/CONTRACT_ABI_V1.md and its linked v1 companions. Credit limits, separate pre-event design and November 1 source-eligibility boundary remain unchanged. No owner-facing visual redesign or new spending/deployment authorization.
+All tests above are specifications and NOT RUN in contract. State/method authority is docs/CONTRACT_ABI_V1.md and its linked v1 companions. Credit limits, separate pre-event design and November 1 source-eligibility boundary remain unchanged. No owner-facing visual redesign or new spending/deployment authorisation.
 
 ## Product naming update | 2026-10-28
 
 | ID | Status | Decision | Reason | Date |
 | --- | --- | --- | --- | --- |
-| D-041 | ACCEPTED | Rename the active product surface from Judgment Room to The Bench in frontend title/header, active navigation references and product documentation. The name-only substitution is explicitly authorized within the UX3A freeze; all layout, typography, colors, components and assets remain unchanged. | Explicit owner naming instruction | 2026-10-28 |
+| D-041 | ACCEPTED | Rename the active product surface from Judgment Room to The Bench in frontend title/header, active navigation references and product documentation. The name-only substitution is explicitly authorised within the UX3A freeze; all layout, typography, colours, components and assets remain unchanged. | Explicit owner naming instruction | 2026-10-28 |
 
-Historical log entries, archived design prototype paths and protocol method names remain unchanged. Earlier product-name references in historical logs describe their original checkpoints. UX3C remains the active protocol checkpoint; G01-G07 decisions, first November 1 Rust/sandbox milestone, credit limits and execution boundaries are unchanged. No redesign or additional feature is authorized by this naming update.
+Historical log entries, archived design prototype paths and protocol method names remain unchanged. Earlier product-name references in historical logs describe their original checkpoints. UX3C remains the active protocol checkpoint; G01-G07 decisions, first November 1 Rust/sandbox milestone, credit limits and execution boundaries are unchanged. No redesign or additional feature is authorised by this naming update.
 
 ## IMPL-M03 Sandbox execution | 2026-10-29
 

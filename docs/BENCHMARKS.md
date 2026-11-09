@@ -1,6 +1,6 @@
 # Evaluation design
 
-Research goal: test whether adversarial review improves the reliability of disputed judgments under an application-level NEAR adjudication protocol.
+Research goal: test whether adversarial review improves the reliability of disputed judgments under an application-level NEAR contestation protocol.
 
 ## Three controlled baselines
 
@@ -27,7 +27,7 @@ Keep evidence, model versions, prompts, reviewer budgets, deadlines and scoring 
 - Reviewer disagreement and reversal rate.
 - Time to provisional decision, time to final decision.
 - End-to-end gas paid, inference spend, offchain CPU cost, storage and retry expense.
-- Cost per correctly adjudicated case, excluding cases without defensible ground truth or reporting them separately.
+- Cost per correctly resolved case, excluding cases without defensible ground truth or reporting them separately.
 
 ## Guardrails
 

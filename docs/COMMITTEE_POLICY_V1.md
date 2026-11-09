@@ -40,7 +40,7 @@ On timely challenge, use only the preselected fresh three. No new reviewer selec
 
 ## Required committee tests (not executed)
 
-CM01: Unauthorized set_reviewer/other-account confirmation, old revision, mismatched digest and unconfirmed member all reject (AC04/12/14/29).
+CM01: Unauthorised set_reviewer/other-account confirmation, old revision, mismatched digest and unconfirmed member all reject (AC04/12/14/29).
 CM02: Registry same-update no-op; changed revision resets confirmation; active/confirmed selection is deterministic under insertion order permutations; at most 32 scanned (AC05/14).
 CM03: Five eligible distinct operators -> no funding; six accounts with one common operator -> no funding; parties/contract/party operators excluded; six valid -> exactly 3+3, threshold 2 (AC07/14).
 CM04: Fresh committee accounts AND operator IDs are disjoint from primary; requester cannot supply or reorder members (AC14/17).

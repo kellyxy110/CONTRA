@@ -4,10 +4,10 @@
 
 ```mermaid
 flowchart LR
-    U[Browser + NEAR Wallet] -->|signed user transactions| N[NEAR Rust Adjudication Contract]
+    U[Browser + NEAR Wallet] -->|signed user transactions| N[NEAR Rust Contestation Contract]
     U -->|evidence upload| S[Evidence API + immutable manifest store]
     S --> O[Orchestrator + budget governor]
-    O --> M[Meta adjudicator]
+    O --> M[Meta reviewer]
     O --> B[Baseten counterexample reviewer]
     O --> X[Modal short-lived verification functions]
     M --> R[Structured evidence-bound findings]
@@ -40,7 +40,7 @@ flowchart LR
 - Persist reservations and usage before requests, reconcile to provider invoices and provider-side spend caps.
 - Allowlist models, max token counts, max runtime, max concurrency, one retry and fixed timeouts.
 - Cache replay fixtures. Pre-recorded demos must be labelled recorded.
-- Credit exhaustion: skip live inference; show explicit unavailable state. No automatic spending beyond authorization.
+- Credit exhaustion: skip live inference; show explicit unavailable state. No automatic spending beyond authorisation.
 - Verify actual billing terms, credit eligibility and expiration before a paid call; software cost caps are not substitutes for a provider-side hard limit.
 
 ## Security model
@@ -51,7 +51,7 @@ Onchain security is limited to deterministic rules and NEAR execution. Reviewer 
 
 ```text
 contra/
-  contracts/adjudication/
+  contracts/contestation/
   apps/web/
   services/evaluator-gateway/
   services/evidence/

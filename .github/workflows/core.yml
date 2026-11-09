@@ -35,9 +35,13 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - name: Clean dependency installation
-        run: npm ci --no-audit --no-fund
+        run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Source policy and JavaScript syntax
         run: node scripts/ci-policy.mjs core
+      - name: Documentation links
+        run: node scripts/ci-doc-links.mjs
+      - name: Documentation impact
+        run: node scripts/ci-doc-drift.mjs
       - name: Repository unit and service tests
         run: npm test
       - name: M05 runtime and recovery tests

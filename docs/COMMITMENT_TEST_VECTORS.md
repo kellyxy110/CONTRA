@@ -95,7 +95,7 @@ CV05: Same creator/request in create returns original ID/digest; changed terms/d
 CV06: Changing any criterion, deadline, fallback, party/operator ID, amount, evidence policy or committee snapshot changes terms_digest. Changing any original manifest/counterexample/criterion/case/terms changes fresh bundle hash (AC07/09/15/17).
 CV07: Round-0 V01 cannot be revealed in fresh round; no nonce logging before/after reveal, no production fixture nonce reuse; reveal calldata is publicly visible, not confidential (AC12/17/29).
 
-Local document preparation computes bytes/hashes with Node crypto, independently reconstructs bytes with Python struct/hashlib, and checks the same bytes with OpenSSL. All 12 vote fixtures plus the challenge bundle agree. The initial OpenSSL check lacked a hex-decoder executable, was detected and corrected before reporting success. This is serialization/hash fixture validation only. It does not demonstrate Rust/browser interoperability, authentication, NEAR runtime behavior or sandbox financial invariants. Those tests are mandatory on November 1 or later.
+Local document preparation computes bytes/hashes with Node crypto, independently reconstructs bytes with Python struct/hashlib, and checks the same bytes with OpenSSL. All 12 vote fixtures plus the challenge bundle agree. The initial OpenSSL check lacked a hex-decoder executable, was detected and corrected before reporting success. This is serialization/hash fixture validation only. It does not demonstrate Rust/browser interoperability, authentication, NEAR runtime behaviour or sandbox financial invariants. Those tests are mandatory on November 1 or later.
 
 Reference: [Borsh encoding specification](https://borsh.io/), reviewed 2026-10-28.
 

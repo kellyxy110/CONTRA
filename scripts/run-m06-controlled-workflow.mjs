@@ -34,7 +34,7 @@ const callbacks=await Promise.all([http('wallet/broadcast',{token:walletToken,bo
 evidence.wallet.push({operation_id:walletOperation,prepared:prepared.value.operation.status,handoff:handed.value.operation.status,restart_status:'UNKNOWN',recovered_status:callbacks[0].value.status,tx_hash:txHash,dispatch_count:0,history:store.tx(walletOperation,walletAccount).history});
 await closeServer();
 
-// The adjudication segment uses real local NEAR Sandbox transactions. Provider calls are
+// The contestation segment uses real local NEAR Sandbox transactions. Provider calls are
 // deterministic in-process HTTP fixtures and external wallet signing remains simulated.
 chain=await startSandbox({onReceipt:row=>{evidence.events.push({type:'sandbox-receipt',tx_hash:row.tx_hash,method:row.method,success:row.success});}});
 const fixtureConfig={meta:{name:'meta',available:true,endpoint:'https://fixture.invalid/meta',model:'muse-spark-1.3',key:'fixture-only',maxCostMicro:100},baseten:{name:'baseten',available:true,endpoint:'https://fixture.invalid/baseten',model:'baseten-fixture',key:'fixture-only',maxCostMicro:100},modal:{name:'modal',available:true,endpoint:'https://fixture.invalid/modal',model:'modal-fixture',key:'fixture-only',maxCostMicro:100}};

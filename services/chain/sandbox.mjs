@@ -34,7 +34,7 @@ export async function startSandbox({faults=false,onReceipt=()=>{},longAccounts=f
  const creator=await root.createSubAccount(localName('creator'),{initialBalance:100n*NEAR});
  const beneficiary=await root.createSubAccount(localName('beneficiary'),{initialBalance:100n*NEAR});
  const outsider=await root.createSubAccount(localName('outsider'),{initialBalance:100n*NEAR});
- const contract=await root.devDeploy(path.join(ROOT,'contracts/adjudication/target/wasm32-unknown-unknown',faults?'faults.wasm':'release/contra_adjudication.wasm'),{initialBalance:100n*NEAR});
+ const contract=await root.devDeploy(path.join(ROOT,'contracts/contestation/target/wasm32-unknown-unknown',faults?'faults.wasm':'release/contra_contestation.wasm'),{initialBalance:100n*NEAR});
  await contract.call(contract,'new',{owner_id:creator.accountId,chain_id:'testnet',creator_allowlist:[creator.accountId]},{gas:GAS});
  const reviewers=[];for(let i=0;i<6;i++){const r=await root.createSubAccount(localName('reviewer'+i),{initialBalance:10n*NEAR});reviewers.push(r);const disclosure=sha('Sandbox controlled operator '+i);await creator.call(contract,'set_reviewer',{reviewer_id:r.accountId,operator_id:sha('sandbox-operator-'+i),disclosure_digest:disclosure,active:true},{gas:GAS,attachedDeposit:ONE});await r.call(contract,'confirm_reviewer',{revision:'1',disclosure_digest:disclosure},{gas:GAS,attachedDeposit:ONE});}
  const accounts=[creator,beneficiary,...reviewers,outsider];const byId=new Map(accounts.map(a=>[a.accountId,a]));

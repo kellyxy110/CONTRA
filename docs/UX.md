@@ -52,13 +52,13 @@ Mobile: sidebar becomes top navigation; status and escrow amount remain visible 
 - Funded: funds locked, evidence pending.
 - Reviewing: quorum or reveal window not closed.
 - Provisional: candidate finding with live challenge window.
-- Challenged: adjudication paused for counterexample review.
+- Challenged: contestation paused for counterexample review.
 - Unresolved: insufficient reliable decision; predetermined policy applies.
 - Settlement pending: contract issued payout, callback not yet verified.
 - Settled: chain confirms payout callback succeeded.
 - Transfer failed: payout remains recoverable; no success claim.
 
-## Color semantics
+## Colour semantics
 
 - Mint #00EC97: main interaction, completed settlement or reviewer verified by deterministic checks.
 - Obsidian #0B1110: principal background.
@@ -68,7 +68,7 @@ Mobile: sidebar becomes top navigation; status and escrow amount remain visible 
 - Amber #F4BD68: pending or unresolved.
 - Blue: in-progress review only; never used to imply trust.
 
-No meaning by color alone. Icons and text labels required. Keyboard visible focus, minimum text contrast, reduced motion mode and responsive layout required.
+No meaning by colour alone. Icons and text labels required. Keyboard visible focus, minimum text contrast, reduced motion mode and responsive layout required.
 
 ## Data contract for frontend
 
@@ -80,7 +80,7 @@ No meaning by color alone. Icons and text labels required. Keyboard visible focu
 
 ## UI edge states
 
-Wallet disconnected, wrong chain, funding pending, funding failed, evidence unavailable, missing hash, evaluator offline, reveal expired, quorum failed, challenge deadline reached, duplicate challenge, unauthorized challenge, unresolved by rule, settlement callback delayed, transfer failed, offline data refresh, partial page load.
+Wallet disconnected, wrong chain, funding pending, funding failed, evidence unavailable, missing hash, evaluator offline, reveal expired, quorum failed, challenge deadline reached, duplicate challenge, unauthorised challenge, unresolved by rule, settlement callback delayed, transfer failed, offline data refresh, partial page load.
 
 ## Prototype scope
 

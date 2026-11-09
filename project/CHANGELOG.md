@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M07 Contestation release-candidate preparation
+
+Renamed the active contract directory, Rust crate, production WASM and full journey job to the canonical Contestation identity. Updated all build, Sandbox, test, policy and artifact paths while leaving Rust semantics, ABI, state, commitment vectors and settlement invariants unchanged. Added active-tree terminology enforcement, documentation-link and documentation-impact checks, programme blocker tracking, repository audit classification, dependency assessment, testnet deployment preparation, reproducibility instructions and a three-route judge guide. Rebuilt the README as the current product entrypoint. Preserved immutable historical evidence without moving or rewriting it.
+
+Remediated the inherited critical and high npm path by retaining compatible `near-sandbox` 0.1.5 and overriding `tar` from 6.2.1 to 7.5.22. A clean Linux install proved that `near-sandbox` 0.3.5 cannot replace the legacy interface required by `near-workspaces` 5.0.0. The current audit reports 15 low findings, zero moderate, zero high and zero critical. The tar override remains subject to the complete Linux Sandbox and financial gates. Local repository tests pass 92/92 and wallet, source, security, link and formatting checks pass. No tracked file was deleted. No external transaction, deployment, provider call, secret change or spending occurred.
+
 ## 2026-11-08 | M06 controlled workflow complete and promoted
 
 - PR 11 merged controlled workflow head `184768e0d36a5be6bb2dd2ffc587e22f5c2d86fb` into `implementation/oct28` as `721964b2f4fb5c6b69767e864bb717e8b32c9afb`.
@@ -39,7 +45,7 @@
 
 Added reviewer-control operations for exact active registry and disclosure matching, six-account and six-operator committee disjointness, phase-aware commit and reveal validation, missing-reviewer and quorum diagnostics, frozen vote commitment construction, and evidence-bound finding verification. Corrected reviewer confirmation preparation so the signer, active registry revision and disclosure digest must all match.
 
-Advanced SQLite to schema version 5 with durable encrypted reveal recovery packages, finalized registry observations and append-only reviewer audit records. Recovery packages are account and round scoped, idempotent for identical metadata, reject conflicting commitments or findings, survive restart and never expose another reviewer's ciphertext. Added protected reviewer control, workspace, recovery and audit endpoints. All outputs preserve the statement that distinct fixture accounts and declared operators do not prove independent control.
+Advanced SQLite to schema version 5 with durable encrypted reveal recovery packages, finalised registry observations and append-only reviewer audit records. Recovery packages are account and round scoped, idempotent for identical metadata, reject conflicting commitments or findings, survive restart and never expose another reviewer's ciphertext. Added protected reviewer control, workspace, recovery and audit endpoints. All outputs preserve the statement that distinct fixture accounts and declared operators do not prove independent control.
 
 Dedicated reviewer tests pass 7/7, combined reviewer and wallet integration tests pass 17/17 and the repository suite passes 76/76. Wallet bundle, syntax, diff, Core policy, Security policy and dependency baseline checks pass. The inherited dependency baseline remains 17 findings. PR 4 was merged into `implementation/oct28` as `4bd6bc163cd3c6a1b4097eb2f01a749f54e97e03` before this unit. No live signing, transaction, deployment, paid inference, production secret or spending occurred.
 
@@ -56,12 +62,12 @@ Dedicated reviewer tests pass 7/7, combined reviewer and wallet integration test
 - Added seven routing and adaptive block-planning tests and included them in the repository suite.
 - Split comprehensive baseline and journey verification into isolated parallel jobs with separate evidence and timing artifacts.
 - Added a truthful aggregate integration gate and preserved the 90-minute Sandbox timeout and separate F01 through F18 workflow.
-- Replaced repeated conservative block stepping with finalized-height calibration without shortening contract deadlines.
+- Replaced repeated conservative block stepping with finalised-height calibration without shortening contract deadlines.
 - Local results: policy tests 7/7 and repository tests 76/76 passed; Core and Security policies and the wallet build passed. GitHub run `42418916525` passed policy, the isolated nine-test baseline, both complete journeys and the aggregate gate. PR 5 merged as `963e27edb4a7cbf8570d652b4a2b3fa6fe2b806a`.
 
 ## 2026-11-07 | IMPL-M06-P1 final wallet hardening
 
-Made finalized RPC transaction hash presence, format and exact equality mandatory. Added signer and contract checks in the RPC adapter, independent inner-hash and exact gas checks in lifecycle verification, final block identity validation, and UNKNOWN classification for stale or regressed success observations. Receipt-integrity exceptions now lock the durable operation UNKNOWN rather than being treated as ordinary RPC unavailability.
+Made finalised RPC transaction hash presence, format and exact equality mandatory. Added signer and contract checks in the RPC adapter, independent inner-hash and exact gas checks in lifecycle verification, final block identity validation, and UNKNOWN classification for stale or regressed success observations. Receipt-integrity exceptions now lock the durable operation UNKNOWN rather than being treated as ordinary RPC unavailability.
 
 The complete browser recovery audit identified one related P1 defect: a wallet-returned hash was lost if the server callback failed before persistence. The client now saves that hash before the callback and, after reload, attaches it through the existing first-hash-only callback for receipt reconciliation. It never invokes the wallet or redispatches the transaction during recovery.
 
@@ -69,15 +75,15 @@ Added controlled regressions for matching, missing, empty, malformed and differe
 
 ## 2026-11-07 | IMPL-M06-P1 wallet safety corrections
 
-Added durable signing handoff state, restart-safe prepared intents, post-handoff UNKNOWN locking, unique transaction-hash ownership and atomic terminal receipt persistence. Added a server-only live-signing authorization gate while retaining non-billable preparation with live execution disabled by default. Tightened RPC result classification to explicit NEAR success and failure variants, validated returned transaction identity and final block freshness, and prevented ambiguous finality from becoming confirmation.
+Added durable signing handoff state, restart-safe prepared intents, post-handoff UNKNOWN locking, unique transaction-hash ownership and atomic terminal receipt persistence. Added a server-only live-signing authorisation gate while retaining non-billable preparation with live execution disabled by default. Tightened RPC result classification to explicit NEAR success and failure variants, validated returned transaction identity and final block freshness, and prevented ambiguous finality from becoming confirmation.
 
 Changed browser recovery to retain UNKNOWN operation IDs, account identity and known hashes across reloads; added account-scoped restoration and safe corrupt-storage handling. Added pre-fix regressions that failed in five places, then expanded focused coverage for restart before and after handoff, concurrent handoff, delayed callbacks, rejection authority, duplicate hashes, explicit finality, stale observations, wallet invocation order and account-isolated restoration. Final focused result is 31/31, repository result is 66/66, M05 runtime is 18/18, wallet build and local Core/Security policy checks pass. The dependency baseline remains 17 inherited findings with no new failure. Windows Sandbox preflight blocked before launch, so fresh Linux Integration CI remains pending. No contract, transaction, signing, deployment, paid provider, production secret or spend changed.
 
 ## 2026-11-07 | IMPL-M06-P1 external wallet lifecycle local gate
 
-Recovered the wallet portion of the preserved M06 stash onto `feat/m06-wallet-lifecycle` without applying its reviewer or provider work. Added strict external-call policy, durable pre-signing intents, session inspection, renewal and revocation, transaction-hash callbacks, finalized receipt reconciliation, network and payload matching, block-regression rejection and restart recovery. Added browser adapter helpers for stable operation identifiers, reload-visible pending operations, explicit rejection, interruption locking and delayed callback recovery.
+Recovered the wallet portion of the preserved M06 stash onto `feat/m06-wallet-lifecycle` without applying its reviewer or provider work. Added strict external-call policy, durable pre-signing intents, session inspection, renewal and revocation, transaction-hash callbacks, finalised receipt reconciliation, network and payload matching, block-regression rejection and restart recovery. Added browser adapter helpers for stable operation identifiers, reload-visible pending operations, explicit rejection, interruption locking and delayed callback recovery.
 
-Added eight controlled wallet lifecycle tests covering policy, receipt integrity, restart, concurrent prepare, conflicting reuse, repeated callbacks, rejection, missing redirect, delayed receipts, RPC failure, stale observations, UNKNOWN safety and session/account isolation. Updated M05 recovery expectations for schema version 3 and added finalized receipt block metadata. `npm test` passes 60/60, the focused M05/service/wallet run passes 51/51 and `npm run build:wallet` passes. Published code commit `379ff4e0111336da33579357a08c341ce6273dcb` in PR 4. Genuine Core `42373449517`, Security `42373449483` and Integration `42373449454` passed. Integration reran the nine-test baseline and both full journeys, then validated receipts and balances. No contract source, financial assertion, live transaction, signing, deployment, paid inference, secret or spend changed.
+Added eight controlled wallet lifecycle tests covering policy, receipt integrity, restart, concurrent prepare, conflicting reuse, repeated callbacks, rejection, missing redirect, delayed receipts, RPC failure, stale observations, UNKNOWN safety and session/account isolation. Updated M05 recovery expectations for schema version 3 and added finalised receipt block metadata. `npm test` passes 60/60, the focused M05/service/wallet run passes 51/51 and `npm run build:wallet` passes. Published code commit `379ff4e0111336da33579357a08c341ce6273dcb` in PR 4. Genuine Core `42373449517`, Security `42373449483` and Integration `42373449454` passed. Integration reran the nine-test baseline and both full journeys, then validated receipts and balances. No contract source, financial assertion, live transaction, signing, deployment, paid inference, secret or spend changed.
 
 ## 2026-11-07 | IMPL-M05.1 CI recovery local gate
 
@@ -103,9 +109,9 @@ Attempted the M04 journey regression on Windows and WSL. Windows lacked Unix `ps
 
 Reviewed AC01 through AC33 individually against M05 evidence. Preserved 21 PASS, 10 PARTIAL and 2 BLOCKED with no weakened requirement or unsupported upgrade.
 
-## 2026-11-07 | IMPL-M05-R01 runtime, finalized reads and durable recovery
+## 2026-11-07 | IMPL-M05-R01 runtime, finalised reads and durable recovery
 
-Added explicit unavailable, Sandbox and testnet startup configuration. Wired testnet RPC into startup with endpoint, chain identity, sync, account, deployed-code and finalized-block validation. Added finalized read provenance, stale and regressed block detection, authenticated finalized receipt inspection and genuine health metadata. Replaced implicit SQLite setup with two recorded migrations, FULL synchronous mode, integrity and content-object audits, conservative restart recovery to UNKNOWN and two-connection reservation verification. Tightened origin, JSON and browser security headers. Added 9 M05 runtime tests; the complete service and coverage suite passes 44/44. Verified live public testnet RPC status read-only, without a configured CONTRA contract, transaction or deployment.
+Added explicit unavailable, Sandbox and testnet startup configuration. Wired testnet RPC into startup with endpoint, chain identity, sync, account, deployed-code and finalised-block validation. Added finalised read provenance, stale and regressed block detection, authenticated finalised receipt inspection and genuine health metadata. Replaced implicit SQLite setup with two recorded migrations, FULL synchronous mode, integrity and content-object audits, conservative restart recovery to UNKNOWN and two-connection reservation verification. Tightened origin, JSON and browser security headers. Added 9 M05 runtime tests; the complete service and coverage suite passes 44/44. Verified live public testnet RPC status read-only, without a configured CONTRA contract, transaction or deployment.
 
 Recorded the product-first M05 through M07 directive, live hackathon Q-001 eligibility, `security` plus `open` tracks and one-time submission safeguards. Added MIT license, safe environment example, hackathon checklist and M05 checkpoint report. Removed superseded standalone visual studies, capture wrappers and visual-only matrix tools after confirming the operational client still depends on selected UX3A assets. Preserved immutable references, functional browser coverage, protocol source and financial evidence. No Sandbox rerun, testnet transaction, signing, provider request, production secret, deployment or spending occurred.
 
@@ -119,15 +125,15 @@ Added a portable Windows Chrome, Playwright Chromium and Firefox matrix across e
 
 ## 2026-11-04 | IMPL-M04.3-P2 accurate radar values and retrieval states
 
-Rebuilt coverage metrics around explicit measured, not-applicable, inaccessible, unavailable and missing states. Corrected the frontend retrieval path so HTTP authorization and network failures remain explicit instead of becoming false source absence. Added read-only disconnected case coverage with protected sectors marked Locked. Added direct percentage or status text at every sector label, persistent 25/50/75/100 rings, status markers, complete accessible chart text and exact metric metadata. Defined distinct Criteria, Evidence and Overall lens scopes and made Overall the default. Added exhaustive lifecycle unit tests and 17 rendered-browser checks for exact values, label boundaries and overlap, tab profiles, protected data, genuine case switching and console output. Generated three-state side-by-side and genuine Sandbox radar captures. Repository tests pass 35/35 and the Phase 1 viewport matrix remains clean. No contract, protocol, payout, transaction, provider, deployment, secret, testnet or mainnet change occurred.
+Rebuilt coverage metrics around explicit measured, not-applicable, inaccessible, unavailable and missing states. Corrected the frontend retrieval path so HTTP authorisation and network failures remain explicit instead of becoming false source absence. Added read-only disconnected case coverage with protected sectors marked Locked. Added direct percentage or status text at every sector label, persistent 25/50/75/100 rings, status markers, complete accessible chart text and exact metric metadata. Defined distinct Criteria, Evidence and Overall lens scopes and made Overall the default. Added exhaustive lifecycle unit tests and 17 rendered-browser checks for exact values, label boundaries and overlap, tab profiles, protected data, genuine case switching and console output. Generated three-state side-by-side and genuine Sandbox radar captures. Repository tests pass 35/35 and the Phase 1 viewport matrix remains clean. No contract, protocol, payout, transaction, provider, deployment, secret, testnet or mainnet change occurred.
 
 ## 2026-11-04 | IMPL-M04.3-P1 visible desktop workspace
 
-Removed the fixed 810px and 756px desktop minimum-height dependencies and replaced cumulative section minimums with flexible three-column grid rows. Added a short-desktop layout that fits a 652px shell and 597px primary workspace inside the 1536 x 676 viewport. Reduced Overview reviewer cards to two summaries, made materials a compact count on short desktops and limited Overview activity to the newest event, with direct links to the existing Reviewers, Evidence and Activity workspaces. Corrected a separately detected 31px concealed middle-column overflow at 1200 x 900 and centered the desktop shell without document-margin overflow. Added `tests/m043-desktop-fit.mjs` with visible-viewport, scrollbar, section-boundary, control visibility, typography, horizontal-overflow and console assertions across eight viewports. The final matrix passes and actual screenshots were inspected. No protocol, contract, financial safeguard, provider, deployment, secret, testnet or mainnet state changed.
+Removed the fixed 810px and 756px desktop minimum-height dependencies and replaced cumulative section minimums with flexible three-column grid rows. Added a short-desktop layout that fits a 652px shell and 597px primary workspace inside the 1536 x 676 viewport. Reduced Overview reviewer cards to two summaries, made materials a compact count on short desktops and limited Overview activity to the newest event, with direct links to the existing Reviewers, Evidence and Activity workspaces. Corrected a separately detected 31px concealed middle-column overflow at 1200 x 900 and centreed the desktop shell without document-margin overflow. Added `tests/m043-desktop-fit.mjs` with visible-viewport, scrollbar, section-boundary, control visibility, typography, horizontal-overflow and console assertions across eight viewports. The final matrix passes and actual screenshots were inspected. No protocol, contract, financial safeguard, provider, deployment, secret, testnet or mainnet state changed.
 
 ## 2026-11-03 | IMPL-M04.2-P3 stable navigation and complete UX verification
 
-Replaced major workflow dialogs with stable hash-routed views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity while retaining dialogs for focused actions. Preserved selected-case context, direct routes and browser Back behavior. Added complete state, keyboard, focus, responsive, zoom, reduced-motion, contrast and console verification. Results: 54/54 end-to-end checks, 46/46 empty and 46/46 genuine populated responsive checks, 13/13 radar checks, 3/3 deterministic coverage subtests and 12/12 browser-matrix checks across Windows Chrome, Chromium and Firefox. Linux Chromium remains blocked by WSL browser-download network failure. Reexecuted both local Sandbox journeys with 44 persisted operations and receipts, exact 1 NEAR callback-confirmed settlements and challenged ACCEPT to REJECT reversal. Added the component audit, final screenshots and acceptance evidence. No protocol, Rust contract, deployment, paid call, production secret, testnet or mainnet action occurred. Owner visual acceptance remains pending.
+Replaced major workflow dialogs with stable hash-routed views for Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and Activity while retaining dialogs for focused actions. Preserved selected-case context, direct routes and browser Back behaviour. Added complete state, keyboard, focus, responsive, zoom, reduced-motion, contrast and console verification. Results: 54/54 end-to-end checks, 46/46 empty and 46/46 genuine populated responsive checks, 13/13 radar checks, 3/3 deterministic coverage subtests and 12/12 browser-matrix checks across Windows Chrome, Chromium and Firefox. Linux Chromium remains blocked by WSL browser-download network failure. Reexecuted both local Sandbox journeys with 44 persisted operations and receipts, exact 1 NEAR callback-confirmed settlements and challenged ACCEPT to REJECT reversal. Added the component audit, final screenshots and acceptance evidence. No protocol, Rust contract, deployment, paid call, production secret, testnet or mainnet action occurred. Owner visual acceptance remains pending.
 
 ## 2026-11-03 | IMPL-M04.2-P2 operational radar measurements
 
@@ -139,7 +145,7 @@ Removed independent desktop overflow and stable scrollbar gutters from the three
 
 ## 2026-11-03 | IMPL-M04.1-P3 complete frontend UX gate
 
-Pinned Playwright, added portable browser setup and test commands, and removed all user-specific module and Chromium paths. Added account disconnect, persistent-operation reconciliation availability, serialized async navigation, dialog history state, browser Back behavior, Escape close and reliable focus restoration. Added 58 end-to-end checks for genuine case switching, all navigation and tabs, search, pagination, settlement retry lock, reload recovery, stale and failed reads, permission denial, reduced motion, semantics, contrast, 125 and 200 percent effective zoom and final screenshots. Legacy browser checks pass 16/16, service tests 29/29 and wallet build passes. Updated README badges, environment commands, M04 acceptance and new M04.1 acceptance report. Fresh Rust execution was blocked before tests by crates.io DNS and missing offline cache; no contract change or pass is claimed. Windows frontend-only clean install passes with `npm ci --ignore-scripts`; dependency audit limitations are recorded. No deployment, testnet, mainnet, paid inference or production secret occurred.
+Pinned Playwright, added portable browser setup and test commands, and removed all user-specific module and Chromium paths. Added account disconnect, persistent-operation reconciliation availability, serialized async navigation, dialog history state, browser Back behaviour, Escape close and reliable focus restoration. Added 58 end-to-end checks for genuine case switching, all navigation and tabs, search, pagination, settlement retry lock, reload recovery, stale and failed reads, permission denial, reduced motion, semantics, contrast, 125 and 200 percent effective zoom and final screenshots. Legacy browser checks pass 16/16, service tests 29/29 and wallet build passes. Updated README badges, environment commands, M04 acceptance and new M04.1 acceptance report. Fresh Rust execution was blocked before tests by crates.io DNS and missing offline cache; no contract change or pass is claimed. Windows frontend-only clean install passes with `npm ci --ignore-scripts`; dependency audit limitations are recorded. No deployment, testnet, mainnet, paid inference or production secret occurred.
 
 ## 2026-11-03 | IMPL-M04.1-P2 radar and interface gate
 
@@ -147,7 +153,7 @@ Rebuilt the radar renderer around responsive canvas dimensions and device pixel 
 
 ## 2026-11-03 | IMPL-M04.1-P1 responsive layout gate
 
-Replaced the fixed-size-only behavior outside the approved viewport with proportional wide-desktop columns, intentional short-desktop panel scrolling, an ordered tablet flow and a full-width phone layout with scrollable navigation. Removed fixed content heights that clipped populated records and added coarse-pointer target sizing. Added a portable environment-configured responsive Chromium test covering seven target viewports, exact 1200 shell geometry, overflow, clipping, accessible names, touch targets and console errors. Empty state passed 26/26 checks. The initial genuine populated run correctly failed on undersized targets; those controls were fixed and the complete populated run passed 29/29. Saved fourteen screenshots and two measurement reports under `project/artifacts/m041/phase1/`. Reexecuted both authorized local Sandbox journeys to provide genuine populated state; 44 operations and receipts passed with the prior exact settlement results. No protocol, contract, deployment, paid inference, secret, testnet or mainnet change occurred. Next: Phase 2 radar and information refinement.
+Replaced the fixed-size-only behaviour outside the approved viewport with proportional wide-desktop columns, intentional short-desktop panel scrolling, an ordered tablet flow and a full-width phone layout with scrollable navigation. Removed fixed content heights that clipped populated records and added coarse-pointer target sizing. Added a portable environment-configured responsive Chromium test covering seven target viewports, exact 1200 shell geometry, overflow, clipping, accessible names, touch targets and console errors. Empty state passed 26/26 checks. The initial genuine populated run correctly failed on undersized targets; those controls were fixed and the complete populated run passed 29/29. Saved fourteen screenshots and two measurement reports under `project/artifacts/m041/phase1/`. Reexecuted both authorised local Sandbox journeys to provide genuine populated state; 44 operations and receipts passed with the prior exact settlement results. No protocol, contract, deployment, paid inference, secret, testnet or mainnet change occurred. Next: Phase 2 radar and information refinement.
 
 ## 2026-11-03 | IMPL-M04 full local product integration
 
@@ -163,7 +169,7 @@ Replaced the single initial UNKNOWN operation state with persisted PREPARING, AW
 
 ## 2026-11-03 | IMPL-M04-E01 structured evidence integration
 
-Added canonical per-criterion evidence manifests, exact source hashes, bounded provenance, participant-only access and append-only same-case corrections. Added manifest persistence and listing without altering immutable blobs. Connected The Bench evidence records, criteria cards and Evidence/Provenance radar values to the exact onchain-selected manifest. Added validation and HTTP tests for complete criterion coverage, hash mismatch, immutable corrections, cross-case rejection, participant authorization and onchain linkage. `npm test` passes 22/22; syntax and em dash checks pass. No contract change, transaction, deployment, paid call, secret or spending occurred. Next: wallet transaction lifecycle and stale-read reconciliation.
+Added canonical per-criterion evidence manifests, exact source hashes, bounded provenance, participant-only access and append-only same-case corrections. Added manifest persistence and listing without altering immutable blobs. Connected The Bench evidence records, criteria cards and Evidence/Provenance radar values to the exact onchain-selected manifest. Added validation and HTTP tests for complete criterion coverage, hash mismatch, immutable corrections, cross-case rejection, participant authorisation and onchain linkage. `npm test` passes 22/22; syntax and em dash checks pass. No contract change, transaction, deployment, paid call, secret or spending occurred. Next: wallet transaction lifecycle and stale-read reconciliation.
 
 ## 2026-11-03 | IMPL-M03 P0 financial verification complete
 
@@ -175,7 +181,7 @@ Resumed c0800c8. Preserved its successful WSL evidence and explicitly superseded
 
 ## 2026-10-29 | IMPL-M03 in progress - Real Sandbox financial execution
 
-Moved execution to compatible Ubuntu x86_64 with glibc 2.39 and hard open-file limit 1048576. Pinned Rust 1.98.0, passed all 20 Rust tests, rebuilt production and fault Wasm, installed checksum-pinned NEAR Sandbox 2.13.4 and executed real transactions. Verified exact 1 NEAR balance transfer and callback-confirmed settlement, plus a challenged case whose fresh committee reversed the original verdict. Corrected the Sandbox clock helper after real receipts proved deadline overshoot and expired block-hash behavior. Targeted `KEEP_PRIMARY` timeout now passes. Saved raw failure and passing evidence. P0 remains incomplete pending the rest of the 18-category matrix, gas/storage measurement and full rerun.
+Moved execution to compatible Ubuntu x86_64 with glibc 2.39 and hard open-file limit 1048576. Pinned Rust 1.98.0, passed all 20 Rust tests, rebuilt production and fault Wasm, installed checksum-pinned NEAR Sandbox 2.13.4 and executed real transactions. Verified exact 1 NEAR balance transfer and callback-confirmed settlement, plus a challenged case whose fresh committee reversed the original verdict. Corrected the Sandbox clock helper after real receipts proved deadline overshoot and expired block-hash behaviour. Targeted `KEEP_PRIMARY` timeout now passes. Saved raw failure and passing evidence. P0 remains incomplete pending the rest of the 18-category matrix, gas/storage measurement and full rerun.
 
 ## 2026-10-28 | IMPL-M02 - Functional integration source and verification evidence
 
@@ -183,12 +189,12 @@ Extended M01 with preallocated case storage, strict ABI argument handling, compl
 
 ## 2026-10-28 | IMPL-M01 - Actual implementation begins before event
 
-Owner removed November 1 implementation gate (D-042). Added Rust escrow/adjudication contract, canonical commitment encoding, Sandbox scenarios, immutable evidence/cost-ledger services and API foundation. Production Wasm builds; 14 Rust SDK tests pass. Sandbox execution blocked by host open-file hard limit. No deployment or paid calls. The Bench naming and frozen UX3A preserved. No claim of competition-window authorship or proven real settlement.
+Owner removed November 1 implementation gate (D-042). Added Rust escrow/contestation contract, canonical commitment encoding, Sandbox scenarios, immutable evidence/cost-ledger services and API foundation. Production Wasm builds; 14 Rust SDK tests pass. Sandbox execution blocked by host open-file hard limit. No deployment or paid calls. The Bench naming and frozen UX3A preserved. No claim of competition-window authorship or proven real settlement.
 
 
 - UX3C verification record: project/artifacts/ux3c/spec-validation.json, including six specification SHA-256 values, 33 acceptance/10 invariant/7 gap coverage checks and 16 independent byte/hash fixture results. Contract/sandbox acceptance remains NOT RUN.
 
-UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recolored derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
+UX3A final correction: replaced sidebar library approximations with source-derived glyph assets and preserved the full spatial margin texture in a recoloured derivative. Recaptured and reviewed the final combined comparison. Internal visual QA passed after corrections; font rasterization remains an explicit P3 limitation. Owner acceptance remains pending.
 ## v1.0 | 2026-10-27 | Preparation baseline
 
 - Authored initial product, protocol, UX, security and benchmark specifications.
@@ -204,8 +210,8 @@ Future entries must include date, changes, files touched, acceptance status, unr
 ## v1.1 | 2026-10-27 | Owner-selected design reference
 
 - Added source screenshot at `design/reference/control-ai-policy-dashboard.jpeg` for project art direction.
-- Accepted D-015: graph-first cinematic UI is now the exact desktop visual reference; NEAR mint, coral and amber remain the color vocabulary.
-- Added detailed source-to-CONTRA component mapping and non-color graph semantics in `docs/VISUAL_DIRECTION.md`.
+- Accepted D-015: graph-first cinematic UI is now the exact desktop visual reference; NEAR mint, coral and amber remain the colour vocabulary.
+- Added detailed source-to-CONTRA component mapping and non-colour graph semantics in `docs/VISUAL_DIRECTION.md`.
 - Marked original v1.0 Judgment Room wireframe as superseded for layout only; it remains a design study, not an implemented product.
 - No production implementation or onchain contracts created; budget spend unchanged.
 - Next: interactive high-fidelity graph-first UI visual acceptance.
@@ -257,12 +263,12 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Final Playwright regression: 22 checks passed, zero browser console or page errors.
 - No repository initialization, remote operation, deployment, paid API use, contract work or blockchain transaction occurred.
 
-## v1.2.4 | 2026-10-28 | Repository baseline authorization
+## v1.2.4 | 2026-10-28 | Repository baseline authorisation
 
-- Owner authorized creation of private repository `kellyxy110/CONTRA`.
+- Owner authorised creation of private repository `kellyxy110/CONTRA`.
 - Current blueprint, logs, immutable reference and visual QA artifacts form the redesign baseline.
 - Added repository ignore rules for local tooling, secrets and generated output.
-- Product redesign is the next design milestone. No deployment, paid API use or smart contract work was authorized by this decision.
+- Product redesign is the next design milestone. No deployment, paid API use or smart contract work was authorised by this decision.
 - Created private GitHub repository `kellyxy110/CONTRA`, set `main` as the default branch and pushed baseline commit `351e90d73c93577f8798e45c2e8bb45bff3e082a`.
 
 
@@ -270,7 +276,7 @@ Future entries must include date, changes, files touched, acceptance status, unr
 
 - Added separate source-faithful dashboard study, immutable new reference, local server and screenshot comparison page.
 - Preserved graph study, older source, all protocol requirements and historical logs.
-- New study uses approved colors and CONTRA fixture records within the source panel geometry, plus original sector radar and avatar images.
+- New study uses approved colours and CONTRA fixture records within the source panel geometry, plus original sector radar and avatar images.
 - Inter font and Lucide icon assets are local; no runtime external font or API requests.
 - Browser verification and screenshot comparisons completed. Owner acceptance pending; exact pixel identity is not claimed.
 - Source files: package.json, server.mjs, design/ux3a/*, design/reference/IMG_7409.jpeg, project/artifacts/ux3a/*, design-qa.md, project logs.
@@ -300,7 +306,7 @@ Future entries must include date, changes, files touched, acceptance status, unr
 ## 2026-10-28 | UX3C naming update | The Bench
 
 - Renamed the active dashboard header/browser title and current product documentation from Judgment Room to The Bench; clarified the current frontend entry in README and the case-dashboard navigation name in the UX3B map.
-- Recorded D-041. Preserved historical log text and archived prototype paths. No contract methods, ABI, state machine, committee/recovery rules, commitment vectors, CSS, JavaScript behavior, reference images or other visual assets changed.
-- UX3A remains approved with this owner-authorized naming-only exception. UX3C protocol work and first November 1 fresh Rust escrow/sandbox milestone continue unchanged.
+- Recorded D-041. Preserved historical log text and archived prototype paths. No contract methods, ABI, state machine, committee/recovery rules, commitment vectors, CSS, JavaScript behaviour, reference images or other visual assets changed.
+- UX3A remains approved with this owner-authorised naming-only exception. UX3C protocol work and first November 1 fresh Rust escrow/sandbox milestone continue unchanged.
 - Validation: exact frontend text-substitution comparison and scoped diff inspection; no protocol/sandbox testing claimed. No deployment, provider use, secrets, mainnet action or spending.
 

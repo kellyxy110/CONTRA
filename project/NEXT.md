@@ -1,18 +1,24 @@
 # Next execution task
 
-## Active next task | M07 controlled release-readiness audit
+## Active next task | M07 Contestation release candidate
+
+Complete the local Rust, ABI, commitment and artifact checksum gates, then run the full GitHub Core, Security, Contract, Integration and Financial P0 checks on the focused terminology and professionalisation pull request. Resolve any compatibility defect in the `near-sandbox@0.3.5` override without weakening financial assertions. Merge green work through `implementation/oct28`, promote it to `main`, verify remote heads and repository description, and record the exact run and merge evidence.
+
+After M07 reaches `main`, continue every non-signing M08 preparation task. External deployment remains blocked by the single consolidated owner request in `project/BLOCKERS.md`; do not deploy, sign or fund a transaction until that gate is explicitly satisfied.
+
+## Historical next task | M07 controlled release-readiness audit
 
 Preserve the controlled M06 implementation merged through PR 11 as `721964b2f4fb5c6b69767e864bb717e8b32c9afb` and promoted through PR 12 to `main` as `b32cd8868470b5b2ad41a5ee5503752f95c54d17`. Evaluate AC01 through AC33 individually against the fresh wallet, reviewer, provider-fixture and local Sandbox artifacts. Audit README reproducibility, public repository accessibility, license, dependency findings, credential history, key-control disclosure and deployment boundaries. Correct only demonstrated functional, security or reproducibility defects through focused PRs and the maintained risk policy.
 
 Testnet signing, funded transactions, deployment, live provider calls, paid inference, production secrets, submission, X publication and demo work remain separately gated. Fetch the official hackathon instructions again before submission. Earlier instructions below are retained as historical records.
 
-Authorized live provider checks, paid inference, live testnet signing, deployment, production secrets and mainnet activity remain separately gated.
+Authorised live provider checks, paid inference, live testnet signing, deployment, production secrets and mainnet activity remain separately gated.
 
 ## Historical next task | Provider interoperability PR and CI
 
 Publish `feat/m06-provider-interoperability` into `implementation/oct28`. Require Core, Security and the integration policy gate on the exact head. This provider-only unit should remain in the fast gate unless an independently risky path changes. Resolve actionable failures and merge under the standing green-check policy. Do not perform live inference, add production secrets or spend credits.
 
-After merge, run the complete controlled M06 workflow with wallet, reviewer and provider fixtures across restart, timeout and contradictory-evidence paths. Authorized live provider checks remain separately gated.
+After merge, run the complete controlled M06 workflow with wallet, reviewer and provider fixtures across restart, timeout and contradictory-evidence paths. Authorised live provider checks remain separately gated.
 
 ## Historical next task | M06 Phase 2 reviewer-control PR and CI
 
@@ -24,7 +30,7 @@ After merge, begin M06 provider interoperability on its own feature branch using
 
 Preserve `CONTRA-2026-11-07-IMPL-M06-P1-WALLET-FINAL`, PR 4, PR 3 and `stash@{0}`. Obtain one fresh Core, Security and affected Linux Integration run on the intended final PR 4 head. Confirm branch protection, mergeability, final diff and review-conversation state. Do not merge until the owner explicitly authorizes it. If all checks pass, report M06 Phase 1 ready for owner merge approval with exact commit and run links. Acceptance remains 21 PASS, 10 PARTIAL and 2 BLOCKED.
 
-After owner-authorized merge into `implementation/oct28`, verify the target commit and required checks, preserve PR 3's independent boundary, create `feat/m06-reviewer-control`, and recover only the reviewer portion of the preserved stash. Implement reviewer onboarding, registry verification, signer-control disclosure, primary and fresh committee separation, evidence authorization, commit-reveal failure handling, quorum recovery and session continuity. No live signing, deployment, paid inference, production-secret change, UI redesign or demo work is authorized.
+After owner-authorised merge into `implementation/oct28`, verify the target commit and required checks, preserve PR 3's independent boundary, create `feat/m06-reviewer-control`, and recover only the reviewer portion of the preserved stash. Implement reviewer onboarding, registry verification, signer-control disclosure, primary and fresh committee separation, evidence authorisation, commit-reveal failure handling, quorum recovery and session continuity. No live signing, deployment, paid inference, production-secret change, UI redesign or demo work is authorised.
 
 ## Historical next task | M06 Phase 1 wallet safety CI and owner review
 
@@ -42,35 +48,35 @@ Leave PR 4 unmerged for owner approval. After owner-directed merge, create the s
 
 Preserve product-source baseline `34c836bbd02dc672325800b2951714ee6e935659`, CI merge `a1eedc929758d3e9f16dffb78fee64da5820817e` and the genuine Core, Security, Contract and Integration results. Open the integration pull request from `implementation/oct28` to `main`, review the complete accumulated contract, backend, dependency, documentation and stored-artifact diff, and leave it unmerged for explicit owner approval. Keep automatic merge disabled and required Core plus Security protection active.
 
-After M05.1 is accepted, resume the safely stashed M06 non-billable external-wallet simulation. The exact first M06 unit is NEP-413 session recovery plus rejected or interrupted wallet-call recovery with persisted transaction identity, finalized receipt reconciliation and duplicate-dispatch prevention. Do not sign a live transaction, deploy, use paid inference or change production secrets.
+After M05.1 is accepted, resume the safely stashed M06 non-billable external-wallet simulation. The exact first M06 unit is NEP-413 session recovery plus rejected or interrupted wallet-call recovery with persisted transaction identity, finalised receipt reconciliation and duplicate-dispatch prevention. Do not sign a live transaction, deploy, use paid inference or change production secrets.
 
 ## Historical next task | M06 non-billable wallet and reviewer preparation
 
-Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R03`, including the fresh 18/18 P0 matrix and two passing local journeys. Audit and complete the external wallet lifecycle in simulation first: NEP-413 session recovery, rejection, redirect recovery, timeout, stale reads, persisted transaction identifiers, finalized receipt reconciliation and idempotency under concurrent requests. Do not sign a live transaction.
+Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R03`, including the fresh 18/18 P0 matrix and two passing local journeys. Audit and complete the external wallet lifecycle in simulation first: NEP-413 session recovery, rejection, redirect recovery, timeout, stale reads, persisted transaction identifiers, finalised receipt reconciliation and idempotency under concurrent requests. Do not sign a live transaction.
 
 Then prepare actual reviewer account, permission, committee and signer-control procedures. Keep primary and fresh committees operator-disjoint, test invalid, duplicate, conflicting and late submissions, and retain truthful shared-control disclosure. Continue provider format and failure testing with non-billable fixtures only.
 
-Configured CONTRA testnet contract reads, testnet signing, deployment, paid inference and production-secret changes remain blocked pending separate owner authorization and the required external resources. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED.
+Configured CONTRA testnet contract reads, testnet signing, deployment, paid inference and production-secret changes remain blocked pending separate owner authorisation and the required external resources. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED.
 
 ## Historical next task | M05 R03 complete local regression and remaining backend fault tests
 
 Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R02`. Run `npm run test:p0` and `npm run test:m04:journeys` on the compatible Linux Sandbox host so the startup, migration, rate-control and persistence changes receive a full financial and two-journey regression. Save actual results without replacing the accepted M03 and M04 evidence if the host is unavailable.
 
-Reevaluate AC01 through AC33 individually after fresh compatible-host evidence. Configured CONTRA testnet contract reads remain blocked until deployment is separately authorized and a deployed account exists.
+Reevaluate AC01 through AC33 individually after fresh compatible-host evidence. Configured CONTRA testnet contract reads remain blocked until deployment is separately authorised and a deployed account exists.
 
 Do not deploy, sign, use paid inference or change production secrets. Visual and demo work remains deferred.
 
 ## Historical next task | M05 R02 failure recovery, rate limits and Sandbox regression
 
-Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R01`. Add bounded request-rate enforcement for authentication, artifact writes, evaluation and transaction routes. Extend case-isolation and origin tests, including stale sessions, malicious host/origin combinations, cross-case object access and oversized request behavior. Add abrupt-process and write-fault tests around object persistence, transaction state and budget reservations. Document backup and restore for the durable SQLite plus object directory as one atomic deployment volume.
+Preserve checkpoint `CONTRA-2026-11-07-IMPL-M05-R01`. Add bounded request-rate enforcement for authentication, artifact writes, evaluation and transaction routes. Extend case-isolation and origin tests, including stale sessions, malicious host/origin combinations, cross-case object access and oversized request behaviour. Add abrupt-process and write-fault tests around object persistence, transaction state and budget reservations. Document backup and restore for the durable SQLite plus object directory as one atomic deployment volume.
 
-On the compatible Linux host, rerun the complete local Sandbox financial and two-journey regressions against the new startup and migration path. Do not infer a Sandbox pass from the 44 service tests. A configured CONTRA testnet contract read remains blocked because deployment is not authorized and no deployed account exists. Do not deploy, sign, use paid providers or change production secrets. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED until individually reevaluated against fresh evidence.
+On the compatible Linux host, rerun the complete local Sandbox financial and two-journey regressions against the new startup and migration path. Do not infer a Sandbox pass from the 44 service tests. A configured CONTRA testnet contract read remains blocked because deployment is not authorised and no deployed account exists. Do not deploy, sign, use paid providers or change production secrets. AC01-AC33 remain 21 PASS, 10 PARTIAL and 2 BLOCKED until individually reevaluated against fresh evidence.
 
 Visual polish, radar refinement, screenshot comparison and demo production remain suspended. Preserve the minimal operational client, immutable reference, The Bench naming and active UX3A dependencies. Current hackathon tracks are `security` and `open`; fetch the live rules again before submission.
 
 ## Historical next task | M04.3 owner visual review
 
-Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P3. Present the inspected visible-viewport screenshots, three-state radar comparison, exact metric table and browser reports for explicit owner review. Do not mark visual acceptance without the owner's response. A manual assistive-technology screen-reader session remains open and must be recorded separately if performed. AC31 and AC32 remain blocked until authorized testnet deployment and live provider records prove their frozen scope. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without separate authorization.
+Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P3. Present the inspected visible-viewport screenshots, three-state radar comparison, exact metric table and browser reports for explicit owner review. Do not mark visual acceptance without the owner's response. A manual assistive-technology screen-reader session remains open and must be recorded separately if performed. AC31 and AC32 remain blocked until authorised testnet deployment and live provider records prove their frozen scope. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without separate authorisation.
 
 ## Historical next task | M04.3 Phase 3 browser verification and visual evidence
 
@@ -78,11 +84,11 @@ Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P2. Run visible-viewport verifi
 
 ## Historical next task | M04.3 Phase 2 accurate and readable radar
 
-Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P1. Define meaningful Criteria, Evidence and Overall scopes, display every sector value directly, and preserve exact numerator, denominator, source and observation time. Distinguish measured zero, unavailable, inaccessible and not applicable. Never convert evidence authorization or network failures to zero. Verify no selected case, created/unfunded, funded/no evidence, evidence/incomplete review, provisional, active challenge, incomplete fresh review, settled unchallenged, settled challenged and missing/inaccessible/not-applicable states. Use genuine Sandbox records where available and label deterministic fixtures. Submit side-by-side visible-viewport radar screenshots for at least three distinct states with exact values before Phase 3.
+Preserve checkpoint CONTRA-2026-11-04-IMPL-M04.3-P1. Define meaningful Criteria, Evidence and Overall scopes, display every sector value directly, and preserve exact numerator, denominator, source and observation time. Distinguish measured zero, unavailable, inaccessible and not applicable. Never convert evidence authorisation or network failures to zero. Verify no selected case, created/unfunded, funded/no evidence, evidence/incomplete review, provisional, active challenge, incomplete fresh review, settled unchallenged, settled challenged and missing/inaccessible/not-applicable states. Use genuine Sandbox records where available and label deterministic fixtures. Submit side-by-side visible-viewport radar screenshots for at least three distinct states with exact values before Phase 3.
 
 ## Historical next task | M04.2 owner visual acceptance and external gates
 
-Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P3. The owner reviews the final desktop, tablet and mobile screenshots plus the running local populated application and either grants explicit visual acceptance or identifies a precise correction. Complete a manual assistive-technology screen-reader session and Linux Chromium verification when a compatible browser binary is available. AC31 and AC32 remain blocked until testnet deployment and paid provider use are separately authorized, credits and pricing are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without authorization.
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P3. The owner reviews the final desktop, tablet and mobile screenshots plus the running local populated application and either grants explicit visual acceptance or identifies a precise correction. Complete a manual assistive-technology screen-reader session and Linux Chromium verification when a compatible browser binary is available. AC31 and AC32 remain blocked until testnet deployment and paid provider use are separately authorised, credits and pricing are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without authorisation.
 
 ## Historical next task | M04.2 Phase 3 navigation and complete UX verification
 
@@ -92,9 +98,9 @@ Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P2. Audit every visible compone
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.2-P1. Replace configuration-derived radar completion with operational measurements for Evidence, Provenance, Review, Finality, Challenge, Quorum, Keyboard and Criteria. Each sector must expose its exact numerator, denominator and source, render an independent radial depth and report N/A when evidence is insufficient. Add deterministic tests for all eight sectors across zero, partial and full case states, then capture the required close-ups and rerun the responsive matrix. Preserve the Phase 1 document-scroll correction, UX3A hierarchy, frozen UX3C protocol and P0 safeguards. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.
 
-## Historical next task | M04.1 owner acceptance and authorized external gates
+## Historical next task | M04.1 owner acceptance and authorised external gates
 
-Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P3. The owner reviews the final desktop, tablet, mobile, zoom and UX3A comparison screenshots and gives explicit visual acceptance or precise corrections. A manual assistive-technology screen-reader session remains open. Separately resolve the crates.io DNS or use a Cargo-equipped verified host before claiming a fresh Rust rerun, and review the upstream `near-sandbox` dependency advisories without breaking the accepted P0 environment. AC31 and AC32 remain blocked until testnet and paid provider use are separately authorized, credits are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without that authorization.
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P3. The owner reviews the final desktop, tablet, mobile, zoom and UX3A comparison screenshots and gives explicit visual acceptance or precise corrections. A manual assistive-technology screen-reader session remains open. Separately resolve the crates.io DNS or use a Cargo-equipped verified host before claiming a fresh Rust rerun, and review the upstream `near-sandbox` dependency advisories without breaking the accepted P0 environment. AC31 and AC32 remain blocked until testnet and paid provider use are separately authorised, credits are reverified and six genuinely independently controlled reviewers are available. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations without that authorisation.
 
 ## Historical next task | IMPL-M04.1 Phase 3 end-to-end UX acceptance
 
@@ -104,9 +110,9 @@ Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P2. Make browser tooling portab
 
 Preserve checkpoint CONTRA-2026-11-03-IMPL-M04.1-P1. Correct the full-coverage radar so rings, spokes and eight sector boundaries remain distinct, implement responsive device-pixel-ratio rendering, and capture zero, partial and full coverage close-ups. Refine exact NEAR amount disclosure, compact case identity, human-readable status text, completed review-window state, materials, reviewer details and event history using genuine case records. Preserve the approved 1200 hierarchy, neutral avatars, UX3C invariants and Phase 1 responsive matrix. Pass the Phase 2 visual and information-accuracy gate before Phase 3. Do not deploy, use paid inference, add production secrets, or perform testnet or mainnet operations.
 
-## Historical next task | External authorization and acceptance gates
+## Historical next task | External authorisation and acceptance gates
 
-Preserve checkpoint CONTRA-2026-11-03-IMPL-M04. Owner reviews the three populated local screenshots and gives explicit visual acceptance or precise corrections. AC31 and AC32 cannot pass their frozen exact scope until the owner separately authorizes testnet deployment and live provider use, credits and pricing are reverified, six genuinely independently controlled reviewer operators are available, and actual provider/testnet records reproduce both journeys. Remaining partial checks include browser Back/focus restoration, external wallet rejection/redirect, injected index lag, full pagination/case-switch matrices and 320px at 200 percent screen-reader review. Do not perform testnet, paid inference, production-secret or mainnet work without authorization.
+Preserve checkpoint CONTRA-2026-11-03-IMPL-M04. Owner reviews the three populated local screenshots and gives explicit visual acceptance or precise corrections. AC31 and AC32 cannot pass their frozen exact scope until the owner separately authorizes testnet deployment and live provider use, credits and pricing are reverified, six genuinely independently controlled reviewer operators are available, and actual provider/testnet records reproduce both journeys. Remaining partial checks include browser Back/focus restoration, external wallet rejection/redirect, injected index lag, full pagination/case-switch matrices and 320px at 200 percent screen-reader review. Do not perform testnet, paid inference, production-secret or mainnet work without authorisation.
 
 ## Historical next task | IMPL-M04 integrated local journeys and acceptance
 
@@ -124,17 +130,17 @@ Preserve checkpoint CONTRA-2026-11-03-IMPL-M04-E01. Implement durable transactio
 
 P0 financial verification passed on November 3, 2026. Continue with structured per-criterion evidence manifests and content-addressed artifacts, wallet reconciliation and transaction freshness, independently controlled reviewer operations, provider adapters within the approved Meta $3, Baseten $3 and Modal $5 envelopes, and two complete local case-to-settlement journeys. One journey must settle an unchallenged agreement. The second must confirm a challenge and reach a different fresh-review verdict before settlement.
 
-Keep AC01-AC33 acceptance evidence explicit and separate. Do not claim local reviewer accounts are independent operators. No testnet deployment, paid provider call, production secret or mainnet operation is authorized. Preserve UNKNOWN payout locks, UX3A geometry, The Bench naming and the immutable design reference.
+Keep AC01-AC33 acceptance evidence explicit and separate. Do not claim local reviewer accounts are independent operators. No testnet deployment, paid provider call, production secret or mainnet operation is authorised. Preserve UNKNOWN payout locks, UX3A geometry, The Bench naming and the immutable design reference.
 
 Older task sections below are historical and superseded where inconsistent.
 
 ## Historical next task | IMPL-M02
 
-On a Linux x86_64 host allowing 65535 open files, run node scripts/setup-sandbox.mjs, node scripts/build-contracts.mjs and npm run test:sandbox. Fix real Wasm/runtime failures; prove native balance deltas, SR05 successful-transfer/failed-callback lock, verified-failure liquidity timing, concurrent-case conservation and worst-case gas/storage. Current host cannot run Sandbox; source/services/UI are saved without financial acceptance. Then finish structured per-criterion manifests, external wallet redirects, source block/timestamp envelopes and independently controlled reviewer/provider integration. Testnet deployment, paid usage and production secrets still need separate authorization. If financial proof is still outstanding November 1, it is the first event-window engineering task; record only new changes as event-window work.
+On a Linux x86_64 host allowing 65535 open files, run node scripts/setup-sandbox.mjs, node scripts/build-contracts.mjs and npm run test:sandbox. Fix real Wasm/runtime failures; prove native balance deltas, SR05 successful-transfer/failed-callback lock, verified-failure liquidity timing, concurrent-case conservation and worst-case gas/storage. Current host cannot run Sandbox; source/services/UI are saved without financial acceptance. Then finish structured per-criterion manifests, external wallet redirects, source block/timestamp envelopes and independently controlled reviewer/provider integration. Testnet deployment, paid usage and production secrets still need separate authorisation. If financial proof is still outstanding November 1, it is the first event-window engineering task; record only new changes as event-window work.
 
-## Historical task - October 28 owner authorization (supersedes former date gate)
+## Historical task - October 28 owner authorisation (supersedes former date gate)
 
-Continue IMPL-M03 from the compatible Ubuntu Sandbox host. Rerun the complete corrected Sandbox suite, then expand it to the full 18-category financial matrix. Prioritize failed-transfer callback combinations, SR05, duplicate and concurrent finalization, multi-case reserve conservation, deadline boundaries, overflow, wrong-intent callbacks, and worst-case storage and gas. Save structured receipts, exact balance deltas, environment metadata and gas totals. Do not accept AC01-AC33, deploy testnet or use paid providers until all required evidence is verified. Approved UX3A remains frozen and the product name remains The Bench.
+Continue IMPL-M03 from the compatible Ubuntu Sandbox host. Rerun the complete corrected Sandbox suite, then expand it to the full 18-category financial matrix. Prioritise failed-transfer callback combinations, SR05, duplicate and concurrent finalisation, multi-case reserve conservation, deadline boundaries, overflow, wrong-intent callbacks, and worst-case storage and gas. Save structured receipts, exact balance deltas, environment metadata and gas totals. Do not accept AC01-AC33, deploy testnet or use paid providers until all required evidence is verified. Approved UX3A remains frozen and the product name remains The Bench.
 
 Checkpoint: CONTRA-2026-10-28-UX3C
 Date: 2026-10-28
@@ -144,15 +150,15 @@ Approved design: bee5a7481d56c86d4c9860280b8367f82af0cb5a, unchanged
 
 ## Historical current task
 
-On or after November 1, 2026 UTC, create fresh contracts/adjudication source and a sandbox harness. Pin Rust/SDK/toolchain and implement storage reserves/accounting, immutable creation identity/terms, beneficiary acceptance, creator-only cancel, exact funding, single payout intent, private callback and verified-failure-only retry. Prove I1/I2/I3/I10 using the v1 acceptance plan, especially SR05 successful transfer plus failed callback and SR06 failed transfer plus failed callback. No second transfer from unknown outcome. A harness-only decision fixture may reach settlement for tests, but no production verdict bypass may be exported.
+On or after November 1, 2026 UTC, create fresh contracts/contestation source and a sandbox harness. Pin Rust/SDK/toolchain and implement storage reserves/accounting, immutable creation identity/terms, beneficiary acceptance, creator-only cancel, exact funding, single payout intent, private callback and verified-failure-only retry. Prove I1/I2/I3/I10 using the v1 acceptance plan, especially SR05 successful transfer plus failed callback and SR06 failed transfer plus failed callback. No second transfer from unknown outcome. A harness-only decision fixture may reach settlement for tests, but no production verdict bypass may be exported.
 
-Then integrate frozen committee/reviewer adjudication and evidence/provider services, followed by the approved frontend visual system. Do not implement submission code before November 1. Pre-event design remains separate and cannot be imported as eligible implementation. No deployment, secrets, paid models or mainnet actions are authorized here. Preserve Meta $3, Baseten $3, Modal $5 caps and no unauthorized cash spending.
+Then integrate frozen committee/reviewer contestation and evidence/provider services, followed by the approved frontend visual system. Do not implement submission code before November 1. Pre-event design remains separate and cannot be imported as eligible implementation. No deployment, secrets, paid models or mainnet actions are authorised here. Preserve Meta $3, Baseten $3, Modal $5 caps and no unauthorised cash spending.
 
 ## Mandatory resume references
 
 STATUS.md, DECISIONS.md, CHANGELOG.md, this file; docs/CONTRACT_ABI_V1.md and its five companion v1 documents; amended UX3B map and AC01-AC33. G01-G07 are RESOLVED AT SPECIFICATION LEVEL, not implemented/proven. Exact gas/storage budgets are frozen assumptions that must pass worst-case sandbox measurement before funding. Unknown payout recovery is deliberately absent, not an open permission to invent a manual workaround.
 
-Registry/operator evidence, separately controlled six-member availability, credit verification, key-control disclosure and testnet deployment authorization remain launch gates. Documented residual fairness/liveness risks remain. Keep design/ux3a and reference assets frozen.
+Registry/operator evidence, separately controlled six-member availability, credit verification, key-control disclosure and testnet deployment authorisation remain launch gates. Documented residual fairness/liveness risks remain. Keep design/ux3a and reference assets frozen.
 
 ## Historical NEXT record
 
@@ -170,11 +176,11 @@ Read STATUS.md, DECISIONS.md, CHANGELOG.md, this file, docs/UX3B_FUNCTIONAL_INTE
 
 ## Precise next task
 
-Resolve and pin G01-G07 in a versioned ABI/state/committee/recovery specification and shared commitment vectors. Do not invent completed interfaces. Before November 1, 2026 UTC, keep work to planning/design; eligible code must be freshly authored in separate apps/web, contracts/adjudication and service directories during the eligible window. Do not import the pre-event runnable study as competition implementation.
+Resolve and pin G01-G07 in a versioned ABI/state/committee/recovery specification and shared commitment vectors. Do not invent completed interfaces. Before November 1, 2026 UTC, keep work to planning/design; eligible code must be freshly authored in separate apps/web, contracts/contestation and service directories during the eligible window. Do not import the pre-event runnable study as competition implementation.
 
-The first eligible engineering slice is create/fund and callback-safe payout/refund sandbox safety, then authorized testnet proof. Follow with evidence, primary/adversarial evaluation, authenticated reviewer commit/reveal, confirmed challenge, fresh review and callback-confirmed settlement. Use AC01-AC33 as release gates. Deliver both AC31 unchallenged and AC32 challenged case-to-settlement evidence before unrelated features.
+The first eligible engineering slice is create/fund and callback-safe payout/refund sandbox safety, then authorised testnet proof. Follow with evidence, primary/adversarial evaluation, authenticated reviewer commit/reveal, confirmed challenge, fresh review and callback-confirmed settlement. Use AC01-AC33 as release gates. Deliver both AC31 unchallenged and AC32 challenged case-to-settlement evidence before unrelated features.
 
-Keep approved design/ux3a unchanged. Map functional navigation/drawers/workflow screens through the integration specification, preserving desktop composition. Every live field must identify source/freshness, unknowns stay unknown and service failure must not silently fall back to fixture values. Contract and provider integrations currently remain unavailable. No deployment, secrets, paid calls or mainnet actions are authorized by this checkpoint.
+Keep approved design/ux3a unchanged. Map functional navigation/drawers/workflow screens through the integration specification, preserving desktop composition. Every live field must identify source/freshness, unknowns stay unknown and service failure must not silently fall back to fixture values. Contract and provider integrations currently remain unavailable. No deployment, secrets, paid calls or mainnet actions are authorised by this checkpoint.
 
 ## Historical NEXT record (superseded)
 
@@ -190,14 +196,14 @@ Objective: Begin a new product redesign brief from the preserved repository base
 1. Preserve UX2B and UX2C screenshots and logs as historical evidence.
 2. Define the redesign scope and acceptance criteria with the owner without reopening protocol safety decisions.
 3. Produce the new visual direction in code and verify it at the required breakpoints.
-4. Do not deploy, consume paid APIs or begin smart contract implementation before the applicable authorization and timing gates.
+4. Do not deploy, consume paid APIs or begin smart contract implementation before the applicable authorisation and timing gates.
 
 ## Constraints
 
 - Pre-November 1 artifacts are design-only, not hackathon product implementation.
 - No live model calls, GPU execution, API spend or blockchain transactions are required for visual acceptance.
 - Preserve NEAR testnet escrow state machine, pending-transfer callbacks and financial safety requirements.
-- Maintain zero unauthorized out-of-pocket spending.
+- Maintain zero unauthorised out-of-pocket spending.
 - GitHub owner identity is `kellyxy110`. Remote repository name and URL remain unassigned.
 
 ## First November 1 engineering task
@@ -206,7 +212,7 @@ Initialize the chosen repository and Rust NEAR contract; write case creation, fu
 
 ## Handoff v1.2 clarification
 
-Agent starts from `HANDOFF_TO_CODING_AGENT.md`. SHA-256 verify original image before starting, and after any package/build changes. Do not edit the source image even to apply NEAR colors. NEAR color adaptation belongs exclusively to the new coded UI. Keep every feature tied to actual case state or a clearly marked fixture. Deliver a high-fidelity working design study for owner acceptance before claiming the UI is ready.
+Agent starts from `HANDOFF_TO_CODING_AGENT.md`. SHA-256 verify original image before starting, and after any package/build changes. Do not edit the source image even to apply NEAR colours. NEAR colour adaptation belongs exclusively to the new coded UI. Keep every feature tied to actual case state or a clearly marked fixture. Deliver a high-fidelity working design study for owner acceptance before claiming the UI is ready.
 
 
 ## Current task supersession | UX3A

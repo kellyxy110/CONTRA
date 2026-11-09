@@ -1,6 +1,6 @@
 # M03 financial verification handoff
 
-Checkpoint: CONTRA-2026-10-29-IMPL-M03. Authorized baseline: a98216cda22501ee112c68a7d336952f8b7967ff, implementation/oct28. Actual implementation began October 28 as pre-event work. The F17 timeout correction and final verification completed November 3 during the official competition window. Governing financial behavior remains the frozen UX3C ABI/state/recovery specifications. No production financial method or recovery policy was changed.
+Checkpoint: CONTRA-2026-10-29-IMPL-M03. Authorised baseline: a98216cda22501ee112c68a7d336952f8b7967ff, implementation/oct28. Actual implementation began October 28 as pre-event work. The F17 timeout correction and final verification completed November 3 during the official competition window. Governing financial behaviour remains the frozen UX3C ABI/state/recovery specifications. No production financial method or recovery policy was changed.
 
 ## Verified result
 
@@ -10,7 +10,7 @@ Observed maximum transaction gas was 35,923,793,821,747. Maximum callback gas wa
 
 Production Wasm is 631,042 bytes with SHA-256 `c607adf597dfbf898d8e442fd71b3b75e7032ad47fd808fb50e89e0573fd3ef8`. It exports none of `set_callback_fault`, `sandbox_set_counters`, `sandbox_probe_callback` or `sandbox_probe_value`. Fault Wasm remains separate. Exact native receiver balance changes and callback outcomes are asserted by the passing financial tests. Machine report: `project/artifacts/implementation/verification.json`. Complete raw evidence: `project/artifacts/m03/p0-run/`.
 
-AC01-AC33 acceptance remains separate and unaccepted. This gate does not prove independent operator control, live provider readiness, external-wallet settlement or authorized testnet deployment.
+AC01-AC33 acceptance remains separate and unaccepted. This gate does not prove independent operator control, live provider readiness, external-wallet settlement or authorised testnet deployment.
 
 ## Reproducible execution
 
@@ -58,4 +58,4 @@ F16 deliberately uses a disposable contract's full-access test key to create an 
 
 All active frontend photograph references use one neutral palette-matched SVG. All fifteen measured desktop rectangles remain equal to UX3A; original photographs, JPEG and frozen design assets are unchanged. The empty-state text is shortened to `No records` without geometry changes.
 
-Exact next task: continue Priority 2 with structured evidence manifests, wallet reconciliation, independently controlled reviewer operations, provider integration within approved credits, and two complete local case-to-settlement journeys, including a challenged case with a different final verdict. Testnet deployment, paid provider usage and production secrets still require separate authorization. Meta $3, Baseten $3 and Modal $5 limits remain unchanged; no spend occurred.
+Exact next task: continue Priority 2 with structured evidence manifests, wallet reconciliation, independently controlled reviewer operations, provider integration within approved credits, and two complete local case-to-settlement journeys, including a challenged case with a different final verdict. Testnet deployment, paid provider usage and production secrets still require separate authorisation. Meta $3, Baseten $3 and Modal $5 limits remain unchanged; no spend occurred.

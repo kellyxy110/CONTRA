@@ -45,6 +45,6 @@ Overview, Cases, Evidence, Challenges, Reviewers, Settlement, Lab, Settings and 
 1. Owner visual acceptance is pending.
 2. Manual assistive-technology screen-reader verification remains PARTIAL.
 3. Linux Chromium is blocked because the WSL browser binary download could not complete. Windows Chromium passed and is not used as a substitute claim for Linux.
-4. External wallet rejection and redirect behavior remains gated.
-5. Authorized testnet journeys, paid provider records and six genuinely independent reviewer operators remain unavailable, so AC31 and AC32 stay BLOCKED.
-6. No testnet deployment, paid inference, production secret or mainnet operation is authorized.
+4. External wallet rejection and redirect behaviour remains gated.
+5. Authorised testnet journeys, paid provider records and six genuinely independent reviewer operators remain unavailable, so AC31 and AC32 stay BLOCKED.
+6. No testnet deployment, paid inference, production secret or mainnet operation is authorised.

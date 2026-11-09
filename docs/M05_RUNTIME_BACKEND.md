@@ -6,9 +6,9 @@ Checkpoint: `CONTRA-2026-11-07-IMPL-M05-R01`
 
 - Added explicit `unavailable`, `sandbox` and `testnet` startup modes.
 - Wired the testnet RPC adapter into application startup.
-- Added startup validation for RPC URL, testnet network identity, node sync status, contract account syntax, deployed contract code and finalized block access.
-- Added finalized contract reads with block height, block hash, block timestamp, observation time, age, stale state and block-regression detection.
-- Added finalized transaction inspection that distinguishes pending, failed and confirmed results.
+- Added startup validation for RPC URL, testnet network identity, node sync status, contract account syntax, deployed contract code and finalised block access.
+- Added finalised contract reads with block height, block hash, block timestamp, observation time, age, stale state and block-regression detection.
+- Added finalised transaction inspection that distinguishes pending, failed and confirmed results.
 - Added genuine chain and persistence details to the health and configuration responses.
 - Added versioned SQLite migrations, full synchronous writes, integrity checks, content-addressed object audits and conservative restart recovery to `UNKNOWN`.
 - Verified idempotent budget reservations through two database connections.
@@ -18,15 +18,15 @@ Checkpoint: `CONTRA-2026-11-07-IMPL-M05-R01`
 ## Observed verification
 
 - `npm test`: 44/44 passed at R01.
-- Live read-only `status` request to `https://rpc.testnet.near.org`: returned `chain_id=testnet`, `syncing=false` and a current finalized testnet head.
+- Live read-only `status` request to `https://rpc.testnet.near.org`: returned `chain_id=testnet`, `syncing=false` and a current finalised testnet head.
 - Local unavailable-mode startup: health returned explicit unavailable chain state and SQLite schema version 2 with integrity `ok`.
-- No testnet contract was configured or queried because no authorized deployed CONTRA account exists.
+- No testnet contract was configured or queried because no authorised deployed CONTRA account exists.
 - No Sandbox journey was rerun in this checkpoint. Accepted M03 and M04 evidence remains unchanged.
 
 ## Remaining M05 work
 
 - Run the complete Sandbox financial regression on the compatible Linux host.
-- Add a configured-contract read test after a testnet deployment is separately authorized and exists.
+- Add a configured-contract read test after a testnet deployment is separately authorised and exists.
 - Complete API rate limiting and deeper case-isolation fuzzing.
 - Exercise abrupt process termination around object, transaction and reservation writes.
 - Finish deployment storage documentation and backup/restore verification for the selected host.
