@@ -16,7 +16,7 @@ export function verifyJudgeEvidence(report){
  if(report.wallet?.dispatch_count!==0||report.wallet?.restart_status!=='UNKNOWN'||report.wallet?.recovered_status!=='PENDING')throw Error('Wallet restart recovery or zero-redispatch proof is missing');
  if(report.trust_boundary?.ai_commitments_before!==0||report.trust_boundary?.ai_commitments_after!==0||report.trust_boundary?.ai_status!=='proposal-only')throw Error('AI trust-boundary proof is missing');
  if(!/^[0-9a-f]{64}$/.test(report.trust_boundary?.modal_proposal_digest||'')||!/^[0-9a-f]{64}$/.test(report.trust_boundary?.verified_proposal_digest||''))throw Error('Modal proposal binding is missing');
- if(report.settlement?.final_disposition!=='REJECT'||report.settlement?.resolution_basis!=='FRESH'||report.settlement?.balance_delta_yocto!==ONE_NEAR||report.settlement?.result!=='SUCCESS_VERIFIED')throw Error('Exact challenged settlement evidence is missing');
+ if(report.settlement?.final_disposition!=='REJECT'||report.settlement?.resolution_basis!=='FRESH'||report.settlement?.recipient_id!=='creator.test.near'||report.settlement?.balance_delta_yocto!==ONE_NEAR||report.settlement?.result!=='SUCCESS')throw Error('Exact challenged settlement evidence is missing');
  if(report.timeout?.resolution_basis!=='BASE_REFUND'||report.timeout?.final_disposition==='ACCEPT')throw Error('Timeout fallback evidence is missing');
  if(!(report.counts?.sandbox_receipts>0)||!(report.counts?.persisted_operations>0))throw Error('Receipt and operation evidence is missing');
  return {verified:true,sandbox_receipts:report.counts.sandbox_receipts,persisted_operations:report.counts.persisted_operations,settlement:report.settlement,wallet:report.wallet,trust_boundary:report.trust_boundary,timeout:report.timeout};
