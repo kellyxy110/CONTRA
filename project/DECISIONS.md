@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-088 | The judge quick-start validates retained evidence, not command success alone | 2026-11-09
+
+ACCEPTED. The credential-free Ubuntu route must run from a clean dependency installation and independently validate the controlled workflow report before returning success. Genuine local Sandbox identity, explicit simulated wallet and mocked provider boundaries, exact challenged settlement, deterministic timeout fallback, positive receipt and operation counts, zero wallet redispatch and zero AI-created commitments are mandatory. Missing or contradictory evidence fails the command even when an upstream process exits successfully.
+
 ## D-087 | Acceptance status follows the required evidence class | 2026-11-09
 
 ACCEPTED. AC06 and AC24 move to PASS because current Sandbox and controlled external-wallet evidence covers confirmed creation, stable request identity, rejection, interrupted handoff, browser reload, account switching, restart, hash recovery, explicit receipt states and zero redispatch. Fixture evidence cannot upgrade criteria that explicitly require live providers, independent operators, a deployed testnet contract or manual final-frontend assistive-technology review. The current result is 23 PASS, 8 PARTIAL and 2 BLOCKED.

@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | Acceptance promotion and judge quick-start
+
+- Merged acceptance-review PR 28 as `29206ecf4295181a84466319edd87f5c075671b9` after Core `42626681412`, Security `42626681362` and comprehensive Integration `42626681341` passed.
+- Promoted it through PR 29 to `main` as `9a17ac082e3e92b70449f71e4080048a7fd7ebd1` after Core `42628250853`, Security `42628250899` and comprehensive Integration `42628250807` passed.
+- Verified protected tree `112562cca368e6bcbd54cfd7cbfd8ea02fcd9226` and implementation ancestry.
+- Started `feat/m11-judge-quickstart`. Added a clean Ubuntu one-command route and fail-closed machine validation of its controlled Sandbox evidence. Focused routing and report verification pass 13/13 tests.
+- Transactions, deployments, live provider calls and spending: none.
+
 ## 2026-11-09 UTC | Frontend interface promotion and M11 acceptance review
 
 - Merged frontend-interface PR 26 as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd` after Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed.

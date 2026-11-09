@@ -67,7 +67,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Capability | Current evidence |
 | --- | --- |
 | Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 113 tests pass on the M09 service-readiness working tree |
+| Repository tests | 116 tests pass on the M11 judge quick-start working tree |
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
@@ -93,7 +93,7 @@ node scripts/build-contracts.mjs
 npm run build:wallet
 ```
 
-Expected results are 113 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. The repository tests include exclusive durable-volume ownership, same-host crash recovery, graceful runtime restart, manifest-bound backup, tamper-detecting restore and separate liveness and readiness coverage. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
+Expected results are 116 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. The repository tests include exclusive durable-volume ownership, same-host crash recovery, graceful runtime restart, manifest-bound backup, tamper-detecting restore, separate liveness and readiness coverage, acceptance and interface drift checks, and judge-report validation. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
 
 The API defaults to safe unavailable mode:
 
@@ -107,6 +107,14 @@ npm run dev
 ## Reproduce the contestation journeys
 
 On the supported Linux host:
+
+```sh
+npm run judge:local
+```
+
+This credential-free command performs a clean install, the source and contract verification, the wallet build, pinned Sandbox setup and the complete controlled Contestation journey. It writes `ci-output/judge-quickstart/report.json` and fails closed if the retained evidence does not prove genuine local Sandbox execution, exact settlement, timeout fallback, zero wallet redispatch and zero AI-created commitments.
+
+For the individual component routes:
 
 ```sh
 node scripts/setup-sandbox.mjs

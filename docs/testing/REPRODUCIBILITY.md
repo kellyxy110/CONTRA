@@ -22,7 +22,7 @@ node scripts/ci-policy.mjs security
 npm run check:docs
 ```
 
-The repository suite currently contains 113 tests, including five deployment-preflight cases that verify secret rejection, authorisation binding, artifact identity, network identity, full-access key scope, account funding and stale-chain failure. Four runtime-ownership cases verify exclusive durable-volume ownership, live-process exclusion, same-host crash reclamation, failed-start cleanup and graceful restart. Four backup cases verify complete storage copying, manifest checksums, restore integrity and rejection of live ownership, nested paths, non-empty destinations, changed files, missing files, extra files and symbolic links. Four service-readiness cases separate process liveness from chain and storage readiness and lock the single-writer service contract. Explicit CI routing covers the non-signing deployment and offline backup paths.
+The repository suite currently contains 116 tests, including five deployment-preflight cases that verify secret rejection, authorisation binding, artifact identity, network identity, full-access key scope, account funding and stale-chain failure. Four runtime-ownership cases verify exclusive durable-volume ownership, live-process exclusion, same-host crash reclamation, failed-start cleanup and graceful restart. Four backup cases verify complete storage copying, manifest checksums, restore integrity and rejection of live ownership, nested paths, non-empty destinations, changed files, missing files, extra files and symbolic links. Four service-readiness cases separate process liveness from chain and storage readiness and lock the single-writer service contract. Acceptance-matrix, frontend-interface and judge-report regressions verify release documentation against implemented routes, Rust states and retained workflow evidence. Explicit CI routing covers the non-signing deployment and offline backup paths.
 
 The preparation-only deployment assessment is expected to remain blocked until the owner-controlled fields are supplied:
 
@@ -33,6 +33,16 @@ node scripts/testnet-deployment-preflight.mjs config/testnet-deployment.example.
 It exits with status 2 and writes a blocker report. It does not sign or broadcast.
 
 ## Local NEAR execution
+
+The maintained credential-free judge path is one command from a clean clone:
+
+```sh
+npm run judge:local
+```
+
+It runs the clean install, unit and service suite, contract suite, both WASM builds, ABI and commitment checks, wallet build, pinned Sandbox setup and controlled workflow. A successful run writes `ci-output/judge-quickstart/report.json` and prints the exact receipt count and 1 NEAR settlement assertion. The command supports Ubuntu 24.04 x86_64 only.
+
+The component commands are:
 
 ```sh
 node scripts/setup-sandbox.mjs
