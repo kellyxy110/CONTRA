@@ -11,7 +11,15 @@ This guide separates what is public now from what requires a future authorised d
 
 ## Route B: reproduce locally
 
-Use the supported Linux host and follow [reproducibility](../testing/REPRODUCIBILITY.md). No wallet, private key, paid provider or external credential is required. The complete controlled journey must show immutable evidence, non-binding AI artifacts, reviewer commitment and reveal, challenge lockout, fresh reversal, exact recipient balance and duplicate-payout prevention.
+Use Ubuntu 24.04 x86_64 with Node.js 26.13.0, Rust 1.98.0 plus `wasm32-unknown-unknown`, and an open-file hard limit of at least 65535. From a clean clone, run:
+
+```sh
+npm run judge:local
+```
+
+No wallet, private key, paid provider or external credential is required. The command performs a clean install, repository and Rust tests, production and fault WASM builds, ABI and commitment checks, the wallet bundle, pinned Sandbox installation and the complete controlled journey. It exits nonzero if the result lacks genuine local Sandbox receipts, immutable evidence, non-binding AI artifacts, reviewer commitment and reveal, fresh reversal, exact 1 NEAR creator refund, BASE_REFUND timeout, zero wallet redispatch or zero AI-created commitments.
+
+Expected final output begins with `[JUDGE] PASS` and the machine report is written to `ci-output/judge-quickstart/report.json`. Provider and external-wallet operations remain explicitly simulated. Follow [reproducibility](../testing/REPRODUCIBILITY.md) for individual commands and retained artifact locations.
 
 ## Route C: explore testnet
 

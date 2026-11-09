@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M11-JUDGE-QUICKSTART
+
+The M11 acceptance review is merged and promoted. PR 28 tested head `84ae0180c75049c01f42bad2a3cca8ba51a85a6c` and merged it into `implementation/oct28` as `29206ecf4295181a84466319edd87f5c075671b9`. Core `42626681412`, Security `42626681362` and comprehensive Integration `42626681341` passed. Promotion PR 29 merged the accepted tree into `main` as `9a17ac082e3e92b70449f71e4080048a7fd7ebd1` after Core `42628250853`, Security `42628250899` and comprehensive Integration `42628250807` passed. The protected branches share tree `112562cca368e6bcbd54cfd7cbfd8ea02fcd9226`; implementation is an ancestor of main.
+
+The credential-free judge quick-start is merged. PR 30 tested head `45c80a424e0e77cb00a192094c54c01174467c22` and merged it into `implementation/oct28` as `2e52098130f62922a3a49ec1121c66a5a9bf3301`. Core `42635548335`, Security `42635548331` and comprehensive Integration `42635548332` passed. The clean Ubuntu judge command passed in 5m42s with 116 repository tests, 28 Rust tests, both WASM builds, ABI and commitment checks, wallet build, 46 genuine local Sandbox receipts, exact challenged settlement, BASE_REFUND timeout, zero redispatch and zero AI-created commitments. No external transaction, deployment, live provider call, secret change or spending occurred. Promotion to `main` is the active release action.
+
 ## Current checkpoint | CONTRA-2026-11-09-M11-ACCEPTANCE-REVIEW
 
 M09 frontend integration is merged. PR 26 tested head `ffc5ddb66775d34e251af5bdfa3d71c9512506c3` and merged it into `implementation/oct28` as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd`. Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed. Promotion PR 27 merged the accepted tree into `main` as `a74445527dd66f2ff0c684887849346f7951416e` after Core `42624205902`, Security `42624205805` and comprehensive Integration `42624205937` passed. The protected branches have identical tree `6528bccef703008371d076475c7b4da55115b2f4`; implementation is an ancestor of main.

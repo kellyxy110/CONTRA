@@ -144,7 +144,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
   full-controlled-workflow:
-    name: full-m06-controlled-workflow
+    name: full-judge-quickstart
     needs: policy
     if: needs.policy.outputs.level == 'full'
     runs-on: ubuntu-24.04
@@ -155,22 +155,23 @@ jobs:
         with:
           node-version: 26.13.0
           cache: npm
-      - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: rustup show
-      - run: node scripts/build-contracts.mjs
-      - run: node scripts/setup-sandbox.mjs
-      - name: Complete controlled M06 cross-component workflow
+      - name: Run credential-free judge quick-start
         shell: bash
         run: |
           set -o pipefail
           mkdir -p ci-output
           if [ "$(ulimit -Sn)" -lt 65535 ]; then ulimit -Sn 65535; fi
-          /usr/bin/time -p -o ci-output/m06-controlled-timing.txt npm run test:m06:controlled 2>&1 | tee ci-output/m06-controlled.txt
+          /usr/bin/time -p -o ci-output/judge-quickstart-timing.txt npm run judge:local 2>&1 | tee ci-output/judge-quickstart.txt
       - if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: m06-controlled-workflow-${{ github.run_id }}
-          path: ci-output/m06-controlled-workflow/
+          name: judge-quickstart-${{ github.run_id }}
+          path: |
+            ci-output/judge-quickstart/
+            ci-output/m06-controlled-workflow/
+            ci-output/judge-quickstart.txt
+            ci-output/judge-quickstart-timing.txt
           if-no-files-found: error
           retention-days: 30
   integration-gate:

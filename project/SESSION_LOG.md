@@ -1,5 +1,21 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | Judge quick-start verification and implementation merge
+
+- Corrected the initial report assertion to the contract's authenticated `SUCCESS` payout result and required the exact creator recipient. The retained 46-receipt report then passed the validator without changing financial behaviour.
+- PR 30 final head `45c80a424e0e77cb00a192094c54c01174467c22` passed Core `42635548335`, Security `42635548331` and comprehensive Integration `42635548332`.
+- The clean judge route passed in 5m42s, the nine-test baseline in 7m39s and both complete Contestation journeys in 4m19s.
+- Merged PR 30 into `implementation/oct28` as `2e52098130f62922a3a49ec1121c66a5a9bf3301`. Promotion to `main` is next.
+- External transactions, deployments, live provider calls and spending: none.
+
+## 2026-11-09 UTC | Acceptance promotion and judge quick-start
+
+- Merged acceptance-review PR 28 as `29206ecf4295181a84466319edd87f5c075671b9` after Core `42626681412`, Security `42626681362` and comprehensive Integration `42626681341` passed.
+- Promoted it through PR 29 to `main` as `9a17ac082e3e92b70449f71e4080048a7fd7ebd1` after Core `42628250853`, Security `42628250899` and comprehensive Integration `42628250807` passed.
+- Verified protected tree `112562cca368e6bcbd54cfd7cbfd8ea02fcd9226` and implementation ancestry.
+- Started `feat/m11-judge-quickstart`. Added a clean Ubuntu one-command route and fail-closed machine validation of its controlled Sandbox evidence. Focused routing and report verification pass 13/13 tests.
+- Transactions, deployments, live provider calls and spending: none.
+
 ## 2026-11-09 UTC | Frontend interface promotion and M11 acceptance review
 
 - Merged frontend-interface PR 26 as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd` after Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed.

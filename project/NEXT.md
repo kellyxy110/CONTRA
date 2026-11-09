@@ -1,10 +1,18 @@
 # Next execution task
 
-## Active next task | M11 acceptance review
+## Active next task | M11 judge promotion and public repository audit
 
-Complete the focused AC01 to AC33 evidence-review PR. Require one classified row per frozen criterion, exact environment boundaries, current commit and CI links, and mechanical totals. Upgrade only criteria whose complete text is supported. Merge and promote under the standing green policy.
+Promote the accepted judge quick-start from `implementation/oct28` into `main` through the protected PR process. Require Core, Security and comprehensive Integration on the exact promotion head, then verify branch tree identity and implementation ancestry.
 
-After promotion, strengthen the judge quick-start with a maintained one-command local runner and machine-verifiable expected output. External M08 to M10 gates remain blocked by the consolidated owner inputs in `project/BLOCKERS.md`.
+After promotion, perform the remaining public-repository and release-candidate audit that does not require external authority. External M08 to M10 gates remain blocked by the consolidated owner inputs in `project/BLOCKERS.md`.
+
+## Historical next task | M11 judge quick-start
+
+PR 30 is merged into `implementation/oct28`. Preserve its one-command clean Ubuntu route, fail-closed evidence validation, comprehensive risk classification and retained CI artifacts.
+
+## Historical next task | M11 acceptance review
+
+The AC01 to AC33 evidence review is merged and promoted. Preserve the 23 PASS, 8 PARTIAL and 2 BLOCKED result until new evidence satisfies each criterion's required class. Do not upgrade deployed, live-provider, independent-reviewer or final-frontend criteria using fixtures.
 
 ## Historical next task | M09 frontend integration contract
 
