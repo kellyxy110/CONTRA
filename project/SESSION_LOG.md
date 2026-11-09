@@ -4,8 +4,15 @@
 
 - Added non-billable readiness checks for six distinct reviewer operators and disjoint committees.
 - Added separate Meta, Baseten and Modal readiness checks with exact provenance, billing and owner-authorisation requirements.
-- Passed 4/4 focused readiness tests and 122/122 repository tests locally before synchronising the accepted Cloudflare baseline.
+- Passed 4/4 focused readiness tests and 122/122 repository tests locally before synchronising the accepted M08 baseline.
 - Provider calls, reviewer signatures, transactions, deployments and spending: none.
+
+## 2026-11-09 UTC | M08 independent readiness
+
+- Separated M08 contract deployment, M09 hosting and M10 provider readiness.
+- Confirmed through two read-only RPC providers that `contra-contestation.testnet` did not exist at the recorded final blocks.
+- GitHub run `42700073759` built the 631190-byte production WASM with SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f` and verified near-cli-rs `0.30.1` Ledger command support without a device or signature.
+- Transactions, deployments, signing, secret changes and spending: none.
 
 ## 2026-11-09 UTC | Cloudflare Free persistence foundation
 

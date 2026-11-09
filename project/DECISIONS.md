@@ -4,6 +4,10 @@
 
 ACCEPTED. Reviewer independence requires six distinct signed operators across disjoint primary and fresh committees. Provider readiness requires exact account, model, smoke, credit, pricing, billing, secret-custody and owner-authorisation evidence for each provider. No M10 field can authorise M08 deployment, and no fixture can satisfy a live external requirement.
 
+## D-091 | External milestone readiness is independent | 2026-11-09
+
+ACCEPTED. M08 deployment readiness depends only on an existing authorised contract account, its public Ledger signer key, the Linux artifact identity and owner approval bound to the final deployment digest. M09 Cloudflare authority and M10 provider spending are separate gates and cannot block or authorise M08. The 8 NEAR opening balance is separately authorised pre-existing funding outside the 5 NEAR execution ceiling, for a maximum combined exposure of 13 NEAR.
+
 ## D-090 | Cloudflare Free is the M09 persistence target | 2026-11-09
 
 ACCEPTED. The public backend target is Cloudflare Workers Free with Static Assets and SQLite-backed Durable Objects under a hard USD 0 ceiling. Durable Object SQLite is the authoritative serial state boundary for financial operation identity, sessions, immutable evidence and chain observations. D1 is not authoritative financial state. R2 is omitted until a verified Free allocation and fail-closed zero-cost need exists. Unmigrated routes return 503 and no public deployment is claimed without separate account authority.

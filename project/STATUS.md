@@ -4,6 +4,10 @@
 
 M10 now has machine-checked fail-closed readiness gates for independently controlled reviewers and live providers. Six distinct operators, disjoint three-member committees, signed disclosures, conflicts and availability are required. Meta, Baseten and Modal are evaluated independently for account, exact model, non-billable smoke, credits, pricing, billing controls, server-side secret custody and bounded owner approval. Current fixtures do not satisfy those live gates. No provider call, reviewer signature, transaction or spending occurred.
 
+## Current checkpoint | CONTRA-2026-11-09-M08-INDEPENDENT-READINESS
+
+M08 now has an independently evaluated readiness state. Its production WASM was built on Ubuntu 24.04 in run `42700073759` with SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`. The proposed account returned `UNKNOWN_ACCOUNT` through the official and fallback RPCs, so ownership, balance, current code and signer key are not verified. The current packet digest is `06c2e0389a56354e2a6c5e731d084450831fbfe6a104171c7a24a66794657d7f`; deployment intent is `559c3063282ee90ffb1e0c0318611c4ceb30920129ca28e6fe124aca7ef9be8b`. Both remain non-executable. No transaction, deployment, signing or spending occurred.
+
 ## Current checkpoint | CONTRA-2026-11-09-M09-CLOUDFLARE-FREE-FOUNDATION
 
 The Cloudflare Free migration foundation is active on `feat/m09-cloudflare-free`. Workers Static Assets and a SQLite-backed `ContraState` Durable Object preserve serial financial operation identity, wallet UNKNOWN locks, unique transaction hashes, account-scoped sessions, immutable evidence digests and non-regressed chain observations. Unmigrated API routes fail closed with 503. Six Cloudflare regressions, the Wrangler dry-run, 118 repository tests and the wallet bundle pass locally. No Cloudflare account, public endpoint, deployment credential or external action is claimed. The hosting ceiling is USD 0.
