@@ -12,6 +12,7 @@ import {loadRuntimeConfig} from '../runtime/config.mjs';
 import {RateLimiter} from './rate-limit.mjs';
 import {receiptState,validateWalletArgs,validateWalletCall,verifyReceiptIntent,walletSigningRequest,walletTxHash} from '../wallet/lifecycle.mjs';
 import {inspectCommitteeControl,reviewerWorkspace,validateReviewerTransaction,verifyFindingIdentity} from '../reviewers/operations.mjs';
+import {acquireDataLease} from '../operations/data-lease.mjs';
 export const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const mutations=new Set(['create_case','accept_terms','cancel_case','fund_case','submit_evidence','advance_round','commit_vote','reveal_vote','file_challenge','finalize_case','retry_payout','confirm_reviewer','set_reviewer','sponsor_storage']);
 const reads=new Set(['get_case','list_cases','get_round','get_events','list_reviewers','get_reviewer','get_committee','get_creation','get_payout','get_config','preview_case']);
@@ -90,15 +91,24 @@ export function createApp({store=new Store(path.join(ROOT,'.data')),chain=null,c
  return {server,store};
 }
 export async function startRuntime(env=process.env){
- const runtime=loadRuntimeConfig(env,{root:ROOT}),store=new Store(runtime.dataDir);store.audit();const recovered=store.recoverInterrupted();let chain=null,sandbox=false;
+ const runtime=loadRuntimeConfig(env,{root:ROOT}),lease=acquireDataLease(runtime.dataDir);let store=null,chain=null,sandbox=false;
  try{
+  store=new Store(runtime.dataDir);store.audit();const recovered=store.recoverInterrupted();
   if(runtime.mode==='sandbox'){const {startSandbox}=await import('../chain/sandbox.mjs');chain=await startSandbox();sandbox=true;}
   if(runtime.mode==='testnet'){chain=rpcAdapter({url:runtime.rpcUrl,contractAccount:runtime.contractAccount,timeoutMs:runtime.rpcTimeoutMs,staleAfterMs:runtime.staleAfterMs});await chain.validate();}
- }catch(error){store.close();throw error;}
- const app=createApp({store,chain,sandbox,allowedOrigins:runtime.allowedOrigins,publicOrigin:runtime.publicOrigin});
- return {runtime,chain,app,recovered};
+  const app=createApp({store,chain,sandbox,allowedOrigins:runtime.allowedOrigins,publicOrigin:runtime.publicOrigin});return {runtime,chain,app,recovered,lease};
+ }catch(error){try{store?.close();}finally{lease.release();}throw error;}
+}
+export async function stopRuntime(handle){
+ const {app,chain,lease}=handle;
+ let failure=null;
+ try{if(app.server.listening)await new Promise((resolve,reject)=>app.server.close(error=>error?reject(error):resolve()));}catch(error){failure=error;}
+ try{app.store.close();}catch(error){failure||=error;}
+ try{await chain?.close?.();}catch(error){failure||=error;}
+ try{lease.release();}catch(error){failure||=error;}
+ if(failure)throw failure;
 }
 if(process.argv[1]===fileURLToPath(import.meta.url)){
- const {runtime,chain,app,recovered}=await startRuntime();app.server.listen(runtime.port,runtime.host,()=>console.log(`CONTRA http://${runtime.host}:${runtime.port} - ${runtime.mode}${recovered.total?` - recovered ${recovered.recoverable} wallet operation(s), locked ${recovered.locked} as UNKNOWN`:''}`));
- for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{app.server.close();app.store.close();await chain?.close?.();process.exit();});
+ const handle=await startRuntime(),{runtime,app,recovered}=handle;app.server.listen(runtime.port,runtime.host,()=>console.log(`CONTRA http://${runtime.host}:${runtime.port} - ${runtime.mode}${recovered.total?` - recovered ${recovered.recoverable} wallet operation(s), locked ${recovered.locked} as UNKNOWN`:''}`));
+ let stopping=false;for(const signal of ['SIGINT','SIGTERM'])process.on(signal,async()=>{if(stopping)return;stopping=true;try{await stopRuntime(handle);process.exitCode=0;}catch(error){console.error(`CONTRA shutdown failed: ${error.message}`);process.exitCode=1;}});
 }
