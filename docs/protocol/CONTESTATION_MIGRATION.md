@@ -30,3 +30,12 @@ Built on Ubuntu with Rust 1.98.0 from the unchanged Rust source:
 | `faults.wasm` | `30571d4d45673b1e7b4493abaea8c76d02e460784db41776c4b4e9500958c003` |
 
 The ABI check reports 29 production exports and four additional fault-only exports, matching baseline commit `34c836bbd02dc672325800b2951714ee6e935659`. Exact commitment, case, terms and payout vectors match the frozen v1 values.
+
+GitHub-hosted Ubuntu run `42573377248` independently produced and archived:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| `contra_contestation.wasm` | `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f` |
+| `faults.wasm` | `d3b8d3f452c6e07916e7c693615657bd657a2ad3281a0f5783462546b36ce00e` |
+
+Deployment must bind the checksum of the exact reviewed release artifact. A checksum from another runner or historical build is not interchangeable deployment proof.
