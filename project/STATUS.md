@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M11-RELEASE-AUDIT-AND-EXTERNAL-PREP
+
+The accepted judge route is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. The remaining release audit is active on `audit/m11-release-candidate`. Licence, immutable design reference, Git object integrity, documentation links, source policies and the 15-low dependency baseline are verified. No high or critical dependency finding remains. Historical evidence and large receipt artifacts remain preserved.
+
+M08 now has one concrete draft authorisation packet proposing `contra-contestation.testnet`, owner-controlled Ledger custody, a 5 NEAR total testnet ceiling and 8 NEAR minimum balance. Its draft packet SHA-256 is `bdd7df5bcb8c4b028e47cdaa8646e9cfc9189da5a9eab38be0fc9174a97fab0f`; its draft deployment-intent SHA-256 is `c8de2e2dc97172c1a181d726693c8b1f4b119d554d7e011345b39963e71ed630`. The draft is deliberately non-executable until the public key, artifact hash and expiring owner approval bind the final digest.
+
+The proposed M09 host is one Fly.io Machine with one encrypted Fly Volume, HTTPS and external encrypted backups, under a proposed USD 15 monthly ceiling. M10 provider documentation is current for Meta Model API, Baseten Model APIs and Modal compute, but no account, catalogue, endpoint response, credit or billing control is claimed. Independent reviewer onboarding requires six distinct operators. No external transaction, deployment, provider call, secret change or spending occurred. Acceptance remains 23 PASS, 8 PARTIAL and 2 BLOCKED.
+
 ## Current checkpoint | CONTRA-2026-11-09-M11-JUDGE-QUICKSTART
 
 The M11 acceptance review is merged and promoted. PR 28 tested head `84ae0180c75049c01f42bad2a3cca8ba51a85a6c` and merged it into `implementation/oct28` as `29206ecf4295181a84466319edd87f5c075671b9`. Core `42626681412`, Security `42626681362` and comprehensive Integration `42626681341` passed. Promotion PR 29 merged the accepted tree into `main` as `9a17ac082e3e92b70449f71e4080048a7fd7ebd1` after Core `42628250853`, Security `42628250899` and comprehensive Integration `42628250807` passed. The protected branches share tree `112562cca368e6bcbd54cfd7cbfd8ea02fcd9226`; implementation is an ancestor of main.
