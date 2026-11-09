@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-084 | Backups are immutable complete storage packages | 2026-11-09
+
+ACCEPTED. A backup must acquire the runtime's exclusive data lease, checkpoint and audit SQLite, copy the database and content-addressed objects as one unit, and record every file size and SHA-256 in a `CONTRA_BACKUP_V1` manifest. Restore verification rejects changed, missing, additional and symbolic-link entries before opening SQLite. Partial packages and ad hoc single-file copies are not valid backups.
+
 ## D-083 | One process owns a durable CONTRA data directory | 2026-11-09
 
 ACCEPTED. The operational runtime must acquire a persisted exclusive lease before SQLite opens. A live lease blocks concurrent runtime or backup ownership. A terminated process on the same host may be reclaimed only after its process identifier is confirmed absent; unreadable and different-host leases fail closed. Graceful termination drains accepted requests, closes SQLite and the chain adapter, then releases the verified lease. This does not make a shared SQLite volume safe for multiple replicas.
