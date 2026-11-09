@@ -4,8 +4,16 @@
 
 - Added non-billable readiness checks for six distinct reviewer operators and disjoint committees.
 - Added separate Meta, Baseten and Modal readiness checks with exact provenance, billing and owner-authorisation requirements.
-- Passed 4/4 focused readiness tests and 122/122 repository tests locally.
+- Passed 4/4 focused readiness tests and 122/122 repository tests locally before synchronising the accepted Cloudflare baseline.
 - Provider calls, reviewer signatures, transactions, deployments and spending: none.
+
+## 2026-11-09 UTC | Cloudflare Free persistence foundation
+
+- Selected Workers with Static Assets and SQLite-backed Durable Objects under a hard USD 0 ceiling.
+- Added durable serial operation state, unique transaction identity, UNKNOWN recovery, sessions, immutable evidence and non-regressed receipt observations.
+- Passed 6/6 Cloudflare tests, Wrangler static build and deploy dry-run, 118/118 repository tests and the wallet build locally.
+- Corrected an artifact SQL parameter-order defect found by the eviction and digest-integrity regression.
+- Public deployment, external transaction, signing, provider usage, production-secret change and spending: none.
 
 ## 2026-11-09 UTC | Release audit and external execution preparation
 
