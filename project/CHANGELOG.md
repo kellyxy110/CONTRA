@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-09 | Cloudflare Free persistence foundation
+
+Replaced the active Fly.io proposal with Cloudflare Workers Free, Static Assets and a SQLite-backed Durable Object. Added serial operation, transaction, session, immutable-artifact and chain-observation persistence with conservative UNKNOWN handling. Added six Cloudflare regressions and a Wrangler dry-run build. Corrected a test-discovered artifact SQL binding defect before commit. Hosting remains undeployed and the hard ceiling is USD 0.
+
 ## 2026-11-09 | Release audit and consolidated external preparation
 
 Corrected stale current-task records after the judge route reached `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. Added a digest-bound single external-authorisation packet, a proposed Ledger-controlled `contra-contestation.testnet` deployment with 5 NEAR ceiling, a single-writer Fly.io hosting design, independent-reviewer onboarding and current official provider-interface references. Corrected Meta's allowed host to `api.meta.ai` and required the Baseten model identity in its request envelope. Added focused regressions. No external action or spending was authorised.

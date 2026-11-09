@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | Cloudflare Free persistence foundation
+
+- Selected Workers with Static Assets and SQLite-backed Durable Objects under a hard USD 0 ceiling.
+- Added durable serial operation state, unique transaction identity, UNKNOWN recovery, sessions, immutable evidence and non-regressed receipt observations.
+- Passed 6/6 Cloudflare tests, Wrangler static build and deploy dry-run, 118/118 repository tests and the wallet build locally.
+- Corrected an artifact SQL parameter-order defect found by the eviction and digest-integrity regression.
+- Public deployment, external transaction, signing, provider usage, production-secret change and spending: none.
+
 ## 2026-11-09 UTC | Release audit and external execution preparation
 
 - Confirmed judge promotion already reached `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302` and corrected stale active-task records.

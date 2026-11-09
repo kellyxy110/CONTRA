@@ -8,7 +8,7 @@ The machine-readable proposal is [`config/testnet-authorisation-proposal.json`](
 node scripts/external-authorisation-packet.mjs config/testnet-authorisation-proposal.json
 ```
 
-Current draft packet SHA-256: `bdd7df5bcb8c4b028e47cdaa8646e9cfc9189da5a9eab38be0fc9174a97fab0f`.
+Current draft packet SHA-256: `652aa71b980860ebe129b2eecb5ec4af6036386a56410d8192ef32a45c1f6733`.
 
 Current draft deployment-intent SHA-256: `c8de2e2dc97172c1a181d726693c8b1f4b119d554d7e011345b39963e71ed630`.
 
@@ -29,7 +29,7 @@ The checked-in draft deliberately lacks the public key, artifact hash and owner 
 
 The same packet consolidates the remaining inputs:
 
-- approve one Fly.io Machine, one encrypted Fly Volume, HTTPS ingress and an external encrypted backup destination, with a proposed infrastructure ceiling of USD 15 per month;
+- approve one Cloudflare Workers Free destination, the `ContraState` SQLite Durable Object class, Static Assets and a recovery export destination, with a hard infrastructure ceiling of USD 0 and no automatic paid upgrade;
 - name three primary and three fresh reviewers under six distinct operators, with no operator overlap;
 - separately authorise any provider account and amount, never exceeding programme ceilings of USD 3 Meta, USD 3 Baseten and USD 5 Modal.
 
