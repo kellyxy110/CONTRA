@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M11 acceptance evidence review
+
+Merged frontend-interface PR 26 as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd` after Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed. Promotion PR 27 merged the accepted tree into `main` as `a74445527dd66f2ff0c684887849346f7951416e` after Core `42624205902`, Security `42624205805` and comprehensive Integration `42624205937` passed.
+
+Reevaluated all 33 frozen acceptance criteria with exact evidence classes, commit and CI links, limitations and external blockers. Added a mechanical 33-row and status-total check. AC06 and AC24 advance from PARTIAL to PASS based on completed Sandbox creation and durable controlled wallet lifecycle evidence. The new result is 23 PASS, 8 PARTIAL and 2 BLOCKED. No live, independent or deployed criterion was upgraded from fixtures.
+
 ## 2026-11-09 | M09 frontend integration contract
 
 Merged service-readiness PR 24 as `6a327e68a95d409f9dcc914fb02b3b88e05d7db9` after Core `42619092396`, Security `42619092408` and comprehensive Integration `42619092337` passed. Promotion PR 25 merged the identical accepted tree into `main` as `737e034e41b2fa24a8db9651f9173fac7c9d1a77` after Core `42620546576`, Security `42620546479` and comprehensive Integration `42620546482` passed.
