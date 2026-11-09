@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | M08 promotion and M09 runtime operations
+
+- Merged PR 18 head `bdd3cd5b40808147b0d929261a8e935a2c2ab29a` into `implementation/oct28` as `38470d1e26d0714b99dbda979eb6e7d285db940f` after Core `42583280382`, Security `42583280234` and Integration `42583280329` passed.
+- Promoted the identical tree through PR 19 to `main` as `5041df54f3700a6594469faf8972b370cb14800f` after Core `42585793787`, Security `42585793850` and Integration `42585793906` passed.
+- Verified both protected branches have tree `abd4b777f0bb125f4a543d99a8e65f57733e22a6`, with implementation an ancestor of main.
+- Added M09 exclusive durable-data ownership and graceful shutdown on `feat/m09-runtime-operations`. Local verification passed 102 repository tests, four focused runtime tests, wallet build, source and security policies, documentation links and impact checks.
+- Transactions and deployments: none outside existing local Sandbox evidence. Provider usage and spending: $0. B-M08-01 and B-M09-01 remain external blockers.
+
 ## 2026-11-09 UTC | M07 completion and M08 deployment preflight
 
 - Merged Contestation migration PR 16 into `implementation/oct28` as `6cc9416119e773e022c0bbcc9c5646544ba25e5b`, then promotion PR 17 into `main` as `4d284ae51a89eeefa17b871636152cb9989de94d`.
