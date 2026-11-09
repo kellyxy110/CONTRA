@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M11 credential-free judge quick-start
+
+Merged acceptance-review PR 28 as `29206ecf4295181a84466319edd87f5c075671b9` after Core `42626681412`, Security `42626681362` and comprehensive Integration `42626681341` passed. Promotion PR 29 merged the accepted tree into `main` as `9a17ac082e3e92b70449f71e4080048a7fd7ebd1` after Core `42628250853`, Security `42628250899` and comprehensive Integration `42628250807` passed.
+
+Added `npm run judge:local` for a clean Ubuntu verification of source, contract, wallet and the controlled local NEAR Sandbox journey. Added an independently checked `CONTRA_JUDGE_QUICKSTART_V1` report, explicit comprehensive-risk mapping and CI artifact retention. The runner rejects missing Sandbox identity, ambiguous external boundaries, incorrect settlement, non-deterministic timeout, redispatch or AI-created commitments. No live network, signing, provider or deployment authority was added.
+
 ## 2026-11-09 | M11 acceptance evidence review
 
 Merged frontend-interface PR 26 as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd` after Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed. Promotion PR 27 merged the accepted tree into `main` as `a74445527dd66f2ff0c684887849346f7951416e` after Core `42624205902`, Security `42624205805` and comprehensive Integration `42624205937` passed.
