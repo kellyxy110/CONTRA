@@ -4,13 +4,17 @@
 
 M08 now has an independently evaluated readiness state. Its production WASM was built on Ubuntu 24.04 in run `42700073759` with SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`. The proposed account returned `UNKNOWN_ACCOUNT` through the official and fallback RPCs, so ownership, balance, current code and signer key are not verified. The current packet digest is `06c2e0389a56354e2a6c5e731d084450831fbfe6a104171c7a24a66794657d7f`; deployment intent is `559c3063282ee90ffb1e0c0318611c4ceb30920129ca28e6fe124aca7ef9be8b`. Both remain non-executable. No transaction, deployment, signing or spending occurred.
 
+## Current checkpoint | CONTRA-2026-11-09-M09-CLOUDFLARE-FREE-FOUNDATION
+
+The Cloudflare Free migration foundation is active on `feat/m09-cloudflare-free`. Workers Static Assets and a SQLite-backed `ContraState` Durable Object preserve serial financial operation identity, wallet UNKNOWN locks, unique transaction hashes, account-scoped sessions, immutable evidence digests and non-regressed chain observations. Unmigrated API routes fail closed with 503. Six Cloudflare regressions, the Wrangler dry-run, 118 repository tests and the wallet bundle pass locally. No Cloudflare account, public endpoint, deployment credential or external action is claimed. The hosting ceiling is USD 0.
+
 ## Current checkpoint | CONTRA-2026-11-09-M11-RELEASE-AUDIT-AND-EXTERNAL-PREP
 
 The accepted judge route is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. The remaining release audit is active on `audit/m11-release-candidate`. Licence, immutable design reference, Git object integrity, documentation links, source policies and the 15-low dependency baseline are verified. No high or critical dependency finding remains. Historical evidence and large receipt artifacts remain preserved.
 
 M08 now has one concrete draft authorisation packet proposing `contra-contestation.testnet`, owner-controlled Ledger custody, a 5 NEAR total testnet ceiling and 8 NEAR minimum balance. Its draft packet SHA-256 is `bdd7df5bcb8c4b028e47cdaa8646e9cfc9189da5a9eab38be0fc9174a97fab0f`; its draft deployment-intent SHA-256 is `c8de2e2dc97172c1a181d726693c8b1f4b119d554d7e011345b39963e71ed630`. The draft is deliberately non-executable until the public key, artifact hash and expiring owner approval bind the final digest.
 
-The proposed M09 host is one Fly.io Machine with one encrypted Fly Volume, HTTPS and external encrypted backups, under a proposed USD 15 monthly ceiling. M10 provider documentation is current for Meta Model API, Baseten Model APIs and Modal compute, but no account, catalogue, endpoint response, credit or billing control is claimed. Independent reviewer onboarding requires six distinct operators. No external transaction, deployment, provider call, secret change or spending occurred. Acceptance remains 23 PASS, 8 PARTIAL and 2 BLOCKED.
+The approved M09 architecture target is Cloudflare Workers Free with Static Assets and SQLite-backed Durable Objects, under a hard USD 0 ceiling and with no automatic paid upgrade. The migration remains local and no public endpoint is claimed. M10 provider documentation is current for Meta Model API, Baseten Model APIs and Modal compute, but no account, catalogue, endpoint response, credit or billing control is claimed. Independent reviewer onboarding requires six distinct operators. No external transaction, deployment, provider call, secret change or spending occurred. Acceptance remains 23 PASS, 8 PARTIAL and 2 BLOCKED.
 
 ## Current checkpoint | CONTRA-2026-11-09-M11-JUDGE-QUICKSTART
 
