@@ -79,7 +79,7 @@ export function assessDeploymentPlan(plan,{root=process.cwd(),now=()=>new Date()
   if(!Number.isFinite(approved)||!Number.isFinite(expires)||approved>at||expires<=at)throw Error('Owner deployment authorisation dates are invalid or expired');
   if(authorisation.approved_plan_sha256!==deploymentIntentDigest(plan))throw Error('Owner authorisation does not bind the current deployment plan');
  }
- return {ready:blockers.length===0,blockers,network:'testnet',artifact,contract_account:plan.contract_account||null,signer_account:plan.signer_account||null};
+ return {ready:blockers.length===0,blockers,network:'testnet',deployment_intent_sha256:deploymentIntentDigest(plan),artifact,contract_account:plan.contract_account||null,signer_account:plan.signer_account||null};
 }
 
 export async function verifyDeploymentTarget(plan,{transport=fetch,now=()=>new Date(),staleAfterMs=120000,timeoutMs=10000}={}){

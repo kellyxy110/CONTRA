@@ -9,11 +9,11 @@ const options={artifactBytes:bytes,artifactExports:['new'],abi,now:()=>new Date(
 
 test('preparation plan reports every owner-controlled deployment blocker',()=>{
  const plan={...ready(),contract_account:null,signer_account:null,signer_public_key:null,custody_method:null,expected_current_code_hash:null,max_total_cost_yocto:null,minimum_account_balance_yocto:null,initial_owner_account:null,creator_allowlist:[],owner_authorisation:null};
- const result=assessDeploymentPlan(plan,options);assert.equal(result.ready,false);assert.equal(result.blockers.length,10);
+ const result=assessDeploymentPlan(plan,options);assert.equal(result.ready,false);assert.equal(result.blockers.length,10);assert.equal(result.deployment_intent_sha256,deploymentIntentDigest(plan));
 });
 
 test('authorised offline plan binds exact production artifact and emits a complete testnet command',()=>{
- const plan=ready(),result=assessDeploymentPlan(plan,options);assert.equal(result.ready,true);assert.equal(result.artifact.sha256,sha);assert.match(deploymentCommand(plan),/^near contract deploy contra\.testnet /);assert.match(deploymentCommand(plan),/network-config testnet sign-with-keychain send$/);
+ const plan=ready(),result=assessDeploymentPlan(plan,options);assert.equal(result.ready,true);assert.equal(result.deployment_intent_sha256,plan.owner_authorisation.approved_plan_sha256);assert.equal(result.artifact.sha256,sha);assert.match(deploymentCommand(plan),/^near contract deploy contra\.testnet /);assert.match(deploymentCommand(plan),/network-config testnet sign-with-keychain send$/);
  const ledger={...plan,custody_method:'ledger'};assert.match(deploymentCommand(ledger),/sign-with-ledger send$/);
  const offline={...plan,custody_method:'offline-custody'};assert.match(deploymentCommand(offline),/network-config testnet sign-later$/);
 });

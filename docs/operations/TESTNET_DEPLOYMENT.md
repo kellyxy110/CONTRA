@@ -46,7 +46,7 @@ Run the offline assessment after building the production artifact:
 node scripts/testnet-deployment-preflight.mjs path/to/approved-plan.json
 ```
 
-Before authorisation, the example exits with status 2 and lists every missing owner-controlled input. That is an expected blocked result, not a deployment failure.
+Before authorisation, the example exits with status 2, lists every missing owner-controlled input and prints `deployment_intent_sha256`. After filling the public plan fields, copy that digest into the separately approved `owner_authorisation.approved_plan_sha256` field. Any later change to the network, accounts, public key, custody, artifact, limits or initial state invalidates the approval. The blocked exit is expected, not a deployment failure.
 
 After a complete plan is separately authorised, the read-only network check is:
 
