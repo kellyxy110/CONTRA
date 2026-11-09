@@ -22,7 +22,7 @@ node scripts/ci-policy.mjs security
 npm run check:docs
 ```
 
-The repository suite currently contains 102 tests, including five deployment-preflight cases that verify secret rejection, authorisation binding, artifact identity, network identity, full-access key scope, account funding and stale-chain failure. Four runtime-operations cases verify exclusive durable-volume ownership, live-process exclusion, same-host crash reclamation, failed-start cleanup and graceful restart. Explicit CI routing covers the non-signing deployment path.
+The repository suite currently contains 108 tests, including five deployment-preflight cases that verify secret rejection, authorisation binding, artifact identity, network identity, full-access key scope, account funding and stale-chain failure. Four runtime-ownership cases verify exclusive durable-volume ownership, live-process exclusion, same-host crash reclamation, failed-start cleanup and graceful restart. Four backup cases verify complete storage copying, manifest checksums, restore integrity and rejection of live ownership, nested paths, non-empty destinations, changed files, missing files, extra files and symbolic links. Explicit CI routing covers the non-signing deployment and offline backup paths.
 
 The preparation-only deployment assessment is expected to remain blocked until the owner-controlled fields are supplied:
 
