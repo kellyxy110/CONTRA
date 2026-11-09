@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | Release audit and external execution preparation
+
+- Confirmed judge promotion already reached `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302` and corrected stale active-task records.
+- Verified the MIT licence, immutable design checksum, Git object integrity, documentation links, source policies and the disclosed 15-low dependency baseline.
+- Added one digest-bound draft for M08 deployment, M09 hosting, M10 independent reviewers and separately gated provider access.
+- Corrected the documented Meta host and Baseten request model identity against current official provider documentation.
+- Transactions, deployments, live provider calls, production-secret changes and spending: none.
+
 ## 2026-11-09 UTC | Judge quick-start verification and implementation merge
 
 - Corrected the initial report assertion to the contract's authenticated `SUCCESS` payout result and required the exact creator recipient. The retained 46-receipt report then passed the validator without changing financial behaviour.

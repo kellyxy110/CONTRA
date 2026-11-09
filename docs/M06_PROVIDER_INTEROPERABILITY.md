@@ -2,17 +2,19 @@
 
 Checkpoint: `CONTRA-2026-11-08-IMPL-M06-P3-PROVIDERS`
 
-This unit validates provider-specific request and response handling with mocked transports only. It does not establish provider access, pricing, credits or live model behaviour.
+This unit validates provider-specific request and response handling with mocked transports only. Official provider documentation was rechecked on 9 November 2026. This does not establish account access, credits, authenticated catalogue access or live model behaviour.
 
 ## Provider roles
 
 | Provider | Bounded role | Interface under test | Live status |
 | --- | --- | --- | --- |
-| Meta | Primary and fresh evidence review | OpenAI-compatible strict JSON schema | Disabled |
-| Baseten | Adversarial evidence review | Model endpoint with strict JSON schema and `stream: false` | Disabled |
-| Modal | Validation of an immutable AI proposal | Modal function input with strict verification schema | Disabled |
+| Meta | Primary and fresh evidence review | Model API at `api.meta.ai`, model-bound strict JSON request | Documentation verified, execution disabled |
+| Baseten | Adversarial evidence review | Model API at `inference.baseten.co`, explicit model and `stream: false` | Documentation verified, catalogue and execution disabled |
+| Modal | Validation of an immutable AI proposal | Modal function input with strict verification schema | Documentation verified, deployment and execution disabled |
 
-Meta Muse Spark 1.3 is the proposed primary model. Muse Wonder 1.0 is optional escalation metadata only. Neither access nor API behaviour is claimed as verified. Baseten and Modal model identifiers remain server configuration and require an explicit model-interface verification gate before live availability.
+Meta's official catalogue currently lists `muse-spark-1.3` and preview `muse-wonder-1.0`. Spark remains the proposed primary and Wonder remains an optional escalation candidate. The standard, non-contributor privacy mode is required for case evidence. Baseten's exact adversarial model must be selected from the authenticated current catalogue and frozen before a call. Modal remains a bounded function deployment rather than an assumed hosted model. Account access and actual responses remain unverified.
+
+Official references: [Meta overview](https://dev.meta.ai/docs/overview), [Meta models](https://dev.meta.ai/docs/models), [Meta pricing and limits](https://dev.meta.ai/docs/pricing-rate-limits), [Baseten Model APIs](https://docs.baseten.co/inference/model-apis/overview), [Baseten pricing and limits](https://docs.baseten.co/inference/model-apis/pricing-and-limits), [Modal pricing](https://modal.com/pricing) and [Modal GPU guide](https://modal.com/docs/guide/gpu).
 
 ## Safety boundaries
 
