@@ -12,8 +12,8 @@
   "fast_only": [
     "README.md", "LICENSE", "AGENTS.md", "HANDOFF_TO_CODING_AGENT.md", "docs/**", "project/**", "design/**", "apps/web/**",
     "services/api/auth.mjs", "services/api/rate-limit.mjs", "services/deployment/**", "services/evaluators/**", "services/evidence/**", "services/operations/**", "services/runtime/**",
-    "scripts/testnet-deployment-preflight.mjs", "scripts/backup-storage.mjs", "config/testnet-deployment.example.json",
-    "tests/service.test.mjs", "tests/m05-runtime.test.mjs", "tests/m06-integration.test.mjs", "tests/m06-wallet-browser.test.mjs", "tests/m08-deployment-preflight.test.mjs", "tests/m09-runtime-operations.test.mjs", "tests/m09-backup-restore.test.mjs", "tests/m042-coverage.test.mjs", "tests/m043-coverage.test.mjs",
+    "scripts/testnet-deployment-preflight.mjs", "scripts/backup-storage.mjs", "config/testnet-deployment.example.json", "config/runtime-service.example.json",
+    "tests/service.test.mjs", "tests/m05-runtime.test.mjs", "tests/m06-integration.test.mjs", "tests/m06-wallet-browser.test.mjs", "tests/m08-deployment-preflight.test.mjs", "tests/m09-runtime-operations.test.mjs", "tests/m09-backup-restore.test.mjs", "tests/m09-service-readiness.test.mjs", "tests/m042-coverage.test.mjs", "tests/m043-coverage.test.mjs",
     "package.json", "package-lock.json", ".github/workflows/core.yml", ".github/workflows/security.yml", ".github/workflows/contract.yml", ".github/workflows/financial-p0.yml", ".github/pull_request_template.md"
   ]
 }
