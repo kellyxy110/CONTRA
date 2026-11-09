@@ -36,6 +36,6 @@ The creation command acquires the same exclusive data lease as the runtime, chec
 1. Restore the complete directory to a new dedicated path while the service is stopped.
 2. Run `npm run backup:storage -- verify <restored-directory>`. Verification rejects any changed, missing or additional file before opening SQLite, then performs database and object integrity checks under an exclusive lease.
 3. Start with `CONTRA_DATA_DIR=<restored-directory>` in `unavailable` mode first.
-4. Inspect `/api/health` and confirm schema version and integrity before enabling Sandbox or testnet reads.
+4. Inspect `/api/ready` and `/api/health`. Confirm readiness, schema version and integrity before enabling traffic to Sandbox or testnet reads.
 
 Backup and restore do not authorize transaction retries, deployment, signing or paid provider activity.

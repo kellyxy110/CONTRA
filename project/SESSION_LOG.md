@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | Backup promotion and service readiness
+
+- Merged backup PR 22 as `803f26e32cd650ac097325786bb951c3f23a0f05` after Core `42596444044`, Security `42596444011` and comprehensive Integration `42596444025` passed.
+- Promoted it through PR 23 to `main` as `ab0b0b97a2a62951ad51528f56851f5bde576ace` after Core `42613304075`, Security `42613304248` and comprehensive Integration `42613304123` passed.
+- Verified protected tree `17f14b5dbdd8fbd1a12da662d89bbd025e73a68d` and implementation ancestry.
+- Started `feat/m09-service-readiness`. Added separate live and ready endpoints plus a provider-neutral, single-replica service contract. Four focused tests pass.
+- Transactions, deployments, live provider calls and spending: none.
+
 ## 2026-11-09 UTC | M09 runtime promotion and backup package
 
 - Merged runtime-ownership PR 20 as `d083c9a2602205e56219d0d8d204d2ab1b0dc228` after exact-head Core `42588657676`, Security `42588657855` and comprehensive Integration `42588657590` passed.

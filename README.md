@@ -67,7 +67,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Capability | Current evidence |
 | --- | --- |
 | Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 108 tests pass on the M09 backup-and-restore working tree |
+| Repository tests | 113 tests pass on the M09 service-readiness working tree |
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
@@ -93,7 +93,7 @@ node scripts/build-contracts.mjs
 npm run build:wallet
 ```
 
-Expected results are 108 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. The repository tests include exclusive durable-volume ownership, same-host crash recovery, graceful runtime restart, manifest-bound backup and tamper-detecting restore coverage. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
+Expected results are 113 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. The repository tests include exclusive durable-volume ownership, same-host crash recovery, graceful runtime restart, manifest-bound backup, tamper-detecting restore and separate liveness and readiness coverage. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
 
 The API defaults to safe unavailable mode:
 
@@ -102,7 +102,7 @@ cp .env.example .env
 npm run dev
 ```
 
-`GET http://127.0.0.1:4173/api/health` reports the configured chain and durable-store state. Unavailable mode refuses transaction submission.
+`GET http://127.0.0.1:4173/api/live` reports process liveness without implying chain or storage readiness. `GET http://127.0.0.1:4173/api/ready` requires intact persistence and a ready chain; unavailable mode returns 503 and refuses transaction submission. `GET http://127.0.0.1:4173/api/health` provides the detailed operator state. See the [runtime service contract](docs/operations/RUNTIME_SERVICE.md).
 
 ## Reproduce the contestation journeys
 
