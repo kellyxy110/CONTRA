@@ -1,10 +1,14 @@
 # Next execution task
 
-## Active next task | M11 judge quick-start
+## Active next task | M11 judge promotion and public repository audit
 
-Complete the focused credential-free judge PR. Require a genuine clean Ubuntu execution, machine-verified controlled-workflow evidence, retained artifacts and comprehensive Integration. Merge and promote under the standing green policy.
+Promote the accepted judge quick-start from `implementation/oct28` into `main` through the protected PR process. Require Core, Security and comprehensive Integration on the exact promotion head, then verify branch tree identity and implementation ancestry.
 
 After promotion, perform the remaining public-repository and release-candidate audit that does not require external authority. External M08 to M10 gates remain blocked by the consolidated owner inputs in `project/BLOCKERS.md`.
+
+## Historical next task | M11 judge quick-start
+
+PR 30 is merged into `implementation/oct28`. Preserve its one-command clean Ubuntu route, fail-closed evidence validation, comprehensive risk classification and retained CI artifacts.
 
 ## Historical next task | M11 acceptance review
 

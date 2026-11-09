@@ -6,6 +6,8 @@ Merged acceptance-review PR 28 as `29206ecf4295181a84466319edd87f5c075671b9` aft
 
 Added `npm run judge:local` for a clean Ubuntu verification of source, contract, wallet and the controlled local NEAR Sandbox journey. Added an independently checked `CONTRA_JUDGE_QUICKSTART_V1` report, explicit comprehensive-risk mapping and CI artifact retention. The runner rejects missing Sandbox identity, ambiguous external boundaries, incorrect settlement, non-deterministic timeout, redispatch or AI-created commitments. No live network, signing, provider or deployment authority was added.
 
+PR 30 passed Core `42635548335`, Security `42635548331` and comprehensive Integration `42635548332` on final head `45c80a424e0e77cb00a192094c54c01174467c22`, then merged into `implementation/oct28` as `2e52098130f62922a3a49ec1121c66a5a9bf3301`. The judge route passed in 5m42s, the nine-test baseline in 7m39s and both complete journeys in 4m19s.
+
 ## 2026-11-09 | M11 acceptance evidence review
 
 Merged frontend-interface PR 26 as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd` after Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed. Promotion PR 27 merged the accepted tree into `main` as `a74445527dd66f2ff0c684887849346f7951416e` after Core `42624205902`, Security `42624205805` and comprehensive Integration `42624205937` passed.

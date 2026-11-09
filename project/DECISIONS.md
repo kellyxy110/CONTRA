@@ -2,7 +2,7 @@
 
 ## D-088 | The judge quick-start validates retained evidence, not command success alone | 2026-11-09
 
-ACCEPTED. The credential-free Ubuntu route must run from a clean dependency installation and independently validate the controlled workflow report before returning success. Genuine local Sandbox identity, explicit simulated wallet and mocked provider boundaries, exact challenged settlement, deterministic timeout fallback, positive receipt and operation counts, zero wallet redispatch and zero AI-created commitments are mandatory. Missing or contradictory evidence fails the command even when an upstream process exits successfully.
+ACCEPTED. The credential-free Ubuntu route must run from a clean dependency installation and independently validate the controlled workflow report before returning success. Genuine local Sandbox identity, explicit simulated wallet and mocked provider boundaries, exact challenged settlement, deterministic timeout fallback, positive receipt and operation counts, zero wallet redispatch and zero AI-created commitments are mandatory. Missing or contradictory evidence fails the command even when an upstream process exits successfully. PR 30 proved this gate on head `45c80a424e0e77cb00a192094c54c01174467c22` in Integration run `42635548332`.
 
 ## D-087 | Acceptance status follows the required evidence class | 2026-11-09
 
