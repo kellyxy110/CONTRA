@@ -1,0 +1,65 @@
+{
+  "schema": "CONTRA_FRONTEND_INTERFACE_V1",
+  "version": 1,
+  "transport": {
+    "base_path": "/api",
+    "content_type": "application/json",
+    "session_header": "Authorization: Bearer <session-token>",
+    "error_envelope": {"error": "string"},
+    "amount_encoding": "base-10 yoctoNEAR string",
+    "digest_encoding": "lowercase SHA-256 hex"
+  },
+  "browser": {
+    "route_format": "#view=<view>&case=<case-id>",
+    "views": ["Overview", "Cases", "Challenges", "Evidence", "Reviewers", "Settlement", "Lab", "Activity", "Settings"],
+    "dialog_history": true
+  },
+  "states": {
+    "wallet_operation": ["PREPARED", "SIGNING", "PENDING", "CONFIRMED", "FAILED", "UNKNOWN"],
+    "case": ["Draft", "Cancelled", "Funded", "Submitted", "ReviewCommit", "ReviewReveal", "Provisional", "Challenged", "ChallengeReview", "Unresolved", "Resolved", "SettlementPending", "TransferFailed", "Settled"],
+    "provider_artifact": ["reserved", "running", "proposed", "failed", "failed-charge-unreconciled"],
+    "availability": ["available", "inaccessible", "unavailable", "stale"]
+  },
+  "provenance": {
+    "contract_read_fields": ["network", "finality", "block_height", "block_hash", "block_timestamp_ns", "observed_at"],
+    "artifact_fields": ["digest", "case_id", "actor", "kind"],
+    "labels": ["contract", "service", "fixture", "derived"]
+  },
+  "routes": [
+    {"path":"/api/live","methods":["GET"],"access":"public","source":"process","purpose":"Process liveness only"},
+    {"path":"/api/ready","methods":["GET"],"access":"public","source":"chain-and-storage","purpose":"Traffic readiness"},
+    {"path":"/api/health","methods":["GET"],"access":"public","source":"chain-and-storage","purpose":"Detailed runtime health"},
+    {"path":"/api/config","methods":["GET"],"access":"public","source":"server-configuration","purpose":"Permitted runtime capabilities"},
+    {"path":"/api/template","methods":["GET"],"access":"session","source":"contract","purpose":"Chain-derived agreement template"},
+    {"path":"/api/session/sandbox","methods":["POST"],"access":"local-sandbox","source":"service","purpose":"Local fixture session"},
+    {"path":"/api/session/challenge","methods":["POST"],"access":"public","source":"service","purpose":"NEP-413 challenge"},
+    {"path":"/api/session/verify","methods":["POST"],"access":"public","source":"wallet-and-chain","purpose":"NEP-413 verification"},
+    {"path":"/api/session","methods":["GET"],"access":"session","source":"service","purpose":"Session recovery"},
+    {"path":"/api/session/renew","methods":["POST"],"access":"session","source":"service","purpose":"Session renewal"},
+    {"path":"/api/session/disconnect","methods":["POST"],"access":"session","source":"service","purpose":"Session revocation"},
+    {"path":"/api/receipt","methods":["POST"],"access":"session","source":"contract-rpc","purpose":"Finalised receipt inspection"},
+    {"path":"/api/view","methods":["POST"],"access":"public","source":"contract-rpc","purpose":"Allowlisted contract read"},
+    {"path":"/api/transaction","methods":["POST"],"access":"local-sandbox-session","source":"sandbox","purpose":"Local fixture transaction"},
+    {"path":"/api/wallet/prepare","methods":["POST"],"access":"session","source":"service-and-contract","purpose":"Persist external-wallet intent"},
+    {"path":"/api/wallet/handoff","methods":["POST"],"access":"authorised-live-session","source":"service","purpose":"Release authorised signing request"},
+    {"path":"/api/wallet/reject","methods":["POST"],"access":"session","source":"service","purpose":"Record pre-handoff rejection or uncertain interruption"},
+    {"path":"/api/wallet/interrupt","methods":["POST"],"access":"session","source":"service","purpose":"Lock uncertain handed-off operation"},
+    {"path":"/api/wallet/broadcast","methods":["POST"],"access":"session","source":"wallet-callback","purpose":"Persist recovered transaction hash"},
+    {"path":"/api/wallet/reconcile","methods":["POST"],"access":"session","source":"contract-rpc","purpose":"Reconcile persisted transaction"},
+    {"path":"/api/operation","methods":["GET"],"access":"session","source":"service","purpose":"Account-scoped operation recovery"},
+    {"path":"/api/evidence","methods":["POST"],"access":"case-participant","source":"service","purpose":"Store immutable evidence manifest"},
+    {"path":"/api/evidence/manifests","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"List case manifests"},
+    {"path":"/api/finding","methods":["POST"],"access":"appointed-reviewer","source":"service","purpose":"Store evidence-bound human finding"},
+    {"path":"/api/counterexample","methods":["POST"],"access":"case-participant","source":"service","purpose":"Store criterion-bound counterexample"},
+    {"path":"/api/reviewer/disclosure","methods":["POST"],"access":"session","source":"service","purpose":"Store signer-control disclosure"},
+    {"path":"/api/reviewer/disclosures","methods":["GET"],"access":"session","source":"service-and-contract","purpose":"Inspect registry disclosures"},
+    {"path":"/api/reviewer/control","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect committee control"},
+    {"path":"/api/reviewer/workspace","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect reviewer round actions"},
+    {"path":"/api/reviewer/package","methods":["GET","POST"],"access":"appointed-reviewer","source":"service","purpose":"Save or recover encrypted reveal package"},
+    {"path":"/api/reviewer/audit","methods":["GET"],"access":"reviewer-session","source":"service","purpose":"Inspect account-scoped review audit"},
+    {"path":"/api/terms","methods":["POST"],"access":"allowlisted-creator","source":"service-and-contract","purpose":"Store immutable agreement text"},
+    {"path":"/api/availability","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect case artifact availability"},
+    {"path":"/api/artifact","methods":["GET"],"access":"case-participant","source":"service","purpose":"Read case-linked artifact"},
+    {"path":"/api/evaluate","methods":["POST"],"access":"case-participant","source":"provider-or-fixture","purpose":"Create non-binding AI proposal or verification"}
+  ]
+}

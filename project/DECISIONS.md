@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-086 | The frontend consumes a versioned non-authoritative interface | 2026-11-09
+
+ACCEPTED. The implemented API route inventory, browser views, authentication classes, provenance fields and recovery states are frozen in `CONTRA_FRONTEND_INTERFACE_V1`. Frontend state is never authority for reviewer eligibility, transaction finality, verdict or settlement. UNKNOWN operations remain locked, provider artifacts remain proposals and protected case data must be discarded on account change. A route-drift test requires every literal API route to remain represented in the machine contract. Visual implementation remains owner-controlled.
+
 ## D-085 | Liveness never implies operational readiness | 2026-11-09
 
 ACCEPTED. `/api/live` reports only that the HTTP process responds and must not query or claim chain and storage health. `/api/ready` requires a ready configured chain plus a successful database and immutable-object audit. Unavailable, stale or corrupt dependencies return 503 while the process may remain live. The deployment contract is single-replica and single-writer until a separately verified storage architecture replaces SQLite.

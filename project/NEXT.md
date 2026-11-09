@@ -1,8 +1,14 @@
 # Next execution task
 
-## Active next task | M09 service readiness
+## Active next task | M09 frontend integration contract
 
-Complete the focused liveness, readiness and portable service-contract PR. Require readiness to fail closed for stale or unavailable NEAR state and storage-integrity failure while liveness remains a process-only signal. Merge and promote after the applicable checks pass.
+Complete the focused interface-contract PR. Keep the inventory of implemented API routes mechanically aligned with `services/api/server.mjs`, document account switching, provenance, wallet recovery, evidence, reviewer, provider and error states, and preserve the future owner's control over visual design. Run Core, Security and the risk-selected Integration gate, then merge and promote under the standing green policy.
+
+After promotion, all currently independent M09 engineering is complete. Public hosting, testnet deployment and a real wallet journey remain blocked by B-M08-01, B-M09-01 and B-M09-02. Continue with M11 acceptance and judge-reproducibility work that does not require those external resources, while preserving one consolidated owner access request.
+
+## Historical next task | M09 service readiness
+
+The focused liveness, readiness and portable service-contract PR is merged and promoted. Preserve fail-closed readiness for stale or unavailable NEAR state and storage-integrity failure while liveness remains a process-only signal.
 
 After promotion, M09 independent engineering is complete through deployment preparation, durable ownership, verified backup and service readiness. Public hosting, testnet deployment and a real wallet journey remain blocked by B-M08-01, B-M09-01 and B-M09-02. Collect those owner-controlled inputs as one consolidated request rather than simulating completion.
 
