@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M09 frontend integration contract
+
+Merged service-readiness PR 24 as `6a327e68a95d409f9dcc914fb02b3b88e05d7db9` after Core `42619092396`, Security `42619092408` and comprehensive Integration `42619092337` passed. Promotion PR 25 merged the identical accepted tree into `main` as `737e034e41b2fa24a8db9651f9173fac7c9d1a77` after Core `42620546576`, Security `42620546479` and comprehensive Integration `42620546482` passed.
+
+Added a versioned machine-readable frontend contract covering all 35 API routes, operational views, access classes, provenance fields and transaction states. Added the owner-frontend integration guide with trust boundaries, authentication recovery, wallet reconciliation, evidence and reviewer handling, error states and accessibility requirements. Added a route-drift regression to the service suite. No UI redesign, deployment, signing, provider call, transaction, secret change or spending occurred.
+
 ## 2026-11-09 | M09 service readiness
 
 Added separate liveness and readiness probes. Liveness no longer implies NEAR or storage health. Readiness audits SQLite and immutable objects and requires the chain adapter to report ready; unavailable and stale states fail with HTTP 503. Added a provider-neutral single-replica service contract with a persistent single-writer volume, HTTPS ingress requirement and 60-second termination grace period. Four focused tests cover ready, unavailable, stale and service-definition states. No hosting deployment or secret change occurred.

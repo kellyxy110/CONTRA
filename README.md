@@ -146,7 +146,7 @@ Secrets belong only in server environments. No private key, seed phrase or provi
 
 ## Judge and deployment paths
 
-[The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the future authorised testnet route. Until testnet deployment exists, the live route is explicitly blocked rather than simulated.
+[The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the future authorised testnet route. Until testnet deployment exists, the live route is explicitly blocked rather than simulated. The [frontend integration contract](docs/operations/FRONTEND_INTEGRATION.md) freezes the current routes, recovery states, trust boundaries and accessibility requirements for the later owner-provided interface.
 
 [The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) defines the fail-closed preflight, custody requirements, artifact verification and evidence record. The checked-in public plan template and offline validator report missing owner-controlled inputs without accessing a key. Deployment, funded signing, provider spend and production-secret changes require separate owner authorisation.
 

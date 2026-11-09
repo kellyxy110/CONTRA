@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M09-FRONTEND-INTERFACE
+
+M09 service readiness is merged and promoted. PR 24 tested head `e7d009faa2d4c787d132362f35e8352058aa3402` and merged it into `implementation/oct28` as `6a327e68a95d409f9dcc914fb02b3b88e05d7db9`. Core `42619092396`, Security `42619092408` and comprehensive Integration `42619092337` passed. Promotion PR 25 merged the accepted tree into `main` as `737e034e41b2fa24a8db9651f9173fac7c9d1a77` after Core `42620546576`, Security `42620546479` and comprehensive Integration `42620546482` passed. The protected branches have identical tree `6f088ea2add6c81ccb3ab22857728d2f517ea377`; implementation is an ancestor of main.
+
+The frontend-interface unit is active on `docs/m09-frontend-interface`. It adds a versioned, machine-readable inventory of all 35 implemented API routes, the operational hash routes, authentication classes, provenance fields and wallet recovery states. The companion integration guide freezes trust, accessibility, account-switching, UNKNOWN-operation and error-presentation requirements for the later owner-provided interface without changing visual design. The new route-drift regression passes within 32/32 service tests. No runtime, contract, financial, deployment, signing, provider or secret behaviour changed.
+
 ## Current checkpoint | CONTRA-2026-11-09-M09-SERVICE-READINESS
 
 M09 verified backup and restore is merged. PR 22 tested head `cbc5bc8e12d8e375c31484765fcd5d34abfbbd59` and merged it into `implementation/oct28` as `803f26e32cd650ac097325786bb951c3f23a0f05`. Core `42596444044`, Security `42596444011` and comprehensive Integration `42596444025` passed. Promotion PR 23 merged the accepted tree into `main` as `ab0b0b97a2a62951ad51528f56851f5bde576ace` after Core `42613304075`, Security `42613304248` and comprehensive Integration `42613304123` passed. The protected branches have identical tree `17f14b5dbdd8fbd1a12da662d89bbd025e73a68d`; implementation is an ancestor of main.
