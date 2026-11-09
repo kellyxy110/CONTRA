@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-09 | M09 service readiness
+
+Added separate liveness and readiness probes. Liveness no longer implies NEAR or storage health. Readiness audits SQLite and immutable objects and requires the chain adapter to report ready; unavailable and stale states fail with HTTP 503. Added a provider-neutral single-replica service contract with a persistent single-writer volume, HTTPS ingress requirement and 60-second termination grace period. Four focused tests cover ready, unavailable, stale and service-definition states. No hosting deployment or secret change occurred.
+
+Before this unit, PR 22 merged verified backup and restore as `803f26e32cd650ac097325786bb951c3f23a0f05` and PR 23 promoted it to `main` as `ab0b0b97a2a62951ad51528f56851f5bde576ace`. Runs `42596444044`, `42596444011`, `42596444025`, `42613304075`, `42613304248` and `42613304123` passed. Spending remained $0.
+
 ## 2026-11-09 | M09 backup and restore package
 
 Added an offline backup command that acquires exclusive storage ownership, checkpoints and audits SQLite, copies the complete database and immutable object store, and writes a per-file SHA-256 manifest. Added independent restore verification that rejects changed, missing, additional and symbolic-link entries before database and artifact integrity checks. Four focused tests cover a clean restored package plus live-owner, nested-path, non-empty-destination, corruption, omission, addition and symbolic-link failure paths. The full repository passes 108/108 tests. No contract, transaction or financial behaviour changed.

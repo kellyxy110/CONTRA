@@ -1,6 +1,12 @@
 # Next execution task
 
-## Active next task | M09 backup and restore
+## Active next task | M09 service readiness
+
+Complete the focused liveness, readiness and portable service-contract PR. Require readiness to fail closed for stale or unavailable NEAR state and storage-integrity failure while liveness remains a process-only signal. Merge and promote after the applicable checks pass.
+
+After promotion, M09 independent engineering is complete through deployment preparation, durable ownership, verified backup and service readiness. Public hosting, testnet deployment and a real wallet journey remain blocked by B-M08-01, B-M09-01 and B-M09-02. Collect those owner-controlled inputs as one consolidated request rather than simulating completion.
+
+## Historical next task | M09 backup and restore
 
 Complete the focused backup-and-restore PR. Require manifest-bound copying of the complete SQLite and immutable-object unit, exclusive offline ownership, tamper detection and clean restore verification. Run Core, Security and risk-selected Integration, then merge and promote under the standing green policy.
 

@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-085 | Liveness never implies operational readiness | 2026-11-09
+
+ACCEPTED. `/api/live` reports only that the HTTP process responds and must not query or claim chain and storage health. `/api/ready` requires a ready configured chain plus a successful database and immutable-object audit. Unavailable, stale or corrupt dependencies return 503 while the process may remain live. The deployment contract is single-replica and single-writer until a separately verified storage architecture replaces SQLite.
+
 ## D-084 | Backups are immutable complete storage packages | 2026-11-09
 
 ACCEPTED. A backup must acquire the runtime's exclusive data lease, checkpoint and audit SQLite, copy the database and content-addressed objects as one unit, and record every file size and SHA-256 in a `CONTRA_BACKUP_V1` manifest. Restore verification rejects changed, missing, additional and symbolic-link entries before opening SQLite. Partial packages and ad hoc single-file copies are not valid backups.

@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M09-SERVICE-READINESS
+
+M09 verified backup and restore is merged. PR 22 tested head `cbc5bc8e12d8e375c31484765fcd5d34abfbbd59` and merged it into `implementation/oct28` as `803f26e32cd650ac097325786bb951c3f23a0f05`. Core `42596444044`, Security `42596444011` and comprehensive Integration `42596444025` passed. Promotion PR 23 merged the accepted tree into `main` as `ab0b0b97a2a62951ad51528f56851f5bde576ace` after Core `42613304075`, Security `42613304248` and comprehensive Integration `42613304123` passed. The protected branches have identical tree `17f14b5dbdd8fbd1a12da662d89bbd025e73a68d`; implementation is an ancestor of main.
+
+The service-readiness unit is active on `feat/m09-service-readiness`. `/api/live` now reports only process liveness. `/api/ready` requires intact SQLite and immutable objects plus an explicitly ready chain, and returns 503 for unavailable or stale chain state. The provider-neutral service contract fixes one replica, one persistent single-writer volume, separate probes, HTTPS ingress and a 60-second termination grace period without authorising deployment. Four focused tests pass. No host was selected and no external service, secret, signing or transaction action occurred.
+
 ## Current checkpoint | CONTRA-2026-11-09-M09-BACKUP-RESTORE
 
 M09 runtime ownership is merged. PR 20 tested head `3a84c4bfbab957676c98ecfbf446a7af66639e23` and merged it into `implementation/oct28` as `d083c9a2602205e56219d0d8d204d2ab1b0dc228`. Core `42588657676`, Security `42588657855` and comprehensive Integration `42588657590` passed. Promotion PR 21 merged the accepted tree into `main` as `f76f2765ce29c076e512d799531271210df882f8` after Core `42592062881`, Security `42592062883` and comprehensive Integration `42592062838` passed. The protected branches have identical tree `d2d89acb061e7e40405c12f136ec5a0efa8fd873`; implementation is an ancestor of main.

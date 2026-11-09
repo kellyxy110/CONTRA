@@ -1,0 +1,25 @@
+{
+  "schema": "CONTRA_RUNTIME_SERVICE_V1",
+  "process": {
+    "command": ["node", "services/api/server.mjs"],
+    "replicas": 1,
+    "termination_grace_seconds": 60
+  },
+  "network": {
+    "port_environment": "PORT",
+    "host_environment": "HOST",
+    "public_tls_required": true
+  },
+  "storage": {
+    "environment": "CONTRA_DATA_DIR",
+    "single_writer": true,
+    "persistent_volume_required": true,
+    "ephemeral_filesystem_forbidden": true
+  },
+  "probes": {
+    "liveness": "/api/live",
+    "readiness": "/api/ready",
+    "readiness_requires_chain": true
+  },
+  "deployment_authorised": false
+}
