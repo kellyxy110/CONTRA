@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active supporting task | Supply M10 external evidence
+
+Recruit three independently controlled primary reviewers and three independently controlled fresh reviewers, then collect signed control disclosures, conflicts and availability. For each provider, confirm the exact account and model, credits, pricing and billing controls before requesting one bounded spend approval. Continue fixtures until those external conditions are met. M10 remains independent of M08 deployment readiness.
+
 ## Active next task | Supply the bounded M08 external authority
 
 The production artifact is verified. The proposed `contra-contestation.testnet` account was absent at final blocks `276958725` and `276958726`. Create and fund the chosen account only through separately authorised owner action, provide its public Ledger key, then approve the recomputed deployment-intent digest with an expiry. M09 Cloudflare hosting and M10 provider access remain separate and do not block M08 readiness.

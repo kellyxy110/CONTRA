@@ -1,0 +1,47 @@
+{
+  "reviewers": {
+    "schema": "CONTRA_REVIEWER_EXTERNAL_READINESS_V1",
+    "reviewers": []
+  },
+  "providers": {
+    "schema": "CONTRA_PROVIDER_EXTERNAL_READINESS_V1",
+    "providers": {
+      "meta": {
+        "documentation_verified": true,
+        "account_access_verified": false,
+        "model_identifier": "muse-spark-1.3",
+        "interface_smoke_verified": false,
+        "credits_verified": false,
+        "pricing_verified": true,
+        "billing_limit_verified": false,
+        "owner_authorised": false,
+        "server_secret_configured": false,
+        "maximum_authorised_usd": null
+      },
+      "baseten": {
+        "documentation_verified": true,
+        "account_access_verified": false,
+        "model_identifier": null,
+        "interface_smoke_verified": false,
+        "credits_verified": false,
+        "pricing_verified": false,
+        "billing_limit_verified": false,
+        "owner_authorised": false,
+        "server_secret_configured": false,
+        "maximum_authorised_usd": null
+      },
+      "modal": {
+        "documentation_verified": true,
+        "account_access_verified": false,
+        "model_identifier": null,
+        "interface_smoke_verified": false,
+        "credits_verified": false,
+        "pricing_verified": true,
+        "billing_limit_verified": false,
+        "owner_authorised": false,
+        "server_secret_configured": false,
+        "maximum_authorised_usd": null
+      }
+    }
+  }
+}

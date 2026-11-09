@@ -1,5 +1,12 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | M10 external readiness gates
+
+- Added non-billable readiness checks for six distinct reviewer operators and disjoint committees.
+- Added separate Meta, Baseten and Modal readiness checks with exact provenance, billing and owner-authorisation requirements.
+- Passed 4/4 focused readiness tests and 122/122 repository tests locally before synchronising the accepted M08 baseline.
+- Provider calls, reviewer signatures, transactions, deployments and spending: none.
+
 ## 2026-11-09 UTC | M08 independent readiness
 
 - Separated M08 contract deployment, M09 hosting and M10 provider readiness.

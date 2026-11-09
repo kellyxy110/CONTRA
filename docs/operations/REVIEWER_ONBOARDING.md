@@ -4,6 +4,8 @@ Status: procedure prepared. Six independently controlled operators have not yet 
 
 CONTRA requires three primary and three fresh reviewers. Each reviewer account must have a distinct controlling operator, and no operator may control an account in both committees.
 
+The public, secret-free readiness shape is defined by [`config/m10-external-readiness.example.json`](../../config/m10-external-readiness.example.json). `assessReviewerReadiness` requires exactly six valid testnet accounts, six distinct operator identifiers, three members per committee, verified control-statement signatures, explicit conflict clearance and a current availability window. The checked-in example has no reviewers and therefore fails closed.
+
 ## Control evidence
 
 Each operator signs a NEP-413 statement containing the reviewer account, operator disclosure revision, intended committee, conflict declaration, availability window, statement expiry and a server challenge nonce. The backend verifies the signature, account, recipient, nonce, expiry and replay status. The signed statement is retained as an immutable audit artifact without publishing private personal data.
@@ -17,3 +19,5 @@ Before a live journey, every operator independently authenticates, inspects the 
 The owner must schedule all six operators across the contract's actual commitment, reveal, challenge and fresh-review windows. Nonparticipation is a valid tested outcome and must reach deterministic quorum or timeout fallback, never an AI-selected verdict.
 
 Fixture accounts remain useful for local regression, but they are disclosed as one-process controls and do not satisfy this procedure.
+
+Reviewer readiness is an M10 evidence gate. It does not authorise provider usage, contract deployment, wallet signing or spending, and its incomplete state must not block an otherwise authorised M08 deployment.
