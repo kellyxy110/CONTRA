@@ -1,10 +1,20 @@
 # Next execution task
 
+## Active supporting task | Supply M10 external evidence
+
+Recruit three independently controlled primary reviewers and three independently controlled fresh reviewers, then collect signed control disclosures, conflicts and availability. For each provider, confirm the exact account and model, credits, pricing and billing controls before requesting one bounded spend approval. Continue fixtures until those external conditions are met. M10 remains independent of M08 deployment readiness.
+
+## Active next task | Supply the bounded M08 external authority
+
+The production artifact is verified. The proposed `contra-contestation.testnet` account was absent at final blocks `276958725` and `276958726`. Create and fund the chosen account only through separately authorised owner action, provide its public Ledger key, then approve the recomputed deployment-intent digest with an expiry. M09 Cloudflare hosting and M10 provider access remain separate and do not block M08 readiness.
+
 ## Active next task | External M08 authorisation and execution
 
 The judge quick-start is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. Preserve its green release evidence.
 
 Complete and approve the single packet in `config/testnet-authorisation-proposal.json`. Confirm the proposed `contra-contestation.testnet` account, owner-controlled Ledger public key, exact production artifact hash, 5 NEAR total ceiling, 8 NEAR minimum balance and expiry. Recompute the final packet and deployment-intent digests, then bind owner approval to that exact final deployment intent. Do not execute the draft digest.
+
+In parallel, complete the Cloudflare API route migration, recovery export and import, account-scoped authentication and readiness checks on Workers Free. Public deployment remains blocked until the exact Cloudflare account, Worker and least-privilege deployment credential are approved. The hosting ceiling is USD 0 and no automatic paid upgrade is allowed.
 
 After the packet and secure signing access are valid, run the existing read-only preflight and execute the bounded M08 deployment and acceptance plan. Public hosting, live wallet signing, independent reviewer participation and provider spend remain separately disabled until their packet fields are expressly approved.
 

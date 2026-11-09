@@ -4,31 +4,32 @@ Status: prepared, not deployed and not authorised.
 
 ## Selected architecture
 
-Use one Fly.io Machine in one owner-approved region, attached to one Fly Volume mounted at `CONTRA_DATA_DIR`. Fly Proxy terminates HTTPS. The service runs exactly one replica, uses the existing exclusive data lease, and receives at least 60 seconds for graceful shutdown. A second concurrently writable Machine is forbidden.
+Use Cloudflare Workers with Static Assets and one SQLite-backed Durable Object class named `ContraState`. Requests for a financial operation are routed to one named object, which provides a single serial transaction boundary for operation identity, wallet handoff, transaction hashes, sessions, immutable evidence and chain observations.
 
-This choice matches CONTRA's current single-writer SQLite and immutable-object design. Fly Volumes are persistent storage attached to a Machine, but they are local to one region and are not automatically replicated to another Machine. The deployment therefore requires tested application-level backup to separate encrypted object storage. Volume snapshots are recovery assistance, not the only backup.
+This is a deliberate migration from the Node.js process and filesystem SQLite implementation. D1 is not the financial source of truth because it does not provide the same per-operation serial coordination boundary. R2 is not required for the current evidence limit: immutable artifacts up to 1 MB are stored by digest in Durable Object SQLite. R2 may be evaluated later only if an existing Free allocation and a fail-closed zero-cost boundary are verified.
 
 Official operational references:
 
-- [Fly Machines and pricing](https://fly.io/docs/about/pricing/)
-- [Fly Volumes overview](https://fly.io/docs/volumes/overview/)
-- [Fly application configuration](https://fly.io/docs/reference/configuration/)
+- [Workers limits](https://developers.cloudflare.com/workers/platform/limits/)
+- [Durable Objects limits](https://developers.cloudflare.com/durable-objects/platform/limits/)
+- [Durable Objects pricing and Free allocation](https://developers.cloudflare.com/durable-objects/platform/pricing/)
+- [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
 
 ## Cost and security boundary
 
-No hosting spend is authorised. The proposal asks for a USD 15 monthly infrastructure ceiling. Before deployment, the owner must approve the current Fly price estimate for the exact Machine, volume, bandwidth and snapshot settings. Alerts should trigger at 50, 80 and 100 per cent of the approved ceiling.
+No hosting spend is authorised. The hard ceiling is USD 0. The account must remain on Workers Free, no automatic paid upgrade is allowed and quota exhaustion must reject work rather than change financial state. As verified on 9 November 2026, Workers Free documents 100,000 requests per day, 10 ms Worker CPU per invocation, 20,000 static files per version and 25 MiB per static file. SQLite Durable Objects are available on Free with a 5 GB account storage allocation, and storage exhaustion rejects writes. These provider limits must be rechecked immediately before deployment.
 
-The Machine receives only server-side secrets. The volume contains SQLite and content-addressed evidence and must use the provider's at-rest encryption plus application backup encryption. Public ingress exposes only HTTPS. `CONTRA_ALLOWED_ORIGINS` and `CONTRA_PUBLIC_ORIGIN` remain narrow. SSH and organisation access use named operators and least privilege.
+The Worker receives only server-side secrets through Cloudflare secret bindings. Public ingress exposes only HTTPS. Allowed origins remain narrow. Account and API-token access use named operators and least privilege. The current Cloudflare entrypoint exposes liveness and readiness only; unmigrated API routes return 503 and never report a transaction as confirmed.
 
 ## Deployment and recovery checks
 
-1. Build from the frozen release SHA and verify `npm ci`, repository tests and the wallet bundle.
-2. Create one Machine and one volume. Refuse a second writer.
-3. Restore a verified backup or initialise an empty volume.
-4. Start with chain mode unavailable. `/api/live` must return 200 and `/api/ready` must return 503.
+1. Build from the frozen release SHA and verify `npm ci`, repository tests, Cloudflare tests and the wallet bundle.
+2. Create the `contra-testnet` Worker and SQLite `ContraState` Durable Object migration on a Workers Free account.
+3. Initialise empty state or import a separately verified recovery export when that mechanism is complete.
+4. Start with live signing disabled. `/api/live` reports that state and `/api/ready` proves the Durable Object schema.
 5. Configure the authorised testnet contract only after M08 deployment evidence exists.
-6. Route traffic only when `/api/ready` proves intact storage and fresh expected chain identity.
-7. Test graceful stop, lease release, offline backup, restore into a new volume and integrity audit.
+6. Route traffic only when readiness proves intact storage and fresh expected chain identity.
+7. Test isolate eviction, durable-state recovery, storage failure, session isolation and an exported backup and restore before public use.
 8. Retain deployment logs without session tokens, private keys or provider credentials.
 
-Rollback means deploying the prior application image against a backup that matches its schema. Contract deployment itself has no automatic rollback. A replacement contract deployment requires a new artifact hash, preflight and owner-bound plan.
+Worker rollback means deploying a prior version that remains compatible with the applied Durable Object migration. Durable Object migrations are not automatically reversible. Contract deployment itself also has no automatic rollback. A replacement contract deployment requires a new artifact hash, preflight and owner-bound plan.

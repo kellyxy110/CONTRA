@@ -1,5 +1,27 @@
 # CONTRA session log
 
+## 2026-11-09 UTC | M10 external readiness gates
+
+- Added non-billable readiness checks for six distinct reviewer operators and disjoint committees.
+- Added separate Meta, Baseten and Modal readiness checks with exact provenance, billing and owner-authorisation requirements.
+- Passed 4/4 focused readiness tests and 122/122 repository tests locally before synchronising the accepted M08 baseline.
+- Provider calls, reviewer signatures, transactions, deployments and spending: none.
+
+## 2026-11-09 UTC | M08 independent readiness
+
+- Separated M08 contract deployment, M09 hosting and M10 provider readiness.
+- Confirmed through two read-only RPC providers that `contra-contestation.testnet` did not exist at the recorded final blocks.
+- GitHub run `42700073759` built the 631190-byte production WASM with SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f` and verified near-cli-rs `0.30.1` Ledger command support without a device or signature.
+- Transactions, deployments, signing, secret changes and spending: none.
+
+## 2026-11-09 UTC | Cloudflare Free persistence foundation
+
+- Selected Workers with Static Assets and SQLite-backed Durable Objects under a hard USD 0 ceiling.
+- Added durable serial operation state, unique transaction identity, UNKNOWN recovery, sessions, immutable evidence and non-regressed receipt observations.
+- Passed 6/6 Cloudflare tests, Wrangler static build and deploy dry-run, 118/118 repository tests and the wallet build locally.
+- Corrected an artifact SQL parameter-order defect found by the eviction and digest-integrity regression.
+- Public deployment, external transaction, signing, provider usage, production-secret change and spending: none.
+
 ## 2026-11-09 UTC | Release audit and external execution preparation
 
 - Confirmed judge promotion already reached `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302` and corrected stale active-task records.
