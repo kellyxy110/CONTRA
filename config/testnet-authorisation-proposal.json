@@ -1,0 +1,60 @@
+{
+  "schema": "CONTRA_EXTERNAL_AUTHORISATION_PACKET_V1",
+  "status": "DRAFT_REQUIRES_OWNER_INPUT",
+  "prepared_at": "2026-11-09T00:00:00.000Z",
+  "expires_at": "2026-11-16T00:00:00.000Z",
+  "deployment_plan": {
+    "schema": "CONTRA_TESTNET_DEPLOYMENT_V1",
+    "network": "testnet",
+    "rpc_url": "https://rpc.testnet.near.org",
+    "contract_account": "contra-contestation.testnet",
+    "signer_account": "contra-contestation.testnet",
+    "signer_public_key": null,
+    "custody_method": "ledger",
+    "artifact_path": "contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm",
+    "artifact_sha256": null,
+    "expected_current_code_hash": "EMPTY",
+    "max_total_cost_yocto": "5000000000000000000000000",
+    "minimum_account_balance_yocto": "8000000000000000000000000",
+    "initial_owner_account": "contra-contestation.testnet",
+    "creator_allowlist": ["contra-contestation.testnet"],
+    "owner_authorisation": null
+  },
+  "permitted_actions": [
+    "Run read-only testnet RPC and account preflight",
+    "Deploy the exact approved production WASM once and initialise it once",
+    "Read contract code, state, access keys, receipts and balances",
+    "Execute the documented bounded M08 acceptance journey with named authorised testnet accounts",
+    "Retry read-only observation, but never blindly redispatch an UNKNOWN financial operation"
+  ],
+  "forbidden_actions": [
+    "Mainnet activity",
+    "Account deletion or access-key mutation",
+    "Unbounded transfers or calls outside the approved acceptance plan",
+    "Production-secret changes",
+    "Paid provider inference",
+    "Hackathon submission or public publication"
+  ],
+  "custody": {
+    "method": "ledger",
+    "private_material_location": "Owner-controlled hardware wallet only",
+    "repository_or_chat_secret_transfer": false
+  },
+  "hosting": {
+    "proposal": "One Fly.io Machine with one encrypted Fly Volume, HTTPS ingress and external encrypted backup storage",
+    "deployment_authorised": false,
+    "required_owner_inputs": ["Fly.io organisation and application", "approved region", "public hostname", "backup destination", "secret-management access"]
+  },
+  "reviewers": {
+    "required_distinct_operators": 6,
+    "primary": 3,
+    "fresh": 3,
+    "operator_overlap_allowed": false
+  },
+  "providers": {
+    "meta_max_usd": 3,
+    "baseten_max_usd": 3,
+    "modal_max_usd": 5,
+    "spending_authorised": false
+  }
+}

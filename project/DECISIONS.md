@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-089 | External authority is one digest-bound packet | 2026-11-09
+
+ACCEPTED. M08 execution uses one bounded packet that identifies the contract and signer account, public key, Ledger custody, exact artifact, expected code state, initial state, 5 NEAR total ceiling, 8 NEAR minimum balance, permitted actions and expiry. The current draft digest is not executable because the public key, artifact hash and owner approval are absent. M09 uses one Machine and one volume because current SQLite is single-writer. M10 requires six distinct reviewer operators and separate provider spending approval. Any material packet change invalidates prior approval.
+
 ## D-088 | The judge quick-start validates retained evidence, not command success alone | 2026-11-09
 
 ACCEPTED. The credential-free Ubuntu route must run from a clean dependency installation and independently validate the controlled workflow report before returning success. Genuine local Sandbox identity, explicit simulated wallet and mocked provider boundaries, exact challenged settlement, deterministic timeout fallback, positive receipt and operation counts, zero wallet redispatch and zero AI-created commitments are mandatory. Missing or contradictory evidence fails the command even when an upstream process exits successfully. PR 30 proved this gate on head `45c80a424e0e77cb00a192094c54c01174467c22` in Integration run `42635548332`.

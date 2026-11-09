@@ -1,10 +1,16 @@
 # Next execution task
 
-## Active next task | M11 judge promotion and public repository audit
+## Active next task | External M08 authorisation and execution
 
-Promote the accepted judge quick-start from `implementation/oct28` into `main` through the protected PR process. Require Core, Security and comprehensive Integration on the exact promotion head, then verify branch tree identity and implementation ancestry.
+The judge quick-start is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. Preserve its green release evidence.
 
-After promotion, perform the remaining public-repository and release-candidate audit that does not require external authority. External M08 to M10 gates remain blocked by the consolidated owner inputs in `project/BLOCKERS.md`.
+Complete and approve the single packet in `config/testnet-authorisation-proposal.json`. Confirm the proposed `contra-contestation.testnet` account, owner-controlled Ledger public key, exact production artifact hash, 5 NEAR total ceiling, 8 NEAR minimum balance and expiry. Recompute the final packet and deployment-intent digests, then bind owner approval to that exact final deployment intent. Do not execute the draft digest.
+
+After the packet and secure signing access are valid, run the existing read-only preflight and execute the bounded M08 deployment and acceptance plan. Public hosting, live wallet signing, independent reviewer participation and provider spend remain separately disabled until their packet fields are expressly approved.
+
+## Historical next task | M11 judge promotion and public repository audit
+
+Promotion PR 32 completed this task. The remaining release audit and external preparation are captured by the current checkpoint and blocker packet.
 
 ## Historical next task | M11 judge quick-start
 
