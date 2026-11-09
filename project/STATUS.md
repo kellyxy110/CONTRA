@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-09-M11-ACCEPTANCE-REVIEW
+
+M09 frontend integration is merged. PR 26 tested head `ffc5ddb66775d34e251af5bdfa3d71c9512506c3` and merged it into `implementation/oct28` as `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd`. Core `42623963739`, Security `42623963706` and risk-selected Integration `42623963635` passed. Promotion PR 27 merged the accepted tree into `main` as `a74445527dd66f2ff0c684887849346f7951416e` after Core `42624205902`, Security `42624205805` and comprehensive Integration `42624205937` passed. The protected branches have identical tree `6528bccef703008371d076475c7b4da55115b2f4`; implementation is an ancestor of main.
+
+The M11 acceptance review is active on `docs/m11-acceptance-review`. AC01 through AC33 have been reevaluated individually against current source, local Sandbox, wallet simulation, provider fixtures, browser evidence and external blockers. AC06 and AC24 now have sufficient controlled evidence to move from PARTIAL to PASS. The result is 23 PASS, 8 PARTIAL and 2 BLOCKED. Live provider, independently controlled reviewer, deployed testnet, public API and manual final-frontend evidence remain explicitly incomplete.
+
 ## Current checkpoint | CONTRA-2026-11-09-M09-FRONTEND-INTERFACE
 
 M09 service readiness is merged and promoted. PR 24 tested head `e7d009faa2d4c787d132362f35e8352058aa3402` and merged it into `implementation/oct28` as `6a327e68a95d409f9dcc914fb02b3b88e05d7db9`. Core `42619092396`, Security `42619092408` and comprehensive Integration `42619092337` passed. Promotion PR 25 merged the accepted tree into `main` as `737e034e41b2fa24a8db9651f9173fac7c9d1a77` after Core `42620546576`, Security `42620546479` and comprehensive Integration `42620546482` passed. The protected branches have identical tree `6f088ea2add6c81ccb3ab22857728d2f517ea377`; implementation is an ancestor of main.

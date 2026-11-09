@@ -77,7 +77,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Independent reviewers | Not yet demonstrated; local accounts are one-process fixtures |
 | Live provider usage | Not authorised and not performed; spend is $0 |
 
-The acceptance baseline remains 21 PASS, 10 PARTIAL and 2 BLOCKED until AC01 to AC33 are independently reevaluated. See [project status](project/STATUS.md) and [blockers](project/BLOCKERS.md).
+The current independently reviewed acceptance result is 23 PASS, 8 PARTIAL and 2 BLOCKED. See the [AC01 to AC33 matrix](docs/judges/ACCEPTANCE_MATRIX.md), [project status](project/STATUS.md) and [blockers](project/BLOCKERS.md).
 
 ## Quick start
 

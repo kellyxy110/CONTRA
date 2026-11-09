@@ -32,3 +32,5 @@ BLOCKED pending owner-authorised testnet deployment, backend hosting and funded 
 | Inspect cost report | Actual local gas, zero provider spend and stated limitations | M03 evidence and project status |
 
 Historical evidence is labelled by checkpoint. Live network evidence will be added only after the corresponding transaction occurs.
+
+The current [AC01 to AC33 acceptance matrix](ACCEPTANCE_MATRIX.md) records exact evidence classes, commit and CI links, and every remaining limitation. Its current result is 23 PASS, 8 PARTIAL and 2 BLOCKED.
