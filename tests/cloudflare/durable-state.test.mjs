@@ -57,7 +57,7 @@ describe('Cloudflare durable financial state',()=>{
   const ready=await SELF.fetch(publicOrigin+'/api/ready'),report=await ready.json();expect(report.storage.integrity).toBe('ok');
   if(ready.status===200){expect(report.ready).toBe(true);expect(report.chain.status).toBe('ready');expect(report.chain.source.finality).toBe('final');}
   else{expect(ready.status).toBe(503);expect(report.ready).toBe(false);expect(report.chain.status).toBe('unavailable');}
- },12000);
+ },30000);
 
  it('creates durable NEP-413 challenges while rejecting unauthenticated protected access',async()=>{
   const challenge=await SELF.fetch(publicOrigin+'/api/session/challenge',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});

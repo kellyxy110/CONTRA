@@ -1,8 +1,14 @@
 # CONTRA session log
 
+## 2026-11-10 | CONTRA-M09.6-PUBLIC-URL-READY
+
+Created and deployed Cloudflare Pages project `contra-near`, preserving the existing Worker and `ContraState` data. Public readiness and same-origin API routing passed at `https://contra-near.pages.dev`; browser traces contained no request to a `workers.dev` hostname. Chromium and Firefox desktop/mobile captures passed.
+
+The real MyNearWallet attempt used isolated browser state and did not import existing custody keys. The selector did not reach its external redirect, and local resolver observations for `testnet.mynearwallet.com` were inconsistent with public DNS. No disposable account was created, no NEP-413 signature was produced and no transaction was broadcast. This checkpoint records public URL readiness only; genuine browser-wallet verification remains blocked.
+
 ## 2026-11-10 | CONTRA-2026-11-10-M09.4-BROWSER-HOSTING-READY
 
-Wrangler authenticated `judithorluchee@gmail.com` for account `0a8fd0acd086e68c9b558159fac0d7a8` and deployed Worker `contra-testnet`. Public readiness verified SQLite schema 2 and fresh final NEAR testnet state. Four Chromium/Firefox desktop/mobile runs passed and produced screenshots under `project/artifacts/m09/browser`. No key was imported, signature requested or transaction broadcast. Reviewer onboarding regressions passed 3/3. Live browser-wallet signatures and six independently controlled operators remain external gates.
+Wrangler authenticated the verified owner Cloudflare account and deployed Worker `contra-testnet`. Public readiness verified SQLite schema 2 and fresh final NEAR testnet state. Four Chromium/Firefox desktop/mobile runs passed and produced screenshots under `project/artifacts/m09/browser`. No key was imported, signature requested or transaction broadcast. Reviewer onboarding regressions passed 3/3. Live browser-wallet signatures and six independently controlled operators remain external gates.
 
 ## 2026-11-10 | M09.3 beneficiary and live authentication
 

@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-10 | M09.6 public URL migration
+
+- Created the Cloudflare Pages project `contra-near` and deployed the existing operational frontend at `https://contra-near.pages.dev`.
+- Added a same-origin Pages Function proxy for `/api`, retained the existing Worker and SQLite Durable Object, and verified that browser requests expose no `workers.dev` hostname.
+- Updated the Worker origin allowlist and public documentation without enabling signing, paid services or financial transactions.
+- Replaced the temporary public backend proxy with a private Cloudflare service binding and disabled the legacy public Worker route after Pages readiness remained healthy.
+- Repeated Chromium and Firefox desktop/mobile public rendering checks with screenshots, readiness, responsive overflow and accessible-name assertions.
+- Attempted the genuine MyNearWallet testnet path with isolated browser state. The selector stalled before redirect and the wallet hostname was intermittently unavailable through the local resolver. No wallet account, signature or transaction was fabricated.
+
 ## 2026-11-10 | M09.4 public browser and hosting readiness
 
 - Deployed `contra-testnet` with Static Assets and SQLite Durable Object storage to the verified Judithorluchee Cloudflare account.

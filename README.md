@@ -13,7 +13,7 @@
 
 CONTRA enables consequential decisions to be challenged, reviewed against immutable evidence and resolved through enforceable rules. AI contributes evidence-bound proposals, reviewers evaluate contested claims, challenges prevent premature settlement, and the NEAR contract applies the final result or agreed fallback. AI cannot cast votes, change frozen terms or authorise payments.
 
-The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-testnet.judithorluchee.workers.dev](https://contra-testnet.judithorluchee.workers.dev). Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
+The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-near.pages.dev](https://contra-near.pages.dev). Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
 
 ## Contents
 

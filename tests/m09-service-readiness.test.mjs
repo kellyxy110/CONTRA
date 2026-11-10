@@ -29,3 +29,4 @@ test('unavailable and stale chain states are live but not ready',async t=>{
 test('portable service contract enforces one persistent writer and separate probes',()=>{
  const service=JSON.parse(fs.readFileSync(new URL('../config/runtime-service.example.json',import.meta.url),'utf8'));assert.equal(service.schema,'CONTRA_RUNTIME_SERVICE_V1');assert.equal(service.process.replicas,1);assert.equal(service.storage.single_writer,true);assert.equal(service.storage.persistent_volume_required,true);assert.equal(service.probes.liveness,'/api/live');assert.equal(service.probes.readiness,'/api/ready');assert.equal(service.deployment_authorised,false);
 });
+import './m09-pages-proxy.test.mjs';
