@@ -2,7 +2,7 @@
 
 ## Current checkpoint | CONTRA-2026-11-10-M09.1-REMEDIATION-DECISION-READY
 
-The creator defect remediation is implemented for local review only. The recommended option is UPGRADE EXISTING CONTRACT using an owner-only, exact-state, one-time allowlist repair that adds no state field. Future initialisation and deployment preflight now reject the contract account in the creator allowlist. Official read-only RPC confirmed the recorded key remains FullAccess. No upgrade, signing, account creation, funded transaction or merge occurred. AC31 and AC32 remain BLOCKED.
+The creator defect remediation is implemented for local review only. The recommended option is UPGRADE EXISTING CONTRACT using an owner-only, exact-state, one-time allowlist repair that adds no state field. Future initialisation and deployment preflight now reject the contract account in the creator allowlist. Official read-only RPC confirmed the recorded key remains FullAccess. No existing eligible creator wallet is evidenced; `contra-creator.testnet` is absent and proposed under dedicated Windows keychain custody and faucet funding, subject to explicit creation approval. No upgrade, signing, account creation, funded transaction or merge occurred. AC31 and AC32 remain BLOCKED.
 
 ## Current checkpoint | CONTRA-2026-11-10-M09-PREDEPLOY-READY
 

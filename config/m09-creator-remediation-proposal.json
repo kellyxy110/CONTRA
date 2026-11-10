@@ -8,7 +8,11 @@
   "custody": "Windows Credential Manager",
   "current_code_sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f",
   "expected_legacy_allowlist": ["contra-contestation.testnet"],
-  "replacement_creator_account": null,
+  "replacement_creator_account": "contra-creator.testnet",
+  "replacement_creator_account_observation": "UNKNOWN_ACCOUNT",
+  "replacement_creator_key": null,
+  "replacement_creator_custody": "dedicated Windows Credential Manager key, generated only after explicit account-creation authorisation",
+  "replacement_creator_funding": "testnet faucet only, owner-funded fallback prohibited without separate bounded approval",
   "replacement_artifact_sha256": null,
   "replacement_abi_sha256": null,
   "source_commit": null,
@@ -16,5 +20,5 @@
   "expires_at": null,
   "owner_authorisation": null,
   "authorised_operations": [],
-  "note": "This draft cannot authorise signing. Missing account, artifact, cost, expiry and owner approval fields must be verified and bound into a new digest."
+  "note": "This draft cannot authorise signing or account creation. The proposed account is currently absent. Missing public key, artifact, cost, expiry and owner approval fields must be verified and bound into a new digest."
 }
