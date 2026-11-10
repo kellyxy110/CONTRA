@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-10 | M09.1 safe creator eligibility remediation
+
+Reviewed the M08 defect, current Rust layout, PR 43 and official access-key state. Implemented local-only constructor, preflight and one-time repair candidates. Chose upgrade over replacement because it preserves account identity, custody and Borsh state while avoiding new account, funding and integration surfaces. No chain write, new key, account, deployment, provider call, Cloudflare resource or spending occurred.
+
 ## 2026-11-10 UTC | M09 predeployment implementation
 
 - Reproduced the deployed creator-eligibility contradiction from Rust source and retained M08 state evidence.

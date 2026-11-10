@@ -1,0 +1,20 @@
+{
+  "schema": "CONTRA_M09_CREATOR_REMEDIATION_DRAFT_V1",
+  "status": "NON_EXECUTABLE_DRAFT",
+  "recommended_option": "UPGRADE_EXISTING_CONTRACT",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "current_public_key": "ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y",
+  "custody": "Windows Credential Manager",
+  "current_code_sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f",
+  "expected_legacy_allowlist": ["contra-contestation.testnet"],
+  "replacement_creator_account": null,
+  "replacement_artifact_sha256": null,
+  "replacement_abi_sha256": null,
+  "source_commit": null,
+  "maximum_total_cost_yocto": null,
+  "expires_at": null,
+  "owner_authorisation": null,
+  "authorised_operations": [],
+  "note": "This draft cannot authorise signing. Missing account, artifact, cost, expiry and owner approval fields must be verified and bound into a new digest."
+}

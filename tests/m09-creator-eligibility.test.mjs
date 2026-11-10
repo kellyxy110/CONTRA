@@ -19,3 +19,7 @@ test('a distinct valid allowlisted account restores creator eligibility without 
  assert.deepEqual(result.eligible_creators,['creator.testnet']);
  assert.equal(result.can_create_case,true);
 });
+
+test('deployment eligibility rejects a contract-only allowlist before signing',()=>{
+ assert.throws(()=>requireCreatorEligibility({contract_account:'contra-contestation.testnet',creator_allowlist:['contra-contestation.testnet']}),/No allowlisted account/);
+});

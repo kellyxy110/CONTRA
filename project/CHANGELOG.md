@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-10 | M09.1 creator remediation decision
+
+- Added constructor and deployment-preflight rejection for creator allowlists containing the contract account.
+- Added a state-layout-compatible, one-time owner repair candidate and Rust regressions.
+- Documented upgrade versus replacement, rollback, custody and incomplete authorisation inputs.
+- Confirmed the deployed public key remains FullAccess through official read-only testnet RPC.
+- Kept PR 43 open and performed no external write or merge.
+
 ## 2026-11-10 | M09 predeployment API and creator safety
 
 Added a regression proving the deployed creator allowlist has no valid case creator and documented safe remediation choices without changing the contract. Completed the Cloudflare Worker API migration for durable authentication, immutable records, account isolation, wallet preparation and recovery, final receipt reconciliation and chain-aware readiness. Added non-executable wallet and Cloudflare authority packets plus deployment, backup, PITR and rollback procedures. No external resource, signature, funded transaction or provider call occurred.

@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-10-M09.1-REMEDIATION-DECISION-READY
+
+The creator defect remediation is implemented for local review only. The recommended option is UPGRADE EXISTING CONTRACT using an owner-only, exact-state, one-time allowlist repair that adds no state field. Future initialisation and deployment preflight now reject the contract account in the creator allowlist. Official read-only RPC confirmed the recorded key remains FullAccess. No upgrade, signing, account creation, funded transaction or merge occurred. AC31 and AC32 remain BLOCKED.
+
 ## Current checkpoint | CONTRA-2026-11-10-M09-PREDEPLOY-READY
 
 M09 predeployment implementation is complete locally and remains undeployed. A P0 creator-eligibility audit proved that the deployed allowlist contains only the contract account while `create_case` rejects that identity, leaving no eligible creator. Live signing is disabled and AC31 and AC32 remain BLOCKED. The Cloudflare Worker now implements durable NEP-413 challenges and sessions, testnet reads, immutable digest-addressed records, reviewer and case access boundaries, wallet preparation and conservative UNKNOWN recovery, final receipt reconciliation, honest chain-and-storage readiness and complete operator-only backup export. Server-side dispatch, wallet handoff and paid providers remain disabled. Cloudflare and wallet authority packets remain non-executable pending exact owner inputs and creator remediation.

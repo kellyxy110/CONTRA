@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active | M09.1 owner decision and immutable execution packet
+
+Review the recommended existing-contract upgrade. Before any executable authority exists, supply and verify the independent creator account and custody, build the final production WASM on Linux, bind its checksum and ABI, set a cost ceiling and expiry, observe the final chain state, and calculate a fresh immutable digest. Do not deploy, repair, sign or fund from the current non-executable draft. Keep AC31 and AC32 BLOCKED.
+
 ## Active next task | Resolve creator eligibility through a new authorised plan
 
 Do not enable live signing against the current deployment. Select a replacement deployment, versioned owner-only allowlist upgrade or empty-state migration, then bind the exact code, account, creator, funding, custody, ABI and financial verification plan to fresh owner approval. Cloudflare deployment remains independently blocked on the final account and destination authority packet.
