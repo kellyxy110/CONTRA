@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | Approve the exact M08 deployment intent
+
+The testnet account, public key, 10 NEAR faucet balance, empty code and Linux production artifact are verified. Contract deployment remains blocked only on explicit owner approval of deployment-intent digest `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`, expiring 16 November 2026. Account-creation approval does not authorise deployment.
+
 ## Active supporting task | Supply M10 external evidence
 
 Recruit three independently controlled primary reviewers and three independently controlled fresh reviewers, then collect signed control disclosures, conflicts and availability. For each provider, confirm the exact account and model, credits, pricing and billing controls before requesting one bounded spend approval. Continue fixtures until those external conditions are met. M10 remains independent of M08 deployment readiness.

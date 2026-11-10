@@ -9,7 +9,9 @@ test('external authorisation packet has stable digests and exposes independent a
  const result=inspectAuthorisationPacket(fixture());
  assert.match(result.packet_sha256,/^[a-f0-9]{64}$/);
  assert.match(result.deployment_intent_sha256,/^[a-f0-9]{64}$/);
- assert.deepEqual(result.readiness.m08_contract_deployment,{ready:false,missing:['existing authorised contract account','signer public key','owner authorisation bound to the final deployment intent digest']});
+ assert.deepEqual(result.readiness.m08_contract_deployment,{ready:false,missing:['owner authorisation bound to the final deployment intent digest']});
+ assert.equal(fixture().deployment_plan.custody_method,'os-keychain');
+ assert.equal(fixture().account_observation.public_key,fixture().deployment_plan.signer_public_key);
  assert.deepEqual(result.readiness.m09_hosting,{ready:false,missing:['hosting destination and deployment authority']});
  assert.deepEqual(result.readiness.m10_provider_usage,{ready:false,missing:['separate provider spending authorisation']});
 });

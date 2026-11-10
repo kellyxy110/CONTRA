@@ -4,7 +4,7 @@ This register consolidates owner-controlled and external requirements. Engineeri
 
 | ID | Severity | Phase | Root cause and impact | Resolution owner | Corrective action and required evidence | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| B-M08-01 | P0 | M08 | No authorised testnet contract account, funding or signing authority. Real deployment and acceptance receipts cannot exist. | Owner | Review `config/testnet-authorisation-proposal.json`. Confirm or replace `contra-contestation.testnet`, supply its public Ledger key, approve the exact production artifact and final deployment-intent digest, fund at least 8 NEAR and authorise no more than 5 NEAR total expenditure before the stated expiry. Private material remains on the Ledger. | BLOCKED |
+| B-M08-01 | P0 | M08 | The verified account, faucet balance, empty code, OS-keychain signer and production artifact exist, but account-creation approval does not authorise deployment. Real deployment and acceptance receipts cannot yet exist. | Owner | Explicitly approve deployment-intent digest `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5` before its 16 November 2026 expiry, including the existing 5 NEAR maximum deployment and acceptance ceiling. Private material remains in Windows Credential Manager. | BLOCKED |
 | B-M09-01 | P0 | M09 | No authorised Cloudflare account, Workers destination or deployment credential has been supplied. The Cloudflare Free migration is locally testable but a public API cannot be claimed. | Owner | Approve the exact Cloudflare account, `contra-testnet` Worker, `ContraState` SQLite Durable Object namespace and static-assets destination. Supply a least-privilege deployment token through approved secret management. Confirm that the account remains on Workers Free with a USD 0 ceiling and no automatic paid upgrade. | BLOCKED |
 | B-M09-02 | P0 | M09 | Live external wallet signing is not authorised. | Owner | Authorise named testnet accounts, permitted methods, maximum attached deposits and funded journey budget after B-M08-01 is satisfied. | BLOCKED |
 | B-M10-01 | P1 | M10 | Six separately controlled reviewer operators are not available. Fixture accounts cannot prove independence. | Owner | Recruit and identify three primary and three fresh reviewers, collect control disclosures and conflicts, and schedule signed participation. | BLOCKED |
@@ -15,7 +15,7 @@ This register consolidates owner-controlled and external requirements. Engineeri
 
 The exact draft and digest procedure are in `docs/operations/OWNER_AUTHORISATION_PACKET.md`. One response may satisfy the external gates by providing:
 
-1. The dedicated NEAR testnet contract account, ownership proof, access-key policy, funding ceiling and explicit permission to deploy and sign funded testnet acceptance transactions.
+1. Explicit digest-bound permission to deploy and sign the bounded testnet acceptance transactions from the already verified `contra-contestation.testnet` OS-keychain account.
 2. Approved Cloudflare Free account, Worker and SQLite Durable Object resources, optional domain, recovery export destination and least-privilege deployment access. The hosting expenditure ceiling is USD 0.
 3. Six distinct reviewer operators and their availability for primary and fresh committees.
 4. Provider accounts, exact permitted models, verified credits and billing controls, plus a separately approved spend per provider.
