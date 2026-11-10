@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active task | M09.4 external wallet and reviewer boundary
+
+The public Cloudflare application is deployed and read-only ready. Keep live signing disabled. The next executable action is to obtain explicit confirmation before importing the existing creator and beneficiary custody keys into separate testnet browser-wallet profiles, then exercise NEP-413 connect, rejection, expiry, switching and recovery without funded contract calls. In parallel, invite six separately controlled reviewer operators using `docs/operations/REVIEWER_ONBOARDING.md`. Do not represent invitations or distinct test accounts as proof of independence.
+
 ## Active | Complete browser proof and external actor authority
 
 Import or select the verified creator and beneficiary identities in an authorised testnet browser wallet, then exercise connect, account switching, rejection, refresh recovery and disconnect without a funded contract call. Separately verify participant control and consent and recruit six eligible reviewer operators. Only then freeze deterministic case terms and request approval of the immutable packet capped at 1 testnet NEAR per transaction and 2 testnet NEAR total. Stop any UNKNOWN operation without redispatch. AC31 and AC32 remain BLOCKED.

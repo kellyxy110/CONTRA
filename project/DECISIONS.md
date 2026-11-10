@@ -1,5 +1,12 @@
 # Decision ledger
 
+## D-099 | Public Cloudflare boundary and reviewer invitations | 2026-11-10
+
+- Deploy `contra-testnet` only to the verified `judithorluchee@gmail.com` Cloudflare account under a USD 0 ceiling.
+- Require SQLite integrity and a fresh final testnet observation before public readiness reports success.
+- Keep live transaction signing disabled. Public rendering and authentication entry points do not authorise importing custody keys into a browser wallet.
+- Reviewer invitations require explicit consent, custody and conflict disclosures, distinct accounts and distinct declared operators. Automated checks do not prove real-world independence.
+
 ## D-098 | Separate beneficiary and authentication do not imply spending authority | 2026-11-10
 
 ACCEPTED. `contra-beneficiary.testnet` is the sole new beneficiary account, has a separate Windows Credential Manager key and is distinct from the creator and contract. Real NEP-413 verification may prove key control without broadcasting a transaction. It does not prove browser-wallet behaviour, independent participant consent, reviewer readiness or authority to spend. Keep transaction signing disabled until the final immutable packet satisfies every gate.
