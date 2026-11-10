@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-097 | Live wallet authority requires a distinct beneficiary | 2026-11-10
+
+ACCEPTED. Reuse `contra-creator.testnet` and its Windows Credential Manager key for the creator. Do not reuse either the creator or contract account as beneficiary. Keep live signing disabled until an exact beneficiary, custody proof, immutable packet digest, expenditure limits, expiry and owner approval are all verified. Read-only RPC evidence is not signing evidence.
+
 ## 2026-11-10 | Recommend a tightly bounded existing-contract upgrade
 
 PROPOSED, NOT AUTHORISED. Prefer upgrading `contra-contestation.testnet` over deploying a replacement. The candidate repair is owner-only, requires 1 yoctoNEAR, is permitted only for the exact defective singleton allowlist and cannot run again after success. It preserves the Borsh layout, account identity and Windows keychain custody. A replacement remains contingency only if the upgrade artifact or compatibility proof fails.
