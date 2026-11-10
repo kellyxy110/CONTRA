@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-10 | M09.3 beneficiary and live authentication readiness
+
+- Created exactly one beneficiary account, `contra-beneficiary.testnet`, through the testnet faucet under a separate Windows Credential Manager key.
+- Verified final creation transaction `EXWgEjHa76etMyVGANLkPhw6t3AQvue3iLkWF8zeEwZo`, FullAccess key `ed25519:9GmL7B19aWFiJV3EsXbPBzaRxViKVmZjGPYFQHvwJBks` and 10 testnet NEAR balance through official RPC.
+- Added live keychain-backed NEP-413 verification for creator and beneficiary, including recovery, renewal, replay rejection and disconnect, with no transaction broadcast.
+- Bound the operational client to the selected external-wallet account, added account-switch and rejected-signature regressions and preserved server-disabled live transaction signing.
+- Updated the authority gate and evidence to keep browser proof, participant consent, six reviewers and funded authority explicit blockers.
+
 ## 2026-11-10 | M09.2 wallet readiness
 
 - Merged the tested M09.1 remediation and retained its upgrade and repair transaction evidence.

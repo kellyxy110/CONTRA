@@ -1,0 +1,15 @@
+{
+  "schema": "CONTRA_M09_TESTNET_WALLET_V1",
+  "account_id": "contra-beneficiary.testnet",
+  "network": "testnet",
+  "public_key": "ed25519:9GmL7B19aWFiJV3EsXbPBzaRxViKVmZjGPYFQHvwJBks",
+  "custody": "separate Windows Credential Manager key",
+  "permission": "FullAccess",
+  "creation_transaction": "EXWgEjHa76etMyVGANLkPhw6t3AQvue3iLkWF8zeEwZo",
+  "creation_status": "FINAL SuccessValue",
+  "final_block_height": "277054382",
+  "balance_yocto": "10000000000000000000000000",
+  "balance_source": "testnet faucet",
+  "owner_funded_expenditure_yocto": "0",
+  "secret_material_recorded": false
+}

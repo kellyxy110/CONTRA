@@ -1,0 +1,23 @@
+{
+  "account": "contra-beneficiary.testnet",
+  "public_key": "ed25519:9GmL7B19aWFiJV3EsXbPBzaRxViKVmZjGPYFQHvwJBks",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "nep413_signature_verified": true,
+  "session_recovered": true,
+  "session_renewed": true,
+  "replay_rejected": true,
+  "disconnect_verified": true,
+  "transaction_broadcast": false,
+  "observation": {
+    "network": "testnet",
+    "finality": "final",
+    "block_height": "277056376",
+    "block_hash": "5Nm1gPbcYxvC1zWqFrVzb64n52CUWEewh4fc1BdCAgV1",
+    "block_timestamp_ns": "1794307206831961268",
+    "observed_at": "2026-11-10T10:40:13.448Z",
+    "age_ms": 6617,
+    "regressed": false,
+    "stale": false
+  }
+}

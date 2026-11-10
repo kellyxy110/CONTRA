@@ -1,0 +1,43 @@
+{
+  "schema": "CONTRA_M09_LIVE_WALLET_READINESS_V1",
+  "observed_on": "2026-11-10",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "contract_code_hash": "EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2",
+  "creator_account": "contra-creator.testnet",
+  "beneficiary_account": "contra-beneficiary.testnet",
+  "creator_allowlist": ["contra-creator.testnet"],
+  "registered_reviewer_count": 0,
+  "existing_case_count": 0,
+  "held_escrow_yocto": "0",
+  "inflight_or_unknown_yocto": "0",
+  "wallet_authentication": {
+    "creator_nep413_verified": true,
+    "beneficiary_nep413_verified": true,
+    "session_recovery_verified": true,
+    "session_renewal_verified": true,
+    "challenge_replay_rejected": true,
+    "disconnect_verified": true,
+    "browser_wallet_verified": false,
+    "transaction_broadcast": false
+  },
+  "proposed_limits": {
+    "maximum_attached_deposit_yocto": "1000000000000000000000000",
+    "maximum_total_journey_expenditure_yocto": "2000000000000000000000000"
+  },
+  "case_terms_template": {
+    "amount_yocto": "1000000000000000000000000",
+    "deadline_offsets_seconds": [610, 1220, 1830, 2440, 3050, 3660, 4270],
+    "criterion": "No keyboard traps",
+    "policy_version": 1,
+    "base_fallback": "BASE_REFUND_V1",
+    "challenge_fallback": "KEEP_PRIMARY_V1"
+  },
+  "financial_ready": false,
+  "blockers": [
+    "Browser wallet import and live browser NEP-413 proof are unavailable in the current browser automation environment",
+    "The creator and beneficiary keys are locally controlled and do not establish distinct participant consent or operator control",
+    "The deployed reviewer registry contains zero of six required active confirmed reviewers",
+    "Final case terms, authority digest and owner spending approval are absent"
+  ]
+}

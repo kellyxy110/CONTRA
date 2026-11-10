@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-10-M09.3-LIVE-WALLET-READY
+
+`contra-beneficiary.testnet` now exists as a distinct faucet-funded testnet identity under a separate Windows Credential Manager key. Official final RPC verified its FullAccess public key, 10 testnet NEAR balance and creation transaction. Both creator and beneficiary completed real keychain-backed NEP-413 verification, session recovery, renewal, replay rejection and disconnect without broadcasting a transaction. The operational client now binds external authentication to the selected wallet account and keeps real transaction signing server-disabled. Browser-wallet UI proof, independent participant consent, six eligible reviewers and final spending authority remain unresolved, so no case or funded transaction was attempted and AC31 and AC32 remain BLOCKED.
+
 ## Current checkpoint | CONTRA-2026-11-10-M09.2-WALLET-READY
 
 PR 43 was merged into `implementation/oct28` after its exact tested tree and five required workflows were verified. The repaired testnet contract remains at code hash `EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2` with creator allowlist `contra-creator.testnet`. Wallet authority now fails closed against code drift, non-distinct identities, absent custody, expired approval and expenditure-limit errors. Read-only testnet verification is ready. Financial execution is not ready because no distinct beneficiary account or custody exists, the browser signing path has not been exercised with a real wallet and owner authority remains null. AC31 and AC32 remain BLOCKED.
