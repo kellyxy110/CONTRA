@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-10-M08-KEYCHAIN-ACCOUNT
+
+`contra-contestation.testnet` now exists under explicitly approved Windows OS-keychain custody. Faucet transaction `4dZ1NxvX35Hq4JDnEREik6Mtc1A2C6nKrCjTDePyUH5D` created the account with full-access key `ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y`. Official NEAR RPC and FastNEAR observed 10 NEAR, empty code and the exact key at final blocks `276992312` and `276992319`. Packet digest `37c36d7d7af72254d62c01fb478fa8789f0634645c261a722b0a051a21b4785b` and deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5` remain non-executable pending separate deployment approval.
+
 ## Current checkpoint | CONTRA-2026-11-09-M10-EXTERNAL-READINESS
 
 M10 now has machine-checked fail-closed readiness gates for independently controlled reviewers and live providers. Six distinct operators, disjoint three-member committees, signed disclosures, conflicts and availability are required. Meta, Baseten and Modal are evaluated independently for account, exact model, non-billable smoke, credits, pricing, billing controls, server-side secret custody and bounded owner approval. Current fixtures do not satisfy those live gates. No provider call, reviewer signature, transaction or spending occurred.

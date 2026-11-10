@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-10 | M08 testnet account creation
+
+Created `contra-contestation.testnet` through the NEAR testnet faucet under explicit Windows OS-keychain custody approval. Creation transaction `4dZ1NxvX35Hq4JDnEREik6Mtc1A2C6nKrCjTDePyUH5D` installed full-access key `ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y`. Two RPCs verified 10 NEAR, empty code and the exact key. No contract was deployed and no owner funds were spent.
+
 ## 2026-11-09 | M10 external readiness gates
 
 Added fail-closed reviewer and provider readiness validation. The reviewer gate enforces six distinct controlling operators, disjoint committees, signed disclosures and availability. Provider gates remain separate and enforce the existing Meta USD 3, Baseten USD 3 and Modal USD 5 programme ceilings without authorising spend. No external provider call or reviewer-independence claim occurred.

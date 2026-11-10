@@ -1,7 +1,7 @@
 {
   "schema": "CONTRA_EXTERNAL_AUTHORISATION_PACKET_V1",
   "status": "DRAFT_REQUIRES_OWNER_INPUT",
-  "prepared_at": "2026-11-09T00:00:00.000Z",
+  "prepared_at": "2026-11-10T00:13:06.018Z",
   "expires_at": "2026-11-16T00:00:00.000Z",
   "deployment_plan": {
     "schema": "CONTRA_TESTNET_DEPLOYMENT_V1",
@@ -9,29 +9,34 @@
     "rpc_url": "https://rpc.testnet.near.org",
     "contract_account": "contra-contestation.testnet",
     "signer_account": "contra-contestation.testnet",
-    "signer_public_key": null,
-    "custody_method": "ledger",
+    "signer_public_key": "ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y",
+    "custody_method": "os-keychain",
     "artifact_path": "contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm",
     "artifact_sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f",
     "expected_current_code_hash": "EMPTY",
     "max_total_cost_yocto": "5000000000000000000000000",
     "minimum_account_balance_yocto": "8000000000000000000000000",
     "minimum_balance_is_pre_existing_prerequisite": true,
-    "opening_balance_funding_requires_separate_authorisation": true,
-    "maximum_combined_owner_exposure_yocto": "13000000000000000000000000",
+    "opening_balance_funding_requires_separate_authorisation": false,
+    "maximum_combined_owner_exposure_yocto": "5000000000000000000000000",
     "initial_owner_account": "contra-contestation.testnet",
     "creator_allowlist": ["contra-contestation.testnet"],
     "owner_authorisation": null
   },
   "account_observation": {
-    "status": "UNKNOWN_ACCOUNT",
-    "observed_at": "2026-11-09T17:44:00.000Z",
-    "official_rpc_final_block_height": "276958725",
-    "fallback_rpc_final_block_height": "276958726",
-    "ownership_verified": false,
-    "balance_verified": false,
-    "code_state_verified": false,
-    "signer_key_verified": false
+    "status": "EXISTS",
+    "observed_at": "2026-11-10T00:13:06.018Z",
+    "creation_transaction_hash": "4dZ1NxvX35Hq4JDnEREik6Mtc1A2C6nKrCjTDePyUH5D",
+    "official_rpc_final_block_height": "276992312",
+    "fallback_rpc_final_block_height": "276992319",
+    "amount_yocto": "10000000000000000000000000",
+    "locked_yocto": "0",
+    "code_hash": "11111111111111111111111111111111",
+    "public_key": "ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y",
+    "ownership_verified": true,
+    "balance_verified": true,
+    "code_state_verified": true,
+    "signer_key_verified": true
   },
   "permitted_actions": [
     "Run read-only testnet RPC and account preflight",
@@ -49,8 +54,8 @@
     "Hackathon submission or public publication"
   ],
   "custody": {
-    "method": "ledger",
-    "private_material_location": "Owner-controlled hardware wallet only",
+    "method": "os-keychain",
+    "private_material_location": "Windows Credential Manager for the authorised repository owner profile",
     "repository_or_chat_secret_transfer": false
   },
   "hosting": {
