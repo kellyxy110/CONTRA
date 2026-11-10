@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-10-M09.2-WALLET-READY
+
+PR 43 was merged into `implementation/oct28` after its exact tested tree and five required workflows were verified. The repaired testnet contract remains at code hash `EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2` with creator allowlist `contra-creator.testnet`. Wallet authority now fails closed against code drift, non-distinct identities, absent custody, expired approval and expenditure-limit errors. Read-only testnet verification is ready. Financial execution is not ready because no distinct beneficiary account or custody exists, the browser signing path has not been exercised with a real wallet and owner authority remains null. AC31 and AC32 remain BLOCKED.
+
 ## Previous checkpoint | CONTRA-2026-11-10-M09.1-REMEDIATION-DECISION-READY
 
 The creator defect remediation is implemented for review only. The recommended option is UPGRADE EXISTING CONTRACT using an owner-only, exact-state, one-time allowlist repair that adds no state field. Future initialisation and deployment preflight reject the contract account in the creator allowlist. Official RPC confirmed the contract key remains FullAccess. Following explicit owner authorisation, `contra-creator.testnet` was created with a separate Windows keychain key and 10 testnet NEAR from the faucet. No owner funds were used. No contract upgrade, repair call or merge occurred. AC31 and AC32 remain BLOCKED.
