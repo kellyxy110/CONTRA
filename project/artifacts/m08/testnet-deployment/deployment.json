@@ -1,0 +1,67 @@
+{
+  "schema": "CONTRA_M08_TESTNET_DEPLOYMENT_V1",
+  "checkpoint": "CONTRA-2026-11-10-M08-TESTNET-DEPLOYED",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "signer_public_key": "ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y",
+  "custody_method": "os-keychain",
+  "deployment_intent_sha256": "18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5",
+  "authorisation_expires_at": "2026-11-16T00:00:00.000Z",
+  "artifact": {
+    "path": "contracts/contestation/target/wasm32-unknown-unknown/release/contra_contestation.wasm",
+    "size_bytes": 631190,
+    "sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f",
+    "deployed_code_hash": "5y8hJtxVHWvAnGRVGJRirPA14nduonJKFMehCGnbCKjU",
+    "downloaded_wasm_sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f"
+  },
+  "transaction": {
+    "hash": "BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr",
+    "final_execution_status": "Final",
+    "status": "SuccessValue",
+    "transaction_block_hash": "77NdtSdi6KXhCRTi6c3YXN5iAM4RYSshhdtUyJWsuQJu",
+    "receipt_ids": [
+      "Gkhmy2emKbqGuXiugbvTYBShVYoSyXr6EWJohWvjeSxQ",
+      "DJm7jhgS862M8ZnVupUL1w85MP7XTSZHshGvkZSqxUJ3"
+    ],
+    "final_receipt_block_hash": "CB2a3DmPjytzzwpAmkn9EQkVk2BLxs3boSPC7WavHfkh",
+    "actions": ["DeployContract", "FunctionCall:new"],
+    "attached_deposit_yocto": "0",
+    "prepaid_gas": "100000000000000"
+  },
+  "initial_state": {
+    "abi_version": "1.0.0",
+    "policy_version": 1,
+    "chain_id": "testnet",
+    "owner_id": "contra-contestation.testnet",
+    "creator_allowlist": ["contra-contestation.testnet"],
+    "cases": 0,
+    "reviewers": 0,
+    "held_escrow_yocto": "0",
+    "inflight_or_unknown_yocto": "0",
+    "paid_yocto": "0"
+  },
+  "financial_reconciliation": {
+    "balance_before_yocto": "10000000000000000000000000",
+    "balance_after_yocto": "9995245828096322200000000",
+    "actual_execution_cost_yocto": "4754171903677800000000",
+    "actual_execution_cost_near": "0.0047541719036778",
+    "authorised_ceiling_yocto": "5000000000000000000000000",
+    "within_ceiling": true
+  },
+  "post_deployment_observation": {
+    "observed_at": "2026-11-10T01:07:59.410Z",
+    "official_rpc_final_block_height": "276997851",
+    "official_rpc_final_block_hash": "FosYvzYn4idTSdRiqxu7vgasqDBVwCaT4iF8VfyKh2bs",
+    "fallback_rpc_final_block_height": "276997875",
+    "fallback_rpc_final_block_hash": "HPi79jER5SJueqGi7fEX9UXJwJF4SpvWWGhY1rovLjpq"
+  },
+  "scope": {
+    "contract_deployed": true,
+    "contract_initialised": true,
+    "bounded_acceptance_journey_executed": false,
+    "bounded_acceptance_blocker": "No separately controlled beneficiary and six independently controlled reviewer signers are authorised for a genuine testnet journey.",
+    "mainnet_activity": false,
+    "paid_provider_usage": false,
+    "cloudflare_deployment": false
+  }
+}

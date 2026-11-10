@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-10 | M08 NEAR testnet deployment
+
+Recorded exact owner approval for deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`, corrected the preflight's faucet-funded exposure calculation and deployed the approved 631190-byte production WASM. Transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr` atomically deployed and initialised the contract with final success. Downloaded deployed bytes match SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`. Actual cost was `0.0047541719036778 NEAR`, below the 5 NEAR ceiling.
+
 ## 2026-11-10 | M08 testnet account creation
 
 Created `contra-contestation.testnet` through the NEAR testnet faucet under explicit Windows OS-keychain custody approval. Creation transaction `4dZ1NxvX35Hq4JDnEREik6Mtc1A2C6nKrCjTDePyUH5D` installed full-access key `ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y`. Two RPCs verified 10 NEAR, empty code and the exact key. No contract was deployed and no owner funds were spent.

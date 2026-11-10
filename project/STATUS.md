@@ -1,6 +1,10 @@
 # CONTRA status checkpoint
 
-## Current checkpoint | CONTRA-2026-11-10-M08-KEYCHAIN-ACCOUNT
+## Current checkpoint | CONTRA-2026-11-10-M08-TESTNET-DEPLOYED
+
+The Contestation contract is deployed and initialised on `contra-contestation.testnet`. Transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr` reached final `SuccessValue` and contains exactly the approved `DeployContract` and `FunctionCall:new` actions. Onchain code hash is `5y8hJtxVHWvAnGRVGJRirPA14nduonJKFMehCGnbCKjU`; downloaded bytes match approved SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`. Owner, chain and creator allowlist match the plan. Actual cost was `0.0047541719036778 NEAR`, below the 5 NEAR ceiling. Complete live journeys remain blocked on M09 wallet authority and M10 independent reviewer and provider evidence.
+
+## Previous checkpoint | CONTRA-2026-11-10-M08-KEYCHAIN-ACCOUNT
 
 `contra-contestation.testnet` now exists under explicitly approved Windows OS-keychain custody. Faucet transaction `4dZ1NxvX35Hq4JDnEREik6Mtc1A2C6nKrCjTDePyUH5D` created the account with full-access key `ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y`. Official NEAR RPC and FastNEAR observed 10 NEAR, empty code and the exact key at final blocks `276992312` and `276992319`. Packet digest `37c36d7d7af72254d62c01fb478fa8789f0634645c261a722b0a051a21b4785b` and deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5` remain non-executable pending separate deployment approval.
 

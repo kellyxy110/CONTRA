@@ -8,12 +8,12 @@
 [![Security CI](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml)
 [![Contract CI](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml)
 ![Network: local Sandbox verified](https://img.shields.io/badge/network-local%20Sandbox%20verified-00EC97?style=flat-square&labelColour=0B1110)
-![Testnet deployment: pending authorisation](https://img.shields.io/badge/testnet%20deployment-pending%20authorisation-F4BD68?style=flat-square&labelColour=0B1110)
+![Testnet deployment: verified](https://img.shields.io/badge/testnet%20deployment-verified-29D391?style=flat-square&labelColour=0B1110)
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-00EC97?style=flat-square&labelColour=0B1110)
 
 CONTRA enables consequential decisions to be challenged, reviewed against immutable evidence and resolved through enforceable rules. AI contributes evidence-bound proposals, reviewers evaluate contested claims, challenges prevent premature settlement, and the NEAR contract applies the final result or agreed fallback. AI cannot cast votes, change frozen terms or authorise payments.
 
-The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. No testnet contract, public backend, live provider call or independent six-operator committee is claimed yet.
+The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. No public backend, live provider call, complete live testnet journey or independent six-operator committee is claimed yet.
 
 ## Contents
 
@@ -72,7 +72,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
 | Provider interoperability | Official interfaces rechecked; Meta, Baseten and Modal execution still uses only non-billable fixtures with strict provenance and authority separation |
-| Testnet deployment | Pending explicit owner authorisation, account and funded signing authority |
+| Testnet deployment | Verified on `contra-contestation.testnet`; [final deployment transaction](https://explorer.testnet.near.org/transactions/BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr) |
 | Public backend | Not deployed |
 | Independent reviewers | Not yet demonstrated; local accounts are one-process fixtures |
 | Live provider usage | Not authorised and not performed; spend is $0 |
@@ -144,7 +144,7 @@ The contract preserves immutable terms, exact deposits, disjoint committees, det
 
 Important limitations:
 
-- No public testnet deployment or funded live wallet journey exists yet.
+- The testnet contract exists, but no complete funded live-wallet Contestation journey exists yet.
 - Six local reviewer accounts are fixtures controlled by one process, not independent operators.
 - Provider model availability, identifiers, credits and billing are not operationally verified.
 - SQLite and content-addressed objects require one durable volume and coordinated backup.
@@ -154,9 +154,9 @@ Secrets belong only in server environments. No private key, seed phrase or provi
 
 ## Judge and deployment paths
 
-[The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the future authorised testnet route. Until testnet deployment exists, the live route is explicitly blocked rather than simulated. The [frontend integration contract](docs/operations/FRONTEND_INTEGRATION.md) freezes the current routes, recovery states, trust boundaries and accessibility requirements for the later owner-provided interface.
+[The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the authorised testnet route. The deployed contract and transaction are publicly inspectable, while the complete live application journey remains blocked rather than simulated. The [frontend integration contract](docs/operations/FRONTEND_INTEGRATION.md) freezes the current routes, recovery states, trust boundaries and accessibility requirements for the later owner-provided interface.
 
-[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) defines the fail-closed preflight, custody requirements, artifact verification and evidence record. The [consolidated owner packet](docs/operations/OWNER_AUTHORISATION_PACKET.md) proposes the bounded account, custody, cost and external-resource plan. The [hosting architecture](docs/operations/HOSTING_ARCHITECTURE.md) selects Cloudflare Workers Free, Static Assets and SQLite-backed Durable Objects under a hard USD 0 ceiling. It remains locally verified and undeployed. The checked-in draft is non-executable until its final public fields and exact digest receive approval. Deployment, funded signing, hosting, provider spend and production-secret changes require separate owner authorisation.
+[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) records the fail-closed preflight, custody requirements, matching artifact and final deployment evidence. The [consolidated owner packet](docs/operations/OWNER_AUTHORISATION_PACKET.md) preserves the exact bounded authorisation. The [hosting architecture](docs/operations/HOSTING_ARCHITECTURE.md) selects Cloudflare Workers Free, Static Assets and SQLite-backed Durable Objects under a hard USD 0 ceiling. Hosting remains locally verified and undeployed. Additional funded signing, hosting, provider spend and production-secret changes require separate owner authorisation.
 
 ## Benchmarks
 
