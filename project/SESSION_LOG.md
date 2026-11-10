@@ -1,5 +1,12 @@
 # CONTRA session log
 
+## 2026-11-10 UTC | M08 testnet account creation
+
+- Recorded explicit owner approval for Windows OS-keychain custody and faucet creation.
+- Created `contra-contestation.testnet` in transaction `4dZ1NxvX35Hq4JDnEREik6Mtc1A2C6nKrCjTDePyUH5D`.
+- Verified through two RPCs that the account has 10 NEAR, empty code and exactly one matching full-access public key.
+- Owner-funded spending: 0 NEAR. Contract deployments and contract calls: none.
+
 ## 2026-11-09 UTC | M10 external readiness gates
 
 - Added non-billable readiness checks for six distinct reviewer operators and disjoint committees.

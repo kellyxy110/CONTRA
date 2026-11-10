@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-093 | M08 testnet custody uses the Windows OS keychain | 2026-11-10
+
+ACCEPTED. The owner explicitly replaced unavailable Ledger custody with Windows OS-keychain custody for `contra-contestation.testnet` and authorised faucet creation. The private key remains in Windows Credential Manager. The faucet supplied 10 NEAR, so owner-funded account-opening expenditure was zero. This decision does not authorise contract deployment or funded acceptance transactions.
+
 ## D-092 | M10 external readiness is evidence-bound and separately authorised | 2026-11-09
 
 ACCEPTED. Reviewer independence requires six distinct signed operators across disjoint primary and fresh committees. Provider readiness requires exact account, model, smoke, credit, pricing, billing, secret-custody and owner-authorisation evidence for each provider. No M10 field can authorise M08 deployment, and no fixture can satisfy a live external requirement.
