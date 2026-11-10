@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-094 | The exact authorised testnet artifact is deployed once | 2026-11-10
+
+ACCEPTED. Deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5` authorised one atomic deploy and `new` call. Transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr` reached final success. Downloaded deployed bytes match the approved SHA-256. No redeployment is authorised. Complete AC31 and AC32 journeys remain blocked on live wallet, independent reviewer and provider evidence.
+
 ## D-093 | M08 testnet custody uses the Windows OS keychain | 2026-11-10
 
 ACCEPTED. The owner explicitly replaced unavailable Ledger custody with Windows OS-keychain custody for `contra-contestation.testnet` and authorised faucet creation. The private key remains in Windows Credential Manager. The faucet supplied 10 NEAR, so owner-funded account-opening expenditure was zero. This decision does not authorise contract deployment or funded acceptance transactions.

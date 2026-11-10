@@ -1,6 +1,6 @@
 # Consolidated external authorisation packet
 
-Status: draft only. This document requests one bounded owner decision. It does not authorise a deployment, signature, funded transaction, hosting change, provider call or secret transfer.
+Status: M08 deployment authorisation executed. It does not authorise additional deployment, M09 hosting, M10 provider usage, mainnet, publication or secret transfer.
 
 The machine-readable proposal is [`config/testnet-authorisation-proposal.json`](../../config/testnet-authorisation-proposal.json). Recompute both digests with:
 
@@ -8,9 +8,11 @@ The machine-readable proposal is [`config/testnet-authorisation-proposal.json`](
 node scripts/external-authorisation-packet.mjs config/testnet-authorisation-proposal.json
 ```
 
-Current draft packet SHA-256: `37c36d7d7af72254d62c01fb478fa8789f0634645c261a722b0a051a21b4785b`.
+Pre-execution authorised packet SHA-256: `a521c0ca0695b39d6cb242e6ff7e4989e74e7910d1f05cf86e824f83163e234a`.
 
-Current draft deployment-intent SHA-256: `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`.
+Approved deployment-intent SHA-256: `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`.
+
+Post-execution evidence packet SHA-256: `54a1ded4860f89658fa375aaf401dfdebb40662cce57b14a65761aeb4ae4cd4c`.
 
 The owner authorised Windows OS-keychain custody and faucet creation on 10 November 2026. Faucet transaction `4dZ1NxvX35Hq4JDnEREik6Mtc1A2C6nKrCjTDePyUH5D` created `contra-contestation.testnet` with full-access public key `ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y`. The private key remains in Windows Credential Manager and was not printed, exported or committed.
 
@@ -27,9 +29,9 @@ Packet readiness is separated by milestone. M08 contract deployment can become r
 5. The owner approves that exact deployment-intent digest, with approval and expiry timestamps. Any field change invalidates approval.
 6. Within that scope, execution may deploy once, initialise once, inspect code and state, and run the bounded acceptance journey. UNKNOWN financial operations are never blindly redispatched.
 
-The checked-in draft now lacks only owner approval bound to the exact deployment-intent digest. Its digest is not executable until that bounded approval is supplied. Any material field change invalidates approval.
+The owner approved the exact deployment-intent digest on 10 November 2026. Transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr` deployed the approved artifact and called `new` once. Final execution succeeded. The downloaded deployed WASM matches SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`; onchain code hash is `5y8hJtxVHWvAnGRVGJRirPA14nduonJKFMehCGnbCKjU`.
 
-GitHub run `42700073759` built the production WASM on Ubuntu 24.04 from tested source and recorded SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`, size 631190 bytes. near-cli-rs `0.30.1` is checksum-pinned. The verified deployment command will use `sign-with-keychain` only after digest-bound deployment approval.
+GitHub run `42700073759` built the production WASM on Ubuntu 24.04 from tested source and recorded SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`, size 631190 bytes. near-cli-rs `0.30.1` is checksum-pinned. The executed command used `sign-with-keychain`; no private material entered the repository or command line.
 
 ## Hosting, reviewers and providers
 
