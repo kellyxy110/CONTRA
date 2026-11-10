@@ -1,6 +1,6 @@
 {
   "schema": "CONTRA_EXTERNAL_AUTHORISATION_PACKET_V1",
-  "status": "DRAFT_REQUIRES_OWNER_INPUT",
+  "status": "M08_DEPLOYED",
   "prepared_at": "2026-11-10T00:13:06.018Z",
   "expires_at": "2026-11-16T00:00:00.000Z",
   "deployment_plan": {
@@ -21,7 +21,13 @@
     "maximum_combined_owner_exposure_yocto": "5000000000000000000000000",
     "initial_owner_account": "contra-contestation.testnet",
     "creator_allowlist": ["contra-contestation.testnet"],
-    "owner_authorisation": null
+    "owner_authorisation": {
+      "id": "CONTRA-2026-11-10-M08-DEPLOYMENT-AUTHORISED",
+      "approved_by": "repository-owner",
+      "approved_at": "2026-11-10T01:03:34.510Z",
+      "expires_at": "2026-11-16T00:00:00.000Z",
+      "approved_plan_sha256": "18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5"
+    }
   },
   "account_observation": {
     "status": "EXISTS",
@@ -37,6 +43,14 @@
     "balance_verified": true,
     "code_state_verified": true,
     "signer_key_verified": true
+  },
+  "deployment_execution": {
+    "transaction_hash": "BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr",
+    "final_execution_status": "Final",
+    "deployed_code_hash": "5y8hJtxVHWvAnGRVGJRirPA14nduonJKFMehCGnbCKjU",
+    "downloaded_wasm_sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f",
+    "actual_execution_cost_yocto": "4754171903677800000000",
+    "initialised": true
   },
   "permitted_actions": [
     "Run read-only testnet RPC and account preflight",

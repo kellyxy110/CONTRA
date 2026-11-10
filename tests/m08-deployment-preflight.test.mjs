@@ -18,6 +18,12 @@ test('authorised offline plan binds exact production artifact and emits a comple
  const offline={...plan,custody_method:'offline-custody'};assert.match(deploymentCommand(offline),/network-config testnet sign-later$/);
 });
 
+test('faucet-funded opening balance adds zero owner exposure',()=>{
+ const plan=ready();plan.opening_balance_funding_requires_separate_authorisation=false;plan.maximum_combined_owner_exposure_yocto=plan.max_total_cost_yocto;plan.owner_authorisation.approved_plan_sha256=deploymentIntentDigest(plan);
+ const result=assessDeploymentPlan(plan,options);
+ assert.equal(result.ready,true);assert.deepEqual(result.blockers,[]);
+});
+
 test('preflight refuses mainnet, embedded secrets, signer mismatch and artifact mismatch',()=>{
  assert.throws(()=>assessDeploymentPlan({...ready(),network:'mainnet'},options),/testnet/);
  assert.throws(()=>assessDeploymentPlan({...ready(),private_key:'ed25519:unsafe'},options),/forbidden secret/);

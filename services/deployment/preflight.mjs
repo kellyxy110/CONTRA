@@ -71,8 +71,9 @@ export function assessDeploymentPlan(plan,{root=process.cwd(),now=()=>new Date()
  if(!positiveYocto(plan.max_total_cost_yocto))blockers.push('authorised testnet cost ceiling');
  if(!positiveYocto(plan.minimum_account_balance_yocto))blockers.push('minimum funded account balance');
  if(plan.minimum_balance_is_pre_existing_prerequisite!==true)blockers.push('opening balance classified as a pre-existing prerequisite');
- if(plan.opening_balance_funding_requires_separate_authorisation!==true)blockers.push('separate opening balance funding authorisation');
- if(!positiveYocto(plan.maximum_combined_owner_exposure_yocto)||positiveYocto(plan.max_total_cost_yocto)&&positiveYocto(plan.minimum_account_balance_yocto)&&BigInt(plan.maximum_combined_owner_exposure_yocto)!==BigInt(plan.max_total_cost_yocto)+BigInt(plan.minimum_account_balance_yocto))blockers.push('exact maximum combined owner exposure');
+ if(typeof plan.opening_balance_funding_requires_separate_authorisation!=='boolean')blockers.push('opening balance funding classification');
+ const ownerFundedOpening=plan.opening_balance_funding_requires_separate_authorisation===true&&positiveYocto(plan.minimum_account_balance_yocto)?BigInt(plan.minimum_account_balance_yocto):0n;
+ if(!positiveYocto(plan.maximum_combined_owner_exposure_yocto)||positiveYocto(plan.max_total_cost_yocto)&&BigInt(plan.maximum_combined_owner_exposure_yocto)!==BigInt(plan.max_total_cost_yocto)+ownerFundedOpening)blockers.push('exact maximum combined owner exposure');
  if(!account(plan.initial_owner_account))blockers.push('initial contract owner account');
  if(!Array.isArray(plan.creator_allowlist)||!plan.creator_allowlist.length||plan.creator_allowlist.some(value=>!account(value)))blockers.push('initial creator allowlist');
  const authorisation=plan.owner_authorisation;
