@@ -1,20 +1,23 @@
 {
   "schema": "CONTRA_M09_WALLET_AUTHORITY_V1",
-  "status": "AWAITING_DISTINCT_BENEFICIARY_AND_OWNER_AUTHORISATION",
+  "status": "AWAITING_BROWSER_WALLET_PROOF_PARTICIPANT_CONSENT_AND_OWNER_AUTHORISATION",
   "network": "testnet",
   "contract_account": "contra-contestation.testnet",
   "contract_code_hash": "EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2",
   "contract_wasm_sha256": "ce57c375dc0f0dccab1619ffddcbf7113059a45963fab8452db26d2ccbca5447",
   "creator_account": "contra-creator.testnet",
-  "beneficiary_account": null,
+  "beneficiary_account": "contra-beneficiary.testnet",
   "creator_public_keys": ["ed25519:61VyeNdx9dTGwvQB6QFW8ZjNDejkXwP7qFhqGx6iz1AZ"],
-  "beneficiary_public_keys": [],
-  "custody_evidence": {"creator":"Windows Credential Manager; official RPC FullAccess verified","beneficiary":null},
+  "beneficiary_public_keys": ["ed25519:9GmL7B19aWFiJV3EsXbPBzaRxViKVmZjGPYFQHvwJBks"],
+  "custody_evidence": {"creator":"Windows Credential Manager; official RPC FullAccess verified","beneficiary":"Separate Windows Credential Manager key; official RPC FullAccess verified"},
+  "authentication_evidence": {"creator_nep413_verified":true,"beneficiary_nep413_verified":true,"browser_wallet_verified":false},
+  "participant_control": {"creator_operator_id":null,"beneficiary_operator_id":null,"beneficiary_consent_verified":false},
+  "reviewer_readiness": {"required_active_confirmed_distinct_operators":6,"verified":0},
   "permitted_methods": ["create_case", "accept_terms", "fund_case", "submit_evidence", "advance_round", "file_challenge", "finalize_case"],
   "maximum_deposit_per_transaction_yocto": "1000000000000000000000000",
   "maximum_total_journey_expenditure_yocto": "2000000000000000000000000",
   "expires_at": "2026-11-16T00:00:00Z",
   "owner_authorisation": null,
   "live_signing_enabled": false,
-  "blocking_finding": "No distinct beneficiary account or custody is currently available. No live signing or funded case is authorised."
+  "blocking_finding": "Both wallet identities exist and passed real keychain NEP-413 verification, but browser-wallet import, distinct participant consent, six eligible reviewers and final owner authority remain absent. No funded case is authorised."
 }

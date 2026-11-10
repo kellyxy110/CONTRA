@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-10 | M09.3 beneficiary and live authentication
+
+The credential audit found no eligible beneficiary, so the explicitly authorised faucet flow created exactly one account, `contra-beneficiary.testnet`, with a separate Windows keychain key. Official final RPC verified the public key, FullAccess permission, 10 testnet NEAR balance and successful creation receipt. The creator and beneficiary keys then signed real server-issued NEP-413 challenges; the backend verified each key against testnet and exercised recovery, renewal, replay rejection and disconnect without a transaction broadcast. Browser automation was unavailable, so browser-wallet UI proof remains blocked and is not represented by the keychain exercise. Live signing remains disabled. The contract has zero reviewers, and no case, consent call, escrow funding or provider operation occurred.
+
 ## 2026-11-10 | M09.2 wallet readiness
 
 Verified PR 43 at the exact tested head, corrected its description and merged it into `implementation/oct28`. Preserved the public upgrade and repair transaction records. Official RPC reconfirmed the repaired code hash and sole eligible creator. Inspected the local Windows keychain inventory without exposing private material: contract and creator keys exist, but no beneficiary key exists. Added a fail-closed wallet-authority evaluator and regressions. No new chain write, funded case, wallet signature, provider call, Cloudflare deployment or spending occurred.

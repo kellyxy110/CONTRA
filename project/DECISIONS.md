@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-098 | Separate beneficiary and authentication do not imply spending authority | 2026-11-10
+
+ACCEPTED. `contra-beneficiary.testnet` is the sole new beneficiary account, has a separate Windows Credential Manager key and is distinct from the creator and contract. Real NEP-413 verification may prove key control without broadcasting a transaction. It does not prove browser-wallet behaviour, independent participant consent, reviewer readiness or authority to spend. Keep transaction signing disabled until the final immutable packet satisfies every gate.
+
 ## D-097 | Live wallet authority requires a distinct beneficiary | 2026-11-10
 
 ACCEPTED. Reuse `contra-creator.testnet` and its Windows Credential Manager key for the creator. Do not reuse either the creator or contract account as beneficiary. Keep live signing disabled until an exact beneficiary, custody proof, immutable packet digest, expenditure limits, expiry and owner approval are all verified. Read-only RPC evidence is not signing evidence.
