@@ -50,10 +50,9 @@ Before the repair call, the approved M08 WASM can be redeployed to restore the o
 
 ## Inputs still required for executable authority
 
-- The repository contains no evidence of an existing eligible creator wallet. Read-only RPC returned `UNKNOWN_ACCOUNT` for the preferred dedicated name `contra-creator.testnet`. Creation is not authorised.
-- Proposed custody is a new dedicated key in Windows Credential Manager, generated only after explicit account-creation authorisation. The contract key must not be reused.
-- Proposed funding is the testnet faucet with zero owner-funded expenditure. If the faucet is unavailable, stop and obtain a separate bounded funding approval.
-- After authorised creation, verify the public key, FullAccess permission, balance and independent account identity through official RPC before binding it into the upgrade packet.
+- No reusable eligible wallet was evidenced. Under explicit owner authorisation, `contra-creator.testnet` was created with a dedicated Windows Credential Manager key and faucet-only funding.
+- Official final RPC observed public key `ed25519:61VyeNdx9dTGwvQB6QFW8ZjNDejkXwP7qFhqGx6iz1AZ`, FullAccess permission and 10 testnet NEAR. Creation transaction: `EMxMRnCQH4fyGzk8YrMoLvxFAuhrGsy6EXppShiNLnrB`.
+- The contract key was not reused. No private key or seed phrase was printed or recorded. Owner-funded expenditure is zero.
 - Final Linux-built production WASM SHA-256 and allowed-export report.
 - Final source commit and ABI checksum.
 - Maximum testnet expenditure and expiry.
@@ -61,4 +60,4 @@ Before the repair call, the approved M08 WASM can be redeployed to restore the o
 
 AC31 and AC32 remain BLOCKED.
 
-The current non-executable draft file SHA-256 is `b585157e6c18aa47aaeb7155149978fae0637264be1a4fd1fc6c678858cb0a81`. This is an evidence checksum, not an execution authorisation digest.
+The current non-executable draft file SHA-256 is `ec6d745d9c7a8b321458dd0e6d186fcf2a36e17e9b24dbc01caebe5fc866cd2a`. This is an evidence checksum, not an execution authorisation digest.

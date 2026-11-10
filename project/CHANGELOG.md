@@ -7,6 +7,7 @@
 - Documented upgrade versus replacement, rollback, custody and incomplete authorisation inputs.
 - Confirmed the deployed public key remains FullAccess through official read-only testnet RPC.
 - Kept PR 43 open and performed no external write or merge.
+- Created the explicitly authorised dedicated creator wallet `contra-creator.testnet` using a separate Windows keychain key and faucet-only funding; retained public transaction and final RPC evidence.
 
 ## 2026-11-10 | M09 predeployment API and creator safety
 

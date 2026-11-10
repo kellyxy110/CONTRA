@@ -4,6 +4,8 @@
 
 Reviewed the M08 defect, current Rust layout, PR 43 and official access-key state. Implemented local-only constructor, preflight and one-time repair candidates. Chose upgrade over replacement because it preserves account identity, custody and Borsh state while avoiding new account, funding and integration surfaces. No chain write, new key, account, deployment, provider call, Cloudflare resource or spending occurred.
 
+The owner subsequently authorised a dedicated creator wallet. The first faucet helper request failed after safely storing the generated key and created no account. A retry with the same public key created `contra-creator.testnet` in transaction `EMxMRnCQH4fyGzk8YrMoLvxFAuhrGsy6EXppShiNLnrB`. Official RPC verified the key as FullAccess and the faucet balance as 10 testnet NEAR. Owner-funded expenditure remained zero. No contract call occurred.
+
 ## 2026-11-10 UTC | M09 predeployment implementation
 
 - Reproduced the deployed creator-eligibility contradiction from Rust source and retained M08 state evidence.
