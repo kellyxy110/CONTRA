@@ -7,8 +7,8 @@
 [![Core CI](https://github.com/kellyxy110/CONTRA/actions/workflows/core.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/core.yml)
 [![Security CI](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml)
 [![Contract CI](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml)
-![Network: local Sandbox verified](https://img.shields.io/badge/network-local%20Sandbox%20verified-00EC97?style=flat-square&labelColour=0B1110)
-![Testnet deployment: verified](https://img.shields.io/badge/testnet%20deployment-verified-29D391?style=flat-square&labelColour=0B1110)
+[![Network: local Sandbox verified](https://img.shields.io/badge/network-local%20Sandbox%20verified-00EC97?style=flat-square&labelColour=0B1110)](#reproduce-the-contestation-journeys)
+[![Testnet deployment: verified](https://img.shields.io/badge/testnet%20deployment-verified-29D391?style=flat-square&labelColour=0B1110)](docs/operations/TESTNET_DEPLOYMENT.md)
 ![Licence: MIT](https://img.shields.io/badge/licence-MIT-00EC97?style=flat-square&labelColour=0B1110)
 
 CONTRA enables consequential decisions to be challenged, reviewed against immutable evidence and resolved through enforceable rules. AI contributes evidence-bound proposals, reviewers evaluate contested claims, challenges prevent premature settlement, and the NEAR contract applies the final result or agreed fallback. AI cannot cast votes, change frozen terms or authorise payments.
@@ -67,7 +67,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Capability | Current evidence |
 | --- | --- |
 | Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 118 tests pass in the current release audit, including two external-authorisation packet regressions |
+| Repository tests | 137 tests pass in the current M09.3 verification, including wallet-authority and external-authorisation regressions |
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
