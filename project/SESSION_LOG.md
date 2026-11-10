@@ -1,5 +1,13 @@
 # CONTRA session log
 
+## 2026-11-10 UTC | M08 NEAR testnet deployment
+
+- Bound exact owner approval to deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`.
+- Recovered the exact retained Linux artifact after a local rebuild produced different bytes; no substitute was signed.
+- Deployed and initialised once in transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr`, final status `SuccessValue`.
+- Downloaded deployed WASM matched the approved SHA-256. Initial owner, chain, allowlist, empty cases, empty reviewer registry and zero financial reserves were verified through read-only calls.
+- Actual execution cost: `0.0047541719036778 NEAR`. Mainnet, Cloudflare, providers and additional testnet transactions: none.
+
 ## 2026-11-10 UTC | M08 testnet account creation
 
 - Recorded explicit owner approval for Windows OS-keychain custody and faucet creation.

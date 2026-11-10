@@ -4,14 +4,15 @@ import fs from 'node:fs';
 import {authorisationPacketDigest,inspectAuthorisationPacket} from '../scripts/external-authorisation-packet.mjs';
 
 const fixture=()=>JSON.parse(fs.readFileSync(new URL('../config/testnet-authorisation-proposal.json',import.meta.url),'utf8'));
+const unauthorisedFixture=()=>{const packet=fixture();packet.deployment_plan.owner_authorisation=null;return packet;};
 
 test('external authorisation packet has stable digests and exposes independent authority gates',()=>{
- const result=inspectAuthorisationPacket(fixture());
+ const packet=unauthorisedFixture(),result=inspectAuthorisationPacket(packet);
  assert.match(result.packet_sha256,/^[a-f0-9]{64}$/);
  assert.match(result.deployment_intent_sha256,/^[a-f0-9]{64}$/);
  assert.deepEqual(result.readiness.m08_contract_deployment,{ready:false,missing:['owner authorisation bound to the final deployment intent digest']});
- assert.equal(fixture().deployment_plan.custody_method,'os-keychain');
- assert.equal(fixture().account_observation.public_key,fixture().deployment_plan.signer_public_key);
+ assert.equal(packet.deployment_plan.custody_method,'os-keychain');
+ assert.equal(packet.account_observation.public_key,packet.deployment_plan.signer_public_key);
  assert.deepEqual(result.readiness.m09_hosting,{ready:false,missing:['hosting destination and deployment authority']});
  assert.deepEqual(result.readiness.m10_provider_usage,{ready:false,missing:['separate provider spending authorisation']});
 });
@@ -29,7 +30,7 @@ test('M08 readiness is independent from hosting and provider authorisation',()=>
 });
 
 test('authorising hosting or provider usage cannot authorise M08',()=>{
- const packet=fixture();packet.hosting.deployment_authorised=true;packet.providers.spending_authorised=true;
+ const packet=unauthorisedFixture();packet.hosting.deployment_authorised=true;packet.providers.spending_authorised=true;
  const result=inspectAuthorisationPacket(packet);
  assert.equal(result.readiness.m08_contract_deployment.ready,false);
  assert.equal(result.readiness.m09_hosting.ready,true);

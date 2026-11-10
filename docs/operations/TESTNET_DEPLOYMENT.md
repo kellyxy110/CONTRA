@@ -1,6 +1,6 @@
 # NEAR testnet deployment
 
-Status: preparation only. No deployment or funded signing is authorised or claimed.
+Status: deployed and initialised on NEAR testnet on 10 November 2026. Deployment evidence is retained at [`project/artifacts/m08/testnet-deployment/deployment.json`](../../project/artifacts/m08/testnet-deployment/deployment.json).
 
 ## Required authorisation
 
@@ -8,7 +8,7 @@ Before any external action, record the dedicated testnet contract account, accou
 
 M08 readiness is independent of M09 hosting and M10 provider usage. Missing hosting or provider authority cannot block a complete M08 plan and cannot satisfy any M08 requirement.
 
-The minimum 8 NEAR account balance is a pre-existing deployment prerequisite. It is separate from the 5 NEAR execution-cost ceiling. Account creation and opening funding require explicit owner authorisation, and the maximum combined owner exposure is 13 NEAR. The preflight rejects a plan that does not bind all three values.
+The minimum 8 NEAR account balance was a pre-existing deployment prerequisite. The faucet supplied 10 NEAR, so owner-funded opening expenditure was zero. The separately approved execution ceiling was 5 NEAR. Actual deployment and initialisation cost was `0.0047541719036778 NEAR`.
 
 ## Environment separation
 
@@ -64,4 +64,4 @@ This validates the live chain ID, final block freshness, current code hash, acco
 
 Archive the account, signer identity without secret material, artifact checksum, deployment transaction hash, finalised receipts, deployed code hash, RPC block identity, ABI result and explorer links. Read the deployed state through the real RPC and compare the onchain code hash with the tested artifact.
 
-Failures, UNKNOWN outcomes or contradictory hashes stop the procedure. Deployment must never be retried blindly.
+Failures, UNKNOWN outcomes or contradictory hashes stop the procedure. Deployment must never be retried blindly. The deployed transaction reached final `SuccessValue`; no retry occurred.

@@ -1,8 +1,14 @@
 # Next execution task
 
-## Active next task | Approve the exact M08 deployment intent
+## Active next task | M09 live wallet and public runtime authority
 
-The testnet account, public key, 10 NEAR faucet balance, empty code and Linux production artifact are verified. Contract deployment remains blocked only on explicit owner approval of deployment-intent digest `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`, expiring 16 November 2026. Account-creation approval does not authorise deployment.
+M08 contract deployment is complete. Preserve transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr`, the matching deployed artifact and initial state. Do not redeploy. The next external gate is named creator and beneficiary testnet-wallet authority plus approved Cloudflare Free resources. Six independently controlled reviewers and live provider usage remain separate M10 gates.
+
+## Historical task | Approve the exact M08 deployment intent
+
+This task was completed on 10 November 2026. The retained text below records the pre-deployment state and is not an active instruction.
+
+The testnet account, public key, 10 NEAR faucet balance, empty code and Linux production artifact were verified. Contract deployment was blocked on explicit owner approval of deployment-intent digest `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`, expiring 16 November 2026. Account-creation approval did not itself authorise deployment.
 
 ## Active supporting task | Supply M10 external evidence
 
