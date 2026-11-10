@@ -19,14 +19,14 @@ Official operational references:
 
 No hosting spend is authorised. The hard ceiling is USD 0. The account must remain on Workers Free, no automatic paid upgrade is allowed and quota exhaustion must reject work rather than change financial state. As verified on 9 November 2026, Workers Free documents 100,000 requests per day, 10 ms Worker CPU per invocation, 20,000 static files per version and 25 MiB per static file. SQLite Durable Objects are available on Free with a 5 GB account storage allocation, and storage exhaustion rejects writes. These provider limits must be rechecked immediately before deployment.
 
-The Worker receives only server-side secrets through Cloudflare secret bindings. Public ingress exposes only HTTPS. Allowed origins remain narrow. Account and API-token access use named operators and least privilege. The current Cloudflare entrypoint exposes liveness and readiness only; unmigrated API routes return 503 and never report a transaction as confirmed.
+The Worker receives only server-side secrets through Cloudflare secret bindings. Public ingress exposes only HTTPS. Allowed origins remain narrow. Account and API-token access use named operators and least privilege. The Cloudflare entrypoint implements the frontend integration routes for authentication, testnet reads, immutable records, reviewer access and wallet recovery. Server-side transaction dispatch, live wallet handoff and paid provider execution remain disabled.
 
 ## Deployment and recovery checks
 
 1. Build from the frozen release SHA and verify `npm ci`, repository tests, Cloudflare tests and the wallet bundle.
 2. Create the `contra-testnet` Worker and SQLite `ContraState` Durable Object migration on a Workers Free account.
 3. Initialise empty state or import a separately verified recovery export when that mechanism is complete.
-4. Start with live signing disabled. `/api/live` reports that state and `/api/ready` proves the Durable Object schema.
+4. Start with live signing disabled. `/api/live` reports process availability, while `/api/ready` requires both the Durable Object schema and a fresh NEAR final-block observation.
 5. Configure the authorised testnet contract only after M08 deployment evidence exists.
 6. Route traffic only when readiness proves intact storage and fresh expected chain identity.
 7. Test isolate eviction, durable-state recovery, storage failure, session isolation and an exported backup and restore before public use.

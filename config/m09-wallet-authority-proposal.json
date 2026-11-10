@@ -1,0 +1,19 @@
+{
+  "schema": "CONTRA_M09_WALLET_AUTHORITY_V1",
+  "status": "BLOCKED_CREATOR_ELIGIBILITY_AND_OWNER_INPUT",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "contract_code_hash": "5y8hJtxVHWvAnGRVGJRirPA14nduonJKFMehCGnbCKjU",
+  "creator_account": null,
+  "beneficiary_account": null,
+  "creator_public_keys": [],
+  "beneficiary_public_keys": [],
+  "custody_evidence": null,
+  "permitted_methods": ["create_case", "accept_terms", "fund_case", "submit_evidence", "advance_round", "file_challenge", "finalize_case"],
+  "maximum_deposit_per_transaction_yocto": null,
+  "maximum_total_journey_expenditure_yocto": null,
+  "expires_at": null,
+  "owner_authorisation": null,
+  "live_signing_enabled": false,
+  "blocking_finding": "The deployed creator allowlist contains only the contract account, which create_case rejects as a creator."
+}

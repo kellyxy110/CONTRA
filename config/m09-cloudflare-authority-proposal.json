@@ -1,0 +1,18 @@
+{
+  "schema": "CONTRA_M09_CLOUDFLARE_AUTHORITY_V1",
+  "status": "DRAFT_REQUIRES_OWNER_INPUT",
+  "plan": "workers-free",
+  "maximum_cost_usd": 0,
+  "automatic_paid_upgrade_allowed": false,
+  "account_id": null,
+  "worker_name": "contra-testnet",
+  "durable_object_binding": "CONTRA_STATE",
+  "durable_object_class": "ContraState",
+  "durable_object_backend": "sqlite",
+  "static_assets_directory": "dist/cloudflare-static",
+  "public_origin": null,
+  "recovery_export_destination": null,
+  "least_privilege_token_configured": false,
+  "live_signing_enabled": false,
+  "owner_authorisation": null
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "CONTRA_M09_CREATOR_WALLET_EVIDENCE_V1",
+  "network": "testnet",
+  "account_id": "contra-creator.testnet",
+  "public_key": "ed25519:61VyeNdx9dTGwvQB6QFW8ZjNDejkXwP7qFhqGx6iz1AZ",
+  "permission": "FullAccess",
+  "custody": "Windows Credential Manager",
+  "creation_transaction": "EMxMRnCQH4fyGzk8YrMoLvxFAuhrGsy6EXppShiNLnrB",
+  "balance_yocto": "10000000000000000000000000",
+  "code_hash": "11111111111111111111111111111111",
+  "storage_usage": 182,
+  "account_final_block": 277039653,
+  "key_final_block": 277039658,
+  "funding_source": "testnet faucet",
+  "owner_funded_expenditure_yocto": "0",
+  "private_material_recorded": false
+}

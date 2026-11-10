@@ -1,0 +1,16 @@
+{
+  "schema": "CONTRA_M09_REMEDIATION_AUTHORISATION_V1",
+  "approved_at": "2026-11-10T08:42:46.608Z",
+  "approved_by": "repository owner",
+  "proposal_sha256": "fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3",
+  "contract_account": "contra-contestation.testnet",
+  "creator_account": "contra-creator.testnet",
+  "artifact_sha256": "ce57c375dc0f0dccab1619ffddcbf7113059a45963fab8452db26d2ccbca5447",
+  "maximum_total_cost_yocto": "100000000000000000000000",
+  "expires_at": "2026-11-16T00:00:00Z",
+  "authorised_operations": [
+    "deploy exact replacement artifact once to contra-contestation.testnet",
+    "call repair_creator_allowlist once with [contra-creator.testnet] and exactly 1 yoctoNEAR"
+  ],
+  "approval_text": "Complete M09.1 by running the final read-only preflight, verifying the exact WASM and remediation proposal, then executing the bounded existing-contract upgrade and one-time creator allowlist repair if all checks pass."
+}

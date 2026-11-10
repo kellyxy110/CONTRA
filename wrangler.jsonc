@@ -7,7 +7,13 @@
   "vars": {
     "CONTRA_HOSTING_PLAN": "cloudflare-free",
     "CONTRA_HOSTING_COST_CEILING_USD": "0",
-    "CONTRA_LIVE_SIGNING_AUTHORISED": "false"
+    "CONTRA_LIVE_SIGNING_AUTHORISED": "false",
+    "CONTRA_CONTRACT_ACCOUNT": "contra-contestation.testnet",
+    "NEAR_RPC_URL": "https://rpc.testnet.near.org",
+    "CONTRA_RPC_TIMEOUT_MS": "1000",
+    "CONTRA_PUBLIC_ORIGIN": "https://contra.invalid",
+    "CONTRA_FREE_REQUEST_LIMIT_DAILY": "100000",
+    "CONTRA_FREE_STORAGE_LIMIT_BYTES": "5000000000"
   },
   "assets": {
     "directory": "./dist/cloudflare-static",
