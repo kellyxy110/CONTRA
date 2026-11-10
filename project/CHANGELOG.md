@@ -8,6 +8,7 @@
 - Confirmed the deployed public key remains FullAccess through official read-only testnet RPC.
 - Kept PR 43 open and performed no external write or merge.
 - Created the explicitly authorised dedicated creator wallet `contra-creator.testnet` using a separate Windows keychain key and faucet-only funding; retained public transaction and final RPC evidence.
+- Executed the separately approved existing-contract upgrade and one-time creator allowlist repair, reconciled both final receipts and verified the exact deployed WASM and eligible creator state.
 
 ## 2026-11-10 | M09 predeployment API and creator safety
 

@@ -70,3 +70,11 @@ It proposes only these operations before `2026-11-16T00:00:00Z`:
 2. After final code-hash reconciliation, call `repair_creator_allowlist` once with `["contra-creator.testnet"]` and exactly 1 yoctoNEAR.
 
 The combined ceiling is `100000000000000000000000` yoctoNEAR, or 0.1 testnet NEAR. The proposal stops on any identity mismatch, expired or absent approval, cost excess or UNKNOWN transaction. The owner-authorisation field is null. Therefore this digest is a proposal for approval and is not authority to execute.
+
+## Executed remediation
+
+The owner subsequently approved the exact proposal digest. Fresh preflight verified both keychain identities, the M08 code, zero cases and zero held, inflight or paid liabilities. Transaction `4AbVrJHeJTJHoA95c5owniYaXLJmEBkETsWrQxuGzvXz` deployed the exact approved replacement bytes and reached final `SuccessValue`. The deployed SHA-256 is `ce57c375dc0f0dccab1619ffddcbf7113059a45963fab8452db26d2ccbca5447` and NEAR code hash is `EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2`.
+
+Transaction `2qQYh7sdkyLKN9uuDUHJ8pSYcwyviZgtNQJykWmaKKTj` then called the one-time repair with `["contra-creator.testnet"]`, 30 TGas and exactly 1 yoctoNEAR. It reached final `SuccessValue`. Final configuration contains only the independent creator account and the eligibility validator reports `can_create_case: true`.
+
+Combined measured balance consumption was `0.0048511016886709` testnet NEAR, below the 0.1 ceiling. No case, escrow or payout operation occurred.

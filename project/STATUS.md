@@ -1,8 +1,12 @@
 # CONTRA status checkpoint
 
-## Current checkpoint | CONTRA-2026-11-10-M09.1-REMEDIATION-DECISION-READY
+## Previous checkpoint | CONTRA-2026-11-10-M09.1-REMEDIATION-DECISION-READY
 
 The creator defect remediation is implemented for review only. The recommended option is UPGRADE EXISTING CONTRACT using an owner-only, exact-state, one-time allowlist repair that adds no state field. Future initialisation and deployment preflight reject the contract account in the creator allowlist. Official RPC confirmed the contract key remains FullAccess. Following explicit owner authorisation, `contra-creator.testnet` was created with a separate Windows keychain key and 10 testnet NEAR from the faucet. No owner funds were used. No contract upgrade, repair call or merge occurred. AC31 and AC32 remain BLOCKED.
+
+## Current checkpoint | CONTRA-2026-11-10-M09.1-CREATOR-REMEDIATED
+
+The owner approved proposal digest `fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3`. Fresh preflight verified the exact account, keys, M08 code, zero cases and zero financial liabilities. Deployment transaction `4AbVrJHeJTJHoA95c5owniYaXLJmEBkETsWrQxuGzvXz` installed the exact Linux artifact, and repair transaction `2qQYh7sdkyLKN9uuDUHJ8pSYcwyviZgtNQJykWmaKKTj` replaced the defective allowlist with `contra-creator.testnet`. Both reached final explicit success. Combined balance consumption was 0.0048511016886709 testnet NEAR, below the 0.1 ceiling. AC31 and AC32 remain BLOCKED pending complete live journeys.
 
 ## Current checkpoint | CONTRA-2026-11-10-M09-PREDEPLOY-READY
 

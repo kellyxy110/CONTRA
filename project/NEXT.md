@@ -2,7 +2,7 @@
 
 ## Active | M09.1 owner decision and immutable execution packet
 
-Review the recommended existing-contract upgrade and immutable proposal digest `fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3`. It binds the verified creator account, signer custody, Linux artifact, 0.1 testnet NEAR ceiling, two exact operations and 16 November expiry. Do not deploy or repair until the owner explicitly approves that exact digest and a fresh read-only preflight passes. Keep AC31 and AC32 BLOCKED.
+M09.1 creator eligibility is remediated. Keep PR 43 open until the new public evidence and all required checks pass. The next separately authorised external step is the bounded live-wallet journey using `contra-creator.testnet` and an exact beneficiary account. Do not infer authority for funding, case creation or other contract calls from the completed remediation. Keep AC31 and AC32 BLOCKED.
 
 ## Active next task | Resolve creator eligibility through a new authorised plan
 

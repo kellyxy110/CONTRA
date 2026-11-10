@@ -6,7 +6,7 @@ The deployed `get_config` result identifies `contra-contestation.testnet` as bot
 
 The official testnet RPC reconfirmed this configuration at final block `277008099`, hash `5LurWxEQdEjjpMbuSxjdMBjh814q8feijeusetMKgjbP`. The public observation is retained in [`project/artifacts/m09/creator-eligibility.json`](../../project/artifacts/m09/creator-eligibility.json).
 
-No account can currently create a case. AC31 and AC32 therefore remain BLOCKED independently of wallet, reviewer and provider readiness.
+The M08 deployment originally had no eligible creator. M09.1 repaired the deployed allowlist through the separately authorised, one-time upgrade procedure. `contra-creator.testnet` is now the sole eligible creator. AC31 and AC32 remain BLOCKED because their complete live wallet, reviewer and provider journeys have not yet executed.
 
 ## Safety impact
 

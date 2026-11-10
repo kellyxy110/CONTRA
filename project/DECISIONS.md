@@ -6,6 +6,8 @@ PROPOSED, NOT AUTHORISED. Prefer upgrading `contra-contestation.testnet` over de
 
 The exact proposed execution authority is file digest `fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3`. Its owner-authorisation field remains null, so no contract action is authorised.
 
+EXECUTED AFTER OWNER APPROVAL. The bounded existing-contract upgrade and one-time repair both reached final explicit success. Preserve `contra-creator.testnet` as the sole creator allowlist entry. No general allowlist administration was introduced, and the repair method is now locked by its exact-state guard.
+
 ## D-095 | Creator eligibility blocks all deployed case creation | 2026-11-10
 
 ACCEPTED. The M08 state allowlists only `contra-contestation.testnet`, while contract preparation requires the creator to differ from the contract account. The eligible creator set is empty. Preserve that safety inequality and keep live signing disabled. Any replacement deployment, upgrade or state migration requires a separately approved immutable plan and complete contract and financial verification.
