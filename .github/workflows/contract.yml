@@ -15,9 +15,11 @@ on:
       - "rust-toolchain.toml"
   push:
     branches:
+      - main
       - "implementation/**"
       - "release/**"
     paths:
+      - ".github/workflows/contract.yml"
       - "contracts/contestation/**"
       - "docs/COMMITMENT_TEST_VECTORS.md"
       - "docs/CONTRACT_ABI_V1.md"

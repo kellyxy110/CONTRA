@@ -7,6 +7,8 @@
 - Added live keychain-backed NEP-413 verification for creator and beneficiary, including recovery, renewal, replay rejection and disconnect, with no transaction broadcast.
 - Bound the operational client to the selected external-wallet account, added account-switch and rejected-signature regressions and preserved server-disabled live transaction signing.
 - Updated the authority gate and evidence to keep browser proof, participant consent, six reviewers and funded authority explicit blockers.
+- Merged PR 47 into `implementation/oct28` at `9b758902e46a915c9f97bffd925101ce6bc95e75`, then promoted the identical tree through PR 48 to `main` at `5feceb78df588edd4c22c2c821f03a51ba747b0d` after Core, Security and comprehensive Integration passed on both gates.
+- Corrected the Contract CI badge by enabling the matching `contract.yml` workflow on contract-sensitive `main` pushes, and linked the Sandbox and testnet badges to their actual verification routes instead of bare image endpoints.
 
 ## 2026-11-10 | M09.2 wallet readiness
 
