@@ -1,10 +1,13 @@
 import {setupWalletSelector} from '@near-wallet-selector/core';
 import {setupMyNearWallet} from '@near-wallet-selector/my-near-wallet';
-export async function connectWallet({network,contractAccount,authorized}){
- if(network!=='testnet'||authorized!==true)throw Error('Testnet wallet use requires separate owner authorization.');
+export async function connectWallet({network,contractAccount,authenticationAuthorized}){
+ if(network!=='testnet'||authenticationAuthorized!==true)throw Error('Testnet wallet authentication is not authorized.');
  const selector=await setupWalletSelector({network:'testnet',modules:[setupMyNearWallet()]});
- const wallet=await selector.wallet('my-near-wallet');await wallet.signIn({contractId:contractAccount,methodNames:[]});return {selector,wallet};
+ const wallet=await selector.wallet('my-near-wallet');let accounts=await getWalletAccounts(wallet);if(!accounts.length){await wallet.signIn({contractId:contractAccount,methodNames:[]});accounts=await getWalletAccounts(wallet);}return {selector,wallet,accounts};
 }
+export async function getWalletAccounts(wallet){const accounts=await wallet?.getAccounts?.();if(!Array.isArray(accounts))throw Error('Wallet account discovery failed.');return accounts.filter(value=>/^[a-z0-9._-]+\.testnet$/.test(value?.accountId||'')&&value?.publicKey?.startsWith('ed25519:'));}
+export function selectWalletAccount(accounts,accountId=null){if(!Array.isArray(accounts)||!accounts.length)throw Error('No testnet wallet account is connected.');const selected=accountId?accounts.find(value=>value.accountId===accountId):accounts[0];if(!selected)throw Error('The selected wallet account is unavailable. Reauthenticate after switching accounts.');return selected;}
+export async function assertWalletAccount(wallet,expectedAccount){const selected=selectWalletAccount(await getWalletAccounts(wallet),expectedAccount);if(selected.accountId!==expectedAccount)throw Error('Wallet account changed. Reauthenticate before continuing.');return selected;}
 async function api(path,{token,method='GET',body}={}){const response=await fetch('/api/'+path,{method,headers:{...(token?{Authorization:'Bearer '+token}:{}),...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined}),value=await response.json();if(!response.ok){const error=Error(value.error||'Wallet operation failed');error.status=response.status;throw error;}return value;}
 export async function recoverWalletSession(token){return api('session',{token});}
 export async function renewWalletSession(token){return api('session/renew',{token,method:'POST',body:{}});}

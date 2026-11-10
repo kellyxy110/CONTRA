@@ -1,5 +1,13 @@
 # Next execution task
 
+## Active | Complete browser proof and external actor authority
+
+Import or select the verified creator and beneficiary identities in an authorised testnet browser wallet, then exercise connect, account switching, rejection, refresh recovery and disconnect without a funded contract call. Separately verify participant control and consent and recruit six eligible reviewer operators. Only then freeze deterministic case terms and request approval of the immutable packet capped at 1 testnet NEAR per transaction and 2 testnet NEAR total. Stop any UNKNOWN operation without redispatch. AC31 and AC32 remain BLOCKED.
+
+## Historical task | M09.3 beneficiary and keychain authentication
+
+Completed on 10 November 2026. `contra-beneficiary.testnet` was created exactly once through the testnet faucet, verified through final RPC and stored under a separate Windows Credential Manager key. Both participant accounts passed non-financial live NEP-413 verification. Browser-wallet UI evidence and funded authority were intentionally not claimed.
+
 ## Active | M09.2 beneficiary and bounded wallet authority
 
 M09.1 creator eligibility is remediated and PR 43 is merged. Identify or separately authorise creation of a beneficiary testnet account distinct from `contra-creator.testnet` and `contra-contestation.testnet`. Verify custody and permissions, freeze exact case terms and expenditure limits, then bind the final wallet-authority digest to explicit owner approval. First exercise non-financial authentication and recovery. Do not fund or create a case until every gate passes. Keep AC31 and AC32 BLOCKED.
