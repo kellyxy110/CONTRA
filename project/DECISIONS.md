@@ -1,8 +1,15 @@
 # Decision ledger
 
+## D-100 | Public Pages origin and browser custody boundary | 2026-11-10
+
+- Use `https://contra-near.pages.dev` as the canonical public frontend.
+- Keep the existing Worker and `ContraState` Durable Object unchanged behind a same-origin Pages proxy and private `BACKEND` service binding.
+- Do not import the creator or beneficiary Windows keychain credentials into browser storage. Browser proof must use disposable testnet identities in isolated profiles.
+- Do not claim genuine MyNearWallet authentication until the selector completes a real redirect, signature, verification and recovery flow. A stalled connector or simulated signature is not evidence.
+
 ## D-099 | Public Cloudflare boundary and reviewer invitations | 2026-11-10
 
-- Deploy `contra-testnet` only to the verified `judithorluchee@gmail.com` Cloudflare account under a USD 0 ceiling.
+- Deploy `contra-testnet` only to the verified owner Cloudflare account under a USD 0 ceiling.
 - Require SQLite integrity and a fresh final testnet observation before public readiness reports success.
 - Keep live transaction signing disabled. Public rendering and authentication entry points do not authorise importing custody keys into a browser wallet.
 - Reviewer invitations require explicit consent, custody and conflict disclosures, distinct accounts and distinct declared operators. Automated checks do not prove real-world independence.

@@ -1,8 +1,8 @@
 # Next execution task
 
-## Active task | M09.4 external wallet and reviewer boundary
+## Active task | M09.6 genuine browser-wallet verification
 
-The public Cloudflare application is deployed and read-only ready. Keep live signing disabled. The next executable action is to obtain explicit confirmation before importing the existing creator and beneficiary custody keys into separate testnet browser-wallet profiles, then exercise NEP-413 connect, rejection, expiry, switching and recovery without funded contract calls. In parallel, invite six separately controlled reviewer operators using `docs/operations/REVIEWER_ONBOARDING.md`. Do not represent invitations or distinct test accounts as proof of independence.
+The public Cloudflare application is deployed at `https://contra-near.pages.dev` and read-only ready. Keep live signing disabled. Resolve or replace the stalled MyNearWallet testnet connector using an officially supported testnet wallet path, then create only disposable browser identities in isolated profiles and exercise NEP-413 connect, rejection, expiry, replay, switching, disconnect and recovery without funded contract calls. Do not import the creator or beneficiary custody keys. In parallel, invite six separately controlled reviewer operators using `docs/operations/REVIEWER_ONBOARDING.md`. Do not represent invitations or distinct test accounts as proof of independence.
 
 ## Active | Complete browser proof and external actor authority
 
