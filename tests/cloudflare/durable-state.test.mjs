@@ -4,6 +4,7 @@ import {describe,it,expect} from 'vitest';
 import {nep413Bytes,verifyEd25519} from '../../services/cloudflare/worker.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
+const publicOrigin=env.CONTRA_PUBLIC_ORIGIN;
 const tx='11111111111111111111111111111111',block='22222222222222222222222222222222';
 const stub=name=>env.CONTRA_STATE.getByName(name);
 const operation=(id,account='creator.testnet')=>({id,account,payload_hash:'a'.repeat(64),contract_account:'contra-contestation.testnet'});
@@ -51,15 +52,17 @@ describe('Cloudflare durable financial state',()=>{
   await rejection(()=>runInDurableObject(state,instance=>instance.health()),/schema is incomplete/);
  });
 
- it('serves liveness and reports unavailable chain as honestly unready',async()=>{
-  expect((await SELF.fetch('https://contra.invalid/api/live')).status).toBe(200);
-  const ready=await SELF.fetch('https://contra.invalid/api/ready');expect(ready.status).toBe(503);const report=await ready.json();expect(report.ready).toBe(false);expect(report.storage.integrity).toBe('ok');expect(report.chain.status).toBe('unavailable');
- });
+ it('serves liveness and reports chain readiness honestly',async()=>{
+  expect((await SELF.fetch(publicOrigin+'/api/live')).status).toBe(200);
+  const ready=await SELF.fetch(publicOrigin+'/api/ready'),report=await ready.json();expect(report.storage.integrity).toBe('ok');
+  if(ready.status===200){expect(report.ready).toBe(true);expect(report.chain.status).toBe('ready');expect(report.chain.source.finality).toBe('final');}
+  else{expect(ready.status).toBe(503);expect(report.ready).toBe(false);expect(report.chain.status).toBe('unavailable');}
+ },12000);
 
  it('creates durable NEP-413 challenges while rejecting unauthenticated protected access',async()=>{
-  const challenge=await SELF.fetch('https://contra.invalid/api/session/challenge',{method:'POST',headers:{Origin:'https://contra.invalid','Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});
+  const challenge=await SELF.fetch(publicOrigin+'/api/session/challenge',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});
   expect(challenge.status).toBe(201);const value=await challenge.json();expect(value.account).toBe('creator.testnet');expect(value.nonce).toMatch(/^[A-Za-z0-9+/]+=*$/);
-  const operation=await SELF.fetch('https://contra.invalid/api/operation?id=missing');expect(operation.status).toBe(401);
+  const operation=await SELF.fetch(publicOrigin+'/api/operation?id=missing');expect(operation.status).toBe(401);
  });
 
  it('verifies a NEP-413 payload with Web Crypto Ed25519 and rejects a changed payload',async()=>{
@@ -69,8 +72,8 @@ describe('Cloudflare durable financial state',()=>{
  });
 
  it('rejects cross-origin writes and keeps live signing disabled',async()=>{
-  const crossOrigin=await SELF.fetch('https://contra.invalid/api/session/challenge',{method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});expect(crossOrigin.status).toBe(403);
-  const handoff=await SELF.fetch('https://contra.invalid/api/wallet/handoff',{method:'POST',headers:{Origin:'https://contra.invalid','Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(403);expect((await handoff.json()).error).toMatch(/signing is disabled/i);
+  const crossOrigin=await SELF.fetch(publicOrigin+'/api/session/challenge',{method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});expect(crossOrigin.status).toBe(403);
+  const handoff=await SELF.fetch(publicOrigin+'/api/wallet/handoff',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(403);expect((await handoff.json()).error).toMatch(/signing is disabled/i);
  });
 
  it('preserves pre-handoff rejection but locks post-handoff uncertainty',async()=>{

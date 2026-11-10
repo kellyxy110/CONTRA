@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-10 | M09.4 public browser and hosting readiness
+
+- Deployed `contra-testnet` with Static Assets and SQLite Durable Object storage to the verified Judithorluchee Cloudflare account.
+- Corrected missing wallet bundle publication, Cloudflare account dialog compatibility, RPC readiness timeout and stale Sandbox copy.
+- Added Chromium and Firefox desktop/mobile public verification with screenshots and machine-readable evidence.
+- Added reviewer invitation, consent, custody, conflict and disjoint-control validation plus onboarding documentation.
+- Preserved disabled live signing, USD 0 hosting, no paid providers and no funded transaction.
+
 ## 2026-11-10 | M09.3 beneficiary and live authentication readiness
 
 - Created exactly one beneficiary account, `contra-beneficiary.testnet`, through the testnet faucet under a separate Windows Credential Manager key.
