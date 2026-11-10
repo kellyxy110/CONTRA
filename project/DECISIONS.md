@@ -1,5 +1,13 @@
 # Decision ledger
 
+## D-095 | Creator eligibility blocks all deployed case creation | 2026-11-10
+
+ACCEPTED. The M08 state allowlists only `contra-contestation.testnet`, while contract preparation requires the creator to differ from the contract account. The eligible creator set is empty. Preserve that safety inequality and keep live signing disabled. Any replacement deployment, upgrade or state migration requires a separately approved immutable plan and complete contract and financial verification.
+
+## D-096 | Cloudflare readiness requires storage and fresh chain evidence | 2026-11-10
+
+ACCEPTED. Worker liveness is independent from readiness. The M09 Worker is ready only when its complete SQLite schema is intact and NEAR RPC supplies a fresh, non-stale final observation for the exact testnet contract. Paid providers and server-side signing remain disabled. Durable backup exports are not public routes, and data rollback never authorises transaction redispatch.
+
 ## D-094 | The exact authorised testnet artifact is deployed once | 2026-11-10
 
 ACCEPTED. Deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5` authorised one atomic deploy and `new` call. Transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr` reached final success. Downloaded deployed bytes match the approved SHA-256. No redeployment is authorised. Complete AC31 and AC32 journeys remain blocked on live wallet, independent reviewer and provider evidence.

@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active next task | Resolve creator eligibility through a new authorised plan
+
+Do not enable live signing against the current deployment. Select a replacement deployment, versioned owner-only allowlist upgrade or empty-state migration, then bind the exact code, account, creator, funding, custody, ABI and financial verification plan to fresh owner approval. Cloudflare deployment remains independently blocked on the final account and destination authority packet.
+
 ## Active next task | M09 live wallet and public runtime authority
 
 M08 contract deployment is complete. Preserve transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr`, the matching deployed artifact and initial state. Do not redeploy. The next external gate is named creator and beneficiary testnet-wallet authority plus approved Cloudflare Free resources. Six independently controlled reviewers and live provider usage remain separate M10 gates.

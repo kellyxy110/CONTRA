@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-10 | M09 predeployment API and creator safety
+
+Added a regression proving the deployed creator allowlist has no valid case creator and documented safe remediation choices without changing the contract. Completed the Cloudflare Worker API migration for durable authentication, immutable records, account isolation, wallet preparation and recovery, final receipt reconciliation and chain-aware readiness. Added non-executable wallet and Cloudflare authority packets plus deployment, backup, PITR and rollback procedures. No external resource, signature, funded transaction or provider call occurred.
+
 ## 2026-11-10 | M08 NEAR testnet deployment
 
 Recorded exact owner approval for deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`, corrected the preflight's faucet-funded exposure calculation and deployed the approved 631190-byte production WASM. Transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr` atomically deployed and initialised the contract with final success. Downloaded deployed bytes match SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`. Actual cost was `0.0047541719036778 NEAR`, below the 5 NEAR ceiling.

@@ -1,5 +1,14 @@
 # CONTRA session log
 
+## 2026-11-10 UTC | M09 predeployment implementation
+
+- Reproduced the deployed creator-eligibility contradiction from Rust source and retained M08 state evidence.
+- Added fail-closed eligibility diagnostics and regression coverage. No contract or onchain state changed.
+- Migrated Cloudflare API routes to SQLite Durable Object state for NEP-413 challenges, sessions, immutable records, operation recovery and chain observation.
+- Kept server transaction dispatch, live wallet handoff and paid provider execution disabled.
+- Added digest-bound backup export, eviction recovery, storage failure, account isolation, origin and unready-chain tests.
+- Prepared non-executable wallet and Cloudflare authority packets and recovery runbooks. Transactions, deployments and spending: none.
+
 ## 2026-11-10 UTC | M08 NEAR testnet deployment
 
 - Bound exact owner approval to deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`.
