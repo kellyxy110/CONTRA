@@ -2,7 +2,9 @@
 
 Status: publicly deployed with live signing disabled. The machine-readable execution record is [`config/m09-cloudflare-authority-proposal.json`](../../config/m09-cloudflare-authority-proposal.json).
 
-Public origin: `https://contra-testnet.judithorluchee.workers.dev`. Verified Worker version: `c8e0feae-900e-4f5e-88f3-a3df103797d6`. Wrangler authenticated `judithorluchee@gmail.com` against account `0a8fd0acd086e68c9b558159fac0d7a8`. The credential remains encrypted locally and was not printed or committed. The current OAuth grant is not represented as a dedicated least-privilege API token.
+Public origin: `https://contra-near.pages.dev`. Pages project: `contra-near`. Verified Pages deployment: `88bd4a69.contra-near.pages.dev`. Verified backend Worker version: `7134221e-6ee1-477d-9352-6a52ea841db5`. Wrangler authenticated the verified owner account locally. Its personal login identifier is omitted from active public metadata. The credential remains encrypted locally and was not printed or committed. The current OAuth grant is not represented as a dedicated least-privilege API token.
+
+Pages serves the static frontend and same-origin `/api/*` proxy. A private `BACKEND` service binding invokes the existing Worker inside Cloudflare, so browser requests expose only `contra-near.pages.dev` and the personal Worker hostname is absent from active source. The Worker and `ContraState` Durable Object remain unchanged resources. The legacy public Worker route now returns HTTP 404, while Pages readiness remains HTTP 200.
 
 ## Preflight
 

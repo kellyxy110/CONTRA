@@ -1,20 +1,24 @@
 {
   "schema": "CONTRA_M09_BROWSER_EVIDENCE_V1",
-  "captured_at": "2026-11-10T14:05:01.003Z",
-  "origin": "https://contra-testnet.judithorluchee.workers.dev",
+  "captured_at": "2026-11-10T16:00:20.052Z",
+  "origin": "https://contra-near.pages.dev",
   "boundary": "Public browser rendering and authentication entry point only. No wallet key was imported, no signature was requested and no transaction was broadcast.",
   "results": [
     {
       "browser": "chromium",
       "layout": "desktop",
       "version": "158.0.8127.18",
-      "url": "https://contra-testnet.judithorluchee.workers.dev/",
+      "url": "https://contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
       "live_signing": false,
       "horizontal_overflow": false,
       "missing_accessible_names": 0,
+      "workers_dev_requests": 0,
+      "request_hosts": [
+        "contra-near.pages.dev"
+      ],
       "console_errors": [],
       "page_errors": [],
       "screenshot": "chromium-desktop.png"
@@ -23,13 +27,17 @@
       "browser": "chromium",
       "layout": "mobile",
       "version": "158.0.8127.18",
-      "url": "https://contra-testnet.judithorluchee.workers.dev/",
+      "url": "https://contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
       "live_signing": false,
       "horizontal_overflow": false,
       "missing_accessible_names": 0,
+      "workers_dev_requests": 0,
+      "request_hosts": [
+        "contra-near.pages.dev"
+      ],
       "console_errors": [],
       "page_errors": [],
       "screenshot": "chromium-mobile.png"
@@ -38,13 +46,17 @@
       "browser": "firefox",
       "layout": "desktop",
       "version": "159.0",
-      "url": "https://contra-testnet.judithorluchee.workers.dev/",
+      "url": "https://contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
       "live_signing": false,
       "horizontal_overflow": false,
       "missing_accessible_names": 0,
+      "workers_dev_requests": 0,
+      "request_hosts": [
+        "contra-near.pages.dev"
+      ],
       "console_errors": [],
       "page_errors": [],
       "screenshot": "firefox-desktop.png"
@@ -53,13 +65,17 @@
       "browser": "firefox",
       "layout": "mobile",
       "version": "159.0",
-      "url": "https://contra-testnet.judithorluchee.workers.dev/",
+      "url": "https://contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
       "live_signing": false,
       "horizontal_overflow": false,
       "missing_accessible_names": 0,
+      "workers_dev_requests": 0,
+      "request_hosts": [
+        "contra-near.pages.dev"
+      ],
       "console_errors": [],
       "page_errors": [],
       "screenshot": "firefox-mobile.png"

@@ -3,6 +3,7 @@
   "name": "contra-testnet",
   "account_id": "0a8fd0acd086e68c9b558159fac0d7a8",
   "main": "services/cloudflare/worker.mjs",
+  "workers_dev": false,
   "compatibility_date": "2026-11-09",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
@@ -12,7 +13,7 @@
     "CONTRA_CONTRACT_ACCOUNT": "contra-contestation.testnet",
     "NEAR_RPC_URL": "https://rpc.testnet.near.org",
     "CONTRA_RPC_TIMEOUT_MS": "8000",
-    "CONTRA_PUBLIC_ORIGIN": "https://contra-testnet.judithorluchee.workers.dev",
+    "CONTRA_PUBLIC_ORIGIN": "https://contra-near.pages.dev",
     "CONTRA_FREE_REQUEST_LIMIT_DAILY": "100000",
     "CONTRA_FREE_STORAGE_LIMIT_BYTES": "5000000000"
   },

@@ -1,8 +1,14 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-M09.6-PUBLIC-URL-READY
+
+The operational frontend is publicly available at `https://contra-near.pages.dev`. Its same-origin `/api` proxy preserves the existing `contra-testnet` Worker and `ContraState` Durable Object while keeping the legacy personal Worker hostname out of browser requests. Public readiness, SQLite schema 2, fresh final NEAR testnet reads, Chromium and Firefox desktop/mobile rendering, responsive overflow and accessible control-name checks pass. Live transaction signing remains disabled.
+
+Genuine MyNearWallet authentication is not yet verified. The current `@near-wallet-selector/my-near-wallet` testnet flow stalls before redirect in isolated Chromium, and the configured testnet wallet hostname is intermittently unavailable through the local system resolver despite resolving through public DNS. No disposable browser wallet was created, no custody key was imported, no signature was requested and no transaction was broadcast. The M09.6 wallet checkpoint therefore remains blocked rather than being represented by fixture or keychain evidence.
+
 ## Current checkpoint | CONTRA-2026-11-10-M09.4-BROWSER-HOSTING-READY
 
-The `contra-testnet` Worker is publicly deployed at `https://contra-testnet.judithorluchee.workers.dev` in Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`, authenticated as `judithorluchee@gmail.com`. SQLite Durable Object schema 2 and fresh final NEAR testnet observations are required for readiness. Live signing remains disabled and the hosting ceiling remains USD 0. Chromium and Firefox desktop and mobile verification passed without console errors, page errors, horizontal overflow or unnamed controls. A missing wallet bundle and a Cloudflare configuration crash were found and corrected. Browser-wallet key import and genuine wallet signatures remain blocked on explicit sensitive-data transfer confirmation. Six real independent reviewers remain unavailable; a fail-closed invitation and consent procedure is now technically ready without claiming independence.
+The `contra-testnet` Worker is publicly deployed in the verified owner Cloudflare account. SQLite Durable Object schema 2 and fresh final NEAR testnet observations are required for readiness. Live signing remains disabled and the hosting ceiling remains USD 0. Chromium and Firefox desktop and mobile verification passed without console errors, page errors, horizontal overflow or unnamed controls. A missing wallet bundle and a Cloudflare configuration crash were found and corrected. Browser-wallet key import and genuine wallet signatures remained blocked at this checkpoint. Six real independent reviewers remain unavailable; a fail-closed invitation and consent procedure is now technically ready without claiming independence.
 
 ## Current checkpoint | CONTRA-2026-11-10-M09.3-LIVE-WALLET-READY
 
