@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {build} from 'esbuild';
 
 const root=process.cwd(),destination=path.join(root,'dist','cloudflare-static');
+await build({entryPoints:[path.join(root,'apps/web/wallet-source.mjs')],bundle:true,format:'esm',outfile:path.join(root,'apps/web/wallet.bundle.js')});
 fs.rmSync(destination,{recursive:true,force:true});
 fs.mkdirSync(destination,{recursive:true});
 for(const [source,target] of [['apps/web',''],['design/ux3a','design/ux3a'],['packages/protocol','packages/protocol']]){

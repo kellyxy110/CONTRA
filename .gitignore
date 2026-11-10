@@ -16,4 +16,5 @@ Thumbs.db
 coverage/
 dist/
 ci-output/
+worker-configuration.d.ts
 project/artifacts/m04/local-journeys/data/

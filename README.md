@@ -13,7 +13,7 @@
 
 CONTRA enables consequential decisions to be challenged, reviewed against immutable evidence and resolved through enforceable rules. AI contributes evidence-bound proposals, reviewers evaluate contested claims, challenges prevent premature settlement, and the NEAR contract applies the final result or agreed fallback. AI cannot cast votes, change frozen terms or authorise payments.
 
-The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. No public backend, live provider call, complete live testnet journey or independent six-operator committee is claimed yet.
+The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-testnet.judithorluchee.workers.dev](https://contra-testnet.judithorluchee.workers.dev). Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
 
 ## Contents
 
@@ -73,7 +73,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
 | Provider interoperability | Official interfaces rechecked; Meta, Baseten and Modal execution still uses only non-billable fixtures with strict provenance and authority separation |
 | Testnet deployment | Verified on `contra-contestation.testnet`; [final deployment transaction](https://explorer.testnet.near.org/transactions/BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr) |
-| Public backend | Cloudflare Worker API complete locally; public deployment not authorised |
+| Public backend | Cloudflare Worker and SQLite Durable Object deployed; readiness requires fresh final testnet state; live signing disabled |
 | Independent reviewers | Not yet demonstrated; local accounts are one-process fixtures |
 | Live provider usage | Not authorised and not performed; spend is $0 |
 
@@ -157,9 +157,9 @@ Secrets belong only in server environments. No private key, seed phrase or provi
 
 [The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the authorised testnet route. The deployed contract and transaction are publicly inspectable, while the complete live application journey remains blocked rather than simulated. The [frontend integration contract](docs/operations/FRONTEND_INTEGRATION.md) freezes the current routes, recovery states, trust boundaries and accessibility requirements for the later owner-provided interface.
 
-[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) records the fail-closed preflight, custody requirements, matching artifact and final deployment evidence. The [consolidated owner packet](docs/operations/OWNER_AUTHORISATION_PACKET.md) preserves the exact bounded authorisation. The [hosting architecture](docs/operations/HOSTING_ARCHITECTURE.md) selects Cloudflare Workers Free, Static Assets and SQLite-backed Durable Objects under a hard USD 0 ceiling. Hosting remains locally verified and undeployed. Additional funded signing, hosting, provider spend and production-secret changes require separate owner authorisation.
+[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) records the fail-closed preflight, custody requirements, matching artifact and final deployment evidence. The [consolidated owner packet](docs/operations/OWNER_AUTHORISATION_PACKET.md) preserves the exact bounded authorisation. The [hosting architecture](docs/operations/HOSTING_ARCHITECTURE.md) records the deployed Cloudflare Workers Free, Static Assets and SQLite-backed Durable Object boundary under a hard USD 0 ceiling. Funded signing, provider spend and production-secret changes require separate owner authorisation.
 
-The [creator eligibility defect report](docs/security/M08_CREATOR_ELIGIBILITY_DEFECT.md) explains why the current deployment cannot create cases. The [Cloudflare deployment and recovery runbook](docs/operations/CLOUDFLARE_DEPLOYMENT.md) and [wallet authority proposal](docs/operations/M09_WALLET_AUTHORITY.md) define the remaining fail-closed external gates.
+The [creator eligibility defect report](docs/security/M08_CREATOR_ELIGIBILITY_DEFECT.md) preserves the original defect and verified repair evidence. The [Cloudflare deployment and recovery runbook](docs/operations/CLOUDFLARE_DEPLOYMENT.md), [wallet authority proposal](docs/operations/M09_WALLET_AUTHORITY.md) and [reviewer onboarding procedure](docs/operations/REVIEWER_ONBOARDING.md) define the remaining fail-closed external gates.
 
 ## Benchmarks
 

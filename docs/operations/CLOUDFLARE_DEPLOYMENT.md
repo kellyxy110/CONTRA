@@ -1,17 +1,17 @@
 # Cloudflare Free deployment and recovery
 
-Status: locally implemented and not publicly deployed. The machine-readable authority draft is [`config/m09-cloudflare-authority-proposal.json`](../../config/m09-cloudflare-authority-proposal.json).
+Status: publicly deployed with live signing disabled. The machine-readable execution record is [`config/m09-cloudflare-authority-proposal.json`](../../config/m09-cloudflare-authority-proposal.json).
 
-Current draft SHA-256 over canonical JSON: `e073d3532132bd25b7ecd51095b05d759ee70847676de31d07fbb61776e8983d`. The final account, origin, recovery destination, token readiness and approval will change this digest. Only the final recomputed digest can be authorised.
+Public origin: `https://contra-testnet.judithorluchee.workers.dev`. Verified Worker version: `c8e0feae-900e-4f5e-88f3-a3df103797d6`. Wrangler authenticated `judithorluchee@gmail.com` against account `0a8fd0acd086e68c9b558159fac0d7a8`. The credential remains encrypted locally and was not printed or committed. The current OAuth grant is not represented as a dedicated least-privilege API token.
 
 ## Preflight
 
 1. Confirm the Cloudflare account is on Workers Free and the expenditure ceiling is USD 0.
-2. Bind the approved account ID, `contra-testnet` Worker, `ContraState` SQLite Durable Object and public origin in the final authority packet.
-3. Provide a least-privilege deployment token through protected environment secret handling. Never commit or print it.
+2. Verify account ID `0a8fd0acd086e68c9b558159fac0d7a8`, the `contra-testnet` Worker, `ContraState` SQLite Durable Object and public origin.
+3. Prefer a dedicated least-privilege deployment token for future automation. Never commit or print it.
 4. Run `npm ci`, `npm test`, `npm run test:cloudflare`, `npm run build:cloudflare` and `npm run check:cloudflare`.
 5. Confirm Wrangler's dry-run names only the intended Worker, SQLite migration and Static Assets directory.
-6. Keep `CONTRA_LIVE_SIGNING_AUTHORISED=false`. The creator-eligibility defect independently prohibits enabling signing.
+6. Keep `CONTRA_LIVE_SIGNING_AUTHORISED=false` until the separate browser custody, participant consent, reviewer independence and funded authority gates are complete.
 
 ## Readiness
 

@@ -1,18 +1,22 @@
 {
   "schema": "CONTRA_M09_CLOUDFLARE_AUTHORITY_V1",
-  "status": "DRAFT_REQUIRES_OWNER_INPUT",
+  "status": "DEPLOYED_SIGNING_DISABLED",
   "plan": "workers-free",
   "maximum_cost_usd": 0,
   "automatic_paid_upgrade_allowed": false,
-  "account_id": null,
+  "account_id": "0a8fd0acd086e68c9b558159fac0d7a8",
+  "account_name": "Judithorluchee@gmail.com's Account",
+  "authenticated_identity": "judithorluchee@gmail.com",
   "worker_name": "contra-testnet",
   "durable_object_binding": "CONTRA_STATE",
   "durable_object_class": "ContraState",
   "durable_object_backend": "sqlite",
   "static_assets_directory": "dist/cloudflare-static",
-  "public_origin": null,
+  "public_origin": "https://contra-testnet.judithorluchee.workers.dev",
+  "verified_worker_version": "c8e0feae-900e-4f5e-88f3-a3df103797d6",
   "recovery_export_destination": null,
+  "deployment_credential": "Wrangler OAuth encrypted locally with Windows Credential Manager",
   "least_privilege_token_configured": false,
   "live_signing_enabled": false,
-  "owner_authorisation": null
+  "owner_authorisation": "M09.4 handoff authorised deployment after account, permissions and zero-cost boundaries were verified"
 }

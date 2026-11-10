@@ -1,10 +1,10 @@
-# Proposed public backend architecture
+# Public backend architecture
 
 Status: prepared, not deployed and not authorised.
 
 ## Selected architecture
 
-Use Cloudflare Workers with Static Assets and one SQLite-backed Durable Object class named `ContraState`. Requests for a financial operation are routed to one named object, which provides a single serial transaction boundary for operation identity, wallet handoff, transaction hashes, sessions, immutable evidence and chain observations.
+The deployed backend uses Cloudflare Workers with Static Assets and one SQLite-backed Durable Object class named `ContraState`. Requests for a financial operation are routed to one named object, which provides a single serial transaction boundary for operation identity, wallet handoff, transaction hashes, sessions, immutable evidence and chain observations.
 
 This is a deliberate migration from the Node.js process and filesystem SQLite implementation. D1 is not the financial source of truth because it does not provide the same per-operation serial coordination boundary. R2 is not required for the current evidence limit: immutable artifacts up to 1 MB are stored by digest in Durable Object SQLite. R2 may be evaluated later only if an existing Free allocation and a fail-closed zero-cost boundary are verified.
 

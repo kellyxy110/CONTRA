@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-10-M09.4-BROWSER-HOSTING-READY
+
+The `contra-testnet` Worker is publicly deployed at `https://contra-testnet.judithorluchee.workers.dev` in Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`, authenticated as `judithorluchee@gmail.com`. SQLite Durable Object schema 2 and fresh final NEAR testnet observations are required for readiness. Live signing remains disabled and the hosting ceiling remains USD 0. Chromium and Firefox desktop and mobile verification passed without console errors, page errors, horizontal overflow or unnamed controls. A missing wallet bundle and a Cloudflare configuration crash were found and corrected. Browser-wallet key import and genuine wallet signatures remain blocked on explicit sensitive-data transfer confirmation. Six real independent reviewers remain unavailable; a fail-closed invitation and consent procedure is now technically ready without claiming independence.
+
 ## Current checkpoint | CONTRA-2026-11-10-M09.3-LIVE-WALLET-READY
 
 `contra-beneficiary.testnet` now exists as a distinct faucet-funded testnet identity under a separate Windows Credential Manager key. Official final RPC verified its FullAccess public key, 10 testnet NEAR balance and creation transaction. Both creator and beneficiary completed real keychain-backed NEP-413 verification, session recovery, renewal, replay rejection and disconnect without broadcasting a transaction. The operational client now binds external authentication to the selected wallet account and keeps real transaction signing server-disabled. Browser-wallet UI proof, independent participant consent, six eligible reviewers and final spending authority remain unresolved, so no case or funded transaction was attempted and AC31 and AC32 remain BLOCKED.

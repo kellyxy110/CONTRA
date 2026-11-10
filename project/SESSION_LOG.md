@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-10 | CONTRA-2026-11-10-M09.4-BROWSER-HOSTING-READY
+
+Wrangler authenticated `judithorluchee@gmail.com` for account `0a8fd0acd086e68c9b558159fac0d7a8` and deployed Worker `contra-testnet`. Public readiness verified SQLite schema 2 and fresh final NEAR testnet state. Four Chromium/Firefox desktop/mobile runs passed and produced screenshots under `project/artifacts/m09/browser`. No key was imported, signature requested or transaction broadcast. Reviewer onboarding regressions passed 3/3. Live browser-wallet signatures and six independently controlled operators remain external gates.
+
 ## 2026-11-10 | M09.3 beneficiary and live authentication
 
 The credential audit found no eligible beneficiary, so the explicitly authorised faucet flow created exactly one account, `contra-beneficiary.testnet`, with a separate Windows keychain key. Official final RPC verified the public key, FullAccess permission, 10 testnet NEAR balance and successful creation receipt. The creator and beneficiary keys then signed real server-issued NEP-413 challenges; the backend verified each key against testnet and exercised recovery, renewal, replay rejection and disconnect without a transaction broadcast. Browser automation was unavailable, so browser-wallet UI proof remains blocked and is not represented by the keychain exercise. Live signing remains disabled. The contract has zero reviewers, and no case, consent call, escrow funding or provider operation occurred.
