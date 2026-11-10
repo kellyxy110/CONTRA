@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-10 | M09.2 wallet readiness
+
+- Merged the tested M09.1 remediation and retained its upgrade and repair transaction evidence.
+- Bound the wallet proposal to the repaired code hash and verified creator identity.
+- Added fail-closed authority checks for beneficiary separation, custody, limits, expiry, owner approval and live-signing enablement.
+- Recorded that no distinct beneficiary identity exists and no M09.2 transaction or spending occurred.
+
 ## 2026-11-10 | M09.1 creator remediation decision
 
 - Added constructor and deployment-preflight rejection for creator allowlists containing the contract account.

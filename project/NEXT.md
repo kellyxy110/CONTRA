@@ -1,10 +1,10 @@
 # Next execution task
 
-## Active | M09.1 owner decision and immutable execution packet
+## Active | M09.2 beneficiary and bounded wallet authority
 
-M09.1 creator eligibility is remediated. Keep PR 43 open until the new public evidence and all required checks pass. The next separately authorised external step is the bounded live-wallet journey using `contra-creator.testnet` and an exact beneficiary account. Do not infer authority for funding, case creation or other contract calls from the completed remediation. Keep AC31 and AC32 BLOCKED.
+M09.1 creator eligibility is remediated and PR 43 is merged. Identify or separately authorise creation of a beneficiary testnet account distinct from `contra-creator.testnet` and `contra-contestation.testnet`. Verify custody and permissions, freeze exact case terms and expenditure limits, then bind the final wallet-authority digest to explicit owner approval. First exercise non-financial authentication and recovery. Do not fund or create a case until every gate passes. Keep AC31 and AC32 BLOCKED.
 
-## Active next task | Resolve creator eligibility through a new authorised plan
+## Historical task | Resolve creator eligibility through a new authorised plan
 
 Do not enable live signing against the current deployment. Select a replacement deployment, versioned owner-only allowlist upgrade or empty-state migration, then bind the exact code, account, creator, funding, custody, ABI and financial verification plan to fresh owner approval. Cloudflare deployment remains independently blocked on the final account and destination authority packet.
 
