@@ -2,7 +2,7 @@
 
 ## Active | M09.1 owner decision and immutable execution packet
 
-Review the recommended existing-contract upgrade. Before any executable authority exists, supply and verify the independent creator account and custody, build the final production WASM on Linux, bind its checksum and ABI, set a cost ceiling and expiry, observe the final chain state, and calculate a fresh immutable digest. Do not deploy, repair, sign or fund from the current non-executable draft. Keep AC31 and AC32 BLOCKED.
+Review the recommended existing-contract upgrade and immutable proposal digest `fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3`. It binds the verified creator account, signer custody, Linux artifact, 0.1 testnet NEAR ceiling, two exact operations and 16 November expiry. Do not deploy or repair until the owner explicitly approves that exact digest and a fresh read-only preflight passes. Keep AC31 and AC32 BLOCKED.
 
 ## Active next task | Resolve creator eligibility through a new authorised plan
 

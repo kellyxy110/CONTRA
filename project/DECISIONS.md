@@ -4,6 +4,8 @@
 
 PROPOSED, NOT AUTHORISED. Prefer upgrading `contra-contestation.testnet` over deploying a replacement. The candidate repair is owner-only, requires 1 yoctoNEAR, is permitted only for the exact defective singleton allowlist and cannot run again after success. It preserves the Borsh layout, account identity and Windows keychain custody. A replacement remains contingency only if the upgrade artifact or compatibility proof fails.
 
+The exact proposed execution authority is file digest `fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3`. Its owner-authorisation field remains null, so no contract action is authorised.
+
 ## D-095 | Creator eligibility blocks all deployed case creation | 2026-11-10
 
 ACCEPTED. The M08 state allowlists only `contra-contestation.testnet`, while contract preparation requires the creator to differ from the contract account. The eligible creator set is empty. Preserve that safety inequality and keep live signing disabled. Any replacement deployment, upgrade or state migration requires a separately approved immutable plan and complete contract and financial verification.

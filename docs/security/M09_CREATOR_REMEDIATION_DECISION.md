@@ -60,4 +60,13 @@ Before the repair call, the approved M08 WASM can be redeployed to restore the o
 
 AC31 and AC32 remain BLOCKED.
 
-The current non-executable draft file SHA-256 is `ec6d745d9c7a8b321458dd0e6d186fcf2a36e17e9b24dbc01caebe5fc866cd2a`. This is an evidence checksum, not an execution authorisation digest.
+## Proposed execution authority
+
+The immutable proposal file SHA-256 is `fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3`.
+
+It proposes only these operations before `2026-11-16T00:00:00Z`:
+
+1. Deploy production WASM SHA-256 `ce57c375dc0f0dccab1619ffddcbf7113059a45963fab8452db26d2ccbca5447` once to `contra-contestation.testnet` using its verified Windows keychain signer.
+2. After final code-hash reconciliation, call `repair_creator_allowlist` once with `["contra-creator.testnet"]` and exactly 1 yoctoNEAR.
+
+The combined ceiling is `100000000000000000000000` yoctoNEAR, or 0.1 testnet NEAR. The proposal stops on any identity mismatch, expired or absent approval, cost excess or UNKNOWN transaction. The owner-authorisation field is null. Therefore this digest is a proposal for approval and is not authority to execute.

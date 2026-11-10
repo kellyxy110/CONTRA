@@ -1,6 +1,6 @@
 {
   "schema": "CONTRA_M09_CREATOR_REMEDIATION_DRAFT_V1",
-  "status": "NON_EXECUTABLE_DRAFT",
+  "status": "AWAITING_OWNER_AUTHORISATION",
   "recommended_option": "UPGRADE_EXISTING_CONTRACT",
   "network": "testnet",
   "contract_account": "contra-contestation.testnet",
@@ -16,10 +16,19 @@
   "replacement_creator_creation_transaction": "EMxMRnCQH4fyGzk8YrMoLvxFAuhrGsy6EXppShiNLnrB",
   "replacement_artifact_sha256": "ce57c375dc0f0dccab1619ffddcbf7113059a45963fab8452db26d2ccbca5447",
   "replacement_abi_sha256": "e4a5d542687c4c27a841cab6ee48022f3d1b4bf51a4b1beadd723bf03115ca03",
-  "source_commit": "e410b208ebd6edeae0d9b3d39e96cc582741f29c",
-  "maximum_total_cost_yocto": null,
-  "expires_at": null,
+  "source_commit": "7dcaa031e7910848115a6a6a3696f7bbeb1d4ecd",
+  "maximum_total_cost_yocto": "100000000000000000000000",
+  "expires_at": "2026-11-16T00:00:00Z",
   "owner_authorisation": null,
-  "authorised_operations": [],
-  "note": "This draft cannot authorise contract signing. Missing cost, expiry, final source identity and owner approval fields must be verified and bound into a new digest after CI completes."
+  "authorised_operations": [
+    "deploy exact replacement artifact once to contra-contestation.testnet",
+    "call repair_creator_allowlist once with [contra-creator.testnet] and exactly 1 yoctoNEAR"
+  ],
+  "stop_conditions": [
+    "account, public key, code hash, artifact or allowlist differs from the verified plan",
+    "any original transaction has an UNKNOWN outcome",
+    "estimated or actual total cost exceeds 0.1 testnet NEAR",
+    "authorisation is absent, revoked or expired"
+  ],
+  "note": "This proposal authorises nothing until the owner explicitly approves its exact intent digest."
 }
