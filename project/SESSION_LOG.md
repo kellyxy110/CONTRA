@@ -1,5 +1,22 @@
 # CONTRA session log
 
+## 2026-11-10 | M09.1 safe creator eligibility remediation
+
+Reviewed the M08 defect, current Rust layout, PR 43 and official access-key state. Implemented local-only constructor, preflight and one-time repair candidates. Chose upgrade over replacement because it preserves account identity, custody and Borsh state while avoiding new account, funding and integration surfaces. No chain write, new key, account, deployment, provider call, Cloudflare resource or spending occurred.
+
+The owner subsequently authorised a dedicated creator wallet. The first faucet helper request failed after safely storing the generated key and created no account. A retry with the same public key created `contra-creator.testnet` in transaction `EMxMRnCQH4fyGzk8YrMoLvxFAuhrGsy6EXppShiNLnrB`. Official RPC verified the key as FullAccess and the faucet balance as 10 testnet NEAR. Owner-funded expenditure remained zero. No contract call occurred.
+
+The owner then approved the exact remediation proposal. Fresh preflight passed. Deployment `4AbVrJHeJTJHoA95c5owniYaXLJmEBkETsWrQxuGzvXz` and repair `2qQYh7sdkyLKN9uuDUHJ8pSYcwyviZgtNQJykWmaKKTj` both reached final explicit success. Final code and creator eligibility match the approved plan, zero financial liabilities remain and combined balance consumption was 0.0048511016886709 testnet NEAR.
+
+## 2026-11-10 UTC | M09 predeployment implementation
+
+- Reproduced the deployed creator-eligibility contradiction from Rust source and retained M08 state evidence.
+- Added fail-closed eligibility diagnostics and regression coverage. No contract or onchain state changed.
+- Migrated Cloudflare API routes to SQLite Durable Object state for NEP-413 challenges, sessions, immutable records, operation recovery and chain observation.
+- Kept server transaction dispatch, live wallet handoff and paid provider execution disabled.
+- Added digest-bound backup export, eviction recovery, storage failure, account isolation, origin and unready-chain tests.
+- Prepared non-executable wallet and Cloudflare authority packets and recovery runbooks. Transactions, deployments and spending: none.
+
 ## 2026-11-10 UTC | M08 NEAR testnet deployment
 
 - Bound exact owner approval to deployment intent `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`.

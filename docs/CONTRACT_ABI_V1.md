@@ -6,7 +6,7 @@ Freeze: CONTRA-2026-10-28-UX3C. Starting commit af0dd97558f134ac9269c7fb58cc7613
 
 This is the authoritative method/type/event/serialization definition. [STATE_MACHINE_V1.md](STATE_MACHINE_V1.md) owns transitions and deadlines; [COMMITTEE_POLICY_V1.md](COMMITTEE_POLICY_V1.md) owns selection; [SETTLEMENT_RECOVERY_V1.md](SETTLEMENT_RECOVERY_V1.md) owns money movement; [COMMITMENT_TEST_VECTORS.md](COMMITMENT_TEST_VECTORS.md) owns vote bytes; [THREAT_MODEL_V1.md](THREAT_MODEL_V1.md) owns risks and acceptance traceability. These six documents replace conceptual ABI/state ambiguities in PROTOCOL.md and UX3B, not the frozen UX3A visual baseline bee5a74. UX3B A01-A23 and AC01-AC33 remain integration/verification obligations with the explicit amendments in the threat model.
 
-Single Rust contestation contract, native NEAR testnet only. No model calls, arbitrary cross-contract execution, fungible token, slashing, upgrade, admin payout, forced recovery, arbitrary recipient or terms-edit method. The target SDK API reference reviewed is near-sdk 5.29.1; pin exact dependencies/toolchain in the first eligible implementation commit. No source implementation is created by this specification.
+Single Rust contestation contract, native NEAR testnet only. No model calls, arbitrary cross-contract execution, fungible token, slashing, admin payout, forced recovery, arbitrary recipient or terms-edit method. M09.1 adds one narrowly bounded repair method for the exact defective M08 creator allowlist; it does not grant general configuration authority. The target SDK API reference reviewed is near-sdk 5.29.1; pin exact dependencies/toolchain in the first eligible implementation commit. No source implementation is created by this specification.
 
 ## Wire types and limits
 
@@ -49,6 +49,7 @@ All role checks use env::predecessor_account_id(), not an account argument or si
 | --- | --- | --- | --- |
 | new | owner_id:AccountId, chain_id:String, creator_allowlist:Vec<AccountId> | Initialization once by predecessor=current account; chain_id=testnet; 1..8 sorted unique allowed creators; deposit 0; existing deployment account balance covers global budget, current code/storage and operating floor | Initializes Self; external successful result is empty (void); 50 Tgas |
 | sponsor_storage | none | Owner only; positive attached deposit, retained as nonwithdrawable sponsor reserve | ReserveView; 30 Tgas |
+| repair_creator_allowlist | creator_allowlist:Vec<AccountId> | Owner only; exactly 1 yocto; stored allowlist must equal the contract-account singleton; replacement is sorted, unique, limited to eight and excludes the contract account | ConfigView; 30 Tgas; succeeds at most once |
 | set_reviewer | reviewer_id:AccountId, operator_id:Hash32, disclosure_digest:Hash32, active:bool | Owner only; exactly 1 yocto; new record or changed record increments revision, confirmation resets | ReviewerView; 30 Tgas |
 | confirm_reviewer | revision:U64, disclosure_digest:Hash32 | Predecessor's own registry record; current matching revision/digest; active; exactly 1 yocto | ReviewerView; 30 Tgas |
 | create_case | request_id:Hash32, terms:TermsInput, expected_terms_digest:Hash32 | Creator=predecessor in immutable creator_allowlist; exactly 1 yocto; sufficient sponsor capacity; deterministic six-member selection | CreationResult; 50 Tgas |

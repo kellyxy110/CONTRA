@@ -1,0 +1,20 @@
+{
+  "schema": "CONTRA_M09_CREATOR_ELIGIBILITY_V1",
+  "observed_at": "2026-11-10T02:47:32.450Z",
+  "network": "testnet",
+  "rpc": "https://rpc.testnet.near.org",
+  "block_height": "277008099",
+  "block_hash": "5LurWxEQdEjjpMbuSxjdMBjh814q8feijeusetMKgjbP",
+  "contract_account": "contra-contestation.testnet",
+  "owner_id": "contra-contestation.testnet",
+  "creator_allowlist": ["contra-contestation.testnet"],
+  "eligible_creators": [],
+  "contract_rule_source": "contracts/contestation/src/lib.rs",
+  "contract_rule": "creator must be allowlisted and must differ from env::current_account_id()",
+  "can_create_case": false,
+  "financial_state": {
+    "held_escrow_yocto": "0",
+    "inflight_or_unknown_yocto": "0",
+    "paid_yocto": "0"
+  }
+}

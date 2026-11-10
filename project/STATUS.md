@@ -1,5 +1,17 @@
 # CONTRA status checkpoint
 
+## Previous checkpoint | CONTRA-2026-11-10-M09.1-REMEDIATION-DECISION-READY
+
+The creator defect remediation is implemented for review only. The recommended option is UPGRADE EXISTING CONTRACT using an owner-only, exact-state, one-time allowlist repair that adds no state field. Future initialisation and deployment preflight reject the contract account in the creator allowlist. Official RPC confirmed the contract key remains FullAccess. Following explicit owner authorisation, `contra-creator.testnet` was created with a separate Windows keychain key and 10 testnet NEAR from the faucet. No owner funds were used. No contract upgrade, repair call or merge occurred. AC31 and AC32 remain BLOCKED.
+
+## Current checkpoint | CONTRA-2026-11-10-M09.1-CREATOR-REMEDIATED
+
+The owner approved proposal digest `fa488567ef9f9fc9727dab78d1dc16d27b20479dba41725e7027099c6875bbb3`. Fresh preflight verified the exact account, keys, M08 code, zero cases and zero financial liabilities. Deployment transaction `4AbVrJHeJTJHoA95c5owniYaXLJmEBkETsWrQxuGzvXz` installed the exact Linux artifact, and repair transaction `2qQYh7sdkyLKN9uuDUHJ8pSYcwyviZgtNQJykWmaKKTj` replaced the defective allowlist with `contra-creator.testnet`. Both reached final explicit success. Combined balance consumption was 0.0048511016886709 testnet NEAR, below the 0.1 ceiling. AC31 and AC32 remain BLOCKED pending complete live journeys.
+
+## Current checkpoint | CONTRA-2026-11-10-M09-PREDEPLOY-READY
+
+M09 predeployment implementation is complete locally and remains undeployed. A P0 creator-eligibility audit proved that the deployed allowlist contains only the contract account while `create_case` rejects that identity, leaving no eligible creator. Live signing is disabled and AC31 and AC32 remain BLOCKED. The Cloudflare Worker now implements durable NEP-413 challenges and sessions, testnet reads, immutable digest-addressed records, reviewer and case access boundaries, wallet preparation and conservative UNKNOWN recovery, final receipt reconciliation, honest chain-and-storage readiness and complete operator-only backup export. Server-side dispatch, wallet handoff and paid providers remain disabled. Cloudflare and wallet authority packets remain non-executable pending exact owner inputs and creator remediation.
+
 ## Current checkpoint | CONTRA-2026-11-10-M08-TESTNET-DEPLOYED
 
 The Contestation contract is deployed and initialised on `contra-contestation.testnet`. Transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr` reached final `SuccessValue` and contains exactly the approved `DeployContract` and `FunctionCall:new` actions. Onchain code hash is `5y8hJtxVHWvAnGRVGJRirPA14nduonJKFMehCGnbCKjU`; downloaded bytes match approved SHA-256 `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f`. Owner, chain and creator allowlist match the plan. Actual cost was `0.0047541719036778 NEAR`, below the 5 NEAR ceiling. Complete live journeys remain blocked on M09 wallet authority and M10 independent reviewer and provider evidence.

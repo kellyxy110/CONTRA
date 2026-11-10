@@ -31,6 +31,7 @@
     "new",
     "on_payout_complete",
     "preview_case",
+    "repair_creator_allowlist",
     "retry_payout",
     "reveal_vote",
     "set_reviewer",

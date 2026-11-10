@@ -1,6 +1,7 @@
 import {env} from 'cloudflare:workers';
 import {evictDurableObject,runInDurableObject,SELF} from 'cloudflare:test';
 import {describe,it,expect} from 'vitest';
+import {nep413Bytes,verifyEd25519} from '../../services/cloudflare/worker.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
 const tx='11111111111111111111111111111111',block='22222222222222222222222222222222';
@@ -10,6 +11,7 @@ async function rejection(call,pattern){
  let caught=null;try{await call();}catch(error){caught=error;}
  expect(caught).toBeInstanceOf(Error);expect(caught.message).toMatch(pattern);
 }
+function base58(bytes){const alphabet='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let value=0n;for(const byte of bytes)value=(value<<8n)+BigInt(byte);let out='';while(value){out=alphabet[Number(value%58n)]+out;value/=58n;}for(const byte of bytes){if(byte!==0)break;out='1'+out;}return out;}
 
 describe('Cloudflare durable financial state',()=>{
  it('serialises concurrent duplicate preparation and rejects conflicting reuse',async()=>{
@@ -49,9 +51,35 @@ describe('Cloudflare durable financial state',()=>{
   await rejection(()=>runInDurableObject(state,instance=>instance.health()),/schema is incomplete/);
  });
 
- it('serves liveness, durable readiness and fail-closed unmigrated APIs',async()=>{
+ it('serves liveness and reports unavailable chain as honestly unready',async()=>{
   expect((await SELF.fetch('https://contra.invalid/api/live')).status).toBe(200);
-  const ready=await SELF.fetch('https://contra.invalid/api/ready');expect(ready.status).toBe(200);expect((await ready.json()).storage).toBe('cloudflare-durable-object-sqlite');
-  const unavailable=await SELF.fetch('https://contra.invalid/api/transactions',{method:'POST'});expect(unavailable.status).toBe(503);expect((await unavailable.json()).error).toMatch(/no transaction is confirmed/);
+  const ready=await SELF.fetch('https://contra.invalid/api/ready');expect(ready.status).toBe(503);const report=await ready.json();expect(report.ready).toBe(false);expect(report.storage.integrity).toBe('ok');expect(report.chain.status).toBe('unavailable');
+ });
+
+ it('creates durable NEP-413 challenges while rejecting unauthenticated protected access',async()=>{
+  const challenge=await SELF.fetch('https://contra.invalid/api/session/challenge',{method:'POST',headers:{Origin:'https://contra.invalid','Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});
+  expect(challenge.status).toBe(201);const value=await challenge.json();expect(value.account).toBe('creator.testnet');expect(value.nonce).toMatch(/^[A-Za-z0-9+/]+=*$/);
+  const operation=await SELF.fetch('https://contra.invalid/api/operation?id=missing');expect(operation.status).toBe(401);
+ });
+
+ it('verifies a NEP-413 payload with Web Crypto Ed25519 and rejects a changed payload',async()=>{
+  const pair=await crypto.subtle.generateKey({name:'Ed25519'},true,['sign','verify']),raw=new Uint8Array(await crypto.subtle.exportKey('raw',pair.publicKey)),publicKey=`ed25519:${base58(raw)}`;
+  const payload=nep413Bytes({message:'CONTRA authentication',nonce:btoa(String.fromCharCode(...new Uint8Array(32).fill(7))),recipient:'contra.invalid'}),digest=await crypto.subtle.digest('SHA-256',payload),signature=new Uint8Array(await crypto.subtle.sign('Ed25519',pair.privateKey,digest));
+  expect(await verifyEd25519(publicKey,signature,digest)).toBe(true);const changed=new Uint8Array(digest);changed[0]^=1;expect(await verifyEd25519(publicKey,signature,changed)).toBe(false);
+ });
+
+ it('rejects cross-origin writes and keeps live signing disabled',async()=>{
+  const crossOrigin=await SELF.fetch('https://contra.invalid/api/session/challenge',{method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});expect(crossOrigin.status).toBe(403);
+  const handoff=await SELF.fetch('https://contra.invalid/api/wallet/handoff',{method:'POST',headers:{Origin:'https://contra.invalid','Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(403);expect((await handoff.json()).error).toMatch(/signing is disabled/i);
+ });
+
+ it('preserves pre-handoff rejection but locks post-handoff uncertainty',async()=>{
+  const state=stub('rejection-boundary');await state.prepareOperation(operation('pre'));expect((await state.rejectOperation('pre',true)).status).toBe('FAILED');
+  await state.prepareOperation(operation('post'));await state.handoffOperation('post');expect((await state.rejectOperation('post',false)).status).toBe('UNKNOWN');
+ });
+
+ it('exports a digest-bound complete recovery package after eviction',async()=>{
+  const state=stub('backup-package');await state.prepareOperation(operation('backup-op'));await evictDurableObject(state);const backup=await state.backup();
+  expect(backup.schema).toBe('CONTRA_CLOUDFLARE_BACKUP_V1');expect(backup.digest).toMatch(/^[0-9a-f]{64}$/);expect(backup.tables.operations).toHaveLength(1);expect(Object.keys(backup.tables)).toHaveLength(8);
  });
 });

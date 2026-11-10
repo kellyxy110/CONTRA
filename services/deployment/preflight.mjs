@@ -75,7 +75,7 @@ export function assessDeploymentPlan(plan,{root=process.cwd(),now=()=>new Date()
  const ownerFundedOpening=plan.opening_balance_funding_requires_separate_authorisation===true&&positiveYocto(plan.minimum_account_balance_yocto)?BigInt(plan.minimum_account_balance_yocto):0n;
  if(!positiveYocto(plan.maximum_combined_owner_exposure_yocto)||positiveYocto(plan.max_total_cost_yocto)&&BigInt(plan.maximum_combined_owner_exposure_yocto)!==BigInt(plan.max_total_cost_yocto)+ownerFundedOpening)blockers.push('exact maximum combined owner exposure');
  if(!account(plan.initial_owner_account))blockers.push('initial contract owner account');
- if(!Array.isArray(plan.creator_allowlist)||!plan.creator_allowlist.length||plan.creator_allowlist.some(value=>!account(value)))blockers.push('initial creator allowlist');
+ if(!Array.isArray(plan.creator_allowlist)||!plan.creator_allowlist.length||plan.creator_allowlist.some(value=>!account(value))||plan.creator_allowlist.includes(plan.contract_account))blockers.push('initial creator allowlist');
  const authorisation=plan.owner_authorisation;
  if(!authorisation?.id||!authorisation?.approved_by||!authorisation?.approved_at||!authorisation?.expires_at||!authorisation?.approved_plan_sha256)blockers.push('explicit owner deployment authorisation');
  else{

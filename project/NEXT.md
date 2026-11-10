@@ -1,5 +1,13 @@
 # Next execution task
 
+## Active | M09.1 owner decision and immutable execution packet
+
+M09.1 creator eligibility is remediated. Keep PR 43 open until the new public evidence and all required checks pass. The next separately authorised external step is the bounded live-wallet journey using `contra-creator.testnet` and an exact beneficiary account. Do not infer authority for funding, case creation or other contract calls from the completed remediation. Keep AC31 and AC32 BLOCKED.
+
+## Active next task | Resolve creator eligibility through a new authorised plan
+
+Do not enable live signing against the current deployment. Select a replacement deployment, versioned owner-only allowlist upgrade or empty-state migration, then bind the exact code, account, creator, funding, custody, ABI and financial verification plan to fresh owner approval. Cloudflare deployment remains independently blocked on the final account and destination authority packet.
+
 ## Active next task | M09 live wallet and public runtime authority
 
 M08 contract deployment is complete. Preserve transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr`, the matching deployed artifact and initial state. Do not redeploy. The next external gate is named creator and beneficiary testnet-wallet authority plus approved Cloudflare Free resources. Six independently controlled reviewers and live provider usage remain separate M10 gates.

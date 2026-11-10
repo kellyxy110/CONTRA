@@ -1,0 +1,34 @@
+{
+  "schema": "CONTRA_M09_CREATOR_REMEDIATION_DRAFT_V1",
+  "status": "AWAITING_OWNER_AUTHORISATION",
+  "recommended_option": "UPGRADE_EXISTING_CONTRACT",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "current_public_key": "ed25519:Ecmz6dGRxCXaLqJSjqbQf5XkjoCjF158ovj7XZ2upX2y",
+  "custody": "Windows Credential Manager",
+  "current_code_sha256": "49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f",
+  "expected_legacy_allowlist": ["contra-contestation.testnet"],
+  "replacement_creator_account": "contra-creator.testnet",
+  "replacement_creator_account_observation": "EXISTS_FINAL",
+  "replacement_creator_key": "ed25519:61VyeNdx9dTGwvQB6QFW8ZjNDejkXwP7qFhqGx6iz1AZ",
+  "replacement_creator_custody": "dedicated Windows Credential Manager key",
+  "replacement_creator_funding": "10 testnet NEAR from faucet; owner-funded expenditure 0",
+  "replacement_creator_creation_transaction": "EMxMRnCQH4fyGzk8YrMoLvxFAuhrGsy6EXppShiNLnrB",
+  "replacement_artifact_sha256": "ce57c375dc0f0dccab1619ffddcbf7113059a45963fab8452db26d2ccbca5447",
+  "replacement_abi_sha256": "e4a5d542687c4c27a841cab6ee48022f3d1b4bf51a4b1beadd723bf03115ca03",
+  "source_commit": "7dcaa031e7910848115a6a6a3696f7bbeb1d4ecd",
+  "maximum_total_cost_yocto": "100000000000000000000000",
+  "expires_at": "2026-11-16T00:00:00Z",
+  "owner_authorisation": null,
+  "authorised_operations": [
+    "deploy exact replacement artifact once to contra-contestation.testnet",
+    "call repair_creator_allowlist once with [contra-creator.testnet] and exactly 1 yoctoNEAR"
+  ],
+  "stop_conditions": [
+    "account, public key, code hash, artifact or allowlist differs from the verified plan",
+    "any original transaction has an UNKNOWN outcome",
+    "estimated or actual total cost exceeds 0.1 testnet NEAR",
+    "authorisation is absent, revoked or expired"
+  ],
+  "note": "This proposal authorises nothing until the owner explicitly approves its exact intent digest."
+}

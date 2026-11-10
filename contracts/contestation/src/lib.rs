@@ -306,7 +306,10 @@ impl Contract {
         require(
             !creator_allowlist.is_empty()
                 && creator_allowlist.len() <= 8
-                && creator_allowlist.windows(2).all(|w| w[0] < w[1]),
+                && creator_allowlist.windows(2).all(|w| w[0] < w[1])
+                && creator_allowlist
+                    .iter()
+                    .all(|account| account != &env::current_account_id()),
             "E_INPUT",
         );
         let reserve =
@@ -331,6 +334,35 @@ impl Contract {
             global_seq: 0,
             callback_fault: false,
         }
+    }
+    /// One-time repair for the M08 configuration that allowlisted only this
+    /// contract account. The exact legacy state is the one-time guard, so this
+    /// adds no state field and preserves the deployed Borsh layout.
+    #[payable]
+    #[deny_unknown_arguments]
+    pub fn repair_creator_allowlist(&mut self, creator_allowlist: Vec<AccountId>) -> Value {
+        gas(30);
+        deposit(1);
+        require(caller() == self.owner_id, "E_AUTH");
+        require(
+            self.creator_allowlist == vec![env::current_account_id()],
+            "E_REPAIR_COMPLETE",
+        );
+        require(
+            !creator_allowlist.is_empty()
+                && creator_allowlist.len() <= 8
+                && creator_allowlist.windows(2).all(|w| w[0] < w[1])
+                && creator_allowlist
+                    .iter()
+                    .all(|account| account != &env::current_account_id()),
+            "E_INPUT",
+        );
+        self.creator_allowlist = creator_allowlist;
+        self.global(
+            "creator_allowlist_repaired",
+            json!({"creator_allowlist":self.creator_allowlist}),
+        );
+        self.get_config()
     }
     #[payable]
     #[deny_unknown_arguments]
@@ -1501,6 +1533,34 @@ mod tests {
         k.create_case(Hash32([9; 32]), t, hash(&f));
         let c = k.case(id);
         (k, c)
+    }
+    #[test]
+    #[should_panic(expected = "E_INPUT")]
+    fn initialization_rejects_contract_account_as_creator() {
+        ctx("contra.testnet", 0, 0);
+        let _ = Contract::new(
+            aid("contra.testnet"),
+            "testnet".into(),
+            vec![aid("contra.testnet")],
+        );
+    }
+    #[test]
+    fn legacy_allowlist_repair_is_owner_only_and_one_time() {
+        ctx("contra.testnet", 0, 0);
+        let mut k = Contract::new(
+            aid("contra.testnet"),
+            "testnet".into(),
+            vec![aid("creator.testnet")],
+        );
+        k.creator_allowlist = vec![aid("contra.testnet")];
+        ctx("contra.testnet", 0, 1);
+        k.repair_creator_allowlist(vec![aid("creator.testnet")]);
+        assert_eq!(k.creator_allowlist, vec![aid("creator.testnet")]);
+        let second = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            ctx("contra.testnet", 0, 1);
+            k.repair_creator_allowlist(vec![aid("second.testnet")]);
+        }));
+        assert!(second.is_err());
     }
     fn funded() -> (Contract, Case) {
         let (mut k, c) = fixture();
