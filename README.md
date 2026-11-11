@@ -169,7 +169,7 @@ The [creator eligibility defect report](docs/security/M08_CREATOR_ELIGIBILITY_DE
 
 Actual implementation began on 28 October 2026 with owner authorisation. Current hackathon rules accept code since the 19 October announcement, but CONTRA preserves the exact start date and Git history. Primary track is `security`; additional applicable track is `open`. See [hackathon compliance](docs/HACKATHON_COMPLIANCE.md).
 
-The owner controls final frontend design, demo production, public X publication and submission. The deployed client is deliberately neutral and limited to service status, wallet authentication and authenticated API verification. Historical design evidence remains in Git history and immutable reference files, but no prior dashboard design is active or shipped.
+The owner controls final frontend design, demo production, public X publication and submission. The deployed client is deliberately neutral and limited to service status, wallet authentication and authenticated API verification. Historical design evidence remains in Git history and immutable reference files, but no prior dashboard design is active or shipped. Removed presentation asset routes return non-cacheable `404` responses so earlier CDN entries cannot reactivate deleted designs.
 
 ## Licence and acknowledgements
 
