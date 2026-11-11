@@ -1,12 +1,18 @@
 # CONTRA status checkpoint
 
-## Current checkpoint | CONTRA-M10.4-MODAL-VERIFIER-IMPLEMENTED
+## Current checkpoint | CONTRA-M10.4-MODAL-VERIFIER-DEPLOYED
+
+The exact repository-owned Modal verifier at source commit `1a1e06ea91c79641b87dfc8a182c39dd7f49cb8a` is deployed as app `ap-2wMup9xpnApV3ehbwwjKrK`. Its protected endpoint is `https://boredom407--contra-verifier-verify.us-east.modal.run`. An unauthenticated POST returned HTTP 401, proving that `requires_proxy_auth=True` is enforced. The current Modal billing summary reports USD 0.00 billed cost.
+
+The endpoint has not completed an authenticated verification because Modal Proxy Auth credentials are not installed locally or in Cloudflare. The existing `ak-` and `as-` deployment credentials remain confined to the trusted local Modal profile and must not be reused as Worker proxy credentials. Live provider execution remains disabled. Meta and Baseten credentials are present in the Worker secret store, but their independent model and financial gates remain closed. No AI inference, reviewer vote, transaction or settlement occurred.
+
+## Previous checkpoint | CONTRA-M10.4-MODAL-VERIFIER-IMPLEMENTED
 
 The repository-owned Modal verifier is implemented locally and remains undeployed. Its endpoint is explicitly protected with `requires_proxy_auth=True`. The pure deterministic core accepts only the frozen verification request, enforces a 64 KiB bound, recomputes the immutable proposal digest, binds case, terms and round identity, checks all nested citations against the supplied evidence set and returns a non-binding result with zero model tokens. It cannot vote, transact or settle.
 
 Repository tests pass 156 of 156, including five Python verification cases and two Node integration checks. Cloudflare tests pass 14 of 14; Worker dry run, documentation links and Security policy pass. No Modal function was deployed, no Proxy Token was installed in Cloudflare, no inference occurred and spending remains USD 0. Deployment remains gated on review, the verified USD 5 Workspace budget and spend limit, and a bounded external execution approval.
 
-## Current checkpoint | CONTRA-M10.4-PROVIDER-CREDENTIAL-READY
+## Previous checkpoint | CONTRA-M10.4-PROVIDER-CREDENTIAL-READY
 
 Cloudflare provider credential installation is now fail closed and independently observable. The production Worker target remains `contra-testnet` in Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`. Its public configuration reports only redacted credential-presence and external readiness gates. A secret alone cannot enable inference: exact endpoint, model, account, credit, pricing, hard billing control, bounded owner spending authority and live enablement must all pass for that provider.
 

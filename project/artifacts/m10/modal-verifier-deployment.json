@@ -1,0 +1,16 @@
+{
+  "schema": "CONTRA_MODAL_VERIFIER_DEPLOYMENT_V1",
+  "observed_at": "2026-11-11T20:53:00+01:00",
+  "source_commit": "1a1e06ea91c79641b87dfc8a182c39dd7f49cb8a",
+  "app_name": "contra-verifier",
+  "app_id": "ap-2wMup9xpnApV3ehbwwjKrK",
+  "function": "verify",
+  "endpoint": "https://boredom407--contra-verifier-verify.us-east.modal.run",
+  "requires_proxy_auth": true,
+  "unauthenticated_http_status": 401,
+  "authenticated_verification": "PENDING_PROXY_AUTH_TOKEN",
+  "model_inference": false,
+  "model_tokens": 0,
+  "modal_billed_cost_usd": 0,
+  "live_provider_execution_enabled": false
+}
