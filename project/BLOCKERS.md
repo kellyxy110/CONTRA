@@ -24,3 +24,8 @@ The current single action package is `docs/operations/M10_LIVE_VALIDATION_PACKET
 4. Provider accounts, exact permitted models, verified credits and billing controls, plus a separately approved spend per provider.
 
 Private keys, seed phrases and provider secrets must be supplied only through approved secret-management channels, never chat, repository files or logs.
+# M10.4 provider activation blockers
+
+- `B-M10-02-META`: Model API key, account and credit evidence are absent. Standard `muse-spark-1.3` is selected, but no provider-side hard spend cap is verified. Status: EXTERNAL INPUT REQUIRED.
+- `B-M10-02-BASETEN`: Restricted API key, authenticated exact model selection, credit evidence and hard billing control are absent. Status: EXTERNAL INPUT REQUIRED.
+- `B-M10-02-MODAL`: Protected verification function, scoped Proxy Token, frozen function identity and Workspace USD 5 budget and spend limit are absent. Status: EXTERNAL INPUT REQUIRED.
