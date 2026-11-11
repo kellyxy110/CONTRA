@@ -1,5 +1,9 @@
 # Next execution task
 
+## Active task | M10.1 external evidence and public reviewer parity
+
+Complete the credential-independent Cloudflare reviewer lifecycle: immutable invitations and responses, domain-bound reviewer control-statement verification, withdrawal before committee freeze, account-scoped audit and recovery-package parity. Then obtain six separately controlled operators and provider credentials through secure channels. Keep Meta, Baseten and Modal independently disabled until exact accounts, interfaces, billing controls and bounded owner authorisation are verified. Freeze the final funded Testnet packet only after participant consent and committee readiness. AC31 and AC32 remain BLOCKED.
+
 ## Active task | M10 independent reviewers and bounded provider verification
 
 M09.7 genuine browser authentication is complete with a disposable Meteor Testnet identity. Keep transaction signing disabled and AC31/AC32 BLOCKED. Next recruit and verify six separately controlled reviewer operators, then prepare the separately authorised provider and funded-journey gates. Do not treat the disposable browser identity as creator, beneficiary or reviewer independence evidence.

@@ -1,5 +1,13 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-M10.1-ACCELERATED-LIVE-CONTESTATION
+
+M10.1 credential-independent readiness is implemented on `feat/m10-live-contestation-readiness`. Runtime and provider configuration now use independent fail-closed provider states, exact HTTPS endpoint allowlists, bounded timeouts, programme ceilings and provider-specific Modal proxy authentication. Local, Testnet, provider and Wrangler placeholder examples are separated and ignored correctly. Real credentials remain absent and all three providers report `CREDENTIALS_PENDING`.
+
+Reviewer invitations now verify their immutable digest, exact six-slot identity, Testnet account syntax, operator and disclosure digests, explicit consent and verified control-signature status. Duplicate, forged, unknown and unsigned responses fail closed. The existing contract and Node reviewer safeguards remain unchanged. Genuine independent operators remain 0 of 6, and public Cloudflare reviewer lifecycle parity remains incomplete.
+
+No live provider call, funded transaction, contract upgrade, new secret or paid service was used. AC31 and AC32 remain BLOCKED. The public application remains read-only ready with transaction signing disabled.
+
 ## Current checkpoint | CONTRA-M09.7-BROWSER-WALLET-VERIFIED
 
 Genuine browser-wallet NEP-413 authentication completed on the public Cloudflare preview using Meteor Wallet 0.8.12 and the disposable identity `easyjacket3318.testnet`. The server returned an account-bound session and preserved it across page reload. Transaction signing remained disabled and no contract call, transfer or access-key addition occurred. The connector now uses pinned Near Connect 0.12.0 and a checksum-verified, same-origin Meteor executor. AC31 and AC32 remain BLOCKED because no funded journey was authorised or executed.

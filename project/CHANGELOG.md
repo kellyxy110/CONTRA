@@ -1,5 +1,15 @@
 # Change log
 
+## 2026-11-11 | M10.1 accelerated live Contestation readiness
+
+- Added scoped local, Testnet, provider and Wrangler environment examples without committing credentials.
+- Added strict origin, provider endpoint, timeout, model, billing-gate, per-request and programme-cap validation.
+- Added independent `CREDENTIALS_PENDING`, `MISCONFIGURED` and `READY` provider states while preserving disabled public provider execution.
+- Added provider setup and rotation guidance based on current official Meta, Baseten, Modal and Cloudflare interfaces.
+- Hardened reviewer invitation and response validation against forged digests, duplicate responses, invalid accounts, invalid control identifiers and unsigned control claims.
+- Added a neutral reviewer invitation template and retained the truthful 0 of 6 independent-operator status.
+- Preserved disabled financial signing, zero provider spending and BLOCKED AC31/AC32 status.
+
 ## 2026-11-11 | M09.7 genuine browser-wallet authentication
 
 - Replaced the stalled MyNearWallet selector path with pinned Near Connect 0.12.0 and Meteor Wallet Testnet authentication.

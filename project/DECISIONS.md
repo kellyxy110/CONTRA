@@ -1,5 +1,12 @@
 # Decision ledger
 
+## D-102 | Independent provider activation and reviewer evidence boundary | 2026-11-11
+
+- Every provider has an independent disabled, misconfigured or ready state. Missing Meta access cannot disable Baseten or Modal, and no common environment switch can bypass account, model, pricing, billing and owner-authorisation gates.
+- Pin Meta and Baseten to exact approved HTTPS paths. Keep the Baseten model unset until the authenticated catalogue is verified. Treat Modal as a protected function with separate deployment and proxy credentials, not as a pre-existing model.
+- Provider ceilings of USD 3 Meta, USD 3 Baseten and USD 5 Modal are maximum programme boundaries, not spending authority.
+- Reviewer invitation validation establishes technical consistency only. Independence requires six separately controlled humans and signed account-control evidence. After funding freezes committees, replacement is forbidden and nonparticipation follows contract fallback.
+
 ## D-101 | Meteor browser authentication boundary | 2026-11-11
 
 - Use pinned Near Connect 0.12.0 with Meteor Wallet as the verified browser Testnet connector while MyNearWallet remains unavailable.
