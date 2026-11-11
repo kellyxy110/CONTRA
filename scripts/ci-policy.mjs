@@ -17,7 +17,13 @@ if(createHash('sha256').update(image).digest('hex')!=='ab63545c28f2fa2644ed3fa7b
 for(const file of files.filter(v=>/\.(?:m?js|cjs)$/.test(v))){const checked=spawnSync(process.execPath,['--check',file],{cwd:root,encoding:'utf8'});if(checked.status!==0)failures.push(`${file}: JavaScript syntax check failed\n${checked.stderr}`);}
 
 if(mode==='security'){
- const forbidden=files.filter(file=>/(^|\/)(?:\.env(?:\..+)?|credentials?(?:\..+)?|secrets?(?:\..+)?|id_rsa(?:\..+)?|.*\.(?:pem|key))$/i.test(file)&&file!=='.env.example');
+ const allowedEnvironmentTemplates=new Set([
+  '.env.example',
+  '.env.local.example',
+  '.env.providers.example',
+  '.env.testnet.example'
+ ]);
+ const forbidden=files.filter(file=>/(^|\/)(?:\.env(?:\..+)?|credentials?(?:\..+)?|secrets?(?:\..+)?|id_rsa(?:\..+)?|.*\.(?:pem|key))$/i.test(file)&&!allowedEnvironmentTemplates.has(file));
  for(const file of forbidden)failures.push(`${file}: restricted credential filename is tracked`);
  const patterns=[
   ['private key block',/-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----/g],
