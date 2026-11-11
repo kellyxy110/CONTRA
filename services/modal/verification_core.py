@@ -116,4 +116,3 @@ def verify_request(body: Any) -> dict[str, Any]:
         "model": "contra-deterministic-verifier-v1",
         "usage": {"completion_tokens": 0, "prompt_tokens": 0, "total_tokens": 0},
     }
-

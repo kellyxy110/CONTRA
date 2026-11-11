@@ -11,4 +11,3 @@ app = modal.App("contra-verifier")
 @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
 def verify(body: dict) -> dict:
     return verify_request(body)
-
