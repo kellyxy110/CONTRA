@@ -472,3 +472,11 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Verified Cloudflare identity, found no installed Worker secrets, passed 154 repository tests, 14 Cloudflare tests, the Worker dry run, wallet build, documentation links and source policy.
 - Made no provider request, secret change, transaction or expenditure.
 
+# 2026-11-11 | Protected Modal verifier implementation
+
+- Added a repository-owned Modal POST endpoint with mandatory Proxy Token authentication.
+- Added a dependency-free deterministic core for immutable proposal identity and nested citation verification.
+- Added five Python regressions and two Node integration checks, bringing the repository suite to 156 passing tests.
+- Passed 14 Cloudflare tests, Worker dry run, documentation links and Security policy.
+- Did not deploy the Modal function, install its Proxy Token in Cloudflare, call a provider or incur spending.
+
