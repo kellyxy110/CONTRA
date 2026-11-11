@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-M10.4-PROVIDER-CREDENTIAL-READY
+
+Cloudflare provider credential installation is now fail closed and independently observable. The production Worker target remains `contra-testnet` in Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`. Its public configuration reports only redacted credential-presence and external readiness gates. A secret alone cannot enable inference: exact endpoint, model, account, credit, pricing, hard billing control, bounded owner spending authority and live enablement must all pass for that provider.
+
+No provider secret is currently installed. Meta Standard `muse-spark-1.3` and `https://api.meta.ai/v1/chat/completions` are the verified selection, but Meta's missing verified hard spend cap keeps it gated. Baseten's OpenAI-compatible endpoint is verified, while the exact restricted model remains pending authenticated catalogue access. Modal requires a protected `.modal.run` verification function and scoped Proxy Token; deployment-tool credentials are explicitly excluded from the Worker. Repository tests pass 154 of 154 and Cloudflare tests pass 14 of 14. No live inference, secret change or spending occurred.
+
 ## Current checkpoint | CONTRA-M10.3-LIVE-VALIDATION
 
 Credential-independent M10.3 engineering is complete on `feat/m10-live-validation`. Canonical live journey packet validation now requires six distinct signed human controls, disjoint three-member committees, exact evidence and terms digests, ordered deadlines, bounded deposits, an exact transaction sequence, stable operation identifiers and digest-bound financial authority. The checked-in journey files remain explicitly non-executable because those external inputs do not exist.

@@ -1,6 +1,7 @@
 # Wrangler local development placeholders. Rename to .dev.vars locally.
-# The public Worker currently keeps provider execution disabled, so these
-# placeholders are not deployment instructions.
+# Installing these secrets only changes credential presence. Every provider
+# remains disabled until its independent account, model, billing and bounded
+# owner-authorisation gates are configured and verified.
 META_API_KEY=
 BASETEN_API_KEY=
 MODAL_PROXY_KEY=
