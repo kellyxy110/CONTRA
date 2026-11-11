@@ -1,6 +1,8 @@
 import {ApiError,canonical,sha256} from '../api/store.mjs';
 
 const COMMITTEES=new Set(['primary','fresh']);
+const ACCOUNT=/^(?=.{2,64}$)[a-z0-9]+(?:[._-][a-z0-9]+)*\.testnet$/;
+const HASH=/^[a-f0-9]{64}$/;
 function required(value,name,max=512){if(typeof value!=='string'||!value.trim()||value.length>max)throw new ApiError(400,`Invalid ${name}`);return value.trim();}
 
 export function buildReviewerInvitation({slot,committee,contract_account,network='testnet',expires_at}){
@@ -13,16 +15,23 @@ export function buildReviewerInvitation({slot,committee,contract_account,network
 
 export function assessReviewerResponses({invitations,responses,now=new Date().toISOString()}){
  if(!Array.isArray(invitations)||invitations.length!==6||!Array.isArray(responses))throw new ApiError(400,'Six invitations and their responses are required');
- const responseByDigest=new Map(responses.map(value=>[value.invitation_digest,value])),accounts=new Set(),operators=new Set(),issues=[];
+ const responseByDigest=new Map(),accounts=new Set(),operators=new Set(),slots=new Set(),issues=[];
+ for(const response of responses){if(responseByDigest.has(response.invitation_digest))issues.push('duplicate response for one invitation');else responseByDigest.set(response.invitation_digest,response);}
  for(const invitation of invitations){
+  const slotIdentity=`${invitation.committee}:${invitation.slot}`;if(slots.has(slotIdentity))issues.push(`${slotIdentity}: invitation slot duplicated`);slots.add(slotIdentity);
+  const {invitation_digest,...body}=invitation;if(sha256(canonical(body))!==invitation_digest)issues.push(`${slotIdentity}: invitation digest invalid`);
   const response=responseByDigest.get(invitation.invitation_digest);
   if(!response){issues.push(`${invitation.committee} slot ${invitation.slot}: response missing`);continue;}
   if(Date.parse(invitation.expires_at)<=Date.parse(now))issues.push(`${invitation.committee} slot ${invitation.slot}: invitation expired`);
   if(response.accepted!==true||response.consent!==true)issues.push(`${invitation.committee} slot ${invitation.slot}: explicit consent missing`);
-  for(const field of ['reviewer_id','operator_id','disclosure_digest','custody_attestation','availability_attestation'])if(!response[field])issues.push(`${invitation.committee} slot ${invitation.slot}: ${field} missing`);
+  if(!ACCOUNT.test(response.reviewer_id||''))issues.push(`${invitation.committee} slot ${invitation.slot}: reviewer_id invalid`);
+  for(const field of ['operator_id','disclosure_digest'])if(!HASH.test(response[field]||''))issues.push(`${invitation.committee} slot ${invitation.slot}: ${field} invalid`);
+  for(const field of ['custody_attestation','availability_attestation'])if(!response[field])issues.push(`${invitation.committee} slot ${invitation.slot}: ${field} missing`);
+  if(response.control_signature_verified!==true)issues.push(`${invitation.committee} slot ${invitation.slot}: account control signature unverified`);
   if(!Array.isArray(response.conflicts))issues.push(`${invitation.committee} slot ${invitation.slot}: conflict disclosure missing`);
   if(accounts.has(response.reviewer_id))issues.push(`${invitation.committee} slot ${invitation.slot}: reviewer account reused`);accounts.add(response.reviewer_id);
   if(operators.has(response.operator_id))issues.push(`${invitation.committee} slot ${invitation.slot}: controlling operator reused`);operators.add(response.operator_id);
  }
+ for(const digest of responseByDigest.keys())if(!invitations.some(value=>value.invitation_digest===digest))issues.push('response references an unknown invitation');
  return {ready:issues.length===0,independence_established:false,accepted_responses:responses.filter(value=>value.accepted===true).length,distinct_accounts:accounts.size,distinct_operators:operators.size,issues,trust_statement:'Distinct attestations are necessary but do not independently prove separate real-world control.'};
 }

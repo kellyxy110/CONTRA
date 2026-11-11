@@ -1,6 +1,6 @@
 # AC01 to AC33 acceptance matrix
 
-Checkpoint: `CONTRA-2026-11-09-M11-ACCEPTANCE-REVIEW`
+Checkpoint: `CONTRA-M10.1-ACCELERATED-LIVE-CONTESTATION`
 
 Evidence cut-off: implementation merge `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd`, promoted to `main` as `a74445527dd66f2ff0c684887849346f7951416e`.
 
@@ -60,7 +60,7 @@ No criterion is upgraded from fixture evidence where its text requires a live pr
 ## Environment boundary
 
 - Contract-sensitive financial evidence uses real local NEAR Sandbox transactions and retained receipts.
-- External-wallet transaction handling remains controlled simulation only. Genuine browser-wallet NEP-413 authentication succeeded with a disposable Testnet identity, but no transaction was signed or broadcast.
+- External-wallet transaction handling remains controlled simulation only. Genuine Meteor Wallet NEP-413 authentication succeeded with disposable Testnet identity `easyjacket3318.testnet`, but no transaction was signed or broadcast.
 - Meta, Baseten and Modal use deterministic mocked transports only. No provider endpoint or paid inference was used.
 - Six Sandbox reviewer accounts share one process and do not establish independent operator control.
-- There is no testnet deployment, live funded testnet journey or public operational API.
+- The Contestation contract is deployed on NEAR Testnet and the public operational API is live at `https://contra-near.pages.dev`. There is no live funded Testnet journey or live provider evidence.

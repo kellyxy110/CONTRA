@@ -8,12 +8,14 @@ function integer(value,name,{minimum,maximum}){
  return parsed;
 }
 
-function url(value,name,{https=false}={}){
+function url(value,name,{https=false,originOnly=false}={}){
  let parsed;
  try{parsed=new URL(value);}catch{throw Error(`${name} must be an absolute URL`);}
  if(!['http:','https:'].includes(parsed.protocol))throw Error(`${name} must use HTTP or HTTPS`);
  if(https&&parsed.protocol!=='https:'&&!['127.0.0.1','localhost','[::1]'].includes(parsed.hostname))throw Error(`${name} must use HTTPS outside localhost`);
- parsed.username='';parsed.password='';parsed.hash='';parsed.search='';
+ if(parsed.username||parsed.password)throw Error(`${name} must not contain credentials`);
+ if(parsed.hash||parsed.search)throw Error(`${name} must not contain a query or fragment`);
+ if(originOnly&&parsed.pathname!=='/')throw Error(`${name} must be an origin without a path`);
  return parsed.toString().replace(/\/$/,'');
 }
 
@@ -24,8 +26,8 @@ export function loadRuntimeConfig(env=process.env,{root=process.cwd()}={}){
  if(legacySandbox&&mode!=='sandbox')throw Error('CONTRA_SANDBOX conflicts with CONTRA_CHAIN_MODE');
  const dataDir=path.resolve(env.CONTRA_DATA_DIR||path.join(root,'.data'));
  if(dataDir===path.parse(dataDir).root||dataDir===path.resolve(root))throw Error('CONTRA_DATA_DIR must be a dedicated directory');
- const publicOrigin=env.CONTRA_PUBLIC_ORIGIN?url(env.CONTRA_PUBLIC_ORIGIN,'CONTRA_PUBLIC_ORIGIN',{https:mode==='testnet'}):null;
- const allowedOrigins=(env.CONTRA_ALLOWED_ORIGINS||'').split(',').map(v=>v.trim()).filter(Boolean).map(v=>url(v,'CONTRA_ALLOWED_ORIGINS',{https:mode==='testnet'}));
+ const publicOrigin=env.CONTRA_PUBLIC_ORIGIN?url(env.CONTRA_PUBLIC_ORIGIN,'CONTRA_PUBLIC_ORIGIN',{https:mode==='testnet',originOnly:true}):null;
+ const allowedOrigins=[...new Set((env.CONTRA_ALLOWED_ORIGINS||'').split(',').map(v=>v.trim()).filter(Boolean).map(v=>url(v,'CONTRA_ALLOWED_ORIGINS',{https:mode==='testnet',originOnly:true})))];
  const base={mode,dataDir,publicOrigin,allowedOrigins,port:integer(env.PORT||4173,'PORT',{minimum:1,maximum:65535}),host:env.HOST||'127.0.0.1'};
  if(mode!=='testnet')return base;
  const rpcUrl=url(env.CONTRA_RPC_URL||'','CONTRA_RPC_URL',{https:true});

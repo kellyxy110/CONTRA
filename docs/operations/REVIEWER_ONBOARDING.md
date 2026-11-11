@@ -20,7 +20,7 @@ An invitation authorises review only. It cannot create a vote, authorise a trans
 
 ## Control evidence
 
-Each operator signs a NEP-413 statement containing the reviewer account, operator disclosure revision, intended committee, conflict declaration, availability window, statement expiry and a server challenge nonce. The backend verifies the signature, account, recipient, nonce, expiry and replay status. The signed statement is retained as an immutable audit artifact without publishing private personal data.
+Each operator must sign a NEP-413 statement containing the reviewer account, operator disclosure revision, intended committee, conflict declaration, availability window, statement expiry and a server challenge nonce. General NEP-413 account authentication is implemented, but a dedicated immutable reviewer control-statement endpoint and public Cloudflare lifecycle remain incomplete. Until those are implemented and exercised, `control_signature_verified` must remain false in live readiness records.
 
 An administrator confirms registry eligibility and activation. Committee membership is then frozen with the agreement terms. Account switching, expired sessions, duplicate registration and contradictory disclosure revisions fail closed.
 
@@ -30,4 +30,4 @@ Before a live journey, every operator independently authenticates, inspects the 
 
 The owner must schedule all six operators across the contract's actual commitment, reveal, challenge and fresh-review windows. Nonparticipation is a valid tested outcome and must reach deterministic quorum or timeout fallback, never an AI-selected verdict.
 
-Fixture accounts remain useful for local regression, but they are disclosed as one-process controls and do not satisfy this procedure. Reviewer readiness does not authorise provider usage, contract deployment, wallet signing or spending.
+Fixture accounts remain useful for local regression, but they are disclosed as one-process controls and do not satisfy this procedure. Reviewer readiness does not authorise provider usage, contract deployment, wallet signing or spending. Use [the invitation template](REVIEWER_INVITATION_TEMPLATE.md) for recruitment without creating fictional operators.
