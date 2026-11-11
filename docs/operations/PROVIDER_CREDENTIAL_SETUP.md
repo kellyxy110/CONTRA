@@ -33,6 +33,16 @@ Modal requires a deployed protected Web Function before CONTRA has an endpoint t
 
 No Modal function or model is currently claimed.
 
+## Exact owner inputs
+
+Do not send any credential through chat. Enter each value only into its provider dashboard, the local ignored environment file or Wrangler's interactive prompt.
+
+- Meta: one new Model API application key for Standard `muse-spark-1.3`, plus redacted evidence of account access, available credit and the Usage page. Meta currently exposes usage alerts rather than a verified hard spend cap, so installing the key does not satisfy the billing gate.
+- Baseten: one expiring team API key restricted to `Call certain models`, the exact selected model ID and environment, plus redacted credit, pricing and billing-control evidence. Do not create a broad administrator key.
+- Modal: Workspace deployment credentials are needed only on the trusted machine that deploys the verifier. The Worker needs a separately scoped Proxy Token pair, the protected `.modal.run` function URL and frozen function ID. Configure a Workspace budget and USD 5 spend limit first.
+
+The Modal deployment token pair (`MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET`) must never be installed in the CONTRA Worker. Only `MODAL_PROXY_KEY` and `MODAL_PROXY_SECRET` belong there.
+
 ## Local installation
 
 1. Copy `.env.providers.example` to an ignored local file.
@@ -50,20 +60,30 @@ npm run test:cloudflare
 node --test tests/m10-external-readiness.test.mjs tests/m10-environment.test.mjs
 ```
 
-Credential installation, only after the gates above are satisfied:
+Credential installation is interactive. From the repository root, verify the target first:
 
 ```sh
-npx wrangler secret put META_API_KEY
-npx wrangler secret put BASETEN_API_KEY
-npx wrangler secret put MODAL_PROXY_KEY
-npx wrangler secret put MODAL_PROXY_SECRET
+npx wrangler whoami
+npx wrangler secret list --config wrangler.jsonc
 ```
 
-Each command reads the secret interactively. Never pass a secret on the command line or place it in a committed file. Installing a secret does not enable live execution; the corresponding verified model, endpoint, billing and owner-authorisation gates must also pass.
+After the reviewed provider-readiness release is deployed, install only the credentials the owner has obtained:
+
+```sh
+npx wrangler secret put META_API_KEY --config wrangler.jsonc --name contra-testnet
+npx wrangler secret put BASETEN_API_KEY --config wrangler.jsonc --name contra-testnet
+npx wrangler secret put MODAL_PROXY_KEY --config wrangler.jsonc --name contra-testnet
+npx wrangler secret put MODAL_PROXY_SECRET --config wrangler.jsonc --name contra-testnet
+npx wrangler secret list --config wrangler.jsonc
+```
+
+Each command reads the secret interactively and deploys a new Worker version containing that secret. Run it only after the reviewed provider-readiness release is live. Never pass a secret on the command line or place it in a committed file. Installing a secret does not enable live execution because all non-secret provider gates remain false.
 
 ## Cloudflare secrets
 
-Do not add provider secrets to the current Worker yet. Its `/api/evaluate` route is deliberately disabled and does not consume provider secrets. Once a reviewed Worker adapter and durable budget ledger are merged, stage secrets with the Wrangler versions workflow so a secret change is not silently deployed outside the approved release.
+The Worker reports independent, redacted provider readiness through `/api/config`. Credential values are never returned. The execution route remains fail closed until the provider-specific model, account, credit, pricing, hard billing limit, bounded owner spending authority and live-enable gates all pass. `/api/evaluate` remains disabled; the authenticated durable provider-jobs contract is the stable integration boundary.
+
+After credential installation, first verify that `/api/config` changes only that provider's `credential_installed` gate. Authentication or catalogue probes must use a provider-documented non-billable endpoint. If no such endpoint exists, stop before a model call and obtain bounded spending authority.
 
 ## Rotation and incident response
 
