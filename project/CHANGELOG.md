@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-11 | M09.7 genuine browser-wallet authentication
+
+- Replaced the stalled MyNearWallet selector path with pinned Near Connect 0.12.0 and Meteor Wallet Testnet authentication.
+- Vendored the exact pinned Meteor executor into each static build after SHA-256 verification, retaining the restrictive same-origin CSP.
+- Added explicit authentication-only Testnet sign-in without a function-call key, contract permission or transaction authority.
+- Corrected Meteor compatibility where account discovery omits or structures the public key. The server-side NEP-413 signature remains the identity proof.
+- Completed genuine authentication for disposable account `easyjacket3318.testnet` and verified server session recovery after page reload.
+- Preserved disabled transaction signing, zero spending, no chain writes and no import of creator or beneficiary custody.
+
 ## 2026-11-10 | M09.6 public URL migration
 
 - Created the Cloudflare Pages project `contra-near` and deployed the existing operational frontend at `https://contra-near.pages.dev`.

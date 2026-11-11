@@ -60,7 +60,7 @@ No criterion is upgraded from fixture evidence where its text requires a live pr
 ## Environment boundary
 
 - Contract-sensitive financial evidence uses real local NEAR Sandbox transactions and retained receipts.
-- External-wallet interaction is controlled simulation only. No signature or transaction was broadcast by a browser wallet.
+- External-wallet transaction handling remains controlled simulation only. Genuine browser-wallet NEP-413 authentication succeeded with a disposable Testnet identity, but no transaction was signed or broadcast.
 - Meta, Baseten and Modal use deterministic mocked transports only. No provider endpoint or paid inference was used.
 - Six Sandbox reviewer accounts share one process and do not establish independent operator control.
 - There is no testnet deployment, live funded testnet journey or public operational API.
