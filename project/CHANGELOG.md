@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-11 | M10.2 runtime integration and UI removal
+
+Removed the active UX3A dashboard, all imported UX3A assets and obsolete radar/browser visual tests after confirming that wallet, API and protocol logic are separate modules. Added a neutral operational interface. Extended the Cloudflare SQLite Durable Object to schema 3 with provider budgets, idempotent jobs, UNKNOWN locks, immutable proposal provenance, usage events, six-slot reviewer invitations, consent, withdrawal and account-scoped audit history. Production provider execution remains disabled and no independent reviewer claim is made.
+
 ## 2026-11-11 | Cloudflare deployment access restored
 
 Reconnected Wrangler OAuth to the verified Judithorluchee Cloudflare account. Confirmed account ID `0a8fd0acd086e68c9b558159fac0d7a8`, enumerated the existing `contra-testnet` Worker deployments and listed the `contra-near` Pages project. Removed the stale deployment-access requirement from the active external-input list. No deployment or resource mutation occurred.

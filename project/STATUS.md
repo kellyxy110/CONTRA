@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-M10.2-RUNTIME-READY
+
+The active UX3A dashboard, radar, navigation, styling, avatars, icons, font and visual regression suite are removed. The immutable owner-supplied reference JPEG remains unchanged. The public build now contains only a neutral operational interface for liveness, readiness, Meteor wallet authentication, session recovery and disconnect.
+
+Cloudflare SQLite Durable Object schema 3 adds atomic provider budget reservations, idempotent provider jobs, retained UNKNOWN reservations, immutable proposal digests, usage accounting and audit events under the fixed Meta $3, Baseten $3 and Modal $5 ceilings. Live provider execution and fixtures remain disabled in production. Reviewer persistence now provides six unique primary/fresh slots, distinct account and operator enforcement, invitation digest checks, account-scoped NEP-413 consent, pre-freeze withdrawal and immutable audit history. These controls do not prove real-world independence; verified operators remain 0 of 6.
+
 ## 2026-11-11 | Cloudflare deployment administration restored
 
 Wrangler OAuth now authenticates `judithorluchee@gmail.com` against Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`. Read-only administration checks listed the existing `contra-testnet` Worker deployments and the `contra-near` Pages production deployment, confirming that the local deployment identity matches the configured account and resources. No Worker, Pages, Durable Object, secret or route was changed. The USD 0 hosting ceiling remains in force.
