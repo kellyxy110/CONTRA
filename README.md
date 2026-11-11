@@ -13,7 +13,7 @@
 
 CONTRA enables consequential decisions to be challenged, reviewed against immutable evidence and resolved through enforceable rules. AI contributes evidence-bound proposals, reviewers evaluate contested claims, challenges prevent premature settlement, and the NEAR contract applies the final result or agreed fallback. AI cannot cast votes, change frozen terms or authorise payments.
 
-The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-near.pages.dev](https://contra-near.pages.dev). Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
+The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-near.pages.dev](https://contra-near.pages.dev). Genuine Meteor browser-wallet NEP-413 authentication is verified with a disposable Testnet identity. Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
 
 ## Contents
 
@@ -67,7 +67,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Capability | Current evidence |
 | --- | --- |
 | Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 137 tests pass in the current M09.3 verification, including wallet-authority and external-authorisation regressions |
+| Repository tests | 145 tests pass in the current M09.7 verification, including wallet, authority and external-authorisation regressions |
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
@@ -93,7 +93,7 @@ node scripts/build-contracts.mjs
 npm run build:wallet
 ```
 
-Expected results are 118 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. The repository tests include exclusive durable-volume ownership, same-host crash recovery, graceful runtime restart, manifest-bound backup, tamper-detecting restore, separate liveness and readiness coverage, acceptance and interface drift checks, judge-report validation and digest-bound external-authorisation checks. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
+Expected results are 145 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. The repository tests include exclusive durable-volume ownership, same-host crash recovery, graceful runtime restart, manifest-bound backup, tamper-detecting restore, separate liveness and readiness coverage, acceptance and interface drift checks, judge-report validation and digest-bound external-authorisation checks. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
 
 The API defaults to safe unavailable mode:
 
@@ -145,7 +145,7 @@ The contract preserves immutable terms, exact deposits, disjoint committees, det
 Important limitations:
 
 - The testnet contract exists, but no complete funded live-wallet Contestation journey exists yet.
-- The deployed creator allowlist contains only the contract account, which the contract rejects as a creator. Live case creation is blocked pending separately authorised remediation.
+- Browser-wallet authentication is verified with a disposable Meteor Testnet identity, but this grants no creator, beneficiary or financial authority.
 - Six local reviewer accounts are fixtures controlled by one process, not independent operators.
 - Provider model availability, identifiers, credits and billing are not operationally verified.
 - SQLite and content-addressed objects require one durable volume and coordinated backup.
@@ -173,4 +173,4 @@ The owner controls final frontend design, demo production, public X publication 
 
 ## Licence and acknowledgements
 
-CONTRA is available under the [MIT licence](LICENSE). It uses NEAR Protocol, near-sdk, NEAR JavaScript libraries, NEAR Wallet Selector and the provider interfaces documented in the repository. AI-assisted development is disclosed through the repository history and project records; AI outputs do not become protocol authority.
+CONTRA is available under the [MIT licence](LICENSE). It uses NEAR Protocol, near-sdk, NEAR JavaScript libraries, Near Connect, Meteor Wallet and the provider interfaces documented in the repository. AI-assisted development is disclosed through the repository history and project records; AI outputs do not become protocol authority.
