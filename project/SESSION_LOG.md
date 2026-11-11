@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-11 | CONTRA-M10.4-MODAL-VERIFIER-DEPLOYED
+
+Deployed the protected deterministic Modal verifier after the owner confirmed the USD 5 Workspace spending limit and directed execution to proceed. The first attempt stopped locally because Windows console output was not UTF-8; retrying the same source with UTF-8 output succeeded. Modal created app `ap-2wMup9xpnApV3ehbwwjKrK` and endpoint `https://boredom407--contra-verifier-verify.us-east.modal.run`. An unauthenticated POST returned HTTP 401. A follow-up through the local Modal deployment profile also remained 401, confirming that deployment credentials are not Proxy Auth credentials. No secret was printed or committed, no model inference ran and the billing summary remained USD 0.00.
+
 ## 2026-11-11 | CONTRA-M10.3-LIVE-VALIDATION
 
 Rechecked all live provider prerequisites against official sources and separated interface compatibility from financial readiness. Added a fail-closed packet builder that refuses missing reviewer controls, reused operators, excessive deposits, unordered deadlines, incomplete evidence, incorrect transaction order or absent owner authority. Added non-executable journey drafts and one consolidated external action package. Updated all GitHub workflow action pins to supported v6 releases to remove the Node 20 runtime dependency. No provider credential was available, no independent human reviewer was invented, no live request or funded transaction occurred and no new UI was created.
