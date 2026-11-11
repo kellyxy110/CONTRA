@@ -27,8 +27,10 @@ try{
   if(width===390){await page.locator('#mobile-more').click();assert.equal(await page.locator('#mobile-menu').evaluate(node=>node.open),true);await page.locator('#mobile-menu a[href="#settlement"]').click();await page.locator('#workspace .workspace-panel').first().waitFor();assert.equal(new URL(page.url()).hash,'#settlement');}
   if(width===1440){
    assert((await page.locator('main').boundingBox()).y<100,'desktop content starts at the top');
-   const bottoms=await Promise.all(['.committee-panel','.readiness-panel','.events-panel'].map(async selector=>{const box=await page.locator(selector).boundingBox();return box.y+box.height}));
+   const bottoms=await Promise.all(['.deadlines-panel','.readiness-panel','.events-panel'].map(async selector=>{const box=await page.locator(selector).boundingBox();return box.y+box.height}));
    assert(Math.max(...bottoms)-Math.min(...bottoms)<3,'desktop columns end on the same baseline');
+   const committee=await page.locator('.committee-panel').boundingBox(),manifest=await page.locator('.evidence-panel').boundingBox();
+   assert(Math.abs(committee.y-manifest.y)<3,'committee and manifest share the bottom row');
    await page.locator('.rail a[href="#cases"]').click();await page.locator('#workspace .workspace-panel').first().waitFor();assert.equal(new URL(page.url()).hash,'#cases');
   }
   if(width===390||width===1440)await page.screenshot({path:`ci-output/frontend-${width}-route.png`,fullPage:true});
