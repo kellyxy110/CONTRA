@@ -13,7 +13,7 @@
 
 CONTRA enables consequential decisions to be challenged, reviewed against immutable evidence and resolved through enforceable rules. AI contributes evidence-bound proposals, reviewers evaluate contested claims, challenges prevent premature settlement, and the NEAR contract applies the final result or agreed fallback. AI cannot cast votes, change frozen terms or authorise payments.
 
-The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, operational client and reproducible local NEAR Sandbox journeys. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-near.pages.dev](https://contra-near.pages.dev). Genuine Meteor browser-wallet NEP-413 authentication is verified with a disposable Testnet identity. Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
+The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, a neutral operational test interface and reproducible local NEAR Sandbox journeys. The previous product UI has been removed pending a separately authorised design direction. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-near.pages.dev](https://contra-near.pages.dev). Genuine Meteor browser-wallet NEP-413 authentication is verified with a disposable Testnet identity. Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
 
 ## Contents
 
@@ -169,7 +169,7 @@ The [creator eligibility defect report](docs/security/M08_CREATOR_ELIGIBILITY_DE
 
 Actual implementation began on 28 October 2026 with owner authorisation. Current hackathon rules accept code since the 19 October announcement, but CONTRA preserves the exact start date and Git history. Primary track is `security`; additional applicable track is `open`. See [hackathon compliance](docs/HACKATHON_COMPLIANCE.md).
 
-The owner controls final frontend design, demo production, public X publication and submission. This engineering programme maintains the existing operational client and does not replace the approved visual reference.
+The owner controls final frontend design, demo production, public X publication and submission. The deployed client is deliberately neutral and limited to service status, wallet authentication and authenticated API verification. Historical design evidence remains in Git history and immutable reference files, but no prior dashboard design is active or shipped.
 
 ## Licence and acknowledgements
 

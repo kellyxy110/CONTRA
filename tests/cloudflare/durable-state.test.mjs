@@ -4,6 +4,7 @@ import {describe,it,expect} from 'vitest';
 import {nep413Bytes,verifyEd25519} from '../../services/cloudflare/worker.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
+const canonical=value=>value&&typeof value==='object'&&!Array.isArray(value)?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`:JSON.stringify(value);
 const publicOrigin=env.CONTRA_PUBLIC_ORIGIN;
 const tx='11111111111111111111111111111111',block='22222222222222222222222222222222';
 const stub=name=>env.CONTRA_STATE.getByName(name);
@@ -83,6 +84,29 @@ describe('Cloudflare durable financial state',()=>{
 
  it('exports a digest-bound complete recovery package after eviction',async()=>{
   const state=stub('backup-package');await state.prepareOperation(operation('backup-op'));await evictDurableObject(state);const backup=await state.backup();
-  expect(backup.schema).toBe('CONTRA_CLOUDFLARE_BACKUP_V1');expect(backup.digest).toMatch(/^[0-9a-f]{64}$/);expect(backup.tables.operations).toHaveLength(1);expect(Object.keys(backup.tables)).toHaveLength(8);
+  expect(backup.schema).toBe('CONTRA_CLOUDFLARE_BACKUP_V1');expect(backup.digest).toMatch(/^[0-9a-f]{64}$/);expect(backup.tables.operations).toHaveLength(1);expect(Object.keys(backup.tables)).toHaveLength(13);
+ });
+
+ it('reserves provider budgets atomically and rejects conflicting idempotency reuse',async()=>{
+  const state=stub('provider-ledger'),request={provider:'meta',idempotency_key:'fixture-1',account:'reviewer.testnet',case_id:'1'.repeat(64),payload_digest:'2'.repeat(64),reservation_micro_usd:100000};
+  const jobs=await Promise.all(Array.from({length:6},()=>state.reserveProviderJob(request)));expect(jobs.filter(value=>!value.replayed)).toHaveLength(1);
+  await rejection(()=>runInDurableObject(state,instance=>instance.reserveProviderJob({...request,payload_digest:'3'.repeat(64)})),/idempotency conflict/);
+  const completed=await state.completeProviderJob({id:jobs[0].id,response_digest:'4'.repeat(64),actual_micro_usd:0});expect(completed.status).toBe('PROPOSED');
+  const ledger=await state.providerState('reviewer.testnet'),meta=ledger.budgets.find(value=>value.provider==='meta');expect(meta.cap_micro_usd).toBe(3000000);expect(meta.reserved_micro_usd).toBe(0);expect(meta.used_micro_usd).toBe(0);
+ });
+
+ it('locks uncertain provider jobs without releasing or redispatching reservations',async()=>{
+  const state=stub('provider-unknown'),job=await state.reserveProviderJob({provider:'baseten',idempotency_key:'fixture-unknown',account:'reviewer.testnet',case_id:'5'.repeat(64),payload_digest:'6'.repeat(64),reservation_micro_usd:200000});
+  expect((await state.unknownProviderJob(job.id)).status).toBe('UNKNOWN');expect((await state.reserveProviderJob({provider:'baseten',idempotency_key:'fixture-unknown',account:'reviewer.testnet',case_id:'5'.repeat(64),payload_digest:'6'.repeat(64),reservation_micro_usd:200000})).status).toBe('UNKNOWN');
+  await rejection(()=>runInDurableObject(state,instance=>instance.completeProviderJob({id:job.id,response_digest:'7'.repeat(64),actual_micro_usd:0})),/cannot complete/);
+ });
+
+ it('persists six disjoint reviewer slots and account-scoped consent or withdrawal history',async()=>{
+  const state=stub('reviewer-lifecycle'),invitations=[];
+  for(const committee of ['primary','fresh'])for(let slot=1;slot<=3;slot++){const body={committee,slot,purpose:'CONTRA reviewer onboarding'},digestValue=await digest(new TextEncoder().encode(canonical(body)));invitations.push(await state.createReviewerInvitation({digest:digestValue,reviewer_id:`${committee}${slot}.testnet`,operator_id:(committee==='primary'?'a':'b').repeat(63)+slot,committee,slot,expires:Date.now()+60000,body}));}
+  expect(invitations).toHaveLength(6);expect(new Set(invitations.map(value=>value.reviewer_id)).size).toBe(6);expect(new Set(invitations.map(value=>value.operator_id)).size).toBe(6);
+  const accepted=await state.respondReviewer({digest:invitations[0].digest,reviewer_id:'primary1.testnet',status:'CONSENTED',body:{conflicts:[],custody:'independent declaration'}});expect(accepted.status).toBe('CONSENTED');
+  await state.respondReviewer({digest:invitations[1].digest,reviewer_id:'primary2.testnet',status:'WITHDRAWN',body:{reason:'unavailable'}});const history=await state.reviewerLifecycle('primary2.testnet');expect(history.events.map(value=>value.status)).toEqual(['INVITED','WITHDRAWN']);
+  await rejection(()=>runInDurableObject(state,instance=>instance.respondReviewer({digest:invitations[0].digest,reviewer_id:'other.testnet',status:'CONSENTED',body:{}})),/not found/);
  });
 });

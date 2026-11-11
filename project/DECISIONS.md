@@ -1,5 +1,13 @@
 # Decision ledger
 
+## D-104 | Remove all prior product UI while retaining operational verification | 2026-11-11
+
+ACCEPTED. Remove UX3A and earlier active dashboard assets, navigation, radar, styling and visual-only tests. Preserve immutable source references and historical Git evidence. Ship only a neutral operational surface for health, readiness and NEP-413 authentication until a new design direction is explicitly authorised. Functional wallet, API, persistence, provider, reviewer and contract capabilities remain independent of the presentation layer.
+
+## D-105 | Cloudflare provider and reviewer coordination uses SQLite Durable Object state | 2026-11-11
+
+ACCEPTED. Provider reservations, job identity, UNKNOWN locks, usage and provenance share the existing serial SQLite Durable Object boundary. Reviewer invitations enforce unique primary and fresh slots, wallet accounts and operator digests. Authentication proves account control only, not independent human control. Production provider fixtures and live execution remain disabled by configuration.
+
 ## D-103 | Verified Cloudflare deployment identity | 2026-11-11
 
 ACCEPTED. Cloudflare deployment administration uses the OAuth identity `judithorluchee@gmail.com` for account `0a8fd0acd086e68c9b558159fac0d7a8`. This identity can enumerate the configured `contra-testnet` Worker and `contra-near` Pages project. OAuth credentials remain in Wrangler's encrypted local profile backed by Windows Credential Manager and must never be committed. The USD 0 ceiling and separate authority for public mutations remain unchanged.

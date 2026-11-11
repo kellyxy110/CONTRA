@@ -1,5 +1,7 @@
 # AC01 to AC33 acceptance matrix
 
+M10.2 notice: the previous UX3A and dashboard presentation layer has been removed by owner direction. A neutral operational interface retains health, readiness and NEP-413 authentication checks. Durable provider budgets and reviewer onboarding lifecycle tests are fixture evidence only. This does not establish live provider usage or six independent operators, and AC31 and AC32 remain BLOCKED.
+
 Checkpoint: `CONTRA-M10.1-ACCELERATED-LIVE-CONTESTATION`
 
 Evidence cut-off: implementation merge `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd`, promoted to `main` as `a74445527dd66f2ff0c684887849346f7951416e`.

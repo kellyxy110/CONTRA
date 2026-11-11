@@ -1,12 +1,16 @@
 # Next execution task
 
-Cloudflare deployment administration is no longer blocked: Wrangler is connected to the verified Judithorluchee account and can inspect both active resources. Continue the credential-independent reviewer lifecycle and provider-ledger implementation. Any new public resource mutation must remain within the existing Cloudflare Free boundary and must not enable paid features, provider spend or financial signing.
+## Active task | M10.2 external evidence gates
 
-## Active task | M10.1 external evidence and public reviewer parity
+The credential-independent Cloudflare provider ledger and reviewer lifecycle are implemented. Obtain six independently controlled reviewer operators and separately authorised Meta, Baseten and Modal credentials with verified billing limits. Freeze the exact funded Testnet packets only after participant consent. Do not create or reconnect a product UI until the owner supplies a new design direction.
+
+Cloudflare deployment administration is no longer blocked: Wrangler is connected to the verified Judithorluchee account and can inspect both active resources. Any new public resource mutation must remain within the existing Cloudflare Free boundary and must not enable paid features, provider spend or financial signing.
+
+## Historical task | M10.1 external evidence and public reviewer parity
 
 Complete the credential-independent Cloudflare reviewer lifecycle: immutable invitations and responses, domain-bound reviewer control-statement verification, withdrawal before committee freeze, account-scoped audit and recovery-package parity. Then obtain six separately controlled operators and provider credentials through secure channels. Keep Meta, Baseten and Modal independently disabled until exact accounts, interfaces, billing controls and bounded owner authorisation are verified. Freeze the final funded Testnet packet only after participant consent and committee readiness. AC31 and AC32 remain BLOCKED.
 
-## Active task | M10 independent reviewers and bounded provider verification
+## Historical task | M10 independent reviewers and bounded provider verification
 
 M09.7 genuine browser authentication is complete with a disposable Meteor Testnet identity. Keep transaction signing disabled and AC31/AC32 BLOCKED. Next recruit and verify six separately controlled reviewer operators, then prepare the separately authorised provider and funded-journey gates. Do not treat the disposable browser identity as creator, beneficiary or reviewer independence evidence.
 
@@ -14,7 +18,7 @@ M09.7 genuine browser authentication is complete with a disposable Meteor Testne
 
 The public Cloudflare application is deployed at `https://contra-near.pages.dev` and read-only ready. Meteor Wallet completed genuine NEP-413 authentication on the public preview with a disposable Testnet identity. Existing creator and beneficiary custody was not imported. Live transaction signing remains disabled.
 
-## Active | Complete browser proof and external actor authority
+## Historical task | Complete browser proof and external actor authority
 
 Import or select the verified creator and beneficiary identities in an authorised testnet browser wallet, then exercise connect, account switching, rejection, refresh recovery and disconnect without a funded contract call. Separately verify participant control and consent and recruit six eligible reviewer operators. Only then freeze deterministic case terms and request approval of the immutable packet capped at 1 testnet NEAR per transaction and 2 testnet NEAR total. Stop any UNKNOWN operation without redispatch. AC31 and AC32 remain BLOCKED.
 
@@ -22,7 +26,7 @@ Import or select the verified creator and beneficiary identities in an authorise
 
 Completed on 10 November 2026. `contra-beneficiary.testnet` was created exactly once through the testnet faucet, verified through final RPC and stored under a separate Windows Credential Manager key. Both participant accounts passed non-financial live NEP-413 verification. Browser-wallet UI evidence and funded authority were intentionally not claimed.
 
-## Active | M09.2 beneficiary and bounded wallet authority
+## Historical task | M09.2 beneficiary and bounded wallet authority
 
 M09.1 creator eligibility is remediated and PR 43 is merged. Identify or separately authorise creation of a beneficiary testnet account distinct from `contra-creator.testnet` and `contra-contestation.testnet`. Verify custody and permissions, freeze exact case terms and expenditure limits, then bind the final wallet-authority digest to explicit owner approval. First exercise non-financial authentication and recovery. Do not fund or create a case until every gate passes. Keep AC31 and AC32 BLOCKED.
 
@@ -30,7 +34,7 @@ M09.1 creator eligibility is remediated and PR 43 is merged. Identify or separat
 
 Do not enable live signing against the current deployment. Select a replacement deployment, versioned owner-only allowlist upgrade or empty-state migration, then bind the exact code, account, creator, funding, custody, ABI and financial verification plan to fresh owner approval. Cloudflare deployment remains independently blocked on the final account and destination authority packet.
 
-## Active next task | M09 live wallet and public runtime authority
+## Historical task | M09 live wallet and public runtime authority
 
 M08 contract deployment is complete. Preserve transaction `BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr`, the matching deployed artifact and initial state. Do not redeploy. The next external gate is named creator and beneficiary testnet-wallet authority plus approved Cloudflare Free resources. Six independently controlled reviewers and live provider usage remain separate M10 gates.
 
@@ -40,15 +44,15 @@ This task was completed on 10 November 2026. The retained text below records the
 
 The testnet account, public key, 10 NEAR faucet balance, empty code and Linux production artifact were verified. Contract deployment was blocked on explicit owner approval of deployment-intent digest `18793ae8cc5d246c606f3557983f622a7b2624bff2ddf2ccb83c9d965cfd2df5`, expiring 16 November 2026. Account-creation approval did not itself authorise deployment.
 
-## Active supporting task | Supply M10 external evidence
+## Historical task | Supply M10 external evidence
 
 Recruit three independently controlled primary reviewers and three independently controlled fresh reviewers, then collect signed control disclosures, conflicts and availability. For each provider, confirm the exact account and model, credits, pricing and billing controls before requesting one bounded spend approval. Continue fixtures until those external conditions are met. M10 remains independent of M08 deployment readiness.
 
-## Active next task | Supply the bounded M08 external authority
+## Historical task | Supply the bounded M08 external authority
 
 The production artifact is verified. The proposed `contra-contestation.testnet` account was absent at final blocks `276958725` and `276958726`. Create and fund the chosen account only through separately authorised owner action, provide its public Ledger key, then approve the recomputed deployment-intent digest with an expiry. M09 Cloudflare hosting and M10 provider access remain separate and do not block M08 readiness.
 
-## Active next task | External M08 authorisation and execution
+## Historical task | External M08 authorisation and execution
 
 The judge quick-start is already promoted to `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`. Preserve its green release evidence.
 
