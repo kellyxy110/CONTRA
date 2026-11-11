@@ -510,3 +510,7 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 
 Verified the Judithorluchee Cloudflare OAuth identity and exact configured account. Confirmed `contra-testnet` currently has no installed secrets. Implemented redacted, independent provider readiness in the Worker, added three activation regressions, updated credential procedures and preserved disabled provider execution. Results: repository 154 of 154, Cloudflare 14 of 14, Worker dry run, wallet build, documentation links and source policy passed. No external call, secret mutation, transaction or spend occurred. Next action is owner-side credential acquisition followed by interactive installation and independent non-billable verification.
 
+# 2026-11-11 | Modal verifier implemented, not deployed
+
+Implemented the protected deterministic Modal verification boundary on `feat/m10-modal-verifier`. The endpoint requires Proxy Token authentication and its pure core fails closed on malformed envelopes, digest mutation, identity mismatch, unsupported policy and unapproved nested citations. Local results: repository 156 of 156, Cloudflare 14 of 14, Worker dry run, documentation links and Security policy passed. No deployment, provider request, Cloudflare secret change or spending occurred.
+

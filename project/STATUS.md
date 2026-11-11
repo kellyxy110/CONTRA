@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-M10.4-MODAL-VERIFIER-IMPLEMENTED
+
+The repository-owned Modal verifier is implemented locally and remains undeployed. Its endpoint is explicitly protected with `requires_proxy_auth=True`. The pure deterministic core accepts only the frozen verification request, enforces a 64 KiB bound, recomputes the immutable proposal digest, binds case, terms and round identity, checks all nested citations against the supplied evidence set and returns a non-binding result with zero model tokens. It cannot vote, transact or settle.
+
+Repository tests pass 156 of 156, including five Python verification cases and two Node integration checks. Cloudflare tests pass 14 of 14; Worker dry run, documentation links and Security policy pass. No Modal function was deployed, no Proxy Token was installed in Cloudflare, no inference occurred and spending remains USD 0. Deployment remains gated on review, the verified USD 5 Workspace budget and spend limit, and a bounded external execution approval.
+
 ## Current checkpoint | CONTRA-M10.4-PROVIDER-CREDENTIAL-READY
 
 Cloudflare provider credential installation is now fail closed and independently observable. The production Worker target remains `contra-testnet` in Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`. Its public configuration reports only redacted credential-presence and external readiness gates. A secret alone cannot enable inference: exact endpoint, model, account, credit, pricing, hard billing control, bounded owner spending authority and live enablement must all pass for that provider.
