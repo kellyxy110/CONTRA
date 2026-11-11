@@ -2,9 +2,9 @@
 
 M10.2 notice: the previous UX3A and dashboard presentation layer has been removed by owner direction. A neutral operational interface retains health, readiness and NEP-413 authentication checks. Durable provider budgets and reviewer onboarding lifecycle tests are fixture evidence only. This does not establish live provider usage or six independent operators, and AC31 and AC32 remain BLOCKED.
 
-Checkpoint: `CONTRA-M10.1-ACCELERATED-LIVE-CONTESTATION`
+Checkpoint: `CONTRA-M10.3-LIVE-VALIDATION`
 
-Evidence cut-off: implementation merge `59de0f9b57b5245aaae1bb6d90d0df7c7f17b5bd`, promoted to `main` as `a74445527dd66f2ff0c684887849346f7951416e`.
+Evidence cut-off: M10.2 release `main` commit `717bef52943ce67d2c96dab6535710c2921febfe`. M10.3 credential-independent preparation does not upgrade any live criterion.
 
 This is a fresh criterion-by-criterion review of [the frozen acceptance specification](../UX3B_ENGINEERING_ACCEPTANCE.md). PASS means the criterion is supported by current retained evidence at the stated environment boundary. PARTIAL means a material part is proven but one or more required observations are absent. BLOCKED means the required live external evidence cannot exist without an owner-controlled resource or authorisation.
 
@@ -44,8 +44,8 @@ The complete protected-main gate passed in [GitHub Actions run 42624205937](http
 | AC28 | PARTIAL | Operational client and browser evidence | Selected-case consistency, case-switch cancellation and basic pagination are implemented. Broader duplicate-event and multi-page live-index evidence remains incomplete. |
 | AC29 | PASS | Security and service tests | Untrusted evidence is isolated from instructions, browser output is escaped, sessions reject replay and expiry, and cross-case protected data is denied. Current-tree secret and policy checks pass. |
 | AC30 | PARTIAL | Browser accessibility evidence | Keyboard routes, dialog focus, Escape, return focus, text states and responsive evidence exist. A current manual screen-reader session against the final owner frontend is absent. |
-| AC31 | BLOCKED | Requires a complete live testnet case and providers | The contract is deployed on testnet and the creator allowlist is repaired with `contra-creator.testnet` eligible. The unchallenged local Sandbox journey passes, but a complete authorised live-wallet testnet case and actual provider records remain absent. B-M09-03 and B-M10-02 apply. |
-| AC32 | BLOCKED | Requires a complete challenged testnet case and providers | The contract is deployed on testnet and creator eligibility is repaired. The challenged local Sandbox reversal passes, but real wallet interaction, independent reviewers and actual provider records remain absent. B-M09-03, B-M10-01 and B-M10-02 apply. |
+| AC31 | BLOCKED | Requires a complete live testnet case and providers | The contract is deployed on testnet and `contra-creator.testnet` is eligible. Canonical packet validation and the unchallenged Sandbox journey pass, but the packet remains non-executable because six operators, exact evidence, participant consent, provider records and funded authority are absent. B-M09-02, B-M10-01 and B-M10-02 apply. |
+| AC32 | BLOCKED | Requires a complete challenged testnet case and providers | The challenged Sandbox reversal and canonical challenged-packet validation pass. No executable packet or live reversal exists because six operators, counterevidence, participant consent, provider records and funded authority are absent. B-M09-02, B-M10-01 and B-M10-02 apply. |
 | AC33 | PASS | ABI, API and interface traceability | A01 to A23 remain mapped to contract, service or no-op behaviour. `CONTRA_FRONTEND_INTERFACE_V1` now machine-checks every implemented API route and exact Rust case states. |
 
 ## Result

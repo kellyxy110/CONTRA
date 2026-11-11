@@ -1,0 +1,35 @@
+{
+  "schema": "CONTRA_LIVE_CONTESTATION_DRAFTS_V1",
+  "executable": false,
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "contract_code_hash": "EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2",
+  "creator_id": "contra-creator.testnet",
+  "beneficiary_id": "contra-beneficiary.testnet",
+  "limits": {
+    "maximum_attached_deposit_yocto": "1000000000000000000000000",
+    "maximum_journey_expenditure_yocto": "2000000000000000000000000"
+  },
+  "journeys": [
+    {
+      "journey": "unchallenged",
+      "committees": { "primary": [], "fresh": [] },
+      "terms_digest": null,
+      "evidence_manifest_digest": null,
+      "amount_yocto": null,
+      "deadlines": null,
+      "financial_authorisation": null
+    },
+    {
+      "journey": "challenged",
+      "committees": { "primary": [], "fresh": [] },
+      "terms_digest": null,
+      "evidence_manifest_digest": null,
+      "counterexample_digest": null,
+      "amount_yocto": null,
+      "deadlines": null,
+      "financial_authorisation": null
+    }
+  ],
+  "notice": "Draft only. Reviewer identities, evidence, terms, deadlines and owner authority must be frozen before a packet digest or transaction operation ID is issued."
+}
