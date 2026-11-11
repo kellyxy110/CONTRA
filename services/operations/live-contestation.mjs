@@ -99,6 +99,30 @@ export function operationIdentity(packet, step, index) {
   );
 }
 
+export function liveJourneyAuthorityDigest(input) {
+  return sha256(
+    canonical({
+      schema: "CONTRA_LIVE_CONTESTATION_AUTHORITY_V1",
+      journey: input.journey,
+      network: input.network,
+      contract_account: input.contract_account,
+      contract_code_hash: input.contract_code_hash,
+      creator_id: input.creator_id,
+      beneficiary_id: input.beneficiary_id,
+      committees: input.committees,
+      terms_digest: input.terms_digest,
+      evidence_manifest_digest: input.evidence_manifest_digest,
+      counterexample_digest:
+        input.journey === "challenged" ? input.counterexample_digest : null,
+      amount_yocto: input.amount_yocto,
+      deadlines: input.deadlines,
+      expected_transitions: input.expected_transitions,
+      limits: input.limits,
+      transaction_intents: input.transaction_intents,
+    }),
+  );
+}
+
 export function buildLiveJourneyPacket(input) {
   if (!["unchallenged", "challenged"].includes(input?.journey))
     fail("Journey must be unchallenged or challenged");
@@ -169,9 +193,11 @@ export function buildLiveJourneyPacket(input) {
     journeyLimit > 2n * YOCTO
   )
     fail("Journey financial limits exceed the approved proposal envelope");
+  const authorityIntentDigest = liveJourneyAuthorityDigest(input);
   if (
     input.financial_authorisation?.approved !== true ||
-    !HASH.test(input.financial_authorisation?.approval_digest || "")
+    !HASH.test(input.financial_authorisation?.approval_digest || "") ||
+    input.financial_authorisation?.intent_digest !== authorityIntentDigest
   )
     fail("Digest-bound owner financial authorisation is required");
   const expected = expectedIntents(input, principal),
@@ -198,6 +224,12 @@ export function buildLiveJourneyPacket(input) {
     if (BigInt(step.deposit_yocto) > perTransaction)
       fail("Transaction deposit exceeds the packet limit");
   }
+  const combinedDeposit = steps.reduce(
+    (total, step) => total + BigInt(step.deposit_yocto),
+    0n,
+  );
+  if (combinedDeposit > journeyLimit)
+    fail("Combined transaction deposits exceed the journey limit");
   const base = {
     schema: "CONTRA_LIVE_CONTESTATION_PACKET_V1",
     journey: input.journey,
@@ -222,6 +254,7 @@ export function buildLiveJourneyPacket(input) {
         "Onchain state is immutable. Stop subsequent writes after any UNKNOWN outcome.",
     },
     financial_authorisation: input.financial_authorisation,
+    authority_intent_digest: authorityIntentDigest,
     transaction_intents: steps,
   };
   const packet = { ...base, packet_digest: sha256(canonical(base)) };

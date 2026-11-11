@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   buildLiveJourneyPacket,
   assessLiveJourneyDraft,
+  liveJourneyAuthorityDigest,
 } from "../services/operations/live-contestation.mjs";
 import { sha256 } from "../services/api/store.mjs";
 
@@ -11,15 +12,13 @@ const h = (value) => sha256(value),
     (value) => `${value}.testnet`,
   );
 const committee = (offset, kind) =>
-  accounts
-    .slice(offset, offset + 3)
-    .map((reviewer_id, index) => ({
-      reviewer_id,
-      operator_id: h(`${kind}-operator-${index}`),
-      consent_digest: h(`${kind}-consent-${index}`),
-      disclosure_digest: h(`${kind}-disclosure-${index}`),
-      control_signature_verified: true,
-    }));
+  accounts.slice(offset, offset + 3).map((reviewer_id, index) => ({
+    reviewer_id,
+    operator_id: h(`${kind}-operator-${index}`),
+    consent_digest: h(`${kind}-consent-${index}`),
+    disclosure_digest: h(`${kind}-disclosure-${index}`),
+    control_signature_verified: true,
+  }));
 const deadlines = Object.fromEntries(
   [
     "fund_by_ns",
@@ -127,11 +126,13 @@ function packet(journey = "unchallenged") {
       maximum_attached_deposit_yocto: "1000000000000000000000000",
       maximum_journey_expenditure_yocto: "2000000000000000000000000",
     },
-    financial_authorisation: {
-      approved: true,
-      approval_digest: h("owner approval"),
-    },
+    financial_authorisation: null,
     transaction_intents: intents(journey),
+  };
+  input.financial_authorisation = {
+    approved: true,
+    intent_digest: liveJourneyAuthorityDigest(input),
+    approval_digest: h("owner approval"),
   };
   return input;
 }
@@ -165,19 +166,44 @@ test("live packet rejects reused operators, excessive deposits and absent author
 test("live packet rejects a party signing for a reviewer and any changed financial attachment", () => {
   const wrongSigner = packet();
   wrongSigner.transaction_intents[4].signer_id = "contra-creator.testnet";
+  wrongSigner.financial_authorisation.intent_digest =
+    liveJourneyAuthorityDigest(wrongSigner);
   assert.throws(
     () => buildLiveJourneyPacket(wrongSigner),
     /frozen method, signer and deposit/,
   );
   const changedDeposit = packet();
   changedDeposit.transaction_intents[0].deposit_yocto = "0";
+  changedDeposit.financial_authorisation.intent_digest =
+    liveJourneyAuthorityDigest(changedDeposit);
   assert.throws(
     () => buildLiveJourneyPacket(changedDeposit),
     /frozen method, signer and deposit/,
   );
   const wrongRound = packet("challenged");
   wrongRound.transaction_intents[11].args.round_id = 0;
+  wrongRound.financial_authorisation.intent_digest =
+    liveJourneyAuthorityDigest(wrongRound);
   assert.throws(() => buildLiveJourneyPacket(wrongRound), /wrong review round/);
+});
+test("live packet binds owner authority to the exact intent and combined deposit ceiling", () => {
+  const changedAfterApproval = packet();
+  changedAfterApproval.deadlines.fund_by_ns = String(
+    BigInt(changedAfterApproval.deadlines.fund_by_ns) + 1n,
+  );
+  assert.throws(
+    () => buildLiveJourneyPacket(changedAfterApproval),
+    /Digest-bound owner financial authorisation/,
+  );
+  const insufficientTotal = packet();
+  insufficientTotal.limits.maximum_journey_expenditure_yocto =
+    insufficientTotal.amount_yocto;
+  insufficientTotal.financial_authorisation.intent_digest =
+    liveJourneyAuthorityDigest(insufficientTotal);
+  assert.throws(
+    () => buildLiveJourneyPacket(insufficientTotal),
+    /Combined transaction deposits/,
+  );
 });
 test("incomplete external inputs remain an explicit non-executable draft", () => {
   const status = assessLiveJourneyDraft({

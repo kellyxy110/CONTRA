@@ -67,7 +67,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Capability | Current evidence |
 | --- | --- |
 | Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 150 tests pass in the current M10.3 verification, including wallet, authority, live-packet and external-authorisation regressions |
+| Repository tests | 151 tests pass in the current M10.3 verification, including wallet, authority, live-packet and external-authorisation regressions |
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |

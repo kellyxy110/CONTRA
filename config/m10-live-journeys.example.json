@@ -8,7 +8,7 @@
   "beneficiary_id": "contra-beneficiary.testnet",
   "limits": {
     "maximum_attached_deposit_yocto": "1000000000000000000000000",
-    "maximum_combined_journey_expenditure_yocto": "2000000000000000000000000"
+    "maximum_journey_expenditure_yocto": "2000000000000000000000000"
   },
   "journeys": [
     {
