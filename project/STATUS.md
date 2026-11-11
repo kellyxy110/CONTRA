@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## 2026-11-11 | Cloudflare deployment administration restored
+
+Wrangler OAuth now authenticates `judithorluchee@gmail.com` against Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`. Read-only administration checks listed the existing `contra-testnet` Worker deployments and the `contra-near` Pages production deployment, confirming that the local deployment identity matches the configured account and resources. No Worker, Pages, Durable Object, secret or route was changed. The USD 0 hosting ceiling remains in force.
+
 ## Current checkpoint | CONTRA-M10.1-ACCELERATED-LIVE-CONTESTATION
 
 M10.1 credential-independent readiness is implemented on `feat/m10-live-contestation-readiness`. Runtime and provider configuration now use independent fail-closed provider states, exact HTTPS endpoint allowlists, bounded timeouts, programme ceilings and provider-specific Modal proxy authentication. Local, Testnet, provider and Wrangler placeholder examples are separated and ignored correctly. Real credentials remain absent and all three providers report `CREDENTIALS_PENDING`.
