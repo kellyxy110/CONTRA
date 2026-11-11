@@ -1,5 +1,11 @@
 # CONTRA session log
 
+## 2026-11-11 | CONTRA-M09.7-BROWSER-WALLET-VERIFIED
+
+Diagnosed the MyNearWallet failure as an external endpoint path that never completed its redirect. Integrated Meteor through Near Connect with a pinned, checksum-verified executor served from the Pages origin. Corrected two real compatibility defects: CONTRA had queried accounts before explicit wallet sign-in, and it had incorrectly treated Meteor discovery-key formatting as the identity proof.
+
+The disposable extension account `easyjacket3318.testnet` completed a genuine domain-bound NEP-413 signature on the public preview. The live Cloudflare API returned an account-bound session and preserved it across reload. Existing creator and beneficiary custody was unchanged. Live transaction signing stayed disabled. No transaction, provider call, deployment of contract code or spending occurred.
+
 ## 2026-11-10 | CONTRA-M09.6-PUBLIC-URL-READY
 
 Created and deployed Cloudflare Pages project `contra-near`, preserving the existing Worker and `ContraState` data. Public readiness and same-origin API routing passed at `https://contra-near.pages.dev`; browser traces contained no request to a `workers.dev` hostname. Chromium and Firefox desktop/mobile captures passed.

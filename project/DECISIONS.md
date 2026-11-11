@@ -1,5 +1,12 @@
 # Decision ledger
 
+## D-101 | Meteor browser authentication boundary | 2026-11-11
+
+- Use pinned Near Connect 0.12.0 with Meteor Wallet as the verified browser Testnet connector while MyNearWallet remains unavailable.
+- Serve the pinned Meteor executor from the same public origin only after verifying SHA-256 `96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50`.
+- Account discovery establishes only a candidate `.testnet` account identifier. The server-issued NEP-413 challenge and signature establish control and validate the actual public key.
+- Browser authentication grants no transaction authority. Existing creator and beneficiary keys remain in Windows Credential Manager and are not imported into browser storage.
+
 ## D-100 | Public Pages origin and browser custody boundary | 2026-11-10
 
 - Use `https://contra-near.pages.dev` as the canonical public frontend.

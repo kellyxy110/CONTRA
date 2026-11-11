@@ -1,8 +1,12 @@
 # Next execution task
 
-## Active task | M09.6 genuine browser-wallet verification
+## Active task | M10 independent reviewers and bounded provider verification
 
-The public Cloudflare application is deployed at `https://contra-near.pages.dev` and read-only ready. Keep live signing disabled. Resolve or replace the stalled MyNearWallet testnet connector using an officially supported testnet wallet path, then create only disposable browser identities in isolated profiles and exercise NEP-413 connect, rejection, expiry, replay, switching, disconnect and recovery without funded contract calls. Do not import the creator or beneficiary custody keys. In parallel, invite six separately controlled reviewer operators using `docs/operations/REVIEWER_ONBOARDING.md`. Do not represent invitations or distinct test accounts as proof of independence.
+M09.7 genuine browser authentication is complete with a disposable Meteor Testnet identity. Keep transaction signing disabled and AC31/AC32 BLOCKED. Next recruit and verify six separately controlled reviewer operators, then prepare the separately authorised provider and funded-journey gates. Do not treat the disposable browser identity as creator, beneficiary or reviewer independence evidence.
+
+## Completed task | M09.6 and M09.7 browser-wallet verification
+
+The public Cloudflare application is deployed at `https://contra-near.pages.dev` and read-only ready. Meteor Wallet completed genuine NEP-413 authentication on the public preview with a disposable Testnet identity. Existing creator and beneficiary custody was not imported. Live transaction signing remains disabled.
 
 ## Active | Complete browser proof and external actor authority
 
