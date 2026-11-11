@@ -73,3 +73,4 @@
 .workspace-form.vertical{display:grid;align-items:stretch}.workspace-form.vertical label{width:100%}.workspace-form.vertical button{justify-self:start}.workspace-form textarea{width:100%;font-family:inherit;resize:vertical}
 .workspace-form select{min-height:44px;max-width:100%;padding:9px 12px;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;color:var(--text);font:inherit}
 main{margin:0 auto}
+@media(min-width:1181px){.column{align-content:stretch}.left-column{grid-template-rows:auto auto minmax(0,1fr)}.middle-column,.right-column{grid-template-rows:auto minmax(0,1fr)}}
