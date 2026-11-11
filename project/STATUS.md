@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-M10.3-LIVE-VALIDATION
+
+Credential-independent M10.3 engineering is complete on `feat/m10-live-validation`. Canonical live journey packet validation now requires six distinct signed human controls, disjoint three-member committees, exact evidence and terms digests, ordered deadlines, bounded deposits, an exact transaction sequence, stable operation identifiers and digest-bound financial authority. The checked-in journey files remain explicitly non-executable because those external inputs do not exist.
+
+Official provider requirements were revalidated on 11 November 2026. Meta Standard `muse-spark-1.3` is compatible and priced, but Meta documents only a spend alert rather than a hard cap, so it remains disabled. Baseten still lacks an authenticated exact model and verified hard billing control. Modal supports Workspace budgets and spend limits but lacks a deployed protected verification function. All credentials remain pending, no live inference occurred and verified independent reviewers remain 0 of 6. GitHub action pins were upgraded to supported Node 24 based v6 releases without weakening checks. AC31 and AC32 remain BLOCKED.
+
 ## Current checkpoint | CONTRA-M10.2-RUNTIME-READY
 
 The active UX3A dashboard, radar, navigation, styling, avatars, icons, font and visual regression suite are removed. The immutable owner-supplied reference JPEG remains unchanged. The public build now contains only a neutral operational interface for liveness, readiness, Meteor wallet authentication, session recovery and disconnect.

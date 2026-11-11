@@ -30,6 +30,9 @@ if(mode==='security'){
   ['GitHub token',/\bgh[pousr]_[A-Za-z0-9]{20,}\b/g],
   ['AWS access key',/\bAKIA[0-9A-Z]{16}\b/g],
   ['OpenAI-style secret',/\bsk-[A-Za-z0-9_-]{20,}\b/g],
+  ['Meta Model API key',/\bLLM_[0-9]{6,}_[A-Za-z0-9_-]{20,}\b/g],
+  ['Baseten API key',/\bb10_[A-Za-z0-9]{8}\.[A-Za-z0-9]{32}\b/g],
+  ['Modal API token',/\b(?:ak|as|wk|ws)-[A-Za-z0-9]{8,}\b/g],
   ['NEAR private key JSON',/["']private_key["']\s*:\s*["']ed25519:/gi]
  ];
  const scan=(label,text)=>{for(const [name,re]of patterns){re.lastIndex=0;if(re.test(text))failures.push(`${label}: detected ${name}`);}};

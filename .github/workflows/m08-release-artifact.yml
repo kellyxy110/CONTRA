@@ -23,8 +23,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 26.13.0
       - name: Install pinned Rust toolchain
@@ -55,7 +55,7 @@ jobs:
           grep -qi 'ledger' ci-output/near-ledger-help.txt
           printf '{"schema":"CONTRA_M08_LEDGER_CLI_V1","near_cli_version":"0.30.1","ledger_command_available":true,"device_connected":false,"transaction_signed":false,"transaction_broadcast":false}\n' > ci-output/m08-ledger-cli.json
       - name: Upload release preparation evidence
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: m08-release-preparation-${{ github.run_id }}
           path: ci-output/
