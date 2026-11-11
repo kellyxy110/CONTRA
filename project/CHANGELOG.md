@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-11 | M10.3 live validation preparation
+
+- Revalidated Meta, Baseten and Modal credential, pricing, model and billing-control requirements against current official documentation.
+- Recorded that Meta has a spend alert rather than a hard cap and therefore remains disabled under CONTRA's provider-side control requirement.
+- Added strict canonical Testnet journey packet validation, stable operation identifiers, committee independence checks and non-executable draft detection.
+- Added one consolidated reviewer, provider and funded-journey owner action package.
+- Upgraded pinned checkout, setup-node and artifact actions from Node 20 based v4 releases to supported Node 24 based v6 releases.
+- Preserved disabled financial signing, zero provider usage, 0 of 6 independent reviewers and BLOCKED AC31 and AC32.
+
 ## 2026-11-11 | M10.2 runtime integration and UI removal
 
 Removed the active UX3A dashboard, all imported UX3A assets and obsolete radar/browser visual tests after confirming that wallet, API and protocol logic are separate modules. Added a neutral operational interface. Extended the Cloudflare SQLite Durable Object to schema 3 with provider budgets, idempotent jobs, UNKNOWN locks, immutable proposal provenance, usage events, six-slot reviewer invitations, consent, withdrawal and account-scoped audit history. Production provider execution remains disabled and no independent reviewer claim is made.

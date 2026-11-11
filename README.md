@@ -67,11 +67,11 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Capability | Current evidence |
 | --- | --- |
 | Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 145 tests pass in the current M09.7 verification, including wallet, authority and external-authorisation regressions |
+| Repository tests | 150 tests pass in the current M10.3 verification, including wallet, authority, live-packet and external-authorisation regressions |
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
-| Provider interoperability | Official interfaces rechecked; independent fail-closed configuration is ready, while Meta, Baseten and Modal execution still uses only non-billable fixtures with strict provenance and authority separation |
+| Provider interoperability | Official interfaces rechecked; execution still uses only non-billable fixtures. Meta lacks a hard spend cap, Baseten lacks a selected model and verified billing control, and Modal lacks a protected function. |
 | Testnet deployment | Verified on `contra-contestation.testnet`; [final deployment transaction](https://explorer.testnet.near.org/transactions/BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr) |
 | Public backend | Cloudflare Worker and SQLite Durable Object deployed; readiness requires fresh final testnet state; live signing disabled |
 | Independent reviewers | Not yet demonstrated; local accounts are one-process fixtures |
@@ -157,7 +157,7 @@ Secrets belong only in server environments. No private key, seed phrase or provi
 
 [The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the authorised testnet route. The deployed contract and transaction are publicly inspectable, while the complete live application journey remains blocked rather than simulated. The [frontend integration contract](docs/operations/FRONTEND_INTEGRATION.md) freezes the current routes, recovery states, trust boundaries and accessibility requirements for the later owner-provided interface.
 
-[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) records the fail-closed preflight, custody requirements, matching artifact and final deployment evidence. The [consolidated owner packet](docs/operations/OWNER_AUTHORISATION_PACKET.md) preserves the exact bounded authorisation. The [hosting architecture](docs/operations/HOSTING_ARCHITECTURE.md) records the deployed Cloudflare Workers Free, Static Assets and SQLite-backed Durable Object boundary under a hard USD 0 ceiling. Funded signing, provider spend and production-secret changes require separate owner authorisation.
+[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) records the fail-closed preflight, custody requirements, matching artifact and final deployment evidence. The [M10 live validation packet](docs/operations/M10_LIVE_VALIDATION_PACKET.md) consolidates the six-reviewer, provider and funded-journey inputs that remain external. The [hosting architecture](docs/operations/HOSTING_ARCHITECTURE.md) records the deployed Cloudflare Workers Free, Static Assets and SQLite-backed Durable Object boundary under a hard USD 0 ceiling. Funded signing, provider spend and production-secret changes require separate owner authorisation.
 
 The [creator eligibility defect report](docs/security/M08_CREATOR_ELIGIBILITY_DEFECT.md) preserves the original defect and verified repair evidence. The [environment guide](docs/operations/ENVIRONMENT_SETUP.md), [provider credential guide](docs/operations/PROVIDER_CREDENTIAL_SETUP.md), [Cloudflare deployment and recovery runbook](docs/operations/CLOUDFLARE_DEPLOYMENT.md), [wallet authority proposal](docs/operations/M09_WALLET_AUTHORITY.md) and [reviewer onboarding procedure](docs/operations/REVIEWER_ONBOARDING.md) define the remaining fail-closed external gates.
 

@@ -1,10 +1,14 @@
 # Next execution task
 
-## Active task | M10.2 external evidence gates
+## Active task | M10.3 external evidence and final packet freeze
 
-The credential-independent Cloudflare provider ledger and reviewer lifecycle are implemented. Obtain six independently controlled reviewer operators and separately authorised Meta, Baseten and Modal credentials with verified billing limits. Freeze the exact funded Testnet packets only after participant consent. Do not create or reconnect a product UI until the owner supplies a new design direction.
+Use the single action package in `docs/operations/M10_LIVE_VALIDATION_PACKET.md`. Obtain six independently controlled reviewer operators, genuine creator and beneficiary consent, exact evidence, and independently gated provider access. Meta remains blocked by the absence of a hard provider cap; Baseten remains blocked on a selected model and verified billing control; Modal remains blocked on a protected function and scoped Proxy Token. Freeze and approve the two live journey packet digests only after every required identity, deadline, amount and transaction intent is exact. Do not create or reconnect a product UI until the owner supplies a new design direction.
 
-Cloudflare deployment administration is no longer blocked: Wrangler is connected to the verified Judithorluchee account and can inspect both active resources. Any new public resource mutation must remain within the existing Cloudflare Free boundary and must not enable paid features, provider spend or financial signing.
+Cloudflare deployment administration remains available through the verified Judithorluchee account. Any new public resource mutation must remain within the existing Cloudflare Free boundary and must not enable paid features, provider spend or financial signing. AC31 and AC32 remain BLOCKED until both genuine funded journeys satisfy their exact live evidence requirements.
+
+## Historical task | M10.2 external evidence gates
+
+The credential-independent Cloudflare provider ledger and reviewer lifecycle were completed. The remaining work was consolidated into the M10.3 external action and live packet gate.
 
 ## Historical task | M10.1 external evidence and public reviewer parity
 

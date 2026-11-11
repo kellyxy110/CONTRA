@@ -1,5 +1,13 @@
 # Decision ledger
 
+## D-106 | Live provider credentials do not imply spending readiness | 2026-11-11
+
+ACCEPTED. Each provider remains disabled until its exact model or function, credential, pricing, credits, provider-side billing control and bounded owner authority are independently verified. Meta Standard `muse-spark-1.3` is technically compatible, but Meta currently offers an alert rather than a hard spend cap, so a key alone cannot make it ready. Baseten requires a model-scoped expiring team key and an exact selected model. Modal requires a protected function, scoped Proxy Token, Workspace budget and spend limit. No shared switch can bypass these gates.
+
+## D-107 | Live Testnet packets are canonical and non-executable until fully bound | 2026-11-11
+
+ACCEPTED. An executable journey packet must bind the current contract code hash, distinct creator and beneficiary, six distinct signed operators, exact terms and evidence, ordered deadlines, deposit limits, transaction intents and digest-bound owner authority. Operation identifiers derive from the packet and exact call payload. Incomplete checked-in drafts have no executable digest and grant no signing or spending authority.
+
 ## D-104 | Remove all prior product UI while retaining operational verification | 2026-11-11
 
 ACCEPTED. Remove UX3A and earlier active dashboard assets, navigation, radar, styling and visual-only tests. Preserve immutable source references and historical Git evidence. Ship only a neutral operational surface for health, readiness and NEP-413 authentication until a new design direction is explicitly authorised. Functional wallet, API, persistence, provider, reviewer and contract capabilities remain independent of the presentation layer.
