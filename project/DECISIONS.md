@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-103 | Verified Cloudflare deployment identity | 2026-11-11
+
+ACCEPTED. Cloudflare deployment administration uses the OAuth identity `judithorluchee@gmail.com` for account `0a8fd0acd086e68c9b558159fac0d7a8`. This identity can enumerate the configured `contra-testnet` Worker and `contra-near` Pages project. OAuth credentials remain in Wrangler's encrypted local profile backed by Windows Credential Manager and must never be committed. The USD 0 ceiling and separate authority for public mutations remain unchanged.
+
 ## D-102 | Independent provider activation and reviewer evidence boundary | 2026-11-11
 
 - Every provider has an independent disabled, misconfigured or ready state. Missing Meta access cannot disable Baseten or Modal, and no common environment switch can bypass account, model, pricing, billing and owner-authorisation gates.

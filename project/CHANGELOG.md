@@ -1,5 +1,9 @@
 # Change log
 
+## 2026-11-11 | Cloudflare deployment access restored
+
+Reconnected Wrangler OAuth to the verified Judithorluchee Cloudflare account. Confirmed account ID `0a8fd0acd086e68c9b558159fac0d7a8`, enumerated the existing `contra-testnet` Worker deployments and listed the `contra-near` Pages project. Removed the stale deployment-access requirement from the active external-input list. No deployment or resource mutation occurred.
+
 ## 2026-11-11 | M10.1 accelerated live Contestation readiness
 
 - Added scoped local, Testnet, provider and Wrangler environment examples without committing credentials.
