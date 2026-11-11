@@ -369,6 +369,21 @@ export async function storeFinding(store,caseRecord,round,actor,input){
  const finding={schema:'CONTRA_HUMAN_FINDING_V1',case_id:caseRecord.case_id,terms_digest:caseRecord.terms_digest,round_id:input.round_id,evidence_digest:round.evidence_digest,reviewer_id:actor,disposition:input.disposition,citations:input.citations,explanation:input.explanation.trim(),limitations:input.limitations.trim(),created_at:new Date().toISOString(),status:'Reviewer finding'};
  const saved=await store.saveRecord({kind:'finding',case_id:caseRecord.case_id,account:actor,body:finding,canonicalBody:true});return {...saved,finding};
 }
+export async function storeReviewPackage(store,caseRecord,round,actor,input){
+ if(![0,1].includes(input.round_id)||!appointed(caseRecord,actor,input.round_id))fail('Only an appointed reviewer may store a recovery package');
+ for(const name of ['commitment','payload_digest','finding_digest','evidence_digest'])hash(input[name],name);
+ if(!['ACCEPT','REJECT','UNRESOLVED'].includes(input.disposition)||!['xchacha20-poly1305','aes-256-gcm'].includes(input.encryption)||typeof input.ciphertext!=='string'||input.ciphertext.length<48||input.ciphertext.length>65536||!/^[A-Za-z0-9+/_=-]+$/.test(input.ciphertext))fail('Invalid encrypted review package');
+ if(round?.round_id!==input.round_id||round.evidence_digest!==input.evidence_digest)fail('Recovery package does not match the frozen round');
+ const findings=await store.records({kind:'finding',case_id:caseRecord.case_id,account:actor});
+ const finding=findings.find(item=>item.digest===input.finding_digest)?.body;
+ if(!finding||finding.case_id!==caseRecord.case_id||finding.terms_digest!==caseRecord.terms_digest||finding.round_id!==input.round_id||finding.evidence_digest!==round.evidence_digest||finding.reviewer_id!==actor||finding.disposition!==input.disposition)fail('Finding identity does not match the reviewer round');
+ const old=(await store.records({kind:'reviewer-package',case_id:caseRecord.case_id,account:actor})).filter(item=>item.body.round_id===input.round_id);
+ if(!old.length&&round.phase!=='COMMIT')fail('A new recovery package must be saved during the commitment phase');
+ const identity=['commitment','payload_digest','finding_digest','evidence_digest','disposition','encryption'];
+ if(old.some(item=>identity.some(name=>item.body[name]!==input[name])))fail('Conflicting review package already exists');
+ const saved=await store.saveRecord({kind:'reviewer-package',case_id:caseRecord.case_id,account:actor,body:{case_id:caseRecord.case_id,round_id:input.round_id,...Object.fromEntries(identity.map(name=>[name,input[name]])),ciphertext:input.ciphertext}});
+ return saved;
+}
 async function body(request){
  const length=Number(request.headers.get('content-length')||0);if(length>1_000_000)fail('Request body exceeds the one-megabyte application limit');
  if(!request.headers.get('content-type')?.toLowerCase().startsWith('application/json'))fail('JSON content type required');
@@ -479,8 +494,8 @@ async function api(request,env){
   if(caseId)caseRecord=await authorisedCase(adapter,caseId,auth.account);
   const kind=path.split('/').at(-1),record=await store.saveRecord({kind,case_id:caseId,account:auth.account,body:input});return json(record,201);
  }
- if(path==='/api/reviewer/package'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),record=await authorisedCase(adapter,input.case_id,auth.account);if(![0,1].includes(input.round_id)||!appointed(record,auth.account,input.round_id))fail('Only an appointed reviewer may store a recovery package');return json(await store.saveRecord({kind:'reviewer-package',case_id:input.case_id,account:auth.account,body:input}),201);}
- if(path==='/api/reviewer/package'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),roundId=Number(url.searchParams.get('round_id')),record=await authorisedCase(adapter,caseId,auth.account);if(!appointed(record,auth.account,roundId))fail('Only an appointed reviewer may recover this package');const items=await store.records({kind:'reviewer-package',case_id:caseId,account:auth.account});if(!items.length)fail('Reviewer package not found');return json(items.at(-1));}
+ if(path==='/api/reviewer/package'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),record=await authorisedCase(adapter,input.case_id,auth.account);if(![0,1].includes(input.round_id)||!appointed(record,auth.account,input.round_id))fail('Only an appointed reviewer may store a recovery package');const round=await adapter.view('get_round',{case_id:input.case_id,round_id:input.round_id});return json(await storeReviewPackage(store,record,round,auth.account,input),201);}
+ if(path==='/api/reviewer/package'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),roundId=Number(url.searchParams.get('round_id')),record=await authorisedCase(adapter,caseId,auth.account);if(![0,1].includes(roundId)||!appointed(record,auth.account,roundId))fail('Only an appointed reviewer may recover this package');const items=(await store.records({kind:'reviewer-package',case_id:caseId,account:auth.account})).filter(item=>item.body.round_id===roundId);if(!items.length)fail('Reviewer package not found');return json(items.at(-1));}
  if(path==='/api/evidence/manifests'||path==='/api/reviewer/control'||path==='/api/reviewer/workspace'||path==='/api/availability'){
   const auth=await session(request,env),caseId=url.searchParams.get('case_id');const record=await authorisedCase(adapter,caseId,auth.account);
   if(path==='/api/evidence/manifests')return json({case_id:caseId,onchain_digest:record.evidence_digest||null,items:(await store.records({kind:'evidence',case_id:caseId})).map(item=>({...item,onchain:item.digest===record.evidence_digest}))});

@@ -1,7 +1,7 @@
 import {env} from 'cloudflare:workers';
 import {evictDurableObject,runInDurableObject,SELF} from 'cloudflare:test';
 import {describe,it,expect} from 'vitest';
-import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding} from '../../services/cloudflare/worker.mjs';
+import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage} from '../../services/cloudflare/worker.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
 const canonical=value=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`:JSON.stringify(value);
@@ -68,6 +68,21 @@ describe('Cloudflare durable financial state',()=>{
   expect(saved.finding.status).toBe('Reviewer finding');expect(saved.finding.reviewer_id).toBe('reviewer.testnet');
   expect(saved.digest).toBe(await digest(new TextEncoder().encode(canonical(saved.finding))));
   expect(await state.linked(caseId,saved.digest)).toBe(true);
+ });
+
+ it('binds encrypted recovery to the appointed reviewer, finding and frozen round',async()=>{
+  const state=stub('review-package-boundary'),caseId='7'.repeat(64),evidence='8'.repeat(64),actor='reviewer.testnet';
+  const record={case_id:caseId,terms_digest:'9'.repeat(64),evidence_digest:evidence,terms:{criteria:[{criterion_id:1,requirement_digest:'a'.repeat(64)}],primary_committee:[{reviewer_id:actor}],fresh_committee:[]}};
+  const round={round_id:0,evidence_digest:evidence,phase:'COMMIT'};
+  const finding=await storeFinding(state,record,round,actor,{round_id:0,disposition:'ACCEPT',citations:[evidence],explanation:'Cited human finding',limitations:''});
+  const input={case_id:caseId,round_id:0,commitment:'b'.repeat(64),payload_digest:'c'.repeat(64),finding_digest:finding.digest,evidence_digest:evidence,disposition:'ACCEPT',encryption:'aes-256-gcm',ciphertext:'A'.repeat(64)};
+  await rejection(()=>storeReviewPackage(state,record,round,'other.testnet',input),/appointed/);
+  await rejection(()=>storeReviewPackage(state,record,round,actor,{...input,finding_digest:'d'.repeat(64)}),/Finding identity/);
+  await rejection(()=>storeReviewPackage(state,record,{...round,evidence_digest:'e'.repeat(64)},actor,input),/frozen round/);
+  await rejection(()=>storeReviewPackage(state,record,{...round,phase:'REVEAL'},actor,input),/commitment phase/);
+  const saved=await storeReviewPackage(state,record,round,actor,input);expect(saved.body.round_id).toBe(0);
+  await rejection(()=>storeReviewPackage(state,record,round,actor,{...input,commitment:'e'.repeat(64)}),/Conflicting review package/);
+  const replay=await storeReviewPackage(state,record,{...round,phase:'REVEAL'},actor,input);expect(replay.replayed).toBe(true);
  });
 
  it('fails readiness closed when durable schema integrity is lost',async()=>{
