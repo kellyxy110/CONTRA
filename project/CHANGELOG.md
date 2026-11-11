@@ -479,4 +479,5 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Added five Python regressions and two Node integration checks, bringing the repository suite to 156 passing tests.
 - Passed 14 Cloudflare tests, Worker dry run, documentation links and Security policy.
 - Did not deploy the Modal function, install its Proxy Token in Cloudflare, call a provider or incur spending.
+- The first deployment preflight failed safely before resource creation because current Modal requires FastAPI in the function image. The corrective image pins Python 3.13 and `fastapi[standard]` 0.121.1.
 
