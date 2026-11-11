@@ -19,7 +19,7 @@ This register consolidates owner-controlled and external requirements. Engineeri
 The exact draft and digest procedure are in `docs/operations/OWNER_AUTHORISATION_PACKET.md`. One response may satisfy the external gates by providing:
 
 1. Live browser-wallet proof, independent participant consent and final bounded wallet authority for the verified `contra-creator.testnet` and `contra-beneficiary.testnet` identities.
-2. Approved Cloudflare Free account, Worker and SQLite Durable Object resources, optional domain, recovery export destination and least-privilege deployment access. The hosting expenditure ceiling is USD 0.
+2. Optional Cloudflare recovery export destination and a dedicated least-privilege automation token. Interactive deployment administration is verified through the owner account. The hosting expenditure ceiling remains USD 0.
 3. Six distinct reviewer operators and their availability for primary and fresh committees.
 4. Provider accounts, exact permitted models, verified credits and billing controls, plus a separately approved spend per provider.
 
