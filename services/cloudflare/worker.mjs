@@ -2,6 +2,7 @@ import {DurableObject} from 'cloudflare:workers';
 import {rpcAdapter} from '../chain/rpc.mjs';
 import {validateWalletCall,verifyReceiptIntent,receiptState} from '../wallet/lifecycle.mjs';
 import {assessCreatorEligibility} from '../deployment/creator-eligibility.mjs';
+import {cloudflareProviderReadiness} from './provider-readiness.mjs';
 
 const HASH=/^[0-9a-f]{64}$/;
 const TX_HASH=/^[1-9A-HJ-NP-Za-km-z]{32,60}$/;
@@ -367,7 +368,7 @@ async function api(request,env){
  }
  if(path==='/api/config'){
   const config=await adapter.view('get_config',{}),eligibility=assessCreatorEligibility(config);
-  return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:false,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:false,providers:[],hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
+  return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:false,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:false,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
  if(path==='/api/session/sandbox')return json({error:'Sandbox sessions are unavailable in the testnet Worker'},403);
  if(path==='/api/session/challenge'&&request.method==='POST'){

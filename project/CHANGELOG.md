@@ -464,3 +464,11 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - UX3A remains approved with this owner-authorised naming-only exception. UX3C protocol work and first November 1 fresh Rust escrow/sandbox milestone continue unchanged.
 - Validation: exact frontend text-substitution comparison and scoped diff inspection; no protocol/sandbox testing claimed. No deployment, provider use, secrets, mainnet action or spending.
 
+# 2026-11-11 | M10.4 provider credential readiness
+
+- Added independently gated, redacted Cloudflare provider readiness for Meta, Baseten and Modal.
+- Added regressions proving credentials are never returned and cannot bypass endpoint, model, billing, spending-authority or live-enable gates.
+- Replaced obsolete secret-installation guidance with exact interactive commands for the verified `contra-testnet` Worker and clarified that each secret command deploys a Worker version.
+- Verified Cloudflare identity, found no installed Worker secrets, passed 154 repository tests, 14 Cloudflare tests, the Worker dry run, wallet build, documentation links and source policy.
+- Made no provider request, secret change, transaction or expenditure.
+

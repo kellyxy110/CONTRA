@@ -1,5 +1,10 @@
 # Next execution task
 
+## Active task | M10.4 external provider inputs
+
+Install each provider credential only through Wrangler's interactive prompt after the owner has obtained it. Then verify account access and non-billable model or endpoint availability independently. Meta remains gated until a genuine hard billing control or a separately approved risk decision exists. Baseten requires an authenticated exact model selection and verified billing control. Modal requires a deployed protected verification function, scoped Proxy Token and Workspace USD 5 budget and spend limit. Do not enable billable inference until the exact provider has bounded owner spending authority. Continue independent reviewer recruitment and immutable Testnet journey preparation in parallel.
+
+
 ## Active task | M10.3 external evidence and final packet freeze
 
 Use the single action package in `docs/operations/M10_LIVE_VALIDATION_PACKET.md`. Obtain six independently controlled reviewer operators, genuine creator and beneficiary consent, exact evidence, and independently gated provider access. Meta remains blocked by the absence of a hard provider cap; Baseten remains blocked on a selected model and verified billing control; Modal remains blocked on a protected function and scoped Proxy Token. Freeze and approve the two live journey packet digests only after every required identity, deadline, amount and transaction intent is exact. Do not create or reconnect a product UI until the owner supplies a new design direction.
