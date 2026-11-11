@@ -407,3 +407,6 @@ Historical log entries, archived design prototype paths and protocol method name
 # 2026-11-11 | Provider secrets cannot grant execution authority
 
 Cloudflare secret presence is now only one provider-specific readiness gate. CONTRA will not infer model access, billing safety, spending authority or live enablement from an installed credential. Public configuration may disclose redacted gate booleans but never secret values. Modal deployment credentials remain outside the Worker; only a scoped protected-function Proxy Token may be installed. Provider jobs remain non-binding AI proposals and cannot create reviewer actions or settlement authority.
+# 2026-11-11 | Modal verification is deterministic and non-binding
+
+The initial Modal function performs deterministic verification rather than model inference. It proves exact proposal digest, case, terms, round and evidence-citation binding at a protected external execution boundary. A successful result remains an AI verification proposal and has no reviewer, transaction, verdict or settlement authority. This avoids unnecessary provider cost and keeps any later model-backed expansion subject to a separate reviewed interface and spending gate.
