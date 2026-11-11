@@ -81,14 +81,38 @@ export class ContraState extends DurableObject{
       case_id TEXT NOT NULL,digest TEXT NOT NULL,account TEXT NOT NULL,kind TEXT NOT NULL,
       created_at INTEGER NOT NULL,PRIMARY KEY(case_id,digest,kind)
     );
+    CREATE TABLE IF NOT EXISTS provider_budgets(
+      provider TEXT PRIMARY KEY,cap_micro_usd INTEGER NOT NULL,reserved_micro_usd INTEGER NOT NULL DEFAULT 0,
+      used_micro_usd INTEGER NOT NULL DEFAULT 0,updated_at INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS provider_jobs(
+      id TEXT PRIMARY KEY,idempotency_key TEXT UNIQUE NOT NULL,provider TEXT NOT NULL,account TEXT NOT NULL,
+      case_id TEXT NOT NULL,payload_digest TEXT NOT NULL,reservation_micro_usd INTEGER NOT NULL,
+      status TEXT NOT NULL,response_digest TEXT,error TEXT,created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS provider_events(
+      seq INTEGER PRIMARY KEY AUTOINCREMENT,job_id TEXT NOT NULL,status TEXT NOT NULL,
+      response_digest TEXT,error TEXT,observed_at INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS reviewer_invitations(
+      digest TEXT PRIMARY KEY,reviewer_id TEXT NOT NULL,operator_id TEXT NOT NULL,committee TEXT NOT NULL,
+      slot INTEGER NOT NULL,status TEXT NOT NULL,body TEXT NOT NULL,expires INTEGER NOT NULL,created_at INTEGER NOT NULL,
+      UNIQUE(committee,slot),UNIQUE(reviewer_id),UNIQUE(operator_id)
+    );
+    CREATE TABLE IF NOT EXISTS reviewer_events(
+      seq INTEGER PRIMARY KEY AUTOINCREMENT,invitation_digest TEXT NOT NULL,reviewer_id TEXT NOT NULL,
+      status TEXT NOT NULL,body TEXT NOT NULL,observed_at INTEGER NOT NULL
+    );
    `);
+   const now=Date.now();
+   for(const [provider,cap] of [['meta',3000000],['baseten',3000000],['modal',5000000]])this.ctx.storage.sql.exec('INSERT OR IGNORE INTO provider_budgets(provider,cap_micro_usd,updated_at) VALUES(?,?,?)',provider,cap,now);
   });
  }
 
  health(){
-  const tables=this.ctx.storage.sql.exec("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('operations','sessions','challenges','artifacts','chain_observations','records','case_links') ORDER BY name").toArray();
-  if(tables.length!==7)fail('Cloudflare durable storage schema is incomplete');
-  return {storage:'cloudflare-durable-object-sqlite',integrity:'ok',schema_version:2,database_size:this.ctx.storage.sql.databaseSize,hosting_cost_ceiling_usd:0,automatic_paid_upgrade:false};
+  const tables=this.ctx.storage.sql.exec("SELECT name FROM sqlite_master WHERE type='table' AND name IN ('operations','sessions','challenges','artifacts','chain_observations','records','case_links','provider_budgets','provider_jobs','provider_events','reviewer_invitations','reviewer_events') ORDER BY name").toArray();
+  if(tables.length!==12)fail('Cloudflare durable storage schema is incomplete');
+  return {storage:'cloudflare-durable-object-sqlite',integrity:'ok',schema_version:3,database_size:this.ctx.storage.sql.databaseSize,hosting_cost_ceiling_usd:0,automatic_paid_upgrade:false};
  }
 
  operation(id){return row(this.ctx.storage.sql.exec('SELECT * FROM operations WHERE id=?',id));}
@@ -234,8 +258,47 @@ export class ContraState extends DurableObject{
   return this.ctx.storage.sql.exec(sql,...args).toArray().map(value=>({...value,body:JSON.parse(value.body)}));
  }
 
+ reserveProviderJob(input){
+  const provider=required(input?.provider,'provider'),key=required(input?.idempotency_key,'idempotency key'),account=required(input?.account,'account'),caseId=hash(input?.case_id,'case id'),payloadDigest=hash(input?.payload_digest,'payload digest'),reservation=Number(input?.reservation_micro_usd);
+  if(!['meta','baseten','modal'].includes(provider)||!Number.isSafeInteger(reservation)||reservation<=0)fail('Provider reservation is invalid');
+  const existing=row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE idempotency_key=?',key));
+  if(existing){if(existing.provider!==provider||existing.account!==account||existing.case_id!==caseId||existing.payload_digest!==payloadDigest||existing.reservation_micro_usd!==reservation)fail('Provider idempotency conflict');return {...existing,replayed:true};}
+  const budget=row(this.ctx.storage.sql.exec('SELECT * FROM provider_budgets WHERE provider=?',provider));if(!budget||budget.reserved_micro_usd+budget.used_micro_usd+reservation>budget.cap_micro_usd)fail('Provider budget exhausted');
+  const id=crypto.randomUUID(),now=Date.now();
+  this.ctx.storage.sql.exec('UPDATE provider_budgets SET reserved_micro_usd=reserved_micro_usd+?,updated_at=? WHERE provider=?',reservation,now,provider);
+  this.ctx.storage.sql.exec('INSERT INTO provider_jobs(id,idempotency_key,provider,account,case_id,payload_digest,reservation_micro_usd,status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?)',id,key,provider,account,caseId,payloadDigest,reservation,'RESERVED',now,now);
+  this.ctx.storage.sql.exec('INSERT INTO provider_events(job_id,status,observed_at) VALUES(?,?,?)',id,'RESERVED',now);return {...row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE id=?',id)),replayed:false};
+ }
+
+ completeProviderJob({id,response_digest,actual_micro_usd}){
+  const job=row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE id=?',id));if(!job)fail('Provider job not found');if(job.status==='PROPOSED')return {...job,replayed:true};if(job.status!=='RESERVED')fail('Provider job cannot complete from its current state');
+  hash(response_digest,'provider response digest');const actual=Number(actual_micro_usd);if(!Number.isSafeInteger(actual)||actual<0||actual>job.reservation_micro_usd)fail('Provider usage exceeds its reservation');const now=Date.now();
+  this.ctx.storage.sql.exec('UPDATE provider_budgets SET reserved_micro_usd=reserved_micro_usd-?,used_micro_usd=used_micro_usd+?,updated_at=? WHERE provider=?',job.reservation_micro_usd,actual,now,job.provider);
+  this.ctx.storage.sql.exec("UPDATE provider_jobs SET status='PROPOSED',response_digest=?,updated_at=? WHERE id=?",response_digest,now,id);this.ctx.storage.sql.exec('INSERT INTO provider_events(job_id,status,response_digest,observed_at) VALUES(?,?,?,?)',id,'PROPOSED',response_digest,now);return {...row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE id=?',id)),replayed:false};
+ }
+
+ unknownProviderJob(id,reason='Provider outcome is uncertain'){
+  const job=row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE id=?',id));if(!job)fail('Provider job not found');if(['PROPOSED','UNKNOWN'].includes(job.status))return {...job,replayed:true};const now=Date.now();this.ctx.storage.sql.exec("UPDATE provider_jobs SET status='UNKNOWN',error=?,updated_at=? WHERE id=?",reason,now,id);this.ctx.storage.sql.exec('INSERT INTO provider_events(job_id,status,error,observed_at) VALUES(?,?,?,?)',id,'UNKNOWN',reason,now);return {...row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE id=?',id)),replayed:false};
+ }
+
+ providerState(account){return {budgets:this.ctx.storage.sql.exec('SELECT * FROM provider_budgets ORDER BY provider').toArray(),jobs:this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE account=? ORDER BY created_at',account).toArray()};}
+
+ async createReviewerInvitation(input){
+  const digest=hash(input?.digest,'invitation digest'),reviewer=required(input?.reviewer_id,'reviewer id'),operator=hash(input?.operator_id,'operator id'),committee=input?.committee,slot=Number(input?.slot),expires=Number(input?.expires),now=Date.now();
+  if(!ACCOUNT.test(reviewer)||!['primary','fresh'].includes(committee)||!Number.isInteger(slot)||slot<1||slot>3||!Number.isSafeInteger(expires)||expires<=now)fail('Reviewer invitation is invalid');
+  const body=canonical(input.body||{}),calculated=await textHash(body);if(calculated!==digest)fail('Reviewer invitation digest does not match its body');
+  const existing=row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));if(existing)return {...existing,replayed:true};
+  this.ctx.storage.sql.exec('INSERT INTO reviewer_invitations(digest,reviewer_id,operator_id,committee,slot,status,body,expires,created_at) VALUES(?,?,?,?,?,?,?,?,?)',digest,reviewer,operator,committee,slot,'INVITED',body,expires,now);this.ctx.storage.sql.exec('INSERT INTO reviewer_events(invitation_digest,reviewer_id,status,body,observed_at) VALUES(?,?,?,?,?)',digest,reviewer,'INVITED',body,now);return {...row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest)),replayed:false};
+ }
+
+ respondReviewer({digest,reviewer_id,status,body}){
+  const invitation=row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));if(!invitation||invitation.reviewer_id!==reviewer_id)fail('Reviewer invitation not found');if(invitation.expires<=Date.now())fail('Reviewer invitation expired');if(!['CONSENTED','WITHDRAWN'].includes(status))fail('Reviewer response is invalid');if(invitation.status==='WITHDRAWN'||invitation.status==='FROZEN')fail('Reviewer invitation is immutable in its current state');const now=Date.now(),encoded=canonical(body||{});this.ctx.storage.sql.exec('UPDATE reviewer_invitations SET status=? WHERE digest=?',status,digest);this.ctx.storage.sql.exec('INSERT INTO reviewer_events(invitation_digest,reviewer_id,status,body,observed_at) VALUES(?,?,?,?,?)',digest,reviewer_id,status,encoded,now);return row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));
+ }
+
+ reviewerLifecycle(reviewerId){return {invitations:this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE reviewer_id=? ORDER BY created_at',reviewerId).toArray(),events:this.ctx.storage.sql.exec('SELECT * FROM reviewer_events WHERE reviewer_id=? ORDER BY seq',reviewerId).toArray()};}
+
  async backup(){
-  const tables=['operations','operation_events','sessions','challenges','artifacts','chain_observations','records','case_links'],data={};
+  const tables=['operations','operation_events','sessions','challenges','artifacts','chain_observations','records','case_links','provider_budgets','provider_jobs','provider_events','reviewer_invitations','reviewer_events'],data={};
   for(const table of tables)data[table]=this.ctx.storage.sql.exec(`SELECT * FROM ${table} ORDER BY rowid`).toArray().map(value=>Object.fromEntries(Object.entries(value).map(([key,item])=>[key,item instanceof ArrayBuffer||ArrayBuffer.isView(item)?btoa(String.fromCharCode(...new Uint8Array(item instanceof ArrayBuffer?item:item.buffer))):item])));
   const payload={schema:'CONTRA_CLOUDFLARE_BACKUP_V1',created_at:new Date().toISOString(),tables:data},digest=await textHash(canonical(payload));return {...payload,digest};
  }
@@ -364,8 +427,22 @@ async function api(request,env){
  }
  if(path==='/api/reviewer/disclosures'){await session(request,env);return json({items:await store.records({kind:'disclosure'}),independence:'Operator independence requires separately controlled signed accounts.'});}
  if(path==='/api/reviewer/audit'){const auth=await session(request,env);return json({reviewer_id:auth.account,items:await store.records({account:auth.account})});}
+ if(path==='/api/reviewer/invitations'&&request.method==='POST'){
+  const auth=await session(request,env);if(auth.account!=='contra-creator.testnet')fail('Only the authorised creator may issue reviewer invitations');const input=await body(request);return json(await store.createReviewerInvitation(input),201);
+ }
+ if(path==='/api/reviewer/invitations'&&request.method==='GET'){const auth=await session(request,env);return json(await store.reviewerLifecycle(auth.account));}
+ if(path==='/api/reviewer/respond'&&request.method==='POST'){
+  const auth=await session(request,env),input=await body(request);if(input.reviewer_id!==auth.account)fail('Reviewer response account does not match the authenticated NEP-413 identity');return json(await store.respondReviewer(input));
+ }
  if(path==='/api/artifact'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id');await authorisedCase(adapter,caseId,auth.account);const value=await store.readArtifact(url.searchParams.get('digest'));return json({digest:value.digest,media_type:value.media_type,text:new TextDecoder().decode(value.bytes)});}
- if(path==='/api/evaluate')return json({error:'Live and paid provider execution is disabled; AI artifacts cannot create votes or settlement'},403);
+ if(path==='/api/provider/jobs'&&request.method==='POST'){
+  const auth=await session(request,env),input=await body(request);await authorisedCase(adapter,input.case_id,auth.account);
+  if(input.mode!=='fixture'||env.CONTRA_PROVIDER_FIXTURES_ENABLED!=='true')return json({error:'Live and paid provider execution is disabled; deterministic fixtures are not enabled in production'},403);
+  const payloadDigest=await textHash(canonical(input.payload)),job=await store.reserveProviderJob({provider:input.provider,idempotency_key:input.idempotency_key,account:auth.account,case_id:input.case_id,payload_digest:payloadDigest,reservation_micro_usd:input.reservation_micro_usd});
+  if(job.replayed)return json(job);const record=await store.saveRecord({kind:'provider-proposal',case_id:input.case_id,account:auth.account,body:{provider:input.provider,payload_digest:payloadDigest,output:input.fixture_output,status:'AI proposed',binding_authority:false}});return json(await store.completeProviderJob({id:job.id,response_digest:record.digest,actual_micro_usd:0}),201);
+ }
+ if(path==='/api/provider/jobs'&&request.method==='GET'){const auth=await session(request,env);return json(await store.providerState(auth.account));}
+ if(path==='/api/evaluate')return json({error:'Use the authenticated provider jobs API. Live and paid execution remains disabled.'},403);
  return json({error:'API route or method is not supported by the Cloudflare runtime'},404);
 }
 
