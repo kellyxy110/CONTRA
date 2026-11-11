@@ -99,7 +99,7 @@ export async function startRuntime(env=process.env){
   store=new Store(runtime.dataDir);store.audit();const recovered=store.recoverInterrupted();
   if(runtime.mode==='sandbox'){const {startSandbox}=await import('../chain/sandbox.mjs');chain=await startSandbox();sandbox=true;}
   if(runtime.mode==='testnet'){chain=rpcAdapter({url:runtime.rpcUrl,contractAccount:runtime.contractAccount,timeoutMs:runtime.rpcTimeoutMs,staleAfterMs:runtime.staleAfterMs});await chain.validate();}
-  const app=createApp({store,chain,sandbox,allowedOrigins:runtime.allowedOrigins,publicOrigin:runtime.publicOrigin});return {runtime,chain,app,recovered,lease};
+  const app=createApp({store,chain,config:providerConfig(env),sandbox,allowedOrigins:runtime.allowedOrigins,publicOrigin:runtime.publicOrigin});return {runtime,chain,app,recovered,lease};
  }catch(error){try{store?.close();}finally{lease.release();}throw error;}
 }
 export async function stopRuntime(handle){
