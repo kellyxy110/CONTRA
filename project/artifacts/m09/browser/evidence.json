@@ -1,14 +1,14 @@
 {
   "schema": "CONTRA_M09_BROWSER_EVIDENCE_V1",
-  "captured_at": "2026-11-10T16:00:20.052Z",
-  "origin": "https://contra-near.pages.dev",
+  "captured_at": "2026-11-11T01:45:48.377Z",
+  "origin": "https://m09-browser-wallet.contra-near.pages.dev",
   "boundary": "Public browser rendering and authentication entry point only. No wallet key was imported, no signature was requested and no transaction was broadcast.",
   "results": [
     {
       "browser": "chromium",
       "layout": "desktop",
       "version": "158.0.8127.18",
-      "url": "https://contra-near.pages.dev/",
+      "url": "https://m09-browser-wallet.contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
@@ -17,7 +17,7 @@
       "missing_accessible_names": 0,
       "workers_dev_requests": 0,
       "request_hosts": [
-        "contra-near.pages.dev"
+        "m09-browser-wallet.contra-near.pages.dev"
       ],
       "console_errors": [],
       "page_errors": [],
@@ -27,7 +27,7 @@
       "browser": "chromium",
       "layout": "mobile",
       "version": "158.0.8127.18",
-      "url": "https://contra-near.pages.dev/",
+      "url": "https://m09-browser-wallet.contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
@@ -36,7 +36,7 @@
       "missing_accessible_names": 0,
       "workers_dev_requests": 0,
       "request_hosts": [
-        "contra-near.pages.dev"
+        "m09-browser-wallet.contra-near.pages.dev"
       ],
       "console_errors": [],
       "page_errors": [],
@@ -46,7 +46,7 @@
       "browser": "firefox",
       "layout": "desktop",
       "version": "159.0",
-      "url": "https://contra-near.pages.dev/",
+      "url": "https://m09-browser-wallet.contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
@@ -55,7 +55,7 @@
       "missing_accessible_names": 0,
       "workers_dev_requests": 0,
       "request_hosts": [
-        "contra-near.pages.dev"
+        "m09-browser-wallet.contra-near.pages.dev"
       ],
       "console_errors": [],
       "page_errors": [],
@@ -65,7 +65,7 @@
       "browser": "firefox",
       "layout": "mobile",
       "version": "159.0",
-      "url": "https://contra-near.pages.dev/",
+      "url": "https://m09-browser-wallet.contra-near.pages.dev/",
       "http_status": 200,
       "ready_status": 200,
       "storage_schema": 2,
@@ -74,7 +74,7 @@
       "missing_accessible_names": 0,
       "workers_dev_requests": 0,
       "request_hosts": [
-        "contra-near.pages.dev"
+        "m09-browser-wallet.contra-near.pages.dev"
       ],
       "console_errors": [],
       "page_errors": [],

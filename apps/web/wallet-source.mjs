@@ -1,11 +1,24 @@
-import {setupWalletSelector} from '@near-wallet-selector/core';
-import {setupMyNearWallet} from '@near-wallet-selector/my-near-wallet';
-export async function connectWallet({network,contractAccount,authenticationAuthorized}){
+import {NearConnector} from '@hot-labs/near-connect';
+const METEOR_EXECUTOR_COMMIT='ef1be35fc3712f2de60a7563aed543d78e73f763';
+export const METEOR_EXECUTOR_SHA256='96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50';
+const METEOR_EXECUTOR_URL=typeof location==='object'?new URL('/vendor/meteor-near-connect.js',location.origin).href:'https://contra-near.pages.dev/vendor/meteor-near-connect.js';
+export const METEOR_MANIFEST={version:'1.0.0',wallets:[{id:'meteor-wallet',name:'Meteor Wallet',icon:'https://raw.githubusercontent.com/Meteor-Wallet/meteor_wallet_sdk/main/assets/meteor-logo-svg.svg',description:'Browser-isolated NEAR wallet authentication.',website:'https://meteorwallet.app/',version:'1.1.1',executor:METEOR_EXECUTOR_URL,type:'sandbox',features:{signMessage:true,signInWithoutAddKey:true,signInAndSignMessage:true,signAndSendTransaction:true,signAndSendTransactions:true,signInWithFunctionCallKey:true,signDelegateActions:true,mainnet:true,testnet:true},platform:{web:'https://wallet.meteorwallet.app',chrome:'https://chromewebstore.google.com/detail/meteor-wallet/pcndjhkinnkaohffealmlmhaepkpmgkb',android:'https://play.google.com/store/apps/details?id=app.meteorwallet.v2',ios:'https://apps.apple.com/us/app/meteor-wallet/id6739558223'},permissions:{storage:true,allowsOpen:['https://chromewebstore.google.com','https://wallet.meteorwallet.app','https://meteorwallet.app','meteorwallet://','meteorwalletdev://'],external:['meteorCom','meteorComV2']}}]};
+export async function connectWallet({network,contractAccount,authenticationAuthorized,connectorFactory=options=>new NearConnector(options),walletId='meteor-wallet'}){
  if(network!=='testnet'||authenticationAuthorized!==true)throw Error('Testnet wallet authentication is not authorized.');
- const selector=await setupWalletSelector({network:'testnet',modules:[setupMyNearWallet()]});
- const wallet=await selector.wallet('my-near-wallet');let accounts=await getWalletAccounts(wallet);if(!accounts.length){await wallet.signIn({contractId:contractAccount,methodNames:[]});accounts=await getWalletAccounts(wallet);}return {selector,wallet,accounts};
+ if(contractAccount!=='contra-contestation.testnet')throw Error('Unexpected Testnet contract account.');
+ const connector=connectorFactory({network:'testnet',features:{signMessage:true,testnet:true},autoConnect:false,manifest:METEOR_MANIFEST});
+ const wallet=await connector.connect({walletId});
+ let accounts=await getWalletAccounts(wallet);
+ if(!accounts.length){
+  if(typeof wallet?.signIn!=='function')throw Error('The browser wallet returned no eligible Testnet account.');
+  const signedIn=await wallet.signIn({network:'testnet'});
+  accounts=filterWalletAccounts(Array.isArray(signedIn)?signedIn:await wallet.getAccounts?.());
+ }
+ if(!accounts.length)throw Error('The browser wallet returned no eligible Testnet account.');
+ return {selector:connector,connector,wallet,accounts};
 }
-export async function getWalletAccounts(wallet){const accounts=await wallet?.getAccounts?.();if(!Array.isArray(accounts))throw Error('Wallet account discovery failed.');return accounts.filter(value=>/^[a-z0-9._-]+\.testnet$/.test(value?.accountId||'')&&value?.publicKey?.startsWith('ed25519:'));}
+function filterWalletAccounts(accounts){if(!Array.isArray(accounts))throw Error('Wallet account discovery failed.');return accounts.filter(value=>/^[a-z0-9._-]+\.testnet$/.test(value?.accountId||''));}
+export async function getWalletAccounts(wallet){return filterWalletAccounts(await wallet?.getAccounts?.());}
 export function selectWalletAccount(accounts,accountId=null){if(!Array.isArray(accounts)||!accounts.length)throw Error('No testnet wallet account is connected.');const selected=accountId?accounts.find(value=>value.accountId===accountId):accounts[0];if(!selected)throw Error('The selected wallet account is unavailable. Reauthenticate after switching accounts.');return selected;}
 export async function assertWalletAccount(wallet,expectedAccount){const selected=selectWalletAccount(await getWalletAccounts(wallet),expectedAccount);if(selected.accountId!==expectedAccount)throw Error('Wallet account changed. Reauthenticate before continuing.');return selected;}
 async function api(path,{token,method='GET',body}={}){const response=await fetch('/api/'+path,{method,headers:{...(token?{Authorization:'Bearer '+token}:{}),...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined}),value=await response.json();if(!response.ok){const error=Error(value.error||'Wallet operation failed');error.status=response.status;throw error;}return value;}

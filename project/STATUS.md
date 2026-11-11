@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-M09.7-BROWSER-WALLET-VERIFIED
+
+Genuine browser-wallet NEP-413 authentication completed on the public Cloudflare preview using Meteor Wallet 0.8.12 and the disposable identity `easyjacket3318.testnet`. The server returned an account-bound session and preserved it across page reload. Transaction signing remained disabled and no contract call, transfer or access-key addition occurred. The connector now uses pinned Near Connect 0.12.0 and a checksum-verified, same-origin Meteor executor. AC31 and AC32 remain BLOCKED because no funded journey was authorised or executed.
+
+MyNearWallet remains an unavailable external path in this environment. The Meteor path required explicit Testnet sign-in and compatibility with Meteor's keyless or structured account-discovery response. NEP-413 remains the authority proof: the server verifies the signed public key, nonce, origin and account rather than trusting discovery metadata.
+
 ## Current checkpoint | CONTRA-M09.6-PUBLIC-URL-READY
 
 The operational frontend is publicly available at `https://contra-near.pages.dev`. Its same-origin `/api` proxy preserves the existing `contra-testnet` Worker and `ContraState` Durable Object while keeping the legacy personal Worker hostname out of browser requests. Public readiness, SQLite schema 2, fresh final NEAR testnet reads, Chromium and Firefox desktop/mobile rendering, responsive overflow and accessible control-name checks pass. Live transaction signing remains disabled.

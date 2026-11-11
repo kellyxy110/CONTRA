@@ -27,6 +27,45 @@ test('testnet wallet accounts are filtered and account switching requires reauth
  globalThis.localStorage=storage();const module=await import('../apps/web/wallet-source.mjs?account-switch');const wallet={getAccounts:async()=>[{accountId:'creator.testnet',publicKey:'ed25519:11111111111111111111111111111111'},{accountId:'creator.near',publicKey:'ed25519:22222222222222222222222222222222'}]},accounts=await module.getWalletAccounts(wallet);assert.equal(accounts.length,1);assert.equal(module.selectWalletAccount(accounts).accountId,'creator.testnet');await assert.rejects(module.assertWalletAccount(wallet,'beneficiary.testnet'),/selected wallet account is unavailable/i);
 });
 
+test('account discovery permits an omitted key until NEP-413 proves control',async()=>{
+ globalThis.localStorage=storage();
+ const module=await import('../apps/web/wallet-source.mjs?account-discovery-without-key');
+ const structuredKey={keyType:0,data:{0:1}};
+ const wallet={getAccounts:async()=>[{accountId:'disposable.testnet'},{accountId:'structured.testnet',publicKey:structuredKey},{accountId:'mainnet.near'}]};
+ assert.deepEqual(await module.getWalletAccounts(wallet),[{accountId:'disposable.testnet'},{accountId:'structured.testnet',publicKey:structuredKey}]);
+});
+
 test('NEP-413 browser flow binds the exact challenge and propagates rejection',async()=>{
  globalThis.localStorage=storage();const requests=[];globalThis.fetch=async(url,options={})=>{requests.push({url,body:options.body&&JSON.parse(options.body)});if(url.endsWith('/api/session/challenge'))return new Response(JSON.stringify({id:'challenge',message:'Sign in',nonce:btoa(String.fromCharCode(...new Uint8Array(32))),recipient:'localhost'}),{status:200,headers:{'Content-Type':'application/json'}});return new Response(JSON.stringify({token:'session'}),{status:200,headers:{'Content-Type':'application/json'}});};const module=await import('../apps/web/wallet-source.mjs?nep413-flow');const signed={accountId:'creator.testnet',publicKey:'ed25519:11111111111111111111111111111111',signature:'signature'},wallet={signMessage:async payload=>{assert.equal(payload.message,'Sign in');assert.equal(payload.recipient,'localhost');assert.equal(payload.nonce.length,32);return signed;}};assert.deepEqual(await module.authenticateWallet(wallet,'creator.testnet'),{token:'session'});assert.equal(requests[1].body.challenge_id,'challenge');assert.equal(requests[1].body.accountId,'creator.testnet');await assert.rejects(module.authenticateWallet({signMessage:async()=>{throw Error('User rejected signature');}},'creator.testnet'),/rejected signature/);
+});
+
+test('browser connector selects a Testnet NEP-413 wallet without financial authority',async()=>{
+ const calls=[];
+ const wallet={getAccounts:async()=>[{accountId:'disposable.testnet',publicKey:'ed25519:11111111111111111111111111111111'}]};
+ const connector={connect:async options=>{calls.push(options);return wallet;}};
+ const module=await import('../apps/web/wallet-source.mjs?near-connect-selection');
+ const connected=await module.connectWallet({network:'testnet',contractAccount:'contra-contestation.testnet',authenticationAuthorized:true,connectorFactory:options=>{calls.push(options);return connector;}});
+ assert.equal(connected.wallet,wallet);
+ assert.deepEqual(connected.accounts,await wallet.getAccounts());
+ assert.equal(calls[0].network,'testnet');
+ assert.deepEqual(calls[0].features,{signMessage:true,testnet:true});
+ assert.equal(calls[0].autoConnect,false);
+ assert.equal(calls[0].manifest.wallets.length,1);
+ assert.equal(calls[0].manifest.wallets[0].id,'meteor-wallet');
+ assert.equal(calls[0].manifest.wallets[0].executor,'https://contra-near.pages.dev/vendor/meteor-near-connect.js');
+ assert.equal(module.METEOR_EXECUTOR_SHA256,'96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50');
+ assert.deepEqual(calls[1],{walletId:'meteor-wallet'});
+ assert.equal(calls.some(value=>value?.addFunctionCallKey),false);
+});
+
+test('browser connector explicitly signs in a new Testnet wallet without adding a key',async()=>{
+ const calls=[];
+ const account={accountId:'new-disposable.testnet',publicKey:'ed25519:11111111111111111111111111111111'};
+ const wallet={getAccounts:async()=>[],signIn:async options=>{calls.push(options);return [account];}};
+ const connector={connect:async options=>{calls.push(options);return wallet;}};
+ const module=await import('../apps/web/wallet-source.mjs?near-connect-explicit-sign-in');
+ const connected=await module.connectWallet({network:'testnet',contractAccount:'contra-contestation.testnet',authenticationAuthorized:true,connectorFactory:()=>connector});
+ assert.deepEqual(connected.accounts,[account]);
+ assert.deepEqual(calls,[{walletId:'meteor-wallet'},{network:'testnet'}]);
+ assert.equal(calls.some(value=>value?.addFunctionCallKey||value?.contractId),false);
 });
