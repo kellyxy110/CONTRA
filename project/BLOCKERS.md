@@ -28,4 +28,4 @@ Private keys, seed phrases and provider secrets must be supplied only through ap
 
 - `B-M10-02-META`: Model API key, account and credit evidence are absent. Standard `muse-spark-1.3` is selected, but no provider-side hard spend cap is verified. Status: EXTERNAL INPUT REQUIRED.
 - `B-M10-02-BASETEN`: Restricted API key, authenticated exact model selection, credit evidence and hard billing control are absent. Status: EXTERNAL INPUT REQUIRED.
-- `B-M10-02-MODAL`: Protected verification function, scoped Proxy Token, frozen function identity and Workspace USD 5 budget and spend limit are absent. Status: EXTERNAL INPUT REQUIRED.
+- `B-M10-02-MODAL`: Protected verification source and a dedicated workspace-wide Proxy Token exist. Deployment, HTTP 401 proof, frozen endpoint identity, Cloudflare Proxy Token installation and verified Workspace USD 5 budget and spend limit remain outstanding. Environment-scoped tokens are unavailable in this workspace. Status: IMPLEMENTED LOCALLY, EXTERNAL EXECUTION GATED.

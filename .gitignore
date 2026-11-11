@@ -23,4 +23,6 @@ coverage/
 dist/
 ci-output/
 worker-configuration.d.ts
+__pycache__/
+*.pyc
 project/artifacts/m04/local-journeys/data/

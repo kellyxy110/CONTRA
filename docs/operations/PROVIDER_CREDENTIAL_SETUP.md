@@ -33,6 +33,16 @@ Modal requires a deployed protected Web Function before CONTRA has an endpoint t
 
 No Modal function or model is currently claimed.
 
+The reviewed function source is `services/modal/app.py`; its deterministic validation core is `services/modal/verification_core.py`. It accepts only `CONTRA_PROVIDER_VERIFICATION_REQUEST_V1`, recomputes the immutable proposal digest, checks exact case, terms and round identity, restricts every nested citation to the supplied evidence set and returns a non-binding `CONTRA_PROVIDER_VERIFICATION_V1` result. It performs no model inference and reports zero tokens.
+
+Deployment remains an external gate. After the source PR is green and the owner confirms the Modal USD 5 Workspace budget and spend limit, deploy with:
+
+```sh
+modal deploy services/modal/app.py --name contra-verifier --profile boredom407
+```
+
+The endpoint must return HTTP 401 without Proxy Token headers before its URL is accepted. Do not install its Proxy Token in Cloudflare until that negative test passes.
+
 ## Exact owner inputs
 
 Do not send any credential through chat. Enter each value only into its provider dashboard, the local ignored environment file or Wrangler's interactive prompt.

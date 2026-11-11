@@ -1,5 +1,10 @@
 # Next execution task
 
+## Active task | Review and bounded Modal deployment
+
+Complete CI review for the protected Modal verifier. Before external deployment, verify the owner-configured Modal Workspace budget and spend limit do not exceed USD 5 and bind deployment to the reviewed source commit. After approval, deploy `services/modal/app.py`, prove the endpoint returns HTTP 401 without Proxy Token headers, perform one authenticated deterministic request, freeze the function URL and identity, and only then install the dedicated Proxy Token in Cloudflare. Keep live provider execution disabled until the independent spending gate passes.
+
+
 ## Active task | M10.4 external provider inputs
 
 Install each provider credential only through Wrangler's interactive prompt after the owner has obtained it. Then verify account access and non-billable model or endpoint availability independently. Meta remains gated until a genuine hard billing control or a separately approved risk decision exists. Baseten requires an authenticated exact model selection and verified billing control. Modal requires a deployed protected verification function, scoped Proxy Token and Workspace USD 5 budget and spend limit. Do not enable billable inference until the exact provider has bounded owner spending authority. Continue independent reviewer recruitment and immutable Testnet journey preparation in parallel.
