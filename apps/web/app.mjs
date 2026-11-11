@@ -101,7 +101,7 @@ async function refresh(){
   $('runtime-notice').hidden=Boolean(ready.ready);
   if(!ready.ready)$('runtime-notice').textContent='The chain is unavailable. Case data is not simulated.';
   if($('case-id').value.trim())await loadCase();
- }catch(error){$('runtime-notice').hidden=false;$('runtime-notice').textContent=`Runtime check failed: ${error.message}`;}
+ }catch(error){$('dialog-connect').disabled=true;$('runtime-notice').hidden=false;$('runtime-notice').textContent='The NEAR chain is unavailable. Case data and transaction results are not simulated.';walletState('unavailable',`Wallet sign-in is unavailable until the chain is ready. ${error.message}`);}
 }
 async function view(method,args){return (await request('view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,args,envelope:true})})).value;}
 async function loadEvents(caseId,afterSeq='0'){
