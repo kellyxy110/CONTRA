@@ -142,7 +142,21 @@ async function loadDashboard(){
   text('settled-value',/^\d+$/.test(String(reserves.paid_yocto||''))?formatNear(reserves.paid_yocto):'Unavailable');
   const colours=['#54889a','#77a899','#b2b89c','#27535a','#ff8678','#f4bd68'];let chartCursor=0;
   const segments=[...groups].map(([state,count],index)=>{const start=chartCursor;chartCursor+=visible.length?count/visible.length*100:0;return {state,count,colour:colours[index%colours.length],start,end:chartCursor}});
-  const chart=$('status-chart');chart.innerHTML=visible.length?`<div class="donut" style="background:conic-gradient(${segments.map(segment=>`${segment.colour} ${segment.start}% ${segment.end}%`).join(',')})"><div><strong>${visible.length}</strong><small>Cases returned</small></div></div><ul>${segments.map(segment=>`<li><i style="background:${segment.colour}"></i><a href="#cases/state/${encodeURIComponent(segment.state)}">${escapeHtml(segment.state)}</a><b>${segment.count}</b></li>`).join('')}</ul>`:'<p class="empty-state">No contract cases returned for this period.</p>';
+  const chart = $('status-chart');
+  const share = new Intl.NumberFormat('en', {style:'percent', maximumFractionDigits:1});
+  chart.innerHTML = visible.length ? `
+    <div class="donut" style="background:conic-gradient(${segments.map(segment=>`${segment.colour} ${segment.start}% ${segment.end}%`).join(',')})">
+      <div><strong>${visible.length}</strong><small>Cases returned</small></div>
+    </div>
+    <ul aria-label="Filter cases by status">
+      ${segments.map(({state,count,colour}) => {
+        const percentage = share.format(count / visible.length);
+        const countLabel = `${count} ${count === 1 ? 'case' : 'cases'}`;
+        return `<li><a class="status-legend-link" href="#cases/state/${encodeURIComponent(state)}" aria-label="${escapeHtml(state)}, ${percentage}, ${countLabel}" title="${countLabel}">
+          <i aria-hidden="true" style="background:${colour}"></i><span>${escapeHtml(state)}</span><b>${percentage}</b>
+        </a></li>`;
+      }).join('')}
+    </ul>` : '<p class="empty-state">No contract cases returned for this period.</p>';
   text('distribution-scope',page?.next_index?`First ${items.length} cases`:days?`Last ${days} days`:'All contract cases');
  }catch(error){if(requestId !== dashboardRequest)return;
   for(const id of values)text(id,'Unavailable');$('status-chart').innerHTML=`<p class="empty-state">Case distribution unavailable: ${escapeHtml(error.message)}</p>`;text('distribution-scope','Chain unavailable')}
