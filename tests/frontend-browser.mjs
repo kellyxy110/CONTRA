@@ -72,6 +72,28 @@ try {
      await page.screenshot({path:`ci-output/contra-${name}-${width}-fixture-${theme}.png`,fullPage:true});
     }
     if(width===375){
+     cases[0].creator_id='browser-fixture.testnet';
+     cases[0].terms={criteria:[{criterion_id:1}]};
+     await page.addInitScript(()=>sessionStorage.setItem('contra-session','browser-fixture'));
+     await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet'}}));
+     await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',external_wallet_signing_authorized:false}}));
+     await page.route('**/api/evidence',route=>{
+      const input=route.request().postDataJSON();
+      assert.equal(input.case_id,cases[0].case_id);
+      assert.equal(input.manifest.sources[0].provenance.origin,'Browser fixture');
+      return route.fulfill({status:201,json:{digest:'a'.repeat(64)}});
+     });
+     await page.reload();
+     await page.locator('#case').selectOption(cases[0].case_id);
+     await page.getByRole('button',{name:'browser-fixture.testnet'}).waitFor();
+     await page.locator('#navigation a[href="#evidence"]').click();
+     await page.getByLabel('Evidence text').fill('Fixture record');
+     await page.getByLabel('Provenance origin').fill('Browser fixture');
+     await page.getByLabel('Captured at').fill('2026-11-12T12:00');
+     await page.getByLabel('Claim for criterion 1').fill('Fixture claim');
+     await page.getByRole('button',{name:'Store evidence'}).click();
+     await page.getByText('Stored off-chain:',{exact:false}).waitFor();
+     assert.equal(await page.getByRole('button',{name:'Sign evidence submission'}).count(),0);
      for(const link of await page.locator('#navigation a').all()){
       const title=await link.innerText();
       if(title==='Overview')continue;
