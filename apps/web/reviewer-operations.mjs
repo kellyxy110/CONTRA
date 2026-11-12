@@ -19,3 +19,16 @@ export async function verifyReviewerReveal({voteCommitment,caseData,caseId,round
  if(commitment!==expectedCommitment)throw Error('The supplied disposition, finding and nonce do not match the onchain commitment.');
  return revealTransactionArgs(caseId,roundId,disposition,evidenceDigest,findingDigest,nonce);
 }
+
+export async function respondToInvitation(post,digest,reviewerId,status,now=new Date()) {
+ return post('reviewer/respond',invitationResponseArgs(digest,reviewerId,status,now));
+}
+export async function storeReviewerFinding(post,caseId,roundId,data) {
+ return post('finding',findingArgs(caseId,roundId,data));
+}
+export async function commitReviewerVote(signCall,caseId,roundId,commitment) {
+ return signCall('commit_vote',commitmentTransactionArgs(caseId,roundId,commitment),'0');
+}
+export async function revealReviewerVote(signCall,args) {
+ return signCall('reveal_vote',args,'0');
+}
