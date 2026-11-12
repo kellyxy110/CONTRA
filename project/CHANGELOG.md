@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-12 | Modal package import correction
+
+- Traced the authenticated Modal timeout to a container startup failure caused by a missing `verification_core.py` module.
+- Added the deterministic core to the Modal image explicitly and added a deployment-source regression assertion.
+- Preserved Proxy Auth, the USD 5 workspace limit and non-binding zero-token verification semantics.
+
 ## 2026-11-12 | Provider activation gate opened
 
 - Recorded the existing owner authority for USD 3 Meta, USD 3 Baseten, USD 5 Modal and bounded NEAR Testnet execution without broadening reviewer authority.
