@@ -50,8 +50,8 @@ jobs:
         run: npm run build:wallet
       - name: Cloudflare compatibility and Durable Object regressions
         run: npm run test:cloudflare && npm run check:cloudflare
-      - name: Install Chromium for frontend browser verification
-        run: npx playwright install --with-deps chromium
+      - name: Install browsers for frontend verification
+        run: npx playwright install --with-deps chromium firefox
       - name: Verify redesigned frontend at five viewport widths
         run: npm run test:browser
       - name: Retrospective evidence integrity review
