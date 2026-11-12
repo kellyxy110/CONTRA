@@ -392,6 +392,41 @@ async function body(request){
 function rpc(env){return rpcAdapter({url:env.NEAR_RPC_URL,contractAccount:env.CONTRA_CONTRACT_ACCOUNT,network:'testnet',timeoutMs:Number(env.CONTRA_RPC_TIMEOUT_MS||8000)});}
 function state(env){return env.CONTRA_STATE.getByName('contra-testnet');}
 function signingAuthorised(env){return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true';}
+async function activationAuthorised(request,env){
+ const supplied=request.headers.get('x-contra-activation')||'',expected=env.CONTRA_ACTIVATION_KEY||'';
+ if(!supplied||!expected)return false;
+ const left=await textHash(supplied),right=await textHash(expected);let difference=left.length^right.length;
+ for(let index=0;index<Math.max(left.length,right.length);index++)difference|=(left.charCodeAt(index%left.length)^right.charCodeAt(index%right.length));
+ return difference===0;
+}
+function safeModels(value){
+ const items=Array.isArray(value?.data)?value.data:Array.isArray(value?.models)?value.models:Array.isArray(value)?value:[];
+ return items.slice(0,100).map(item=>({id:item?.id||item?.model_id||item?.name||null,name:item?.name||item?.display_name||null})).filter(item=>item.id||item.name);
+}
+async function providerProbe(request,env){
+ if(!await activationAuthorised(request,env))return json({error:'Provider activation authentication required'},401);
+ const input=await body(request),provider=input.provider;
+ if(!['meta','baseten','modal'].includes(provider))fail('Unsupported provider probe');
+ let endpoint,headers,payload=null;
+ if(provider==='meta'){
+  endpoint='https://api.meta.ai/v1/models';headers={Authorization:`Bearer ${required(env.META_API_KEY,'Meta credential')}`};
+ }else if(provider==='baseten'){
+  endpoint='https://api.baseten.co/v1/models';headers={Authorization:`Api-Key ${required(env.BASETEN_API_KEY,'Baseten credential')}`};
+ }else{
+  endpoint=required(env.MODAL_FUNCTION_ENDPOINT,'Modal endpoint');headers={'Content-Type':'application/json','Modal-Key':required(env.MODAL_PROXY_KEY,'Modal proxy key'),'Modal-Secret':required(env.MODAL_PROXY_SECRET,'Modal proxy secret')};
+  const evidence='1'.repeat(64),caseId='2'.repeat(64),terms='3'.repeat(64),proposal={case_id:caseId,terms_digest:terms,round_id:0,status:'AI proposed',findings:[{citations:[evidence]}]},proposalDigest=await textHash(canonical(proposal));
+  const value={allowed_citations:[evidence,proposalDigest].sort(),case_id:caseId,evidence_digest:evidence,model:'contra-deterministic-verifier-v1',policy_version:2,prompt_version:'CONTRA_VERIFY_V1',proposal,proposal_digest:proposalDigest,provider:'modal',role:'verifier',round_id:0,schema:'CONTRA_PROVIDER_VERIFICATION_REQUEST_V1',terms_digest:terms};
+  payload={model:'contra-deterministic-verifier-v1',input:{messages:[{role:'system',content:'Validate the immutable non-binding proposal only.'},{role:'user',content:canonical(value)}],max_tokens:384,response_format:{type:'json_schema'},temperature:0}};
+ }
+ const response=await fetch(endpoint,{method:payload?'POST':'GET',headers,body:payload?JSON.stringify(payload):undefined,signal:AbortSignal.timeout(15000)});
+ const raw=await response.text();let value=null;try{value=JSON.parse(raw)}catch{}
+ if(!response.ok)return json({provider,authenticated:false,status:response.status,error:'Provider rejected the authenticated readiness probe'},502);
+ if(provider==='modal'){
+  const valid=value?.result?.schema==='CONTRA_PROVIDER_VERIFICATION_V1'&&value.result.valid===true&&value?.usage?.total_tokens===0;
+  return json({provider,authenticated:true,status:response.status,verified:valid,model:value?.model||null,response_digest:await textHash(raw),usage:value?.usage||null});
+ }
+ return json({provider,authenticated:true,status:response.status,models:safeModels(value),response_digest:await textHash(raw)});
+}
 function browserOperation(operation){if(!operation)return operation;const payload=operation.payload||(operation.payload_json?JSON.parse(operation.payload_json):null);return {...operation,operation_id:operation.operation_id||operation.id,payload};}
 async function session(request,env){
  const raw=request.headers.get('authorization')?.replace(/^Bearer /,'');if(!raw)fail('Authentication required');
@@ -431,6 +466,7 @@ async function api(request,env){
   const config=await adapter.view('get_config',{}),eligibility=assessCreatorEligibility(config);
   const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
+ if(path==='/api/operator/provider-probe'&&request.method==='POST')return providerProbe(request,env);
  if(path==='/api/session/sandbox')return json({error:'Sandbox sessions are unavailable in the testnet Worker'},403);
  if(path==='/api/session/challenge'&&request.method==='POST'){
   const input=await body(request);if(!ACCOUNT.test(input.account||''))fail('Invalid account');
