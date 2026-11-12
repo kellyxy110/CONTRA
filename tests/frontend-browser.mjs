@@ -64,10 +64,11 @@ try{
    }
    const fixtureAccount='browser-fixture.testnet';
    const recordedJobs=[];
-   await page.addInitScript(account=>{
+   await page.addInitScript(({account,origin})=>{
+    if(location.origin!==origin)return;
     sessionStorage.setItem('contra-session','browser-fixture');
     sessionStorage.setItem('contra-account',account);
-   },fixtureAccount);
+   },{account:fixtureAccount,origin});
    await page.route('**/api/session',route=>route.fulfill({json:{account:fixtureAccount}}));
    await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',provider_fixtures_enabled:true}}));
    await page.route('**/api/provider/jobs',route=>{
