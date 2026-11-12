@@ -1,11 +1,13 @@
 import {createApiClient} from './api-client.mjs';
 import {readPagedCases, readProtectedCaseRecords} from './contract-operations.mjs';
 import {openAuthenticatedWallet, recoverWallet} from './wallet-operations.mjs';
+import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 
 const byId = id => document.getElementById(id);
 const routes = {overview:'Overview',cases:'Cases',evidence:'Evidence',lab:'Evaluations',challenges:'Challenges',reviewers:'The Bench',settlement:'Settlement',constellations:'Constellations',activity:'Activity',settings:'Settings'};
 let token = sessionStorage.getItem('contra-session');
 const {request, view} = createApiClient(() => token);
+const post = (path, body) => request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 let cases = [], caseRequest = 0;
 const chartTones = {
  Challenged:'challenged', ChallengeReview:'challenged', Settled:'verified',
@@ -195,6 +197,58 @@ brandMark.classList.add('statement-mark');
 document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
 let account = null;
+function settlementTools(panel) {
+ if (!token) {
+  panel.append(element('p','Connect your wallet to inspect receipts or recover an operation.'));
+  return;
+ }
+ function addForm(labelText, field, buttonText, inspect) {
+  const form = element('form','');
+  const label = element('label',labelText);
+  const input = element('input','');
+  input.name = field;
+  input.required = true;
+  label.append(input);
+  const button = element('button',buttonText);
+  const result = element('div','');
+  result.setAttribute('role','status');
+  form.append(label,button,result);
+  panel.append(form);
+  form.addEventListener('submit',async event=>{
+   event.preventDefault();
+   button.disabled = true;
+   result.textContent = 'Checking…';
+   try { await inspect(new FormData(form),result); }
+   catch(error){result.textContent=error.message;}
+   finally{button.disabled=false;}
+  });
+ }
+ addForm('Transaction hash','tx_hash','Inspect receipt',async (data,result)=>{
+  const receipt = await inspectReceipt(post,data);
+  result.textContent = `Receipt status: ${receipt.status ?? receipt.outcome ?? 'Unavailable'}`;
+ });
+ addForm('Operation ID','operation_id','Inspect operation',async (data,result)=>{
+  const id = data.get('operation_id');
+  const operation = await inspectOperation(request,id);
+  const state = operationRecoveryState(operation);
+  result.textContent = `Operation status: ${operation.status ?? 'Unavailable'}`;
+  if (state.locked) result.append(element('p','The transaction hash is unknown. This operation remains locked.'));
+  if (!state.canReconcile) return;
+  const reconcile = element('button','Reconcile with chain');
+  reconcile.type = 'button';
+  result.append(reconcile);
+  reconcile.addEventListener('click',async ()=>{
+   reconcile.disabled = true;
+   try {
+    const updated = await reconcileKnownOperation(post,id,operation);
+    result.textContent = `Operation status: ${updated.status ?? 'Unavailable'}`;
+   } catch(error) {
+    result.append(element('p',error.message));
+    reconcile.disabled = false;
+   }
+  });
+ });
+}
 async function updateNavigation() {
  const generation = ++routeRequest;
  const route = location.hash.slice(1).split('/')[0] || 'overview';
@@ -223,6 +277,7 @@ async function updateNavigation() {
    const states = route === 'challenges' ? ['Provisional','Challenged','ChallengeReview'] :
     route === 'settlement' ? ['Resolved','Unresolved','SettlementPending','TransferFailed','Settled'] : null;
    show(records.filter(record=>!states||states.includes(record.state)).map(record=>`${record.case_id} · ${readable(record.state)}`));
+   if(route==='settlement'&&generation===routeRequest)settlementTools(panel);
   } else if (route === 'activity') {
    const activity = await view('get_events',{case_id:null,after_seq:'0',limit:50});
    show(activity.items.map(event=>`${event.data?.[0]?.seq ?? '?'} · ${event.event} · ${event.data?.[0]?.case_id ?? 'Global'}`));
