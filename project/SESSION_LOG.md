@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-12 | Provider and wallet activation
+
+PRs 81 through 86 established, corrected and promoted fail-closed provider activation. Meta authenticated, exposed `muse-spark-1.3` and completed one ledger-bound 49-token smoke at 110 microUSD. Modal's first authenticated attempt exposed a missing packaged module; PR 83 fixed the container, after which Proxy Auth returned a valid zero-token verification. Baseten authenticated but returned no selectable model. Creator and beneficiary repeated genuine NEP-413 signing without transaction broadcast. Activation secrets were deleted after use and financial signing stayed disabled.
+
 ## 2026-11-12 | Final implementation and release verification
 
 PR 75 merged the protected Modal runtime into `main` at `99599120614165bce80bdac86e9a04de4fa6e3af` after Core, Security, the nine-test Sandbox baseline, both complete Contestation journeys and judge quick-start passed. PR 73 was updated with complete Chromium and Firefox route coverage, Cloudflare wallet record normalisation and a gated signing handoff. Local browser testing passed all routes at five widths, Cloudflare tests passed 17/17 and wallet browser tests passed 11/11. The immutable reference remains SHA-256 `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`.

@@ -7,11 +7,11 @@
     "schema": "CONTRA_PROVIDER_EXTERNAL_READINESS_V1",
     "providers": {
       "meta": {
-        "status": "ACTIVATION_PENDING",
+        "status": "LIVE_SMOKE_VERIFIED",
         "documentation_verified": true,
-        "account_access_verified": false,
+        "account_access_verified": true,
         "model_identifier": "muse-spark-1.3",
-        "interface_smoke_verified": false,
+        "interface_smoke_verified": true,
         "credits_verified": false,
         "pricing_verified": true,
         "billing_limit_verified": false,
@@ -22,7 +22,7 @@
       "baseten": {
         "status": "ACTIVATION_PENDING",
         "documentation_verified": true,
-        "account_access_verified": false,
+        "account_access_verified": true,
         "model_identifier": null,
         "interface_smoke_verified": false,
         "credits_verified": false,
@@ -33,12 +33,12 @@
         "maximum_authorised_usd": 3
       },
       "modal": {
-        "status": "ACTIVATION_PENDING",
+        "status": "LIVE_VERIFIER_VERIFIED",
         "documentation_verified": true,
         "account_access_verified": true,
         "model_identifier": "contra-deterministic-verifier-v1",
-        "interface_smoke_verified": false,
-        "credits_verified": false,
+        "interface_smoke_verified": true,
+        "credits_verified": true,
         "pricing_verified": true,
         "billing_limit_verified": true,
         "owner_authorised": true,

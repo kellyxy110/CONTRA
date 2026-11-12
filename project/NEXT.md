@@ -1,5 +1,9 @@
 # Next execution task
 
+## Current execution unit | Independent reviewer onboarding
+
+Provider and non-financial wallet activation are complete to the available external boundary. Recruit and verify three primary and three fresh-appeal human operators with distinct Testnet wallets, control signatures, consent and conflict disclosures. Baseten additionally requires an account-visible exact model before any inference call. Only after reviewer readiness may the two already bounded funded journey packets be frozen and executed. Do not repeat Meta or Modal activation calls.
+
 ## Current execution unit | Provider activation and wallet readiness
 
 The owner has authorised bounded live provider verification up to USD 3 Meta, USD 3 Baseten and USD 5 Modal, plus Testnet execution up to 1 NEAR per transaction and 2 NEAR total across the two acceptance journeys. Meta and Baseten credentials and a dedicated Modal Proxy Auth token are installed server-side. Verify account access, models, pricing and residual billing exposure through authenticated probes, then run only the smallest bounded calls after the corresponding fail-closed gate passes. Exercise creator and beneficiary non-financial signing and transaction preflight. Keep funded reviewer-dependent journeys deferred until six genuine independent operators consent.

@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-108 | Live activation remains non-binding | 2026-11-12
+
+ACCEPTED. A successful provider call proves only authenticated interface availability and immutable provenance. Meta and Modal outputs remain non-binding, cannot create reviewer commitments or votes and cannot authorise transactions or settlement. The short-lived activation credential is deleted after each bounded operation. Baseten remains disabled without an exact account-visible model.
+
 ## D-107 | Final release authority boundary | 2026-11-12
 
 The owner-supplied frontend is the release interface. Financial signing may be enabled only by the Cloudflare server gate and an exact bounded execution authority, never by a browser flag. Provider credentials stay server-side and each provider remains independently gated by model access, credits, pricing, billing controls and the authorised programme ceiling. Development reviewer fixtures can verify engineering but cannot become production reviewer authority or justify funded settlement. AC31 and AC32 are DEFERRED until genuine independent reviewers complete the required live actions.
