@@ -37,3 +37,5 @@ th,td{padding:7px 8px;border-bottom:1px solid var(--line)}th{background:#dbe5de}
 .message{display:grid;place-content:center;text-align:center;background:#dce7e0}.message p{margin-bottom:0}
 @media(max-width:900px){body{grid-template-columns:155px minmax(0,1fr)}main{padding:22px 16px}.heading{flex-wrap:wrap}.chart{grid-template-columns:minmax(70px,105px) 1fr}}
 @media(max-width:660px){body{display:block}aside{padding:12px;gap:10px}nav{display:flex;overflow:auto}nav a{white-space:nowrap}.rail-footer{display:none}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.analysis,.bottom{grid-template-columns:minmax(0,1fr);grid-template-rows:auto}.heading{gap:10px}}
+
+.chart>p{grid-column:1/-1;color:var(--muted)}
