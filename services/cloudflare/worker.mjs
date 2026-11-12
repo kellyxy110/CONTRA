@@ -268,6 +268,8 @@ export class ContraState extends DurableObject{
   if(!['meta','baseten','modal'].includes(provider)||!Number.isSafeInteger(reservation)||reservation<=0)fail('Provider reservation is invalid');
   const existing=row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE idempotency_key=?',key));
   if(existing){if(existing.provider!==provider||existing.account!==account||existing.case_id!==caseId||existing.payload_digest!==payloadDigest||existing.reservation_micro_usd!==reservation)fail('Provider idempotency conflict');return {...existing,replayed:true};}
+  const active=row(this.ctx.storage.sql.exec("SELECT COUNT(*) AS count FROM provider_jobs WHERE provider=? AND status='RESERVED'",provider));
+  if(Number(active?.count||0)>0)fail('Provider concurrency limit reached');
   const budget=row(this.ctx.storage.sql.exec('SELECT * FROM provider_budgets WHERE provider=?',provider));if(!budget||budget.reserved_micro_usd+budget.used_micro_usd+reservation>budget.cap_micro_usd)fail('Provider budget exhausted');
   const id=crypto.randomUUID(),now=Date.now();
   this.ctx.storage.sql.exec('UPDATE provider_budgets SET reserved_micro_usd=reserved_micro_usd+?,updated_at=? WHERE provider=?',reservation,now,provider);
@@ -427,6 +429,23 @@ async function providerProbe(request,env){
  }
  return json({provider,authenticated:true,status:response.status,models:safeModels(value),response_digest:await textHash(raw)});
 }
+async function providerSmoke(request,env,store){
+ if(!await activationAuthorised(request,env))return json({error:'Provider activation authentication required'},401);
+ const input=await body(request);if(input.provider!=='meta')fail('Only the verified Meta smoke path is available');
+ const idempotency=required(input.idempotency_key,'idempotency key');if(!/^[a-z0-9:_-]{16,128}$/.test(idempotency))fail('Invalid provider smoke idempotency key');
+ const requestBody={model:'muse-spark-1.3',messages:[{role:'system',content:'Return only a JSON object confirming API availability. Do not make a decision.'},{role:'user',content:'Return {"available":true}.'}],max_tokens:16,temperature:0,response_format:{type:'json_object'}};
+ const payloadDigest=await textHash(canonical(requestBody)),caseId=await textHash('CONTRA_PROVIDER_ACTIVATION_SMOKE_V1');
+ const job=await store.reserveProviderJob({provider:'meta',idempotency_key:idempotency,account:'provider-activation',case_id:caseId,payload_digest:payloadDigest,reservation_micro_usd:10000});
+ if(job.replayed)return json({provider:'meta',job_id:job.id,status:job.status,replayed:true,response_digest:job.response_digest||null});
+ try{
+  const response=await fetch('https://api.meta.ai/v1/chat/completions',{method:'POST',headers:{Authorization:`Bearer ${required(env.META_API_KEY,'Meta credential')}`,'Content-Type':'application/json'},body:JSON.stringify(requestBody),signal:AbortSignal.timeout(30000)});
+  const raw=await response.text();let value=null;try{value=JSON.parse(raw)}catch{}
+  if(!response.ok||!Array.isArray(value?.choices)||!value.choices.length){await store.unknownProviderJob(job.id,'Meta smoke response was not explicitly successful');return json({provider:'meta',job_id:job.id,status:'UNKNOWN',http_status:response.status},502);}
+  const usage=value.usage||{},prompt=Number(usage.prompt_tokens||0),completion=Number(usage.completion_tokens||0),actual=Math.ceil(prompt*1.25+completion*4.25),digest=await textHash(raw);
+  const completed=await store.completeProviderJob({id:job.id,response_digest:digest,actual_micro_usd:actual});
+  return json({provider:'meta',job_id:job.id,status:completed.status,model:value.model||'muse-spark-1.3',response_digest:digest,usage:{prompt_tokens:prompt,completion_tokens:completion,total_tokens:Number(usage.total_tokens||prompt+completion)},actual_micro_usd:actual,binding_authority:false});
+ }catch(error){await store.unknownProviderJob(job.id,'Meta smoke outcome is uncertain');throw error;}
+}
 function browserOperation(operation){if(!operation)return operation;const payload=operation.payload||(operation.payload_json?JSON.parse(operation.payload_json):null);return {...operation,operation_id:operation.operation_id||operation.id,payload};}
 async function session(request,env){
  const raw=request.headers.get('authorization')?.replace(/^Bearer /,'');if(!raw)fail('Authentication required');
@@ -467,6 +486,7 @@ async function api(request,env){
   const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
  if(path==='/api/operator/provider-probe'&&request.method==='POST')return providerProbe(request,env);
+ if(path==='/api/operator/provider-smoke'&&request.method==='POST')return providerSmoke(request,env,store);
  if(path==='/api/session/sandbox')return json({error:'Sandbox sessions are unavailable in the testnet Worker'},403);
  if(path==='/api/session/challenge'&&request.method==='POST'){
   const input=await body(request);if(!ACCOUNT.test(input.account||''))fail('Invalid account');
