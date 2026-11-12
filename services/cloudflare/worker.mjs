@@ -1,6 +1,6 @@
 import {DurableObject} from 'cloudflare:workers';
 import {rpcAdapter} from '../chain/rpc.mjs';
-import {validateWalletCall,verifyReceiptIntent,receiptState} from '../wallet/lifecycle.mjs';
+import {validateWalletCall,verifyReceiptIntent,receiptState,walletSigningRequest} from '../wallet/lifecycle.mjs';
 import {assessCreatorEligibility} from '../deployment/creator-eligibility.mjs';
 import {cloudflareProviderReadiness} from './provider-readiness.mjs';
 
@@ -391,6 +391,8 @@ async function body(request){
 }
 function rpc(env){return rpcAdapter({url:env.NEAR_RPC_URL,contractAccount:env.CONTRA_CONTRACT_ACCOUNT,network:'testnet',timeoutMs:Number(env.CONTRA_RPC_TIMEOUT_MS||8000)});}
 function state(env){return env.CONTRA_STATE.getByName('contra-testnet');}
+function signingAuthorised(env){return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true';}
+function browserOperation(operation){if(!operation)return operation;const payload=operation.payload||(operation.payload_json?JSON.parse(operation.payload_json):null);return {...operation,operation_id:operation.operation_id||operation.id,payload};}
 async function session(request,env){
  const raw=request.headers.get('authorization')?.replace(/^Bearer /,'');if(!raw)fail('Authentication required');
  const value=await state(env).sessionByToken(await textHash(raw));if(!value)fail('Session expired or unavailable');return {raw,...value};
@@ -422,12 +424,12 @@ async function api(request,env){
   if(request.method!=='GET')fail('Operational probes are read-only');
   const storage=await store.health(),chain=await adapter.health(),ready=chain.status==='ready'&&chain.source?.stale===false;
   if(ready)await store.recordChainObservation({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,block_height:Number(chain.source.block_height),block_hash:chain.source.block_hash});
-  const response={ready,storage,chain,network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,live_signing_authorised:false};
+  const response={ready,storage,chain,network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,live_signing_authorised:signingAuthorised(env)};
   return json(response,path==='/api/ready'&&!ready?503:200);
  }
  if(path==='/api/config'){
   const config=await adapter.view('get_config',{}),eligibility=assessCreatorEligibility(config);
-  return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:false,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:false,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
+  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
  if(path==='/api/session/sandbox')return json({error:'Sandbox sessions are unavailable in the testnet Worker'},403);
  if(path==='/api/session/challenge'&&request.method==='POST'){
@@ -457,9 +459,14 @@ async function api(request,env){
   if(call?.method==='create_case')previewRecord=await adapter.view('preview_case',{creator_id:auth.account,request_id:call.args.request_id,terms:call.args.terms});
   if(call?.method==='confirm_reviewer')configRecord=await adapter.view('get_reviewer',{reviewer_id:auth.account});
   const payload=validateWalletCall({network:'testnet',contractAccount:env.CONTRA_CONTRACT_ACCOUNT,signerId:auth.account,call,caseRecord,configRecord,previewRecord});
-  const operation=await store.prepareOperation({id:input.operation_id,account:auth.account,payload_hash:payload.payload_hash,contract_account:env.CONTRA_CONTRACT_ACCOUNT,payload});return json(operation,201);
+  const operation=browserOperation(await store.prepareOperation({id:input.operation_id,account:auth.account,payload_hash:payload.payload_hash,contract_account:env.CONTRA_CONTRACT_ACCOUNT,payload}));return json({operation,signing_request:null,handoff_required:operation.status==='PREPARED',live_signing_authorized:signingAuthorised(env)},201);
  }
- if(path==='/api/wallet/handoff')return json({error:'Live wallet signing is disabled pending creator-eligibility remediation and separate authority'},403);
+ if(path==='/api/wallet/handoff'&&request.method==='POST'){
+  if(!signingAuthorised(env))return json({error:'Live wallet signing is disabled pending an exact bounded execution authority'},403);
+  const auth=await session(request,env);
+  const input=await body(request),existing=await store.operation(input.operation_id);if(!existing||existing.account!==auth.account)fail('Operation not found');
+  const operation=browserOperation(await store.handoffOperation(input.operation_id));return json({operation,signing_request:walletSigningRequest(operation)});
+ }
  if(path==='/api/wallet/reject'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.rejectOperation(input.operation_id,input.pre_handoff_verified===true));}
  if(path==='/api/wallet/interrupt'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.markUnknown(input.operation_id,input.reason));}
  if(path==='/api/wallet/broadcast'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.attachTransactionHash(input.operation_id,input.tx_hash));}
