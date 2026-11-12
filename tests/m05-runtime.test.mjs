@@ -81,7 +81,37 @@ test('two SQLite connections preserve one idempotent budget reservation',t=>{
 });
 
 test('health reports genuine chain identity and persistence while unavailable mode stays explicit',async t=>{
- const store=new Store(directory(t)),source={network:'testnet',finality:'final',block_height:'42',block_hash:'BLOCK',block_timestamp_ns:'1794010800000000000',observed_at:'2026-11-07T03:00:01.000Z',age_ms:1000,stale:false},chain={network:'testnet',contractAccount:'contra.testnet',health:async()=>({status:'ready',network:'testnet',contract_account:'contra.testnet',source}),view:async()=>null},app=createApp({store,chain});await new Promise(resolve=>app.server.listen(0,'127.0.0.1',resolve));const base='http://127.0.0.1:'+app.server.address().port,health=await fetch(base+'/api/health');assert.equal(health.status,200);const body=await health.json();assert.equal(body.network,'testnet');assert.equal(body.contract_account,'contra.testnet');assert.equal(body.chain_health.source.finality,'final');assert.equal(body.persistence.schema_version,5);assert.deepEqual(body.wallet,{preparation_enabled:true,signing_authorized:false});for(const asset of ['/','/app.mjs']){const response=await fetch(base+asset);assert.equal(response.status,200,asset);await response.arrayBuffer();}for(const removed of ['/workflow.css','/tokens.css','/avatar.svg','/design/ux3a/style.css','/design/ux3a/logo.png']){const response=await fetch(base+removed);assert.equal(response.status,404,removed);await response.arrayBuffer();}const unsupported=await fetch(base+'/api/view',{method:'POST',body:'{}'});assert.equal(unsupported.status,415);await unsupported.arrayBuffer();app.server.closeAllConnections();await new Promise(resolve=>app.server.close(resolve));store.close();
+ const store=new Store(directory(t));
+ const source={network:'testnet',finality:'final',block_height:'42',block_hash:'BLOCK',block_timestamp_ns:'1794010800000000000',observed_at:'2026-11-07T03:00:01.000Z',age_ms:1000,stale:false};
+ const chain={network:'testnet',contractAccount:'contra.testnet',health:async()=>({status:'ready',network:'testnet',contract_account:'contra.testnet',source}),view:async()=>null};
+ const app=createApp({store,chain});
+ try {
+  await new Promise(resolve=>app.server.listen(0,'127.0.0.1',resolve));
+  const base='http://127.0.0.1:'+app.server.address().port;
+  const health=await fetch(base+'/api/health');
+  assert.equal(health.status,200);
+  const body=await health.json();
+  assert.equal(body.network,'testnet');
+  assert.equal(body.contract_account,'contra.testnet');
+  assert.equal(body.chain_health.source.finality,'final');
+  assert.equal(body.persistence.schema_version,5);
+  assert.deepEqual(body.wallet,{preparation_enabled:true,signing_authorized:false});
+  const index=await fetch(base+'/');
+  assert.equal(index.status,200);
+  await index.arrayBuffer();
+  for(const removed of ['/app.mjs','/workspaces.mjs','/workflow.css','/tokens.css','/avatar.svg','/design/ux3a/style.css','/design/ux3a/logo.png']){
+   const response=await fetch(base+removed);
+   assert.equal(response.status,404,removed);
+   await response.arrayBuffer();
+  }
+  const unsupported=await fetch(base+'/api/view',{method:'POST',body:'{}'});
+  assert.equal(unsupported.status,415);
+  await unsupported.arrayBuffer();
+ } finally {
+  app.server.closeAllConnections();
+  if(app.server.listening)await new Promise(resolve=>app.server.close(resolve));
+  store.close();
+ }
 });
 
 test('Pages tombstones prevent removed presentation assets from surviving CDN caches',()=>{
