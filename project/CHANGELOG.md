@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-12 | Provider activation gate opened
+
+- Recorded the existing owner authority for USD 3 Meta, USD 3 Baseten, USD 5 Modal and bounded NEAR Testnet execution without broadening reviewer authority.
+- Installed a dedicated Modal Proxy Auth credential separately from its deployment token.
+- Added a short-lived, operator-authenticated provider readiness probe that returns only redacted model identifiers and response digests.
+- Preserved disabled live inference, disabled financial signing and the six-independent-reviewer gate while authenticated checks run.
+
 ## 2026-11-12 | Final implementation release candidate
 
 - Completed the owner-supplied operational frontend across all nine navigation destinations and case detail.
