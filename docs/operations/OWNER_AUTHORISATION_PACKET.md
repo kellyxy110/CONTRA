@@ -39,7 +39,7 @@ The same packet consolidates the remaining inputs:
 
 - approve one Cloudflare Workers Free destination, the `ContraState` SQLite Durable Object class, Static Assets and a recovery export destination, with a hard infrastructure ceiling of USD 0 and no automatic paid upgrade;
 - name three primary and three fresh reviewers under six distinct operators, with no operator overlap;
-- separately authorise any provider account and amount, never exceeding programme ceilings of USD 3 Meta, USD 3 Baseten and USD 5 Modal.
+- separately authorise any provider account and amount, never exceeding programme ceilings of USD 3 Meta and USD 5 Modal.
 
 Hosting and provider entries remain disabled until separately approved. Provider secrets and hosting credentials belong only in their server-side secret facilities.
 
@@ -49,8 +49,7 @@ Cloudflare hosting and genuine browser authentication are complete and do not au
 
 1. Six separately controlled reviewer operators, split into three primary and three fresh reviewers, with Testnet accounts, signed control statements, conflict clearance, custody disclosure and availability.
 2. Meta account access for the exact Standard Model API and proposed `muse-spark-1.3` model, with credits, pricing and a provider-side billing limit verified.
-3. Baseten account access and an authenticated schema-enforcing model selection. No model is currently selected.
 4. A deployed protected Modal verification function with frozen code identity and separately scoped proxy credentials. No function currently exists.
 5. Independently signed creator and beneficiary consent plus exact case terms, evidence, committees, deadlines and amounts for one immutable funded Testnet packet.
 
-All provider credentials remain `CREDENTIALS_PENDING`. The programme ceilings remain USD 3 Meta, USD 3 Baseten and USD 5 Modal, but no amount is authorised. Proposed financial limits remain 1 testnet NEAR per transaction and 2 testnet NEAR for the complete journey, but no funded transaction is authorised.
+The active provider set is Meta and Modal. Historical packet language remains superseded by the bounded activation evidence recorded in project status. Proposed financial limits remain 1 testnet NEAR per transaction and 2 testnet NEAR for the complete journey, but no funded transaction is authorised by this packet.

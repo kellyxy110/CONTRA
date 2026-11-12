@@ -2,7 +2,7 @@
 
 ## Current execution unit | Independent reviewer onboarding
 
-Provider and non-financial wallet activation are complete to the available external boundary. Recruit and verify three primary and three fresh-appeal human operators with distinct Testnet wallets, control signatures, consent and conflict disclosures. Baseten additionally requires an account-visible exact model before any inference call. Only after reviewer readiness may the two already bounded funded journey packets be frozen and executed. Do not repeat Meta or Modal activation calls.
+Provider and non-financial wallet activation are complete to the available external boundary. Recruit and verify three primary and three fresh-appeal human operators with distinct Testnet wallets, control signatures, consent and conflict disclosures. Meta and Modal are the only active providers. Only after reviewer readiness may the two already bounded funded journey packets be frozen and executed. Do not repeat Meta or Modal activation calls.
 
 ## Current execution unit | Provider activation and wallet readiness
 

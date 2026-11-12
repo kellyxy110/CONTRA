@@ -6,12 +6,12 @@ import {assessM10Readiness,assessProviderReadiness,assessReviewerReadiness,contr
 const now=()=>new Date('2026-11-10T12:00:00.000Z');
 const hash=value=>controlStatementDigest({value});
 const reviewers=()=>({schema:'CONTRA_REVIEWER_EXTERNAL_READINESS_V1',reviewers:Array.from({length:6},(_,index)=>({account_id:`external-${index+1}.testnet`,operator_id:hash(`operator-${index+1}`),committee:index<3?'primary':'fresh',control_statement_digest:hash(`statement-${index+1}`),control_signature_verified:true,conflict_declared:false,available_from:'2026-11-10T00:00:00.000Z',available_until:'2026-11-11T00:00:00.000Z'}))});
-const providers=()=>({schema:'CONTRA_PROVIDER_EXTERNAL_READINESS_V1',providers:Object.fromEntries([['meta',3],['baseten',3],['modal',5]].map(([name,cap])=>[name,{documentation_verified:true,account_access_verified:true,model_identifier:`${name}-verified-id`,interface_smoke_verified:true,credits_verified:true,pricing_verified:true,billing_limit_verified:true,owner_authorised:true,server_secret_configured:true,maximum_authorised_usd:cap}]))});
+const providers=()=>({schema:'CONTRA_PROVIDER_EXTERNAL_READINESS_V1',providers:Object.fromEntries([['meta',3],['modal',5]].map(([name,cap])=>[name,{documentation_verified:true,account_access_verified:true,model_identifier:`${name}-verified-id`,interface_smoke_verified:true,credits_verified:true,pricing_verified:true,billing_limit_verified:true,owner_authorised:true,server_secret_configured:true,maximum_authorised_usd:cap}]))});
 
 test('checked-in M10 evidence preserves partial provider readiness without implying complete readiness',()=>{
  const input=JSON.parse(fs.readFileSync(new URL('../config/m10-external-readiness.example.json',import.meta.url),'utf8')),result=assessM10Readiness(input,{now});
  assert.equal(result.ready,false);assert.equal(result.reviewer.ready,false);assert.equal(result.reviewer.reviewer_count,0);
- assert.equal(result.provider.ready,false);assert.equal(result.provider.providers.baseten.ready,false);
+ assert.equal(result.provider.ready,false);assert.equal(result.provider.providers.meta.ready,false);assert.equal(result.provider.providers.baseten,undefined);
 });
 
 test('reviewer readiness requires six distinct controls, operator-disjoint committees and live availability',()=>{
@@ -23,8 +23,8 @@ test('reviewer readiness requires six distinct controls, operator-disjoint commi
 
 test('provider readiness is independent per provider and enforces each programme cap',()=>{
  const valid=providers();assert.equal(assessProviderReadiness(valid).ready,true);
- const metaBlocked=structuredClone(valid);metaBlocked.providers.meta.owner_authorised=false;let result=assessProviderReadiness(metaBlocked);assert.equal(result.ready,false);assert.equal(result.providers.meta.ready,false);assert.equal(result.providers.baseten.ready,true);assert.equal(result.providers.modal.ready,true);
- const overspend=structuredClone(valid);overspend.providers.baseten.maximum_authorised_usd=3.01;result=assessProviderReadiness(overspend);assert.equal(result.providers.baseten.ready,false);assert(result.providers.baseten.issues.some(value=>value.includes('USD 3')));
+ const metaBlocked=structuredClone(valid);metaBlocked.providers.meta.owner_authorised=false;let result=assessProviderReadiness(metaBlocked);assert.equal(result.ready,false);assert.equal(result.providers.meta.ready,false);assert.equal(result.providers.modal.ready,true);
+ const overspend=structuredClone(valid);overspend.providers.modal.maximum_authorised_usd=5.01;result=assessProviderReadiness(overspend);assert.equal(result.providers.modal.ready,false);assert(result.providers.modal.issues.some(value=>value.includes('USD 5')));
  assert.throws(()=>assessProviderReadiness({...valid,api_key:'unsafe'}),/forbidden secret/);
 });
 

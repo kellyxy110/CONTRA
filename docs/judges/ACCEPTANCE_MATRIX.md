@@ -23,7 +23,7 @@ The complete protected-main gate passed in [GitHub Actions run 42624205937](http
 | AC07 | PASS | Sandbox and F01 to F18 | Exact native funding, wrong or duplicate deposits, authorisation and immutable funded terms are covered. No testnet deposit is claimed. |
 | AC08 | PASS | Service and restart tests | Canonical manifests, source digests, provenance, case isolation, size limits, corruption detection, backup and restore all fail closed. Private source bytes remain offchain. |
 | AC09 | PASS | Rust and Sandbox | Beneficiary, deadline, case, terms and manifest-digest guards prevent unauthorised, late, stale or duplicate evidence submission. |
-| AC10 | PARTIAL | Deterministic provider fixtures plus bounded live activation | Meta returned one authorised live `muse-spark-1.3` response with immutable digest and Modal returned a Proxy-Auth verified deterministic digest. Baseten authentication succeeded but its account exposed no selectable model. Complete case-bound live provider execution remains incomplete. |
+| AC10 | PARTIAL | Deterministic provider fixtures plus bounded live activation | Meta returned one authorised live `muse-spark-1.3` response with immutable digest and Modal returned a Proxy-Auth verified deterministic digest. Baseten is retired from the active provider set. Complete case-bound live provider execution remains incomplete. |
 | AC11 | PARTIAL | Durable provider ledger and live Meta usage | Reservations are durable, atomic, idempotent, concurrency-limited and capped. The live Meta smoke reconciled 49 tokens to 110 microUSD. Modal used zero model tokens. Complete provider billing reconciliation remains incomplete. |
 | AC12 | PASS | Rust and cross-language vectors | Exact domain separation, serialization, appointed reviewer checks and replay boundaries pass. Reveal nonces are excluded from general audit records. |
 | AC13 | PASS | Rust and Sandbox | Wrong, late, duplicate and conflicting review actions fail. Two matching reveals decide; timeout and no-quorum paths follow frozen fallback rules. |
@@ -63,6 +63,6 @@ No criterion is upgraded from fixture evidence where its text requires a live pr
 
 - Contract-sensitive financial evidence uses real local NEAR Sandbox transactions and retained receipts.
 - External-wallet transaction handling remains controlled simulation only. Genuine Meteor Wallet NEP-413 authentication succeeded with disposable Testnet identity `easyjacket3318.testnet`, but no transaction was signed or broadcast.
-- Meta has one bounded live 49-token smoke response costing 110 microUSD. Modal has one genuine protected deterministic verification with zero model tokens. Baseten authentication is verified but no exact model is selected. Full case evaluation remains fixture evidence.
+- Meta has one bounded live 49-token smoke response costing 110 microUSD. Modal has one genuine protected deterministic verification with zero model tokens. Baseten's historical authenticated probe is retained, but it is no longer an active provider. Full case evaluation remains fixture evidence.
 - Six Sandbox reviewer accounts share one process and do not establish independent operator control.
 - The Contestation contract is deployed on NEAR Testnet and the public operational API is live at `https://contra-near.pages.dev`. There is bounded live provider activation evidence, but no live funded Testnet journey.

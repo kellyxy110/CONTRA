@@ -71,7 +71,7 @@ See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md
 | Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
 | Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
 | Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
-| Provider interoperability | Official interfaces rechecked; execution still uses only non-billable fixtures. Meta lacks a hard spend cap, Baseten lacks a selected model and verified billing control, and Modal lacks a protected function. |
+| Provider interoperability | Meta completed one bounded live smoke and Modal completed one protected deterministic verification. Baseten was retired from the active provider set by owner decision on 12 November 2026. |
 | Testnet deployment | Verified on `contra-contestation.testnet`; [final deployment transaction](https://explorer.testnet.near.org/transactions/BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr) |
 | Public backend | Cloudflare Worker and SQLite Durable Object deployed; readiness requires fresh final testnet state; live signing disabled |
 | Independent reviewers | Not yet demonstrated; local accounts are one-process fixtures |

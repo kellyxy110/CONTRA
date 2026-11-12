@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 const ACCOUNT=/^(?=.{2,64}$)[a-z0-9]+(?:[._-][a-z0-9]+)*\.testnet$/;
 const HASH=/^[a-f0-9]{64}$/;
 const SECRET_FIELD=/(api.?key|private|secret|seed|mnemonic|credential|token)/i;
-const CAPS=Object.freeze({meta:3,baseten:3,modal:5});
+const CAPS=Object.freeze({meta:3,modal:5});
 
 function secretFields(value,prefix=''){
  const result=[];
