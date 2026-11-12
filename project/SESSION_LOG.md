@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-12 | Backend completion audit
+
+Implemented case-bound Worker provider execution and cryptographically bound reviewer consent without changing the contract or frontend. The new tests proved Meta and Modal jobs remain non-binding, idempotent and budget bounded, while ambiguous outcomes lock reservations. Read-only RPC showed the deployed contract registry and case list are both empty. The creator account has one FullAccess key but no verified browser-wallet custody path. Repository tests passed 158 of 158 and Cloudflare tests passed 19 of 19.
+
 ## 2026-11-12 | Provider and wallet activation
 
 PRs 81 through 86 established, corrected and promoted fail-closed provider activation. Meta authenticated, exposed `muse-spark-1.3` and completed one ledger-bound 49-token smoke at 110 microUSD. Modal's first authenticated attempt exposed a missing packaged module; PR 83 fixed the container, after which Proxy Auth returned a valid zero-token verification. Baseten authenticated but returned no selectable model. Creator and beneficiary repeated genuine NEP-413 signing without transaction broadcast. Activation secrets were deleted after use and financial signing stayed disabled.

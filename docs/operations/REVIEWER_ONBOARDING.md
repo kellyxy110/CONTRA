@@ -20,9 +20,9 @@ An invitation authorises review only. It cannot create a vote, authorise a trans
 
 ## Control evidence
 
-Each operator must sign a NEP-413 statement containing the reviewer account, operator disclosure revision, intended committee, conflict declaration, availability window, statement expiry and a server challenge nonce. General NEP-413 account authentication is implemented, but a dedicated immutable reviewer control-statement endpoint and public Cloudflare lifecycle remain incomplete. Until those are implemented and exercised, `control_signature_verified` must remain false in live readiness records.
+Each operator must sign a NEP-413 statement containing the reviewer account, invitation digest, operator identifier, exact disclosure digest, custody declaration, conflicts, availability window, statement expiry and a server challenge nonce. The authenticated operator requests that statement from `POST /api/reviewer/control-challenge`, then submits its wallet signature through `POST /api/reviewer/respond`. The Worker verifies the signature against a current Testnet access key, consumes the one-time challenge and prevents a consented disclosure revision from being replaced. These controls establish account control and immutable technical evidence. They do not establish that six different humans control the accounts.
 
-An administrator confirms registry eligibility and activation. Committee membership is then frozen with the agreement terms. Account switching, expired sessions, duplicate registration and contradictory disclosure revisions fail closed.
+The contract owner must separately sign `set_reviewer` for the exact account, operator and disclosure digests. Each reviewer must then sign `confirm_reviewer` for that exact revision and digest. Registry read-back must show six active, confirmed records before committee membership is frozen with the agreement terms. Account switching, expired sessions, duplicate registration and contradictory disclosure revisions fail closed.
 
 ## Rehearsal and schedule
 

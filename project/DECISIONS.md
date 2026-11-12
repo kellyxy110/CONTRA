@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-109 | Case-bound production execution remains fail closed | 2026-11-12
+
+ACCEPTED. Provider readiness may release a call only after authentication, case participation, exact case and round reads, immutable evidence binding, a durable reservation and every provider-specific financial gate pass. Reviewer consent requires an independently signed NEP-413 control statement bound to an immutable disclosure revision. Technical verification cannot establish six-human independence. Browser transaction authority remains scoped to an exact persisted operation and cannot be inferred from a FullAccess key held outside the browser.
+
 ## D-108 | Live activation remains non-binding | 2026-11-12
 
 ACCEPTED. A successful provider call proves only authenticated interface availability and immutable provenance. Meta and Modal outputs remain non-binding, cannot create reviewer commitments or votes and cannot authorise transactions or settlement. The short-lived activation credential is deleted after each bounded operation. Baseten was removed from the active credential and execution set by owner decision on 12 November 2026. Any future OpenRouter or other provider requires a separate explicit integration decision.

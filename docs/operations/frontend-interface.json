@@ -47,12 +47,17 @@
     {"path":"/api/wallet/broadcast","methods":["POST"],"access":"session","source":"wallet-callback","purpose":"Persist recovered transaction hash"},
     {"path":"/api/wallet/reconcile","methods":["POST"],"access":"session","source":"contract-rpc","purpose":"Reconcile persisted transaction"},
     {"path":"/api/operation","methods":["GET"],"access":"session","source":"service","purpose":"Account-scoped operation recovery"},
+    {"path":"/api/operator/provider-probe","methods":["POST"],"access":"temporary-operator-activation-secret","source":"provider","purpose":"Run a redacted provider authentication or catalogue probe"},
+    {"path":"/api/operator/provider-smoke","methods":["POST"],"access":"temporary-operator-activation-secret","source":"provider-ledger","purpose":"Run one bounded Meta availability smoke"},
     {"path":"/api/evidence","methods":["POST"],"access":"case-participant","source":"service","purpose":"Store immutable evidence manifest"},
     {"path":"/api/evidence/manifests","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"List case manifests"},
     {"path":"/api/finding","methods":["POST"],"access":"appointed-reviewer","source":"service","purpose":"Store evidence-bound human finding"},
     {"path":"/api/counterexample","methods":["POST"],"access":"case-participant","source":"service","purpose":"Store criterion-bound counterexample"},
     {"path":"/api/counterexample/records","methods":["GET"],"access":"case-participant","source":"service","purpose":"List case-linked counterexamples"},
     {"path":"/api/reviewer/disclosure","methods":["POST"],"access":"session","source":"service","purpose":"Store signer-control disclosure"},
+    {"path":"/api/reviewer/control-challenge","methods":["POST"],"access":"reviewer-session","source":"service","purpose":"Issue a NEP-413 challenge bound to an exact invitation, operator and disclosure revision"},
+    {"path":"/api/reviewer/invitations","methods":["GET","POST"],"access":"reviewer-session-or-authorised-creator","source":"service","purpose":"Create or inspect immutable reviewer invitations"},
+    {"path":"/api/reviewer/respond","methods":["POST"],"access":"reviewer-session","source":"wallet-and-service","purpose":"Record signed consent or authenticated withdrawal"},
     {"path":"/api/reviewer/disclosures","methods":["GET"],"access":"session","source":"service-and-contract","purpose":"Inspect registry disclosures"},
     {"path":"/api/reviewer/control","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect committee control"},
     {"path":"/api/reviewer/workspace","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect reviewer round actions"},
@@ -61,6 +66,7 @@
     {"path":"/api/terms","methods":["POST"],"access":"allowlisted-creator","source":"service-and-contract","purpose":"Store immutable agreement text"},
     {"path":"/api/availability","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect case artifact availability"},
     {"path":"/api/artifact","methods":["GET"],"access":"case-participant","source":"service","purpose":"Read case-linked artifact"},
-    {"path":"/api/evaluate","methods":["POST"],"access":"case-participant","source":"provider-or-fixture","purpose":"Create non-binding AI proposal or verification"}
+    {"path":"/api/provider/jobs","methods":["GET","POST"],"access":"case-participant","source":"provider-ledger","purpose":"Execute or inspect durable case-bound provider jobs"},
+    {"path":"/api/evaluate","methods":["POST"],"access":"case-participant","source":"provider","purpose":"Create a case-bound non-binding Meta proposal when every provider gate is ready"}
   ]
 }

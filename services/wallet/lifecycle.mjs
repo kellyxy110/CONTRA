@@ -1,4 +1,4 @@
-import {ApiError,canonical,sha256} from '../api/store.mjs';
+import {ApiError,canonical,sha256} from '../api/primitives.mjs';
 
 const ACCOUNT_ID=/^(?=.{2,64}$)[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
 const HASH32=/^[0-9a-f]{64}$/;

@@ -19,7 +19,7 @@ Missing Meta credentials must not disable Modal, and the reverse also applies. A
 
 ## Meta
 
-The verified Standard Model API endpoint is `https://api.meta.ai/v1/chat/completions`. `muse-spark-1.3` remains the proposed primary and fresh-review model. The official catalogue recommends Spark 1.3 for new work. Access to the owner's account has not been verified. Contributor variants must not be used for case evidence because their prompts, files, context and responses may be used for training.
+The verified Standard Model API endpoint is `https://api.meta.ai/v1/chat/completions`. `muse-spark-1.3` is the selected primary, adversarial and fresh-review model. Account authentication and one bounded 49-token smoke are verified. Contributor variants must not be used for case evidence because their prompts, files, context and responses may be used for training.
 
 Create a unique application key in the Model API dashboard and store it as `META_API_KEY` only in the server secret store. Standard Spark 1.3 pricing observed on 2026-11-11 is USD 1.25 per million input tokens and USD 4.25 per million output tokens, with USD 0.15 cached input. Meta documents only a spend alert, not a hard usage cap. Therefore the provider-side hard-limit gate is currently unavailable and Meta must remain disabled even after a key is installed unless the owner accepts a separately documented control or Meta adds a genuine hard cap. The programme ceiling is USD 3, not automatic spending permission.
 
@@ -27,7 +27,7 @@ Create a unique application key in the Model API dashboard and store it as `META
 
 Modal requires a deployed protected Web Function before CONTRA has an endpoint to call. `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET` are deployment-tool credentials, not Web Function proxy credentials. Freeze the function code and deployment identity, set `requires_proxy_auth=True`, then use a separately scoped Proxy Token through `MODAL_PROXY_KEY` and `MODAL_PROXY_SECRET`. The Starter plan currently includes USD 30 monthly compute credit, but credits do not cover every product and are not authority to spend. Configure a Workspace budget and a USD 5 spend limit before any call. The programme ceiling is USD 5.
 
-The protected deterministic verifier is deployed as Modal app `ap-2wMup9xpnApV3ehbwwjKrK` at `https://boredom407--contra-verifier-verify.us-east.modal.run`. An unauthenticated POST returned HTTP 401 on 11 November 2026. No authenticated verification has completed because a dedicated Proxy Auth token is not yet installed.
+The protected deterministic verifier is deployed as Modal app `ap-2wMup9xpnApV3ehbwwjKrK` at `https://boredom407--contra-verifier-verify.us-east.modal.run`. An unauthenticated POST returned HTTP 401 on 11 November 2026. A dedicated Proxy Auth token subsequently returned a valid zero-token deterministic verification with response digest `82bd618c07f911ba6e781b7258ee95f64d9312cd8daf569c133d0db426c0ee6e`.
 
 The reviewed function source is `services/modal/app.py`; its deterministic validation core is `services/modal/verification_core.py`. The Modal image pins Python 3.13 and `fastapi[standard]` 0.121.1 because Modal no longer installs FastAPI automatically for `fastapi_endpoint`. It accepts only `CONTRA_PROVIDER_VERIFICATION_REQUEST_V1`, recomputes the immutable proposal digest, checks exact case, terms and round identity, restricts every nested citation to the supplied evidence set and returns a non-binding `CONTRA_PROVIDER_VERIFICATION_V1` result. It performs no model inference and reports zero tokens.
 
@@ -85,7 +85,7 @@ Each command reads the secret interactively and deploys a new Worker version con
 
 ## Cloudflare secrets
 
-The Worker reports independent, redacted provider readiness through `/api/config`. Credential values are never returned. The execution route remains fail closed until the provider-specific model, account, credit, pricing, hard billing limit, bounded owner spending authority and live-enable gates all pass. `/api/evaluate` remains disabled; the authenticated durable provider-jobs contract is the stable integration boundary.
+The Worker reports independent, redacted provider readiness through `/api/config`. Credential values are never returned. The authenticated `/api/evaluate` and `/api/provider/jobs` routes bind requests to an existing case, round, terms digest, evidence digest and frozen criteria. They remain fail closed until the provider-specific model, account, credit, pricing, billing limit, bounded owner spending authority and live-enable gates all pass. Ambiguous outcomes retain their durable reservation and cannot be retried automatically.
 
 After credential installation, first verify that `/api/config` changes only that provider's `credential_installed` gate. Authentication or catalogue probes must use a provider-documented non-billable endpoint. If no such endpoint exists, stop before a model call and obtain bounded spending authority.
 

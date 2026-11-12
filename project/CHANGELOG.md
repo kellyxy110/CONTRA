@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-12 | Case-bound provider and reviewer control backend
+
+- Added authenticated, durable, case-bound Meta evaluation and Modal proposal verification with strict schemas, provenance and conservative UNKNOWN accounting.
+- Added reviewer control challenges and immutable NEP-413 consent binding for exact invitation, operator, disclosure and availability facts.
+- Corrected Durable Object RPC awaits for case links and artifact isolation.
+- Verified 158 repository tests, 19 Cloudflare tests, documentation links, wallet build and Cloudflare dry-run.
+- Observed zero Testnet reviewers and zero cases through final RPC. No transaction, deployment or provider spending occurred.
+
 ## 2026-11-12 | Live provider and wallet activation evidence
 
 - Verified Meta account access and `muse-spark-1.3`, then reconciled one 49-token response at USD 0.000110.
