@@ -18,6 +18,7 @@ const digestText=async text=>[...new Uint8Array(await crypto.subtle.digest('SHA-
 export function mountWorkspaces({request,view,loadCase,getAccount,getCaseId,showNotice}){
  const host=document.getElementById('workspace');
  const overview=document.querySelector('.key-figures'),dashboard=document.querySelector('.dashboard-grid');
+ const dashboardKpis=document.getElementById('overview-kpis');
  const caseInput=document.getElementById('case-id');
  const select=id=>{if(!caseIdValid(id))return;caseInput.value=id;location.hash=`#cases/${id}`;};
  const post=(path,body)=>request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -123,14 +124,15 @@ export function mountWorkspaces({request,view,loadCase,getAccount,getCaseId,show
   host.innerHTML=panel('Account',`${session.__error?error(session.__error):`<dl>${datum('Account',session.account)}${datum('Session expires',session.expires?new Date(session.expires).toLocaleString():null)}</dl>`}`)+panel('Runtime and safety',`<dl>${datum('Network',config.network||health.network)}${datum('Contract account',config.contract_account)}${datum('Chain status',health.chain?.status||health.chain)}${datum('Live signing',config.external_wallet_signing_authorized===true?'Authorised':'Disabled')}${datum('Hosting',config.hosting?.plan)}</dl>${note('Wallet sessions use NEP-413 message signing. Private provider credentials remain on the server.')}`);
  }
  async function render(){
-  const route=decodeURIComponent(location.hash.slice(1)).split('/')[0]||'overview';state.activeView=route;
-  const isOverview=route==='overview';overview.hidden=!isOverview;dashboard.hidden=!isOverview;host.hidden=isOverview;
+  const parts=decodeURIComponent(location.hash.slice(1)).split('/'),route=parts[0]||'overview';state.activeView=route;
+  const isOverview=route==='overview';overview.hidden=!isOverview;dashboardKpis.hidden=!isOverview;dashboard.hidden=!isOverview;host.hidden=isOverview;
   document.getElementById('view-title').textContent=route[0].toUpperCase()+route.slice(1);
-  document.querySelectorAll('.nav-link,.mobile-tabs a').forEach(link=>{const active=(link.dataset.view||link.hash.slice(1))===route;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current')});
-  if(isOverview)return;
+  document.querySelectorAll('.nav-link,.mobile-tabs a').forEach(link=>{const active=link.hash===location.hash||(!parts[1]&&(link.dataset.view||link.hash.slice(1))===route);link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current')});
+  document.querySelectorAll('.nav-group').forEach(group=>{if(group.querySelector(`a[data-view="${route}"]`))group.open=true});
+  if(isOverview){if(parts[1]==='section-1')document.getElementById('events-list').scrollIntoView();if(parts[1]==='section-2')document.getElementById('network-pill').scrollIntoView();return}
   busy();
   try{
-   const path=decodeURIComponent(location.hash.slice(1)).split('/');
+   const path=parts;
    if(route==='cases')await (path[1]&&caseIdValid(path[1])?detail(path[1]):cases());
    else if(route==='evidence')await evidence();
    else if(route==='challenges')await challenges();
@@ -140,6 +142,8 @@ export function mountWorkspaces({request,view,loadCase,getAccount,getCaseId,show
    else if(route==='activity')await activity();
    else if(route==='settings')await settings();
    else host.innerHTML=panel('Unknown view',note('Choose a destination from the navigation.'));
+   if(path[1]&&path[1].startsWith('section-')){const index=Number(path[1].slice(8));const target=host.querySelectorAll('.workspace-panel')[index];target?.scrollIntoView({block:'start'});target?.setAttribute('tabindex','-1');target?.focus({preventScroll:true})}
+   if(route==='cases'&&path[1]==='create'){const target=host.querySelector('#case-preview-form')||host.querySelector('.workspace-note');target?.scrollIntoView({block:'center'});if(!host.querySelector('#case-preview-form'))showNotice?.('Case creation requires an authorised creator wallet and contract signing. Check the live signing gate in Settings.')}
   }catch(e){host.innerHTML=panel('Unable to load',error(e.message));showNotice?.(e.message)}
  }
  window.addEventListener('hashchange',render);render();
