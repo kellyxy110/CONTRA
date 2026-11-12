@@ -1,4 +1,4 @@
-import {ApiError} from '../api/store.mjs';
+import {ApiError} from '../api/primitives.mjs';
 
 const ACCOUNT_ID=/^(?=.{2,64}$)[a-z0-9]+(?:[._-][a-z0-9]+)*$/;
 const TX_HASH=/^[1-9A-HJ-NP-Za-km-z]{32,64}$/;
