@@ -54,6 +54,8 @@ try {
       list_cases:{items:cases,next_index:null},
       get_events:{items:[{event:'case_funded',data:[{seq:'1',case_id:cases[0].case_id}]}]},
       get_round:{slots:[{commitment:'commit'},{revealed:true},{}]},
+      get_config:{creator_allowlist:['browser-fixture.testnet']},
+      preview_case:{case_id:'d'.repeat(64),terms_digest:'e'.repeat(64)},
      };
      return route.fulfill({json:{value:data[method]??null}});
     });
@@ -76,7 +78,14 @@ try {
      cases[0].terms={criteria:[{criterion_id:1}]};
      await page.addInitScript(()=>sessionStorage.setItem('contra-session','browser-fixture'));
      await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet'}}));
-     await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',external_wallet_signing_authorized:false}}));
+     await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:false}}));
+     await page.route('**/api/terms',route=>route.fulfill({json:{digest:'f'.repeat(64)}}));
+     await page.route('**/api/wallet/prepare',route=>{
+      const {call}=route.request().postDataJSON();
+      assert.equal(call.method,'create_case');
+      assert.equal(call.args.expected_terms_digest,'e'.repeat(64));
+      return route.fulfill({json:{operation:{operation_id:'fixture-preparation',payload_hash:'a'.repeat(64)}}});
+     });
      await page.route('**/api/evidence',route=>{
       const input=route.request().postDataJSON();
       assert.equal(input.case_id,cases[0].case_id);
@@ -94,6 +103,23 @@ try {
      await page.getByRole('button',{name:'Store evidence'}).click();
      await page.getByText('Stored off-chain:',{exact:false}).waitFor();
      assert.equal(await page.getByRole('button',{name:'Sign evidence submission'}).count(),0);
+     await page.locator('#navigation a[href="#cases"]').click();
+     await page.getByLabel('Beneficiary Testnet account').fill('beneficiary.testnet');
+     await page.getByLabel('Amount in NEAR').fill('1');
+     await page.getByLabel('Creator operator digest').fill('1'.repeat(64));
+     await page.getByLabel('Beneficiary operator digest').fill('2'.repeat(64));
+     await page.getByLabel('Criterion requirement').fill('Fixture criterion');
+     await page.getByLabel('Evidence policy').fill('Fixture policy');
+     const deadlines=await page.locator('#workspace input[type=datetime-local]').all();
+     for(const [i,input] of deadlines.entries()){
+      const deadline=new Date(Date.now()+(i+1)*3600000);
+      deadline.setMinutes(deadline.getMinutes()-deadline.getTimezoneOffset());
+      await input.fill(deadline.toISOString().slice(0,16));
+     }
+     await page.getByRole('button',{name:'Preview case'}).click();
+     await page.getByRole('button',{name:'Prepare Testnet case'}).click();
+     await page.getByText('Prepared operation: fixture-preparation.',{exact:false}).waitFor();
+     assert.equal(await page.getByRole('button',{name:'Sign case creation'}).count(),0);
      for(const link of await page.locator('#navigation a').all()){
       const title=await link.innerText();
       if(title==='Overview')continue;

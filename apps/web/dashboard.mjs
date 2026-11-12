@@ -3,6 +3,7 @@ import {readPagedCases, readProtectedCaseRecords} from './contract-operations.mj
 import {createWalletOperations, openAuthenticatedWallet, recoverWallet} from './wallet-operations.mjs';
 import {buildEvidenceManifest, storeEvidence, evidenceSubmissionArgs} from './evidence-operations.mjs';
 import {storeCounterexample, challengeEligibility, fileChallenge} from './challenge-operations.mjs';
+import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 
 const byId = id => document.getElementById(id);
@@ -205,6 +206,92 @@ async function signWorkspaceCall(...args) {
  return createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk}).signCall(...args);
 }
 
+function caseCreation(panel, config) {
+ const creator=account;
+ if(!token || !creator || !config.creator_allowlist?.includes(creator)){
+  panel.append(element('p','Case creation requires an authenticated, allowlisted creator.'));
+  return;
+ }
+ const form=element('form','');
+ const fields=[
+  ['beneficiary_id','Beneficiary Testnet account','text'],
+  ['amount','Amount in NEAR','text'],
+  ['creator_operator_id','Creator operator digest','text'],
+  ['beneficiary_operator_id','Beneficiary operator digest','text'],
+  ['requirement','Criterion requirement','text'],
+  ['policy','Evidence policy','text'],
+  ...deadlineFields.map(name=>[name,readable(name.replace(/_ns$/,'').replaceAll('_',' ')),'datetime-local']),
+ ];
+ for(const [name,title,type] of fields){
+  const label=element('label',title);
+  const input=element('input','');
+  input.type=type;
+  input.name=name;
+  input.required=true;
+  if(name.endsWith('_operator_id'))input.pattern='[0-9a-f]{64}';
+  if(name==='beneficiary_id')input.pattern='[a-z0-9._-]+\\.testnet';
+  label.append(input);
+  form.append(label);
+ }
+ const criterion=element('label','Criterion type');
+ const kind=element('select','');
+ kind.name='kind';
+ kind.append(new Option('General','GENERAL'),new Option('Keyboard','KEYBOARD'));
+ criterion.append(kind);
+ const submit=element('button','Preview case');
+ const result=element('div','');
+ result.setAttribute('role','status');
+ form.append(criterion,submit,result);
+ panel.append(form);
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();
+  const data=new FormData(form);
+  submit.disabled=true;
+  result.textContent='Checking terms and committee eligibility…';
+  try{
+   if(data.get('beneficiary_id')===creator)throw Error('The beneficiary must be distinct from the creator.');
+   yocto(data.get('amount'));
+   const hash=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(crypto.randomUUID()));
+   const requestId=Array.from(new Uint8Array(hash),byte=>byte.toString(16).padStart(2,'0')).join('');
+   const {terms,preview}=await previewCase({data,account:creator,post,view,requestId});
+   result.textContent=`Predicted case ID: ${preview.case_id}. Terms digest: ${preview.terms_digest}.`;
+   const prepare=element('button','Prepare Testnet case');
+   prepare.type='button';
+   result.append(prepare);
+   const args={request_id:requestId,terms,expected_terms_digest:preview.terms_digest};
+   prepare.addEventListener('click',async()=>{
+    prepare.disabled=true;
+    try{
+     if(account!==creator)throw Error('Reconnect the creator account to prepare this preview.');
+     const sdk=await import('./wallet.bundle.js');
+     const operations=createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk});
+     const operation=await operations.prepareCase(args);
+     result.append(element('p',`Prepared operation: ${operation.operation_id}. Payload hash: ${operation.payload_hash}.`));
+     const runtime=await request('config');
+     if(!wallet||runtime.external_wallet_signing_authorized!==true){
+      result.append(element('p','Signing requires the creator wallet and exact server authorisation.'));
+      return;
+     }
+     const sign=element('button','Sign case creation');
+     sign.type='button';
+     result.append(sign);
+     sign.addEventListener('click',async()=>{
+      sign.disabled=true;
+      try{
+       if(account!==creator)throw Error('Reconnect the creator account to sign this preview.');
+       const receipt=await operations.signCall('create_case',args,'1',operation);
+       const persisted=receipt.operation?.status==='CONFIRMED' ? await view('get_case',{case_id:preview.case_id}) : null;
+       result.append(element('p',`Operation status: ${receipt.operation?.status ?? 'Unavailable'}. Transaction: ${receipt.transaction_hash ?? 'Unavailable'}.`));
+       if(persisted)result.append(element('p',`Case confirmed: ${persisted.case_id}`));
+      }catch(error){result.append(element('p',error.message));}
+     });
+    }catch(error){result.append(element('p',error.message));prepare.disabled=false;}
+   });
+  }catch(error){result.textContent=error.message;}
+  finally{submit.disabled=false;}
+ });
+}
+
 function caseArtifactTools(panel, record, isChallenge) {
  if (!token || !account || ![record.creator_id,record.terms?.beneficiary_id].includes(account)) {
   panel.append(element('p','An authenticated case participant is required.'));
@@ -358,6 +445,10 @@ async function updateNavigation() {
    const states = route === 'challenges' ? ['Provisional','Challenged','ChallengeReview'] :
     route === 'settlement' ? ['Resolved','Unresolved','SettlementPending','TransferFailed','Settled'] : null;
    show(records.filter(record=>!states||states.includes(record.state)).map(record=>`${record.case_id} · ${readable(record.state)}`));
+   if(route==='cases'&&generation===routeRequest){
+    const config=await view('get_config',{});
+    if(generation===routeRequest)caseCreation(panel,config);
+   }
    if(route==='challenges'&&generation===routeRequest){
     const selected=records.find(record=>record.case_id===byId('case').value);
     if(selected)caseArtifactTools(panel,selected,true);
