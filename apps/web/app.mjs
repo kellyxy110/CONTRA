@@ -101,7 +101,7 @@ async function refresh(){
   $('runtime-notice').hidden=Boolean(ready.ready);
   if(!ready.ready)$('runtime-notice').textContent='The chain is unavailable. Case data is not simulated.';
   if($('case-id').value.trim())await loadCase();
- }catch(error){text('network-pill','Chain unavailable');$('dialog-connect').disabled=true;$('runtime-notice').hidden=false;$('runtime-notice').textContent='The NEAR chain is unavailable. Case data and transaction results are not simulated.';walletState('unavailable',`Wallet sign-in is unavailable until the chain is ready. ${error.message}`);}finally{await loadDashboard()}
+ }catch(error){text('network-pill','Chain unavailable');$('dialog-connect').disabled=true;$('runtime-notice').hidden=false;$('runtime-notice').textContent='The NEAR chain is unavailable. Case data and transaction results are not simulated.';walletState('unavailable',`Wallet sign-in is unavailable until the chain is ready. ${error.message}`);}finally{await Promise.all([loadDashboard(),loadEvents(null)])}
 }
 async function view(method,args){return (await request('view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,args,envelope:true})})).value;}
 async function signCall(method,args,deposit='0',preparedOperation=null){
@@ -161,9 +161,13 @@ async function loadDashboard(){
  }catch(error){if(requestId !== dashboardRequest)return;
   for(const id of values)text(id,'Unavailable');$('status-chart').innerHTML=`<p class="empty-state">Case distribution unavailable: ${escapeHtml(error.message)}</p>`;text('distribution-scope','Chain unavailable')}
 }
+let eventRequest = 0;
 async function loadEvents(caseId,afterSeq='0'){
+ const requestId=++eventRequest;
+ text('event-count','Loading');
  try{
   const page=await view('get_events',{case_id:caseId,after_seq:afterSeq,limit:20});
+  if(requestId!==eventRequest)return;
   const items=page?.items||[];text('event-count',`${items.length} shown`);
   $('events-list').innerHTML=(page.gap?'<p class="event-gap">Earlier events have left the contract ring.</p>':'')+(items.length?items.map(event=>{
    const data=event.data?.[0]||{};
@@ -171,7 +175,8 @@ async function loadEvents(caseId,afterSeq='0'){
   }).join(''):'<div class="empty-state">No events returned for this page.</div>')+
   (items.length===20?`<button class="text-button event-next" data-next="${escapeHtml(page.next_after_seq)}">Next events</button>`:'');
   $('events-list').querySelector('.event-next')?.addEventListener('click',()=>loadEvents(caseId,page.next_after_seq));
- }catch(error){$('events-list').innerHTML=`<div class="empty-state">Event history unavailable: ${escapeHtml(error.message)}</div>`;}
+ }catch(error){if(requestId!==eventRequest)return;
+  text('event-count','Unavailable');$('events-list').innerHTML=`<div class="empty-state">Event history unavailable: ${escapeHtml(error.message)}</div>`;}
 }
 async function protectedReads(caseId){
  try{
@@ -189,7 +194,6 @@ async function loadCase(caseId=$('case-id').value.trim(),{quiet=false}={}){
   const [availability,manifests]=await protectedReads(caseId);
   const caseWithRound={...record,rounds:roundId?[null,round?.slots||null]:[round?.slots||null,null]};
   renderCase(caseWithRound,round,availability,manifests);
-  await loadEvents(caseId);
   try{localStorage.setItem('contra.case-id',caseId)}catch{}
   if(!quiet)$('runtime-notice').hidden=true;
  }catch(error){$('runtime-notice').hidden=false;$('runtime-notice').textContent=`The selected case could not be read: ${error.message}`;}
