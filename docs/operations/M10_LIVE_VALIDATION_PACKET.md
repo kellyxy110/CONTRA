@@ -32,7 +32,6 @@ The creator, beneficiary, contract account and exposed diagnostic identity `open
 | Provider | Required owner input | Hard boundary |
 | --- | --- | --- |
 | Meta | Model API account, unique server key, Standard `muse-spark-1.3` access, current balance and pricing evidence | Meta currently documents an alert rather than a hard spend cap. Live use stays blocked unless a separately accepted control exists. Maximum programme allocation is USD 3. |
-| Baseten | Account, authenticated catalogue, exact adversarial model, model-scoped team key, pricing and billing-control evidence | No model or hard provider cap is currently verified. Maximum programme allocation is USD 3. |
 | Modal | Workspace, frozen protected function, function identity, scoped Proxy Token, credit evidence, Workspace budget and spend limit | No function exists. Maximum programme allocation is USD 5. |
 
 Secrets must be installed interactively with Wrangler and never sent through chat, committed files, frontend assets or logs. Each provider is enabled independently only after its full gate passes.

@@ -2,7 +2,7 @@
 
 ## Current checkpoint | CONTRA-2026-11-12-PROVIDER-WALLET-ACTIVATED
 
-Meta account authentication and `muse-spark-1.3` access are verified. One ledger-bound live smoke used 33 prompt and 16 completion tokens, recorded response digest `1b46fbeda2e729be9d1c0d6663763f9869fa37aeeef83a729d70e702fc544ad0` and reconciled 110 microUSD. Modal Proxy Auth returned a valid zero-token deterministic verification with response digest `82bd618c07f911ba6e781b7258ee95f64d9312cd8daf569c133d0db426c0ee6e`. Baseten authentication succeeded, but the account catalogue exposed no selectable model, so no Baseten inference ran. Creator and beneficiary both repeated genuine keychain-backed NEP-413 signing, recovery, renewal, replay rejection and disconnect with zero broadcasts. AC31 and AC32 remain DEFERRED for six independent reviewers and their genuine consent.
+Meta account authentication and `muse-spark-1.3` access are verified. One ledger-bound live smoke used 33 prompt and 16 completion tokens, recorded response digest `1b46fbeda2e729be9d1c0d6663763f9869fa37aeeef83a729d70e702fc544ad0` and reconciled 110 microUSD. Modal Proxy Auth returned a valid zero-token deterministic verification with response digest `82bd618c07f911ba6e781b7258ee95f64d9312cd8daf569c133d0db426c0ee6e`. Meta and Modal are now the only active providers. Baseten was retired and its Worker secret removed on 12 November 2026, while its historical authenticated probe remains preserved. Creator and beneficiary both repeated genuine keychain-backed NEP-413 signing, recovery, renewal, replay rejection and disconnect with zero broadcasts. AC31 and AC32 remain DEFERRED for six independent reviewers and their genuine consent.
 
 ## Current checkpoint | CONTRA-2026-11-12-ACTIVATION-IN-PROGRESS
 

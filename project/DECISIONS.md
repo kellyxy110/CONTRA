@@ -2,7 +2,7 @@
 
 ## D-108 | Live activation remains non-binding | 2026-11-12
 
-ACCEPTED. A successful provider call proves only authenticated interface availability and immutable provenance. Meta and Modal outputs remain non-binding, cannot create reviewer commitments or votes and cannot authorise transactions or settlement. The short-lived activation credential is deleted after each bounded operation. Baseten remains disabled without an exact account-visible model.
+ACCEPTED. A successful provider call proves only authenticated interface availability and immutable provenance. Meta and Modal outputs remain non-binding, cannot create reviewer commitments or votes and cannot authorise transactions or settlement. The short-lived activation credential is deleted after each bounded operation. Baseten was removed from the active credential and execution set by owner decision on 12 November 2026. Any future OpenRouter or other provider requires a separate explicit integration decision.
 
 ## D-107 | Final release authority boundary | 2026-11-12
 

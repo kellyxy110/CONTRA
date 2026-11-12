@@ -16,13 +16,13 @@ test('provider credentials remain independently pending by default',()=>{
 test('one malformed live provider does not alter the other provider states',()=>{
  const config=providerConfig({META_LIVE_ENABLED:'true',META_API_BASE_URL:'https://evil.invalid/v1/chat/completions',META_MODEL:'muse-spark-1.3',META_API_KEY:'sentinel'});
  assert.equal(config.meta.status,'MISCONFIGURED');assert(config.meta.issues.some(value=>value.includes('allowlist')));
- assert.equal(config.baseten.status,'CREDENTIALS_PENDING');assert.equal(config.modal.status,'CREDENTIALS_PENDING');
+ assert.equal(config.modal.status,'CREDENTIALS_PENDING');assert.deepEqual(Object.keys(config).sort(),['meta','modal']);
 });
 
 test('provider readiness requires every independent financial and interface gate',()=>{
  const config=providerConfig({META_LIVE_ENABLED:'true',META_API_BASE_URL:'https://api.meta.ai/v1/chat/completions',META_MODEL:'muse-spark-1.3',META_API_KEY:'sentinel',META_TIMEOUT_MS:'30000',META_MAX_REQUEST_MICRO_USD:'100000',META_MAX_SPEND_USD:'3',META_MODEL_VERIFIED:'1',META_BILLING_LIMIT_VERIFIED:'1',CONTRA_PAID_USAGE_AUTHORIZED:'1',CONTRA_CREDITS_VERIFIED:'1',CONTRA_PRICING_VERIFIED:'1'});
  assert.equal(config.meta.status,'READY');assert.equal(config.meta.available,true);assert.equal(config.meta.timeoutMs,30000);assert.equal(config.meta.maximumSpendUsd,3);
- assert.equal(config.baseten.available,false);assert.equal(config.modal.available,false);
+ assert.equal(config.modal.available,false);assert.equal(config.baseten,undefined);
 });
 
 test('runtime rejects credential-bearing and non-origin public URLs',()=>{
