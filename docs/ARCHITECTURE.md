@@ -1,69 +1,49 @@
-# CONTRA architecture boundaries
+# CONTRA architecture and trust boundaries
 
-## Components
+CONTRA separates advisory analysis, human judgement and deterministic financial authority.
 
 ```mermaid
 flowchart LR
-    U[Browser + NEAR Wallet] -->|signed user transactions| N[NEAR Rust Contestation Contract]
-    U -->|evidence upload| S[Evidence API + immutable manifest store]
-    S --> O[Orchestrator + budget governor]
-    O --> M[Meta reviewer]
-    O --> B[Baseten counterexample reviewer]
-    O --> X[Modal short-lived verification functions]
-    M --> R[Structured evidence-bound findings]
-    B --> R
-    X --> R
-    R -->|authenticated reviewer submissions| N
-    N --> T[Events + transaction receipts]
-    T --> U
+  P[Creator, beneficiary, reviewers] -->|NEP-413 identity| UI[Web application]
+  UI -->|authenticated requests| W[Cloudflare Worker API]
+  W --> DO[Durable Object storage]
+  W -->|read-only state and receipt checks| C[NEAR Testnet contract]
+  P -->|approved wallet transactions| C
+  W -->|case-bound non-binding proposal| M[Meta]
+  W -->|proposal digest verification| V[Modal]
+  DO --> W
 ```
 
-## Contract boundary
+## Onchain authority
 
-- Hold escrow and immutable terms.
-- Control rounds, committee membership, deadlines and vote commitments.
-- Record evidence digests, not raw personal documents.
-- Enforce deterministic payout recipient and amount.
-- Never call hosted LLM APIs from the contract.
+The Rust NEAR contract freezes criteria and timing, validates reviewer committees and votes, controls challenge transitions, determines settlement under the quorum and fallback rules, and verifies the payout callback. Native NEAR is the v1 escrow asset.
 
-## Service boundary
+The contract accepts neither model responses nor API state as financial authority. Its ABI, state machine, committee rules and settlement recovery are specified in [the protocol documents](PROTOCOL.md).
 
-- Gateway abstracts provider details, retries, response schema, signing requests and model version.
-- Evidence store keeps SHA-256 content digests, URI references, retrieval timestamps, provenance and access controls.
-- Verification worker runs bounded and sandboxed scripts. Never run arbitrary user-supplied code without isolation and resource limits.
-- Workers may propose and sign judgments, but cannot instruct the contract to ignore policy.
+## Browser identity and transaction boundaries
 
-## Budget governor
+The frontend authenticates an account with a server-verified NEP-413 signature. It displays eligible actions but cannot become a signer or authorise transactions on behalf of an account. Case creation and other financial operations must be prepared against the frozen request, confirmed by the correct wallet and restricted by an exact, server-authorised operation.
 
-- Meta allocation: $3, Baseten: $3, Modal: $5, initial ceiling.
-- Total credit pools user-reported: $10 + $10 + $30 monthly.
-- Persist reservations and usage before requests, reconcile to provider invoices and provider-side spend caps.
-- Allowlist models, max token counts, max runtime, max concurrency, one retry and fixed timeouts.
-- Cache replay fixtures. Pre-recorded demos must be labelled recorded.
-- Credit exhaustion: skip live inference; show explicit unavailable state. No automatic spending beyond authorisation.
-- Verify actual billing terms, credit eligibility and expiration before a paid call; software cost caps are not substitutes for a provider-side hard limit.
+The currently allowlisted creator is `contra-creator.testnet`. Browser control of its verified key was not demonstrated at the backend completion checkpoint. Never import private material into frontend code.
 
-## Security model
+## Durable service
 
-Onchain security is limited to deterministic rules and NEAR execution. Reviewer registry v1 is permissioned and is not automatically decentralized just because accounts differ. Offchain attestations, if used, prove only narrowly defined environment properties. Source provenance and human-readable model explanations remain subject to manipulation and error.
+The Cloudflare Worker and SQLite-backed Durable Object store account-scoped sessions, reviewer invitations, signed control statements, disclosures, evidence manifests, provider jobs and budget reservations, operation intents and audit records. Authorised reads are bound to the current account and case. Successful API storage does not prove onchain submission or finality.
 
-## Proposed repo layout after November 1
+Provider records are protected independently of the generic evidence-artifact endpoint. UNKNOWN payout operations cannot be redispatched automatically.
 
-```text
-contra/
-  contracts/contestation/
-  apps/web/
-  services/evaluator-gateway/
-  services/evidence/
-  packages/protocol-types/
-  tests/sandbox/
-  tests/adversarial/
-  benchmarks/
-  docs/
-  design/
-  project/
-  AGENTS.md
-  README.md
-```
+## Reviewer independence
 
-Cloudflare Pages or an equivalent static edge frontend serves UI. Dynamic evaluator workloads run on bounded functions; no always-on GPU or inference instance is required.
+The primary and appeal committees each require three eligible, confirmed reviewers and must be disjoint. Signed operator-control statements, conflict checks and contract registration support independence verification but fixtures controlled by one process cannot demonstrate six real independent humans.
+
+## Bounded AI
+
+Meta supplies optional case-bound evaluation proposals. Modal verifies an exact proposal digest, evidence citations, terms and round identity. Both are non-binding, use separate authenticated runtime and billing gates, and can remain disabled even when the backend reports healthy.
+
+Baseten is retired from the active provider set. Retained earlier records are historical, not an active runtime configuration.
+
+## Operational state
+
+The backend and Testnet contract were deployed and verified at the 12 November 2026 backend checkpoint. Production signing and live provider case-bound inference were gated. The approved branded dashboard remained on draft PR #95 rather than the deployed `main`.
+
+Release acceptance and remaining actions are defined in [the three-phase completion plan](COMPLETION_PLAN.md), with detailed operational runbooks under [operations](operations/CLOUDFLARE_DEPLOYMENT.md) and [reproducibility](testing/REPRODUCIBILITY.md).
