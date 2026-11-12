@@ -117,6 +117,8 @@ describe('Cloudflare durable financial state',()=>{
  it('keeps provider credential probes closed without operator activation authentication',async()=>{
   const response=await SELF.fetch(publicOrigin+'/api/operator/provider-probe',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:JSON.stringify({provider:'modal'})});
   expect(response.status).toBe(401);expect(await response.json()).toEqual({error:'Provider activation authentication required'});
+  const smoke=await SELF.fetch(publicOrigin+'/api/operator/provider-smoke',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:JSON.stringify({provider:'meta',idempotency_key:'unauthorised-smoke'})});
+  expect(smoke.status).toBe(401);expect(await smoke.json()).toEqual({error:'Provider activation authentication required'});
  });
 
  it('preserves pre-handoff rejection but locks post-handoff uncertainty',async()=>{
@@ -133,6 +135,7 @@ describe('Cloudflare durable financial state',()=>{
   const state=stub('provider-ledger'),request={provider:'meta',idempotency_key:'fixture-1',account:'reviewer.testnet',case_id:'1'.repeat(64),payload_digest:'2'.repeat(64),reservation_micro_usd:100000};
   const jobs=await Promise.all(Array.from({length:6},()=>state.reserveProviderJob(request)));expect(jobs.filter(value=>!value.replayed)).toHaveLength(1);
   await rejection(()=>runInDurableObject(state,instance=>instance.reserveProviderJob({...request,payload_digest:'3'.repeat(64)})),/idempotency conflict/);
+  await rejection(()=>runInDurableObject(state,instance=>instance.reserveProviderJob({...request,idempotency_key:'fixture-2',payload_digest:'3'.repeat(64)})),/concurrency limit/);
   const completed=await state.completeProviderJob({id:jobs[0].id,response_digest:'4'.repeat(64),actual_micro_usd:0});expect(completed.status).toBe('PROPOSED');
   const ledger=await state.providerState('reviewer.testnet'),meta=ledger.budgets.find(value=>value.provider==='meta');expect(meta.cap_micro_usd).toBe(3000000);expect(meta.reserved_micro_usd).toBe(0);expect(meta.used_micro_usd).toBe(0);
  });
