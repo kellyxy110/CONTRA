@@ -127,17 +127,19 @@ async function loadDashboard(){
    if(!page?.next_index)break;
    cursor=page.next_index;
   }
-  const groups=new Map();for(const item of items)groups.set(item.state,(groups.get(item.state)||0)+1);
+  const days=Number($('case-range').value),cutoff=BigInt(Date.now()-days*86400000)*1000000n;
+  const visible=days?items.filter(item=>{try{return BigInt(item.created_at_ns)>=cutoff}catch{return false}}):items;
+  const groups=new Map();for(const item of visible)groups.set(item.state,(groups.get(item.state)||0)+1);
   const challengeStates=new Set(['Challenged','ChallengeReview']);
-  text('active-challenges',String(items.filter(item=>challengeStates.has(item.state)).length));
-  text('awaiting-review',String(items.filter(item=>['ReviewCommit','ReviewReveal','ChallengeReview'].includes(item.state)).length));
+  text('active-challenges',String(visible.filter(item=>challengeStates.has(item.state)).length));
+  text('awaiting-review',String(visible.filter(item=>['ReviewCommit','ReviewReveal','ChallengeReview'].includes(item.state)).length));
   const reserves=(await view('get_config',{}))?.reserve_summary||{};
   text('total-escrow',/^\d+$/.test(String(reserves.held_escrow_yocto||''))?formatNear(reserves.held_escrow_yocto):'Unavailable');
   text('settled-value',/^\d+$/.test(String(reserves.paid_yocto||''))?formatNear(reserves.paid_yocto):'Unavailable');
   const colours=['#54889a','#77a899','#b2b89c','#27535a','#ff8678','#f4bd68'];let chartCursor=0;
-  const segments=[...groups].map(([state,count],index)=>{const start=chartCursor;chartCursor+=items.length?count/items.length*100:0;return {state,count,colour:colours[index%colours.length],start,end:chartCursor}});
-  const chart=$('status-chart');chart.innerHTML=items.length?`<div class="donut" style="background:conic-gradient(${segments.map(segment=>`${segment.colour} ${segment.start}% ${segment.end}%`).join(',')})"><div><strong>${items.length}</strong><small>Cases returned</small></div></div><ul>${segments.map(segment=>`<li><i style="background:${segment.colour}"></i><a href="#cases/state/${encodeURIComponent(segment.state)}">${escapeHtml(segment.state)}</a><b>${segment.count}</b></li>`).join('')}</ul>`:'<p class="empty-state">No contract cases returned.</p>';
-  text('distribution-scope',page?.next_index?`First ${items.length} cases`:'All contract cases');
+  const segments=[...groups].map(([state,count],index)=>{const start=chartCursor;chartCursor+=visible.length?count/visible.length*100:0;return {state,count,colour:colours[index%colours.length],start,end:chartCursor}});
+  const chart=$('status-chart');chart.innerHTML=visible.length?`<div class="donut" style="background:conic-gradient(${segments.map(segment=>`${segment.colour} ${segment.start}% ${segment.end}%`).join(',')})"><div><strong>${visible.length}</strong><small>Cases returned</small></div></div><ul>${segments.map(segment=>`<li><i style="background:${segment.colour}"></i><a href="#cases/state/${encodeURIComponent(segment.state)}">${escapeHtml(segment.state)}</a><b>${segment.count}</b></li>`).join('')}</ul>`:'<p class="empty-state">No contract cases returned for this period.</p>';
+  text('distribution-scope',page?.next_index?`First ${items.length} cases`:days?`Last ${days} days`:'All contract cases');
  }catch(error){for(const id of values)text(id,'Unavailable');$('status-chart').innerHTML=`<p class="empty-state">Case distribution unavailable: ${escapeHtml(error.message)}</p>`;text('distribution-scope','Chain unavailable')}
 }
 async function loadEvents(caseId,afterSeq='0'){
@@ -187,8 +189,13 @@ document.querySelectorAll('[data-manifest-filter]').forEach(button=>button.addEv
 $('case-search').addEventListener('submit',event=>{event.preventDefault();const id=$('case-id').value.trim();if(!/^[0-9a-f]{64}$/i.test(id)){$('runtime-notice').hidden=false;$('runtime-notice').textContent='A case ID must be a 64-character hexadecimal digest.';return}location.hash=`#cases/${id}`;});
 $('connect').addEventListener('click',()=>{$('wallet-dialog').showModal();});$('dialog-connect').addEventListener('click',connect);$('disconnect').addEventListener('click',disconnect);$('mobile-wallet').addEventListener('click',()=>$('wallet-dialog').showModal());document.querySelector('.dialog-close').addEventListener('click',()=>$('wallet-dialog').close());$('refresh').addEventListener('click',refresh);
 $('renew-session').addEventListener('click',renewSession);$('sandbox-connect').addEventListener('click',connectSandbox);
+$('case-range').addEventListener('change',loadDashboard);
+$('mobile-case-range').addEventListener('change',event=>{$('case-range').value=event.target.value;loadDashboard();$('mobile-menu').close()});
 $('mobile-more').addEventListener('click',()=>$('mobile-menu').showModal());
 $('mobile-menu').querySelector('.dialog-close').addEventListener('click',()=>$('mobile-menu').close());
+const mobileNavigation=document.querySelector('.rail nav').cloneNode(true);
+mobileNavigation.className='mobile-navigation';mobileNavigation.setAttribute('aria-label','All destinations');
+$('mobile-menu').querySelector('.more-links').replaceWith(mobileNavigation);
 $('mobile-menu').querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>$('mobile-menu').close()));
 try{$('case-id').value=localStorage.getItem('contra.case-id')||''}catch{}
 setTheme(document.documentElement.dataset.theme||'system');updateWalletUi();setUnavailable();recoverSession().then(refresh);
