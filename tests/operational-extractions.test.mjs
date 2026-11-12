@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {counterexampleRequest,challengeEligibility,challengeSubmissionArgs} from '../apps/web/challenge-operations.mjs';
-import {invitationResponseArgs,findingArgs,reviewerCommitmentArgs,commitmentTransactionArgs,revealTransactionArgs,verifyReviewerReveal} from '../apps/web/reviewer-operations.mjs';
-import {receiptRequest,operationReadPath,reconciliationRequest,operationRecoveryState} from '../apps/web/settlement-operations.mjs';
+import {counterexampleRequest,challengeEligibility,challengeSubmissionArgs,storeCounterexample,fileChallenge} from '../apps/web/challenge-operations.mjs';
+import {invitationResponseArgs,findingArgs,reviewerCommitmentArgs,commitmentTransactionArgs,revealTransactionArgs,verifyReviewerReveal,respondToInvitation,storeReviewerFinding,commitReviewerVote,revealReviewerVote} from '../apps/web/reviewer-operations.mjs';
+import {receiptRequest,operationReadPath,reconciliationRequest,operationRecoveryState,inspectReceipt,inspectOperation,reconcileKnownOperation} from '../apps/web/settlement-operations.mjs';
 
 test('challenge arguments and losing-party deadline eligibility are preserved',()=>{
  const d=new FormData();d.set('criterion_id','2');d.set('text','Counterexample');
@@ -38,4 +38,37 @@ test('settlement inspection preserves UNKNOWN lock without redispatch',()=>{
  assert.deepEqual(operationRecoveryState({status:'UNKNOWN'}),{canReconcile:false,locked:true});
  assert.deepEqual(operationRecoveryState({status:'UNKNOWN',tx_hash:'tx'}),{canReconcile:true,locked:false});
  assert.deepEqual(operationRecoveryState({status:'CONFIRMED',tx_hash:'tx'}),{canReconcile:false,locked:false});
+});
+
+test('challenge dispatch retains exact contract method and deposit',async()=>{
+ let observed=[];
+ const post=async(...args)=>{observed.push(args);return {digest:'digest'};};
+ const data=new FormData();data.set('criterion_id','3');data.set('text','example');
+ await storeCounterexample(post,'case',data);
+ const sign=async(...args)=>{observed.push(args);return {status:'CONFIRMED'};};
+ await fileChallenge(sign,'case',3,'digest');
+ assert.deepEqual(observed,[['counterexample',{case_id:'case',criterion_id:3,text:'example'}],['file_challenge',{case_id:'case',criterion_id:3,counterexample_digest:'digest'},'1']]);
+});
+test('reviewer call dispatch keeps human finding and vote distinct',async()=>{
+ const calls=[];const post=async(...args)=>{calls.push(args);return {digest:'finding'};};
+ const sign=async(...args)=>{calls.push(args);return {ok:true};};
+ const data=new FormData();for(const [k,v] of Object.entries({disposition:'ACCEPT',citation:'cit',explanation:'why',limitations:''}))data.set(k,v);
+ await respondToInvitation(post,'inv','reviewer','CONSENTED',new Date('2026-01-01T00:00:00Z'));
+ await storeReviewerFinding(post,'case',0,data);
+ await commitReviewerVote(sign,'case',0,'commitment');
+ await revealReviewerVote(sign,{case_id:'case',round_id:0,disposition:'ACCEPT'});
+ assert.equal(calls[0][0],'reviewer/respond');assert.equal(calls[1][0],'finding');
+ assert.deepEqual(calls[2],['commit_vote',{case_id:'case',round_id:0,commitment:'commitment'},'0']);
+ assert.equal(calls[3][0],'reveal_vote');assert.equal(calls[3][2],'0');
+});
+test('settlement workflows inspect, reconcile once and reject hashless UNKNOWN',async()=>{
+ let calls=[];const request=async p=>{calls.push(['get',p]);return {status:'UNKNOWN',tx_hash:'hash'};};
+ const post=async(...args)=>{calls.push(args);return {status:'CONFIRMED'};};
+ const data=new FormData();data.set('tx_hash','hash');
+ await inspectReceipt(post,data);
+ const operation=await inspectOperation(request,'abc');
+ await reconcileKnownOperation(post,'abc',operation);
+ assert.deepEqual(calls,[['receipt',{tx_hash:'hash'}],['get','operation?id=abc'],['wallet/reconcile',{operation_id:'abc'}]]);
+ await assert.rejects(reconcileKnownOperation(post,'abc',{status:'UNKNOWN'}),/must remain locked/);
+ assert.equal(calls.length,3);
 });
