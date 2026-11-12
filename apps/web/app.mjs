@@ -1,4 +1,5 @@
 import {authenticateWallet,connectWallet,disconnectWalletSession,recoverWalletSession,renewWalletSession,restoreWalletOperations,selectWalletAccount,prepareWalletTransaction,sendPreparedWalletTransaction,reconcileWalletTransaction} from './wallet.bundle.js';
+import {createApiClient} from './api-client.mjs';
 import {coverage} from './coverage.mjs';
 import {mountWorkspaces} from './workspaces.mjs';
 
@@ -8,11 +9,7 @@ const metricNames=['Evidence','Provenance','Review','Finality','Challenge','Quor
 const lenses={overall:metricNames,evidence:['Evidence','Provenance','Review','Quorum'],criteria:['Evidence','Provenance','Checks','Criteria']};
 const blankMetrics=()=>metricNames.map(name=>({name,status:'unavailable',numerator:null,denominator:null,source:'Connect to an authorised case'}));
 
-async function request(path,options={}){
- const headers={...(options.headers||{})};if(token)headers.Authorization=`Bearer ${token}`;
- const response=await fetch(`/api/${path}`,{...options,headers}),body=await response.json();
- if(!response.ok)throw Error(body.error||`HTTP ${response.status}`);return body;
-}
+const {request,view}=createApiClient(()=>token);
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[char]));}
 function compact(value){const s=String(value||'');return s.length>22?`${s.slice(0,10)}…${s.slice(-8)}`:s;}
 function valueOrUnavailable(value){return value===null||value===undefined||value===''?'Unavailable':String(value);}
@@ -103,7 +100,6 @@ async function refresh(){
   if($('case-id').value.trim())await loadCase();
  }catch(error){text('network-pill','Chain unavailable');$('dialog-connect').disabled=true;$('runtime-notice').hidden=false;$('runtime-notice').textContent='The NEAR chain is unavailable. Case data and transaction results are not simulated.';walletState('unavailable',`Wallet sign-in is unavailable until the chain is ready. ${error.message}`);}finally{await loadDashboard()}
 }
-async function view(method,args){return (await request('view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,args,envelope:true})})).value;}
 async function signCall(method,args,deposit='0',preparedOperation=null){
  if(!token||!account)throw Error('Connect and authenticate a Testnet wallet before signing.');
  if(!wallet)throw Error('Reconnect the signing wallet. Session recovery alone cannot sign transactions.');
