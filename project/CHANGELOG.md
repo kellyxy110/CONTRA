@@ -535,3 +535,9 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Verified all public routes on desktop Chromium and mobile Chromium and Firefox. No browser errors or horizontal overflow were observed.
 - No provider inference, funded Testnet case, contract change or expenditure occurred.
 
+# 2026-11-12: Active provider set reduced to Meta and Modal
+
+- Removed Baseten from Cloudflare secrets, runtime readiness, provider probes, durable job admission and active credential templates by owner decision.
+- Preserved historical Baseten fixture and authenticated-probe evidence without treating it as an active integration.
+- Future OpenRouter or other provider support requires a separate explicit owner decision and integration review.
+

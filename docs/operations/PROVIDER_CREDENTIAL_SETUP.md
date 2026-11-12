@@ -1,6 +1,6 @@
 # Provider credential setup
 
-Meta and Baseten credentials are installed in the Cloudflare Worker, but both providers remain independently gated. The Modal verifier is deployed, but its dedicated Proxy Auth token is not installed. Fixture transports prove schema, citation, budget and trust-boundary behaviour only. They are not live inference evidence.
+Meta and Modal are the only active providers. Meta completed one bounded live smoke, and the protected Modal verifier completed one authenticated deterministic verification. Baseten was retired from the active credential set on 12 November 2026. Fixture transports prove schema, citation, budget and trust-boundary behaviour only. They are not live inference evidence.
 
 ## Common activation gates
 
@@ -15,17 +15,13 @@ Each provider is independently disabled unless all of the following are true:
 7. Per-request and programme limits are valid.
 8. The provider-specific `*_LIVE_ENABLED` flag is explicitly enabled.
 
-Missing Meta credentials must not disable Baseten or Modal, and the reverse also applies. AI artifacts remain non-binding proposals.
+Missing Meta credentials must not disable Modal, and the reverse also applies. AI artifacts remain non-binding proposals.
 
 ## Meta
 
 The verified Standard Model API endpoint is `https://api.meta.ai/v1/chat/completions`. `muse-spark-1.3` remains the proposed primary and fresh-review model. The official catalogue recommends Spark 1.3 for new work. Access to the owner's account has not been verified. Contributor variants must not be used for case evidence because their prompts, files, context and responses may be used for training.
 
 Create a unique application key in the Model API dashboard and store it as `META_API_KEY` only in the server secret store. Standard Spark 1.3 pricing observed on 2026-11-11 is USD 1.25 per million input tokens and USD 4.25 per million output tokens, with USD 0.15 cached input. Meta documents only a spend alert, not a hard usage cap. Therefore the provider-side hard-limit gate is currently unavailable and Meta must remain disabled even after a key is installed unless the owner accepts a separately documented control or Meta adds a genuine hard cap. The programme ceiling is USD 3, not automatic spending permission.
-
-## Baseten
-
-The Model API endpoint is `https://inference.baseten.co/v1/chat/completions`. Keep `BASETEN_MODEL` empty until the authenticated catalogue and a schema-enforcing adversarial model are verified. For production, create a team key with `Call certain models`, restrict it to the selected model and environment, and set an expiry. Baseten exposes OpenAI-compatible Chat Completions and structured outputs, but no exact model or provider-side hard billing cap has been verified for CONTRA. The programme ceiling is USD 3.
 
 ## Modal
 
@@ -48,7 +44,6 @@ The required HTTP 401 negative test passes. The next step is to create a dedicat
 Do not send any credential through chat. Enter each value only into its provider dashboard, the local ignored environment file or Wrangler's interactive prompt.
 
 - Meta: one new Model API application key for Standard `muse-spark-1.3`, plus redacted evidence of account access, available credit and the Usage page. Meta currently exposes usage alerts rather than a verified hard spend cap, so installing the key does not satisfy the billing gate.
-- Baseten: one expiring team API key restricted to `Call certain models`, the exact selected model ID and environment, plus redacted credit, pricing and billing-control evidence. Do not create a broad administrator key.
 - Modal: Workspace deployment credentials are needed only on the trusted machine that deploys the verifier. The Worker needs a separately scoped Proxy Token pair, the protected `.modal.run` function URL and frozen function ID. Configure a Workspace budget and USD 5 spend limit first.
 
 The Modal deployment token pair (`MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET`) must never be installed in the CONTRA Worker. Only `MODAL_PROXY_KEY` and `MODAL_PROXY_SECRET` belong there.
@@ -81,7 +76,6 @@ After the reviewed provider-readiness release is deployed, install only the cred
 
 ```sh
 npx wrangler secret put META_API_KEY --config wrangler.jsonc --name contra-testnet
-npx wrangler secret put BASETEN_API_KEY --config wrangler.jsonc --name contra-testnet
 npx wrangler secret put MODAL_PROXY_KEY --config wrangler.jsonc --name contra-testnet
 npx wrangler secret put MODAL_PROXY_SECRET --config wrangler.jsonc --name contra-testnet
 npx wrangler secret list --config wrangler.jsonc
@@ -107,9 +101,6 @@ Revoke the old credential first when compromise is suspected. Preserve only non-
 - Meta models: <https://dev.meta.ai/docs/models>
 - Meta pricing and rate limits: <https://dev.meta.ai/docs/pricing-rate-limits>
 - Meta authentication: <https://dev.meta.ai/docs/authentication>
-- Baseten Model APIs: <https://docs.baseten.co/inference/model-apis/overview>
-- Baseten pricing and limits: <https://docs.baseten.co/inference/model-apis/pricing-and-limits>
-- Baseten API keys: <https://docs.baseten.co/organization/api-keys>
 - Modal Web Function proxy authentication: <https://modal.com/docs/guide/webhook-proxy-auth>
 - Modal budgets: <https://modal.com/docs/guide/budgets>
 - Modal pricing: <https://modal.com/pricing>

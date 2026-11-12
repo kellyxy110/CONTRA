@@ -106,7 +106,7 @@ export class ContraState extends DurableObject{
     );
    `);
    const now=Date.now();
-   for(const [provider,cap] of [['meta',3000000],['baseten',3000000],['modal',5000000]])this.ctx.storage.sql.exec('INSERT OR IGNORE INTO provider_budgets(provider,cap_micro_usd,updated_at) VALUES(?,?,?)',provider,cap,now);
+   for(const [provider,cap] of [['meta',3000000],['modal',5000000]])this.ctx.storage.sql.exec('INSERT OR IGNORE INTO provider_budgets(provider,cap_micro_usd,updated_at) VALUES(?,?,?)',provider,cap,now);
   });
  }
 
@@ -265,7 +265,7 @@ export class ContraState extends DurableObject{
 
  reserveProviderJob(input){
   const provider=required(input?.provider,'provider'),key=required(input?.idempotency_key,'idempotency key'),account=required(input?.account,'account'),caseId=hash(input?.case_id,'case id'),payloadDigest=hash(input?.payload_digest,'payload digest'),reservation=Number(input?.reservation_micro_usd);
-  if(!['meta','baseten','modal'].includes(provider)||!Number.isSafeInteger(reservation)||reservation<=0)fail('Provider reservation is invalid');
+  if(!['meta','modal'].includes(provider)||!Number.isSafeInteger(reservation)||reservation<=0)fail('Provider reservation is invalid');
   const existing=row(this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE idempotency_key=?',key));
   if(existing){if(existing.provider!==provider||existing.account!==account||existing.case_id!==caseId||existing.payload_digest!==payloadDigest||existing.reservation_micro_usd!==reservation)fail('Provider idempotency conflict');return {...existing,replayed:true};}
   const active=row(this.ctx.storage.sql.exec("SELECT COUNT(*) AS count FROM provider_jobs WHERE provider=? AND status='RESERVED'",provider));
@@ -412,12 +412,10 @@ function safeModels(value){
 async function providerProbe(request,env){
  if(!await activationAuthorised(request,env))return json({error:'Provider activation authentication required'},401);
  const input=await body(request),provider=input.provider;
- if(!['meta','baseten','modal'].includes(provider))fail('Unsupported provider probe');
+ if(!['meta','modal'].includes(provider))fail('Unsupported provider probe');
  let endpoint,headers,payload=null;
  if(provider==='meta'){
   endpoint='https://api.meta.ai/v1/models';headers={Authorization:`Bearer ${required(env.META_API_KEY,'Meta credential')}`};
- }else if(provider==='baseten'){
-  endpoint='https://api.baseten.co/v1/models';headers={Authorization:`Api-Key ${required(env.BASETEN_API_KEY,'Baseten credential')}`};
  }else{
   endpoint=required(env.MODAL_FUNCTION_ENDPOINT,'Modal endpoint');headers={'Content-Type':'application/json','Modal-Key':required(env.MODAL_PROXY_KEY,'Modal proxy key'),'Modal-Secret':required(env.MODAL_PROXY_SECRET,'Modal proxy secret')};
   const evidence='1'.repeat(64),caseId='2'.repeat(64),terms='3'.repeat(64),proposal={case_id:caseId,terms_digest:terms,round_id:0,status:'AI proposed',findings:[{citations:[evidence]}]},proposalDigest=await textHash(canonical(proposal));

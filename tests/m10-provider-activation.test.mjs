@@ -10,7 +10,7 @@ test('Cloudflare provider credentials remain independently gated',()=>{
  assert.equal(report.meta.status,'GATED');
  assert.equal(report.meta.gates.credential_installed,true);
  assert.equal(report.meta.gates.billing_limit_verified,false);
- assert.equal(report.baseten.status,'CREDENTIALS_PENDING');
+ assert.deepEqual(Object.keys(report).sort(),['meta','modal']);
  assert.equal(JSON.stringify(report).includes('secret-not-logged'),false);
 });
 
