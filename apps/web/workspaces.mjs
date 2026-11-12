@@ -144,7 +144,31 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
  async function providers(){
   const [config,jobs]=await Promise.all([maybe('config'),getAccount()?maybe('provider/jobs'):{__error:'Connect a wallet to inspect account-scoped provider jobs.'}]);
   const names=['Meta','Baseten','Modal'];
+  const fixtureForm=config.provider_fixtures_enabled===true&&!jobs.__error
+   ? `<form id="evaluation-fixture" class="workspace-form">
+      <label>Case ID<input name="case_id" required pattern="[0-9a-fA-F]{64}" value="${escape(requireCase()||'')}"></label>
+      <label>Provider ledger<select name="provider">${names.map(name=>`<option value="${name.toLowerCase()}">${name}</option>`).join('')}</select></label>
+      <button type="submit">Run development fixture</button>
+     </form><div id="evaluation-result" role="status"></div>`
+   : note(config.provider_fixtures_enabled===true?'Connect a wallet to run a development fixture.':'This environment has development evaluations disabled.');
   host.innerHTML=panel('Provider readiness',`${config.__error?error(config.__error):names.map(name=>{const provider=config.providers?.[name.toLowerCase()];return `<div class="record"><div><strong>${name}</strong><small>${escape(provider?.model||'Model or function unverified')} · Programme ceiling $${escape(provider?.programme_ceiling_usd??'Unavailable')}</small></div><span class="status-pill">${escape(provider?.status||'Unavailable')}</span></div>${provider?`<details><summary>${name} readiness gates</summary><dl>${Object.entries(provider.gates||{}).map(([gate,passed])=>datum(gate.replaceAll('_',' '),passed?'Verified':'Pending')).join('')}</dl></details>`:''}`}).join('')}${note('Live inference is disabled until credentials, model access and spending controls are independently verified. AI proposals never become binding votes.')}`)+panel('Budget and job history',`${jobs.__error?error(jobs.__error):`<h3>Budgets</h3><pre>${safeJson(jobs.budgets||[])}</pre><h3>My jobs</h3><pre>${safeJson(jobs.jobs||[])}</pre>`}`);
+  host.insertAdjacentHTML('afterbegin',panel('Primary evaluation',note('Development fixtures produce a persisted non-binding record without calling a provider.')+fixtureForm));
+  const form=host.querySelector('#evaluation-fixture');
+  form?.addEventListener('submit',async event=>{
+   event.preventDefault();
+   const data=new FormData(form),button=form.querySelector('button'),result=host.querySelector('#evaluation-result');
+   const caseId=String(data.get('case_id')).toLowerCase(),provider=data.get('provider');
+   const key=await digestText(JSON.stringify(['primary-development-fixture-v1',getAccount(),caseId,provider]));
+   button.disabled=true;
+   result.textContent='Submitting development fixture…';
+   try{
+    const job=await post('provider/jobs',{case_id:caseId,provider,mode:'fixture',idempotency_key:key,reservation_micro_usd:1,payload:{scenario:'primary-development-fixture-v1'},fixture_output:{scenario:'primary-development-fixture-v1'}});
+    const history=await request('provider/jobs');
+    const recorded=history.jobs?.find(item=>item.id===job.id)||job;
+    result.innerHTML=`<dl>${datum('Development job',recorded.id)}${datum('Status',recorded.status)}${datum('Response digest',recorded.response_digest)}</dl>`;
+   }catch(e){result.innerHTML=error(e.message)}
+   finally{button.disabled=false}
+  });
  }
  async function activity(){
   const id=requireCase(),page=await view('get_events',{case_id:id,after_seq:state.eventCursor,limit:30});
