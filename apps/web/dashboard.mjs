@@ -6,6 +6,7 @@ import {storeCounterexample, challengeEligibility, fileChallenge} from './challe
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {submitDevelopmentFixture} from './evaluation-operations.mjs';
 import {mountConstellations} from './constellations.mjs';
+import {respondToInvitation} from './reviewer-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 
 const byId = id => document.getElementById(id);
@@ -203,6 +204,51 @@ document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
 let account = null;
 let wallet = null;
+async function reviewerInvitations(panel) {
+ const identity=account;
+ if(!token||!identity){
+  panel.append(element('p','Connect your wallet to see reviewer invitations.'));
+  return;
+ }
+ const section=element('section','');
+ const feedback=element('p','');
+ feedback.setAttribute('role','status');
+ panel.append(section,feedback);
+ async function refresh(){
+  const {invitations=[],events=[]}=await request('reviewer/invitations');
+  section.replaceChildren(element('h3','My invitations'));
+  if(!invitations.length)section.append(element('p','No invitations for this account.'));
+  for(const invitation of invitations){
+   const item=element('div','');
+   item.append(element('p',`${invitation.committee} · Slot ${invitation.slot} · ${invitation.status}`));
+   const expires=Number(invitation.expires);
+   item.append(element('p',`Expires: ${new Date(expires).toLocaleString('en-GB')}`));
+   if(invitation.reviewer_id===identity && expires>Date.now() && ['INVITED','CONSENTED'].includes(invitation.status)){
+    for(const [label,status] of (invitation.status==='INVITED'?[['Consent','CONSENTED'],['Decline','WITHDRAWN']]:[['Withdraw consent','WITHDRAWN']])){
+     const button=element('button',label);
+     button.type='button';
+     item.append(button);
+     button.addEventListener('click',async()=>{
+      const buttons=[...item.querySelectorAll('button')];
+      buttons.forEach(control=>{control.disabled=true;});
+      try{
+       if(account!==identity||!token||expires<=Date.now())throw Error('This invitation is no longer actionable.');
+       const saved=await respondToInvitation(post,invitation.digest,identity,status);
+       feedback.textContent=`Invitation response: ${saved.status}.`;
+       await refresh();
+      }catch(error){feedback.textContent=error.message;}
+      finally{buttons.forEach(control=>{control.disabled=false;});}
+     });
+    }
+   }
+   section.append(item);
+  }
+  const audit=element('ul','');
+  events.forEach(event=>audit.append(element('li',`${event.status} · ${new Date(event.observed_at).toLocaleString('en-GB')}`)));
+  section.append(element('h3','Invitation history'),audit.children.length?audit:element('p','No invitation events.'));
+ }
+ try{await refresh();}catch(error){feedback.textContent=error.message;}
+}
 async function evaluationTools(panel, config) {
  const identity = account;
  const caseId = byId('case').value;
@@ -527,8 +573,11 @@ async function updateNavigation() {
    const activity = await view('get_events',{case_id:null,after_seq:'0',limit:50});
    show(activity.items.map(event=>`${event.data?.[0]?.seq ?? '?'} · ${event.event} · ${event.data?.[0]?.case_id ?? 'Global'}`));
   } else if (route === 'reviewers') {
-   const registry = await view('list_reviewers',{from_index:'0',limit:32});
-   show(registry.items.map(reviewer=>`${reviewer.reviewer_id} · ${reviewer.confirmed?'Confirmed':reviewer.active?'Active':'Inactive'}`));
+   try{
+    const registry = await view('list_reviewers',{from_index:'0',limit:32});
+    show(registry.items.map(reviewer=>`${reviewer.reviewer_id} · ${reviewer.confirmed?'Confirmed':reviewer.active?'Active':'Inactive'}`));
+   }catch{show(['Reviewer registry is unavailable.']);}
+   if(generation===routeRequest)await reviewerInvitations(panel);
   } else if (route === 'settings' || route === 'lab') {
    const config = await request('config');
    show(route === 'settings' ? [`Network: ${config.network ?? 'Unavailable'}`,`Account: ${account ?? 'Disconnected'}`,`Contract: ${config.contract_account ?? 'Unavailable'}`] :

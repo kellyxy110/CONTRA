@@ -149,6 +149,26 @@ try {
      await page.route('**/api/provider/job-result?*',route=>route.fulfill({status:404,json:{error:'Evaluation job not found'}}));
      await page.getByRole('button',{name:'Inspect evaluation result'}).click();
      await page.getByText('Evaluation job not found',{exact:true}).waitFor();
+     const invite={reviewer_id:'browser-fixture.testnet',digest:'7'.repeat(64),committee:'PRIMARY',slot:1,status:'INVITED',expires:Date.now()+3600000};
+     const invitationEvents=[];
+     await page.route('**/api/reviewer/invitations',route=>route.fulfill({json:{invitations:[invite],events:invitationEvents}}));
+     await page.route('**/api/reviewer/respond',route=>{
+      const response=route.request().postDataJSON();
+      assert.equal(response.reviewer_id,invite.reviewer_id);
+      assert.equal(response.digest,invite.digest);
+      invite.status=response.status;
+      invitationEvents.push({status:response.status,observed_at:Date.now()});
+      return route.fulfill({json:invite});
+     });
+     await page.locator('#navigation a[href="#reviewers"]').click();
+     await page.getByRole('button',{name:'Consent',exact:true}).click();
+     await page.getByText('Invitation response: CONSENTED.',{exact:true}).waitFor();
+     await page.reload();
+     await page.getByRole('button',{name:'Withdraw consent',exact:true}).click();
+     await page.getByText('Invitation response: WITHDRAWN.',{exact:true}).waitFor();
+     assert.equal(await page.getByRole('button',{name:'Consent',exact:true}).count(),0);
+     await page.locator('#navigation a[href="#overview"]').click();
+     await page.locator('#case').selectOption(cases[0].case_id);
      for(const link of await page.locator('#navigation a').all()){
       const title=await link.innerText();
       if(title==='Overview')continue;
