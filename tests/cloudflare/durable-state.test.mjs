@@ -141,8 +141,8 @@ describe('Cloudflare durable financial state',()=>{
  });
 
  it('locks uncertain provider jobs without releasing or redispatching reservations',async()=>{
-  const state=stub('provider-unknown'),job=await state.reserveProviderJob({provider:'baseten',idempotency_key:'fixture-unknown',account:'reviewer.testnet',case_id:'5'.repeat(64),payload_digest:'6'.repeat(64),reservation_micro_usd:200000});
-  expect((await state.unknownProviderJob(job.id)).status).toBe('UNKNOWN');expect((await state.reserveProviderJob({provider:'baseten',idempotency_key:'fixture-unknown',account:'reviewer.testnet',case_id:'5'.repeat(64),payload_digest:'6'.repeat(64),reservation_micro_usd:200000})).status).toBe('UNKNOWN');
+  const state=stub('provider-unknown'),job=await state.reserveProviderJob({provider:'meta',idempotency_key:'fixture-unknown',account:'reviewer.testnet',case_id:'5'.repeat(64),payload_digest:'6'.repeat(64),reservation_micro_usd:200000});
+  expect((await state.unknownProviderJob(job.id)).status).toBe('UNKNOWN');expect((await state.reserveProviderJob({provider:'meta',idempotency_key:'fixture-unknown',account:'reviewer.testnet',case_id:'5'.repeat(64),payload_digest:'6'.repeat(64),reservation_micro_usd:200000})).status).toBe('UNKNOWN');
   await rejection(()=>runInDurableObject(state,instance=>instance.completeProviderJob({id:job.id,response_digest:'7'.repeat(64),actual_micro_usd:0})),/cannot complete/);
  });
 

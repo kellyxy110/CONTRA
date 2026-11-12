@@ -19,19 +19,6 @@
         "server_secret_configured": true,
         "maximum_authorised_usd": 3
       },
-      "baseten": {
-        "status": "ACTIVATION_PENDING",
-        "documentation_verified": true,
-        "account_access_verified": true,
-        "model_identifier": null,
-        "interface_smoke_verified": false,
-        "credits_verified": false,
-        "pricing_verified": false,
-        "billing_limit_verified": false,
-        "owner_authorised": true,
-        "server_secret_configured": true,
-        "maximum_authorised_usd": 3
-      },
       "modal": {
         "status": "LIVE_VERIFIER_VERIFIED",
         "documentation_verified": true,

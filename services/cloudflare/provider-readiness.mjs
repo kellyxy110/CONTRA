@@ -1,4 +1,4 @@
-const CAPS=Object.freeze({meta:3,baseten:3,modal:5});
+const CAPS=Object.freeze({meta:3,modal:5});
 
 function enabled(value){return value==='1'||value==='true';}
 function allowedEndpoint(provider,value){
@@ -7,7 +7,6 @@ function allowedEndpoint(provider,value){
   const url=new URL(value);
   if(url.protocol!=='https:'||url.username||url.password||url.search||url.hash)return false;
   if(provider==='meta')return url.hostname==='api.meta.ai'&&url.pathname==='/v1/chat/completions';
-  if(provider==='baseten')return url.hostname==='inference.baseten.co'&&url.pathname==='/v1/chat/completions';
   return provider==='modal'&&url.hostname.endsWith('.modal.run')&&(url.pathname==='/'||url.pathname.length>1);
  }catch{return false;}
 }
