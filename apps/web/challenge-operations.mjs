@@ -9,3 +9,10 @@ export function challengeEligibility(c, account, signingEnabled, now = Date.now(
 export function challengeSubmissionArgs(caseId,criterionId,digest) {
  return {case_id:caseId,criterion_id:criterionId,counterexample_digest:digest};
 }
+
+export async function storeCounterexample(post,caseId,data) {
+ return post('counterexample',counterexampleRequest(caseId,data));
+}
+export async function fileChallenge(signCall,caseId,criterionId,digest) {
+ return signCall('file_challenge',challengeSubmissionArgs(caseId,criterionId,digest),'1');
+}
