@@ -19,7 +19,7 @@ try{
   const page=await browser.newPage({viewport:{width,height:900},deviceScaleFactor:1});
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   await page.goto(origin,{waitUntil:'networkidle'});
-  await page.locator('#radar svg').waitFor();
+  await page.locator('#status-chart').waitFor();
   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark','approved dark default');
   const metrics=await page.locator('#metric-chips button').count();assert.equal(metrics,8,`readiness sectors at ${width}`);
   assert.equal(await page.locator('#radar').innerText().then(text=>/\b(?:10|20|30|40|50|60|70|80|90|100)%/.test(text)),false,'no guide percentages');

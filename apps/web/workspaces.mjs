@@ -126,7 +126,7 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
  }
  async function activity(){
   const id=requireCase(),page=await view('get_events',{case_id:id,after_seq:state.eventCursor,limit:30});
-  host.innerHTML=panel(id?'Case activity':'Contract activity',`${page.gap?error('The contract ring no longer contains every earlier event.'):''}${list(page.items,e=>`<div class="record"><div><strong>${escape(e.event||'Contract event')}</strong><small>Sequence ${escape(e.data?.[0]?.seq||'Unavailable')}</small></div></div>`,'No events on this page.')}<button id="activity-next" type="button" ${page.items?.length!==30?'disabled':''}>Next events</button>`,`${page.items?.length||0} shown`);
+  host.innerHTML=panel(id?'Case activity':'Contract activity',`${page.gap?error('The contract ring no longer contains every earlier event.'):''}${list(page.items,e=>`<div class="record"><div><strong>${escape(e.event||'Contract event')}</strong><small>Sequence ${escape(e.data?.[0]?.seq||'Unavailable')} · ${escape(e.data?.[0]?.at_ns?date(e.data[0].at_ns):'Time unavailable')}</small></div>${caseIdValid(e.data?.[0]?.case_id)?caseLink(e.data[0].case_id):''}</div>`,'No events on this page.')}<button id="activity-next" type="button" ${page.items?.length!==30?'disabled':''}>Next events</button>`,`${page.items?.length||0} shown`);
   host.querySelector('#activity-next').addEventListener('click',()=>{state.eventCursor=page.next_after_seq;activity()});
  }
  async function settings(){

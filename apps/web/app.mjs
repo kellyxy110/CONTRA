@@ -146,7 +146,7 @@ async function loadEvents(caseId,afterSeq='0'){
   const items=page?.items||[];text('event-count',`${items.length} shown`);
   $('events-list').innerHTML=(page.gap?'<p class="event-gap">Earlier events have left the contract ring.</p>':'')+(items.length?items.map(event=>{
    const data=event.data?.[0]||{};
-   return `<div class="event"><i>●</i><div><b>${escapeHtml(event.event||'Contract event')}</b><span>Sequence ${escapeHtml(data.seq||'Unavailable')}</span></div></div>`;
+   return `<div class="event"><i>●</i><div><b>${escapeHtml(event.event||'Contract event')}</b><span>Sequence ${escapeHtml(data.seq||'Unavailable')}</span></div>${/^[0-9a-f]{64}$/i.test(data.case_id||'')?`<a href="#cases/${escapeHtml(data.case_id)}">Open case</a>`:''}</div>`;
   }).join(''):'<div class="empty-state">No events returned for this page.</div>')+
   (items.length===20?`<button class="text-button event-next" data-next="${escapeHtml(page.next_after_seq)}">Next events</button>`:'');
   $('events-list').querySelector('.event-next')?.addEventListener('click',()=>loadEvents(caseId,page.next_after_seq));
