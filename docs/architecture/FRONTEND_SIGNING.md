@@ -7,3 +7,7 @@ After a wallet response, the browser records the transaction hash and requests r
 A reviewer stores an evidence-bound human finding separately from the binding vote. The browser calculates the commitment with the shared protocol encoding, displays a fresh nonce and finding digest for the reviewer to retain, then asks the wallet to sign the commit call. During reveal, the browser recomputes the commitment and rejects mismatched disposition, finding or nonce before asking the wallet to sign. Development fixtures establish interface behaviour only; they do not establish independent human review or financial authority.
 
 The present Cloudflare signing gate is disabled. Enabling it requires server-side exact bounded authority and valid account control; the browser cannot override that gate.
+
+## Presentation removal
+
+The dashboard document and stylesheets are removed while the frontend logic modules remain available for the next implementation. The browser suite checks the holding page and removed asset responses. The Pages deployment must be verified after a future release to confirm cache behavior.
