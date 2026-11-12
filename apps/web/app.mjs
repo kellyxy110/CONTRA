@@ -118,7 +118,10 @@ async function signCall(method,args,deposit='0'){
   return {transaction_hash:sent?.transaction?.hash||sent?.transaction_outcome?.id||sent?.transactionHash,operation:reconciled};
  }catch(error){throw Error(`${error.message} Operation ${operation.operation_id} is persisted. Inspect it in Settlement recovery before any retry.`)}
 }
+let dashboardRequest = 0;
 async function loadDashboard(){
+ const requestId = ++dashboardRequest;
+ const days = Number($('case-range').value);
  const values=['total-escrow','active-challenges','settled-value','awaiting-review'];
  try{
   let cursor='0',page,items=[];
@@ -127,20 +130,22 @@ async function loadDashboard(){
    if(!page?.next_index)break;
    cursor=page.next_index;
   }
-  const days=Number($('case-range').value),cutoff=BigInt(Date.now()-days*86400000)*1000000n;
+  const reserves=(await view('get_config',{}))?.reserve_summary||{};
+  if(requestId !== dashboardRequest)return;
+  const cutoff=BigInt(Date.now()-days*86400000)*1000000n;
   const visible=days?items.filter(item=>{try{return BigInt(item.created_at_ns)>=cutoff}catch{return false}}):items;
   const groups=new Map();for(const item of visible)groups.set(item.state,(groups.get(item.state)||0)+1);
   const challengeStates=new Set(['Challenged','ChallengeReview']);
   text('active-challenges',String(visible.filter(item=>challengeStates.has(item.state)).length));
   text('awaiting-review',String(visible.filter(item=>['ReviewCommit','ReviewReveal','ChallengeReview'].includes(item.state)).length));
-  const reserves=(await view('get_config',{}))?.reserve_summary||{};
   text('total-escrow',/^\d+$/.test(String(reserves.held_escrow_yocto||''))?formatNear(reserves.held_escrow_yocto):'Unavailable');
   text('settled-value',/^\d+$/.test(String(reserves.paid_yocto||''))?formatNear(reserves.paid_yocto):'Unavailable');
   const colours=['#54889a','#77a899','#b2b89c','#27535a','#ff8678','#f4bd68'];let chartCursor=0;
   const segments=[...groups].map(([state,count],index)=>{const start=chartCursor;chartCursor+=visible.length?count/visible.length*100:0;return {state,count,colour:colours[index%colours.length],start,end:chartCursor}});
   const chart=$('status-chart');chart.innerHTML=visible.length?`<div class="donut" style="background:conic-gradient(${segments.map(segment=>`${segment.colour} ${segment.start}% ${segment.end}%`).join(',')})"><div><strong>${visible.length}</strong><small>Cases returned</small></div></div><ul>${segments.map(segment=>`<li><i style="background:${segment.colour}"></i><a href="#cases/state/${encodeURIComponent(segment.state)}">${escapeHtml(segment.state)}</a><b>${segment.count}</b></li>`).join('')}</ul>`:'<p class="empty-state">No contract cases returned for this period.</p>';
   text('distribution-scope',page?.next_index?`First ${items.length} cases`:days?`Last ${days} days`:'All contract cases');
- }catch(error){for(const id of values)text(id,'Unavailable');$('status-chart').innerHTML=`<p class="empty-state">Case distribution unavailable: ${escapeHtml(error.message)}</p>`;text('distribution-scope','Chain unavailable')}
+ }catch(error){if(requestId !== dashboardRequest)return;
+  for(const id of values)text(id,'Unavailable');$('status-chart').innerHTML=`<p class="empty-state">Case distribution unavailable: ${escapeHtml(error.message)}</p>`;text('distribution-scope','Chain unavailable')}
 }
 async function loadEvents(caseId,afterSeq='0'){
  try{
