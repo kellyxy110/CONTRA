@@ -4,6 +4,8 @@ import {createWalletOperations, openAuthenticatedWallet, recoverWallet} from './
 import {buildEvidenceManifest, storeEvidence, evidenceSubmissionArgs} from './evidence-operations.mjs';
 import {storeCounterexample, challengeEligibility, fileChallenge} from './challenge-operations.mjs';
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
+import {submitDevelopmentFixture} from './evaluation-operations.mjs';
+import {coverage} from './coverage.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 
 const byId = id => document.getElementById(id);
@@ -201,6 +203,56 @@ document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
 let account = null;
 let wallet = null;
+async function evaluationTools(panel, config) {
+ const identity = account;
+ const caseId = byId('case').value;
+ const history = element('section','');
+ const feedback = element('p','');
+ feedback.setAttribute('role','status');
+ panel.append(element('p','Evaluation proposals are non-binding. Live case-bound provider execution is unavailable.'), history, feedback);
+ if(!token || !identity){
+  feedback.textContent='Connect your wallet to inspect your evaluation jobs.';
+  return;
+ }
+ async function refreshJobs(){
+  const {jobs=[]}=await request('provider/jobs');
+  const list=element('ul','');
+  for(const job of jobs){
+   if(caseId && job.case_id!==caseId)continue;
+   list.append(element('li',`${job.provider} · ${job.status} · Response digest: ${job.response_digest ?? 'Unavailable'}`));
+  }
+  history.replaceChildren(element('h3','Evaluation jobs'),list.children.length?list:element('p','No matching jobs.'));
+ }
+ const refresh=element('button','Refresh evaluation jobs');
+ panel.append(refresh);
+ refresh.addEventListener('click',async()=>{
+  refresh.disabled=true;
+  try{await refreshJobs();feedback.textContent='Evaluation jobs refreshed.';}
+  catch(error){feedback.textContent=error.message;}
+  finally{refresh.disabled=false;}
+ });
+ if(config.provider_fixtures_enabled===true && caseId){
+  const label=element('label','Development fixture provider');
+  const provider=element('select','');
+  provider.append(new Option('Meta','meta'),new Option('Modal','modal'));
+  label.append(provider);
+  const run=element('button','Run non-binding development fixture');
+  panel.append(label,run);
+  run.addEventListener('click',async()=>{
+   run.disabled=true;
+   feedback.textContent='Submitting development fixture…';
+   try{
+    if(identity!==account)throw Error('Reconnect the account that opened this workspace.');
+    const digestText=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),byte=>byte.toString(16).padStart(2,'0')).join('');
+    const job=await submitDevelopmentFixture({request,post,caseId,provider:provider.value,account:identity,digestText});
+    feedback.textContent=`Development fixture: ${job.status}. Response digest: ${job.response_digest ?? 'Unavailable'}.`;
+    await refreshJobs();
+   }catch(error){feedback.textContent=error.message;}
+   finally{run.disabled=false;}
+  });
+ }
+ try{await refreshJobs();}catch(error){feedback.textContent=error.message;}
+}
 async function signWorkspaceCall(...args) {
  const sdk = await import('./wallet.bundle.js');
  return createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk}).signCall(...args);
@@ -465,10 +517,16 @@ async function updateNavigation() {
    const config = await request('config');
    show(route === 'settings' ? [`Network: ${config.network ?? 'Unavailable'}`,`Account: ${account ?? 'Disconnected'}`,`Contract: ${config.contract_account ?? 'Unavailable'}`] :
     ['Meta','Modal'].map(name=>`${name}: ${config.providers?.[name.toLowerCase()]?.status ?? 'Unavailable'}`));
+   if(route==='lab'&&generation===routeRequest)await evaluationTools(panel,config);
   } else if (route === 'evidence' || route === 'constellations') {
    const caseId = byId('case').value;
    if (!caseId) return show(['Select a case on the Overview to inspect its evidence.']);
-   const [, records] = await readProtectedCaseRecords(request,caseId);
+   const [availability, records] = await readProtectedCaseRecords(request,caseId);
+   if(route==='constellations'){
+    const record=cases.find(item=>item.case_id===caseId);
+    show(coverage(record,'Overall',availability).map(metric=>`${metric.label}: ${metric.status==='measured'?`${metric.numerator}/${metric.denominator}`:metric.status}. ${metric.source}`));
+    return;
+   }
    show((records?.items ?? []).map(item=>`${item.kind ?? 'Manifest'} · ${item.digest ?? 'Digest unavailable'}`));
    if(route==='evidence'&&generation===routeRequest){
     const selected=cases.find(record=>record.case_id===caseId);

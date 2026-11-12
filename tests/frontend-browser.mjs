@@ -120,6 +120,24 @@ try {
      await page.getByRole('button',{name:'Prepare Testnet case'}).click();
      await page.getByText('Prepared operation: fixture-preparation.',{exact:false}).waitFor();
      assert.equal(await page.getByRole('button',{name:'Sign case creation'}).count(),0);
+     let evaluationJob;
+     await page.route('**/api/provider/jobs',route=>{
+      if(route.request().method()==='POST'){
+       const input=route.request().postDataJSON();
+       assert.equal(input.mode,'fixture');
+       assert.equal(input.case_id,cases[0].case_id);
+       evaluationJob={id:'fixture-job',provider:input.provider,status:'COMPLETED',case_id:input.case_id,response_digest:'f'.repeat(64)};
+       return route.fulfill({status:201,json:evaluationJob});
+      }
+      return route.fulfill({json:{jobs:evaluationJob?[evaluationJob]:[]}});
+     });
+     await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',provider_fixtures_enabled:true}}));
+     await page.locator('#navigation a[href="#lab"]').click();
+     await page.getByLabel('Development fixture provider').selectOption('modal');
+     await page.getByRole('button',{name:'Run non-binding development fixture'}).click();
+     await page.getByText('Development fixture: COMPLETED.',{exact:false}).waitFor();
+     await page.getByRole('button',{name:'Refresh evaluation jobs'}).click();
+     await page.getByText('Evaluation jobs refreshed.',{exact:true}).waitFor();
      for(const link of await page.locator('#navigation a').all()){
       const title=await link.innerText();
       if(title==='Overview')continue;
