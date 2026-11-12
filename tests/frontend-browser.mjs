@@ -34,6 +34,24 @@ try{
    assert(Math.abs(committee.y-manifest.y)<3,'committee and evidence share the second analytical row');
    const activity=await page.locator('.events-panel').boundingBox();
    assert(activity.y>committee.y+committee.height-3,'activity follows the analytical panels');
+   const fixtureCases=['Challenged','Challenged','ReviewCommit'].map((state,index)=>({
+    state, case_id:String(index+1).repeat(64), created_at_ns:String(BigInt(Date.now())*1000000n),
+   }));
+   await page.route('**/api/view',async route=>{
+    const {method}=route.request().postDataJSON();
+    if(method==='list_cases')return route.fulfill({json:{value:{items:fixtureCases}}});
+    if(method==='get_config')return route.fulfill({json:{value:{reserve_summary:{held_escrow_yocto:'0',paid_yocto:'0'}}}});
+    return route.continue();
+   });
+   await page.locator('#case-range').dispatchEvent('change');
+   const legend=page.getByRole('link',{name:'Challenged, 66.7%, 2 cases',exact:true});
+   await legend.waitFor();
+   await legend.focus();
+   await page.keyboard.press('Enter');
+   await page.waitForURL('**/#cases/state/Challenged');
+   await page.goBack();
+   await page.waitForURL(url=>!url.hash);
+   await page.unroute('**/api/view');
    for(const route of ['cases','evidence','challenges','reviewers','settlement','lab','activity','settings']){
     const link=page.locator(`.rail a[href="#${route}"]`).first(),group=link.locator('..');
     if(!await group.evaluate(node=>node.open))await group.locator('summary').click();
