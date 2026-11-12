@@ -49,7 +49,20 @@ nav a[data-tone=challenged]{border-inline-start:3px solid var(--action-challenge
 #timeline li[data-stage=pending]::before{background:var(--state-pending)}
 .donut>div{width:69%;aspect-ratio:1;border-radius:50%;background:var(--panel);display:grid;align-content:center;justify-items:center}
 .donut strong{font-size:22px}.donut small{font-size:11px;color:var(--muted)}
+.line-icon{width:17px;height:17px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+nav a{display:flex;align-items:center;gap:8px}
+nav a[data-tone=challenged] .line-icon{color:var(--action-challenge)}
+.kpis .line-icon{width:22px;height:22px;color:var(--surface-review)}
+.kpis article:nth-child(2) .line-icon{color:#9d3e33}
+.kpis article:nth-child(3) .line-icon{color:#176044}
+.statement-mark{justify-self:center;width:32px;height:32px;margin-bottom:8px;background:var(--ink);border-radius:6px;padding:3px}
+.table table{table-layout:fixed}
+.table th,.table td{overflow-wrap:anywhere}
+.evidence-status{display:inline-block;border-inline-start:3px solid var(--state-pending);padding-inline-start:5px}
+.evidence-status[data-tone=verified]{border-color:var(--state-verified)}
+.evidence-status[data-tone=challenged]{border-color:var(--state-challenged)}
 @media(min-width:661px) and (max-width:900px){.brand{font-size:15px;gap:6px}.brand svg{width:24px;height:24px}}
 @media(max-width:375px){.table th,.table td{padding-inline:4px}}
 @media(max-width:900px){body{grid-template-columns:155px minmax(0,1fr)}main{padding:22px 16px}.heading{flex-wrap:wrap}.chart{grid-template-columns:minmax(70px,105px) 1fr}}
 @media(max-width:660px){body{display:block}aside{padding:12px;gap:10px}nav{display:flex;overflow:auto}nav a{white-space:nowrap}.rail-footer{display:none}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.analysis,.bottom{grid-template-columns:minmax(0,1fr);grid-template-rows:auto}.heading{gap:10px}}
+@media(max-width:660px){nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}nav a{white-space:normal;min-height:40px}}

@@ -26,6 +26,9 @@ try {
    await page.getByRole('heading', {name:'Contestation Overview'}).waitFor();
    await page.getByText('Contract case data is unavailable.').waitFor();
    assert.equal(await page.locator('.kpis article').count(),4);
+   assert.equal(await page.locator('.kpis .line-icon').count(),4);
+   assert.equal(await page.locator('#navigation a .line-icon').count(),10);
+   if(width<=375)assert.equal(await page.locator('#navigation').evaluate(nav=>nav.scrollWidth>nav.clientWidth),false);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    for (const path of ['/workflow.css', '/tokens.css']) {
     assert.equal((await page.request.get(origin + path)).status(), 404);
@@ -37,6 +40,13 @@ try {
    if(width===1440)await page.screenshot({path:`ci-output/contra-${name}-1440-light.png`,fullPage:true});
    if(width===1440||width===375){
     const cases=['ReviewCommit','Challenged','Settled'].map((state,index)=>({case_id:String(index+1).repeat(64),state,created_at_ns:'1794484800000000000',funded_principal_yocto:'1000000000000000000000000'}));
+    cases[0].challenge={counterexample_digest:'c'.repeat(64)};
+    await page.route('**/api/availability?*',route=>route.fulfill({json:{items:{}}}));
+    await page.route('**/api/evidence/manifests?*',route=>route.fulfill({json:{items:[
+     {kind:'Manifest',digest:'a'.repeat(64),onchain:true,body:{sources:[{provenance:{origin:'Fixture source'}}]}},
+     {kind:'Manifest',digest:'b'.repeat(64),onchain:false},
+    ]}}));
+    await page.route('**/api/counterexample/records?*',route=>route.fulfill({json:{items:[{kind:'Counterexample',digest:'c'.repeat(64)}]}}));
     await page.route('**/api/view',route=>{
      const {method}=route.request().postDataJSON();
      const data={
@@ -49,6 +59,9 @@ try {
     await page.reload();
     await page.locator('#case').selectOption(cases[0].case_id);
     await page.locator('#review-chart .donut').waitFor();
+    for(const status of ['Verified binding','Pending binding','Challenged']){
+     await page.locator('#evidence').getByText(status,{exact:true}).waitFor();
+    }
     assert.equal(await page.locator('#funded').textContent(),'3 NEAR');
     assert.equal(await page.locator('#case-chart .donut').count(),1);
     await page.locator('#status').evaluate(node=>{node.textContent='Deterministic visual fixture · no live records';});

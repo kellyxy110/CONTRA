@@ -15,6 +15,32 @@ const chartTones = {
 const tone = label => chartTones[label] ?? 'neutral';
 const colour = label => `var(--state-${tone(label)})`;
 const readable = label => label.replace(/([a-z])([A-Z])/g, '$1 $2');
+const iconPaths = {
+ overview:'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z',
+ cases:'M3 7h7l2 2h9v11H3z M3 7V4h7l2 3h7v2',
+ evidence:'M6 3h9l4 4v14H6z M14 3v5h5 M9 12h7m-7 4h7',
+ lab:'M9 3h6m-5 0v7l-5 8a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-8V3 M8 15h8',
+ challenges:'M12 3 3 20h18z M12 9v5m0 3v1',
+ reviewers:'M3 21v-3a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v3 M14 4a4 4 0 0 1 0 7m4 4a4 4 0 0 1 3 4v2 M14 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
+ settlement:'M3 6h18v13H3z M3 9h18m-6 4h6m-14 3h4',
+ constellations:'M5 17 11 5l8 11-14 1z M3 17a2 2 0 1 0 4 0 2 2 0 1 0-4 0m6-12a2 2 0 1 0 4 0 2 2 0 1 0-4 0m8 11a2 2 0 1 0 4 0 2 2 0 1 0-4 0',
+ activity:'M3 12h4l3-7 4 14 3-7h4',
+ settings:'M4 6h16M4 12h16M4 18h16 M8 4v4m8 2v4m-5 2v4',
+ funded:'M4 7h16v13H4z M4 7l4-4h8l4 4 M8 12h8',
+ payouts:'M4 4h16v16H4z M8 12l3 3 5-6',
+};
+
+function icon(name) {
+ const ns = 'http://www.w3.org/2000/svg';
+ const svg = document.createElementNS(ns, 'svg');
+ svg.setAttribute('viewBox', '0 0 24 24');
+ svg.setAttribute('aria-hidden', 'true');
+ svg.classList.add('line-icon');
+ const path = document.createElementNS(ns, 'path');
+ path.setAttribute('d', iconPaths[name]);
+ svg.append(path);
+ return svg;
+}
 
 function element(tag, content) {
  const node = document.createElement(tag);
@@ -67,7 +93,12 @@ function table(id, rows, width, empty) {
  }
  rows.forEach(values => {
   const row = element('tr', '');
-  values.forEach(value => row.append(element('td', String(value ?? 'Unavailable'))));
+  values.forEach(value => {
+   const cell = element('td', '');
+   if(value instanceof Node)cell.append(value);
+   else cell.textContent = String(value ?? 'Unavailable');
+   row.append(cell);
+  });
   target.append(row);
  });
 }
@@ -106,7 +137,15 @@ async function selectCase() {
  });
  chart('review-chart', [...counts], 'reviewers');
  const records = protectedData.status === 'fulfilled' ? protectedData.value[1]?.items ?? [] : [];
- table('evidence', records.map(item => [item.kind ?? 'Manifest', item.digest?.slice(0,12), item.body?.sources?.[0]?.provenance?.origin, item.onchain ? 'Bound on-chain' : 'Stored off-chain']), 4, 'No authorised evidence records returned.');
+ table('evidence', records.map(item => {
+  const challenged = Boolean(record.challenge && item.digest && (
+   item.digest === record.challenge.counterexample_digest || item.digest === record.evidence_digest
+  ));
+  const binding = element('span', challenged ? 'Challenged' : item.onchain === true ? 'Verified binding' : 'Pending binding');
+  binding.className = 'evidence-status';
+  binding.dataset.tone = challenged ? 'challenged' : item.onchain === true ? 'verified' : 'pending';
+  return [item.kind ?? 'Manifest', item.digest?.slice(0,12), item.body?.sources?.[0]?.provenance?.origin, binding];
+ }), 4, 'No authorised evidence records returned.');
 }
 
 function renderCases() {
@@ -144,9 +183,16 @@ byId('theme').addEventListener('change', () => {
 Object.entries(routes).forEach(([route, label]) => {
  const link = element('a', label);
  link.href = '#' + route;
+ link.prepend(icon(route));
  if(route==='challenges')link.dataset.tone='challenged';
  byId('navigation').append(link);
 });
+for(const [id,name] of Object.entries({funded:'funded',challenges:'challenges',payouts:'payouts',active:'cases'})){
+ byId(id).closest('article').prepend(icon(name));
+}
+const brandMark=document.querySelector('.brand svg').cloneNode(true);
+brandMark.classList.add('statement-mark');
+document.querySelector('.message').prepend(brandMark);
 function updateNavigation() {
  const route = location.hash.slice(1).split('/')[0] || 'overview';
  [...byId('navigation').children].forEach(link => {
