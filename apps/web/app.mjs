@@ -1,4 +1,4 @@
-import {authenticateWallet,connectWallet,disconnectWalletSession,recoverWalletSession,renewWalletSession,restoreWalletOperations,selectWalletAccount} from './wallet.bundle.js';
+import {authenticateWallet,connectWallet,disconnectWalletSession,recoverWalletSession,renewWalletSession,restoreWalletOperations,selectWalletAccount,prepareWalletTransaction,sendPreparedWalletTransaction,reconcileWalletTransaction} from './wallet.bundle.js';
 import {coverage} from './coverage.mjs';
 import {mountWorkspaces} from './workspaces.mjs';
 
@@ -60,10 +60,10 @@ function renderRadar(metrics=blankMetrics()){
  document.querySelectorAll('[data-metric]').forEach(button=>button.addEventListener('click',()=>{const metric=metrics[Number(button.dataset.metric)];document.querySelectorAll('[data-metric]').forEach(node=>node.classList.remove('active'));button.classList.add('active');$('readiness-readout').textContent=`${metric.name}: ${activeSet.has(metric.name)?chartValue(metric):'N/A in this lens'}. ${metric.status==='measured'?`${metric.numerator} of ${metric.denominator} records.`:''} Source: ${metric.source||'unavailable'}. ${metric.reason||''}`;}));
 }
 function renderLifecycle(phase='UNKNOWN'){
- const labels=['Create','Accept','Fund','Evidence','Review','Challenge','Finalise','Settle'];
- const stages={Draft:0,Funded:2,Submitted:3,ReviewCommit:4,ReviewReveal:4,Provisional:5,Challenged:5,ChallengeReview:5,Unresolved:6,Resolved:6,SettlementPending:7,TransferFailed:7,Settled:8};
- const current=stages[phase]??0;
- $('lifecycle').innerHTML=labels.map((label,index)=>`<span data-label="${label}" class="${index<current?'complete':index===current?'current':''} ${label==='Challenge'?'challenge':''}"></span>`).join('');
+ const labels=['Created','Evidence','Committee','Resolution'];
+ const stages={Draft:0,Funded:0,Submitted:1,ReviewCommit:2,ReviewReveal:2,Provisional:2,Challenged:2,ChallengeReview:2,Unresolved:3,Resolved:3,SettlementPending:3,TransferFailed:3,Settled:4};
+ const current=stages[phase];
+ $('lifecycle').innerHTML=labels.map((label,index)=>`<span data-label="${label}" class="${current===undefined?'unknown':index<current?'complete':index===current?'current':'pending'}"></span>`).join('');
  text('lifecycle-state',phase.replaceAll('_',' '));
 }
 function setUnavailable(){
@@ -101,16 +101,73 @@ async function refresh(){
   $('runtime-notice').hidden=Boolean(ready.ready);
   if(!ready.ready)$('runtime-notice').textContent='The chain is unavailable. Case data is not simulated.';
   if($('case-id').value.trim())await loadCase();
- }catch(error){$('dialog-connect').disabled=true;$('runtime-notice').hidden=false;$('runtime-notice').textContent='The NEAR chain is unavailable. Case data and transaction results are not simulated.';walletState('unavailable',`Wallet sign-in is unavailable until the chain is ready. ${error.message}`);}
+ }catch(error){text('network-pill','Chain unavailable');$('dialog-connect').disabled=true;$('runtime-notice').hidden=false;$('runtime-notice').textContent='The NEAR chain is unavailable. Case data and transaction results are not simulated.';walletState('unavailable',`Wallet sign-in is unavailable until the chain is ready. ${error.message}`);}finally{await loadDashboard()}
 }
 async function view(method,args){return (await request('view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,args,envelope:true})})).value;}
+async function signCall(method,args,deposit='0',preparedOperation=null){
+ if(!token||!account)throw Error('Connect and authenticate a Testnet wallet before signing.');
+ if(!wallet)throw Error('Reconnect the signing wallet. Session recovery alone cannot sign transactions.');
+ const config=await request('config');
+ if(config.network!=='testnet'||!config.external_wallet_signing_authorized)throw Error('Live Testnet wallet signing is disabled by the server authority gate.');
+ const operation=preparedOperation||(await prepareWalletTransaction({token,accountId:account,call:{method,args,deposit,receiverId:config.contract_account}})).operation;
+ try{
+  const sent=await sendPreparedWalletTransaction(wallet,{token,operation});
+  const reconciled=await reconcileWalletTransaction({token,accountId:account,operationId:operation.operation_id});
+  await refresh();
+  return {transaction_hash:sent?.transaction?.hash||sent?.transaction_outcome?.id||sent?.transactionHash,operation:reconciled};
+ }catch(error){throw Error(`${error.message} Operation ${operation.operation_id} is persisted. Inspect it in Settlement recovery before any retry.`)}
+}
+let dashboardRequest = 0;
+async function loadDashboard(){
+ const requestId = ++dashboardRequest;
+ const range = $('case-range').value;
+ const days = range === 'all' ? 0 : Number(range);
+ const values=['total-escrow','active-challenges','settled-value','awaiting-review'];
+ try{
+  let cursor='0',page,items=[];
+  for(let batch=0;batch<20;batch++){
+   page=await view('list_cases',{from_index:cursor,limit:50});items.push(...(page?.items||[]));
+   if(!page?.next_index)break;
+   cursor=page.next_index;
+  }
+  const reserves=(await view('get_config',{}))?.reserve_summary||{};
+  if(requestId !== dashboardRequest)return;
+  const cutoff=BigInt(Date.now()-days*86400000)*1000000n;
+  const visible=days?items.filter(item=>{try{return BigInt(item.created_at_ns)>=cutoff}catch{return false}}):items;
+  const groups=new Map();for(const item of visible)groups.set(item.state,(groups.get(item.state)||0)+1);
+  const challengeStates=new Set(['Challenged','ChallengeReview']);
+  text('active-challenges',String(visible.filter(item=>challengeStates.has(item.state)).length));
+  text('awaiting-review',String(visible.filter(item=>['ReviewCommit','ReviewReveal','ChallengeReview'].includes(item.state)).length));
+  text('total-escrow',/^\d+$/.test(String(reserves.held_escrow_yocto||''))?formatNear(reserves.held_escrow_yocto):'Unavailable');
+  text('settled-value',/^\d+$/.test(String(reserves.paid_yocto||''))?formatNear(reserves.paid_yocto):'Unavailable');
+  const colours=['#54889a','#77a899','#b2b89c','#27535a','#ff8678','#f4bd68'];let chartCursor=0;
+  const segments=[...groups].map(([state,count],index)=>{const start=chartCursor;chartCursor+=visible.length?count/visible.length*100:0;return {state,count,colour:colours[index%colours.length],start,end:chartCursor}});
+  const chart = $('status-chart');
+  const share = new Intl.NumberFormat('en', {style:'percent', maximumFractionDigits:1});
+  chart.innerHTML = visible.length ? `
+    <div class="donut" style="background:conic-gradient(${segments.map(segment=>`${segment.colour} ${segment.start}% ${segment.end}%`).join(',')})">
+      <div><strong>${visible.length}</strong><small>Cases returned</small></div>
+    </div>
+    <ul aria-label="Filter cases by status">
+      ${segments.map(({state,count,colour}) => {
+        const percentage = share.format(count / visible.length);
+        const countLabel = `${count} ${count === 1 ? 'case' : 'cases'}`;
+        return `<li><a class="status-legend-link" href="#cases/state/${encodeURIComponent(state)}" aria-label="${escapeHtml(state)}, ${percentage}, ${countLabel}" title="${countLabel}">
+          <i aria-hidden="true" style="background:${colour}"></i><span>${escapeHtml(state)}</span><b>${percentage}</b>
+        </a></li>`;
+      }).join('')}
+    </ul>` : '<p class="empty-state">No contract cases returned for this period.</p>';
+  text('distribution-scope',page?.next_index?`First ${items.length} cases`:days?`Last ${days} days`:'All contract cases');
+ }catch(error){if(requestId !== dashboardRequest)return;
+  for(const id of values)text(id,'Unavailable');$('status-chart').innerHTML=`<p class="empty-state">Case distribution unavailable: ${escapeHtml(error.message)}</p>`;text('distribution-scope','Chain unavailable')}
+}
 async function loadEvents(caseId,afterSeq='0'){
  try{
   const page=await view('get_events',{case_id:caseId,after_seq:afterSeq,limit:20});
   const items=page?.items||[];text('event-count',`${items.length} shown`);
   $('events-list').innerHTML=(page.gap?'<p class="event-gap">Earlier events have left the contract ring.</p>':'')+(items.length?items.map(event=>{
    const data=event.data?.[0]||{};
-   return `<div class="event"><i>●</i><div><b>${escapeHtml(event.event||'Contract event')}</b><span>Sequence ${escapeHtml(data.seq||'Unavailable')}</span></div></div>`;
+   return `<div class="event"><i>●</i><div><b>${escapeHtml(event.event||'Contract event')}</b><span>Sequence ${escapeHtml(data.seq||'Unavailable')}</span></div>${/^[0-9a-f]{64}$/i.test(data.case_id||'')?`<a href="#cases/${escapeHtml(data.case_id)}">Open case</a>`:''}</div>`;
   }).join(''):'<div class="empty-state">No events returned for this page.</div>')+
   (items.length===20?`<button class="text-button event-next" data-next="${escapeHtml(page.next_after_seq)}">Next events</button>`:'');
   $('events-list').querySelector('.event-next')?.addEventListener('click',()=>loadEvents(caseId,page.next_after_seq));
@@ -151,9 +208,21 @@ document.querySelectorAll('[data-manifest-filter]').forEach(button=>button.addEv
 $('case-search').addEventListener('submit',event=>{event.preventDefault();const id=$('case-id').value.trim();if(!/^[0-9a-f]{64}$/i.test(id)){$('runtime-notice').hidden=false;$('runtime-notice').textContent='A case ID must be a 64-character hexadecimal digest.';return}location.hash=`#cases/${id}`;});
 $('connect').addEventListener('click',()=>{$('wallet-dialog').showModal();});$('dialog-connect').addEventListener('click',connect);$('disconnect').addEventListener('click',disconnect);$('mobile-wallet').addEventListener('click',()=>$('wallet-dialog').showModal());document.querySelector('.dialog-close').addEventListener('click',()=>$('wallet-dialog').close());$('refresh').addEventListener('click',refresh);
 $('renew-session').addEventListener('click',renewSession);$('sandbox-connect').addEventListener('click',connectSandbox);
+$('case-range').addEventListener('change',loadDashboard);
+$('mobile-case-range').addEventListener('change',event=>{$('case-range').value=event.target.value;loadDashboard();$('mobile-menu').close()});
 $('mobile-more').addEventListener('click',()=>$('mobile-menu').showModal());
 $('mobile-menu').querySelector('.dialog-close').addEventListener('click',()=>$('mobile-menu').close());
+const mobileNavigation=document.querySelector('.rail nav').cloneNode(true);
+mobileNavigation.className='mobile-navigation';mobileNavigation.setAttribute('aria-label','All destinations');
+$('mobile-menu').querySelector('.more-links').replaceWith(mobileNavigation);
 $('mobile-menu').querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>$('mobile-menu').close()));
 try{$('case-id').value=localStorage.getItem('contra.case-id')||''}catch{}
 setTheme(document.documentElement.dataset.theme||'system');updateWalletUi();setUnavailable();recoverSession().then(refresh);
-mountWorkspaces({request,view,loadCase,getAccount:()=>account,getCaseId:()=>$('case-id').value.trim(),showNotice:message=>{$('runtime-notice').hidden=false;$('runtime-notice').textContent=message;}});
+mountWorkspaces({request,view,loadCase,signCall,prepareCase:async args=>{
+ const config=await request('config');
+ return (await prepareWalletTransaction({token,accountId:account,call:{method:'create_case',args,deposit:'1',receiverId:config.contract_account}})).operation;
+},canSign:()=>runtimeConfig?.network==='testnet'&&runtimeConfig?.external_wallet_signing_authorized===true&&Boolean(wallet&&token),getAccount:()=>account,getCaseId:()=>$('case-id').value.trim(),showNotice:message=>{$('runtime-notice').hidden=false;$('runtime-notice').textContent=message;}});
+
+// Persist the desktop navigation preference independently from wallet state.
+const sidebarToggle=document.getElementById("sidebar-collapse");
+sidebarToggle?.addEventListener("click",()=>{const collapsed=document.body.classList.toggle("sidebar-collapsed");sidebarToggle.setAttribute("aria-expanded",String(!collapsed));sidebarToggle.textContent=collapsed?"Expand sidebar":"Collapse sidebar";});

@@ -393,7 +393,11 @@ async function body(request){
 }
 function rpc(env){return rpcAdapter({url:env.NEAR_RPC_URL,contractAccount:env.CONTRA_CONTRACT_ACCOUNT,network:'testnet',timeoutMs:Number(env.CONTRA_RPC_TIMEOUT_MS||8000)});}
 function state(env){return env.CONTRA_STATE.getByName('contra-testnet');}
-function signingAuthorised(env){return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true';}
+function signingAuthorised(env){
+ return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true'
+  && Boolean(env.CONTRA_SIGNING_OPERATION_ID)
+  && /^[0-9a-f]{64}$/.test(env.CONTRA_SIGNING_PAYLOAD_HASH||'');
+}
 async function activationAuthorised(request,env){
  const supplied=request.headers.get('x-contra-activation')||'',expected=env.CONTRA_ACTIVATION_KEY||'';
  if(!supplied||!expected)return false;
@@ -481,7 +485,7 @@ async function api(request,env){
  }
  if(path==='/api/config'){
   const config=await adapter.view('get_config',{}),eligibility=assessCreatorEligibility(config);
-  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
+  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,provider_fixtures_enabled:env.CONTRA_PROVIDER_FIXTURES_ENABLED==='true',providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
  if(path==='/api/operator/provider-probe'&&request.method==='POST')return providerProbe(request,env);
  if(path==='/api/operator/provider-smoke'&&request.method==='POST')return providerSmoke(request,env,store);
@@ -519,7 +523,12 @@ async function api(request,env){
   if(!signingAuthorised(env))return json({error:'Live wallet signing is disabled pending an exact bounded execution authority'},403);
   const auth=await session(request,env);
   const input=await body(request),existing=await store.operation(input.operation_id);if(!existing||existing.account!==auth.account)fail('Operation not found');
-  const operation=browserOperation(await store.handoffOperation(input.operation_id));return json({operation,signing_request:walletSigningRequest(operation)});
+  const payload=JSON.parse(existing.payload_json);
+  if(existing.id!==env.CONTRA_SIGNING_OPERATION_ID||existing.payload_hash!==env.CONTRA_SIGNING_PAYLOAD_HASH||existing.contract_account!==env.CONTRA_CONTRACT_ACCOUNT||payload.methodName!=='create_case'||payload.deposit!=='1'){
+   return json({error:'The operation does not match the authorised one-yocto Testnet case creation'},403);
+  }
+  const operation=browserOperation(await store.handoffOperation(input.operation_id));
+  return json({operation,signing_request:operation.replayed?null:walletSigningRequest(operation)});
  }
  if(path==='/api/wallet/reject'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.rejectOperation(input.operation_id,input.pre_handoff_verified===true));}
  if(path==='/api/wallet/interrupt'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.markUnknown(input.operation_id,input.reason));}
