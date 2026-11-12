@@ -549,3 +549,7 @@ Repository safeguard: GitHub owner is `kellyxy110`. Remote name and URL remain u
 - Existing graph study and protocol files are preserved on the base branch. No deployment, NEAR transaction, smart contract or paid API work occurred. Spend $0.
 - Next: owner reviews UX3A comparison and identifies any remaining fidelity corrections. Do not freeze acceptance on the owner's behalf.
 
+# Checkpoint CONTRA-2026-11-12-FINAL-ENGINEERING-RELEASE
+
+The accepted frontend, Cloudflare runtime, wallet preparation and release records reached `main` at `7b03ffbaff4abc424c9ddd4791415b8922acc7bb`. Worker version `8268ed63-d9bd-42f0-8ae0-236cbfda8e56` and Pages deployment `6d9e9ee5-84a1-4ac0-b133-e4073629c020` are live at `https://contra-near.pages.dev`. Same-origin API routing, Durable Object storage and fresh finalised NEAR Testnet observations passed public smoke tests. Financial signing and provider live execution remain disabled. AC31 and AC32 are DEFERRED pending six independent reviewers and genuine funded Testnet journeys.
+

@@ -499,3 +499,13 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Did not deploy the Modal function, install its Proxy Token in Cloudflare, call a provider or incur spending.
 - The first deployment preflight failed safely before resource creation because current Modal requires FastAPI in the function image. The corrective image pins Python 3.13 and `fastapi[standard]` 0.121.1.
 
+# 2026-11-12 | Final engineering release
+
+- Merged frontend PR #73 into `implementation/oct28` at `b496dd7c745c4b7e8621e561589a1d4b69b97545`.
+- Promoted PR #78 into `main` at `7b03ffbaff4abc424c9ddd4791415b8922acc7bb` with identical implementation trees.
+- Passed Core, Security, Contract, Financial P0 F01 through F18, the nine-test Sandbox baseline, both Contestation journeys and judge quick-start.
+- Deployed Worker version `8268ed63-d9bd-42f0-8ae0-236cbfda8e56` and Pages deployment `6d9e9ee5-84a1-4ac0-b133-e4073629c020`.
+- Corrected the Pages release invocation to include Pages Functions and the `BACKEND` service binding. Public `/api/ready` then reported healthy durable storage and fresh finalised Testnet state.
+- Verified all public routes on desktop Chromium and mobile Chromium and Firefox. No browser errors or horizontal overflow were observed.
+- No provider inference, funded Testnet case, contract change or expenditure occurred.
+
