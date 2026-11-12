@@ -1,10 +1,10 @@
 # AC01 to AC33 acceptance matrix
 
-M10.2 notice: the previous UX3A and dashboard presentation layer has been removed by owner direction. A neutral operational interface retains health, readiness and NEP-413 authentication checks. Durable provider budgets and reviewer onboarding lifecycle tests are fixture evidence only. This does not establish live provider usage or six independent operators, and AC31 and AC32 remain BLOCKED.
+Final implementation notice: the owner-supplied CONTRA interface is implemented across Overview, Cases, Case Details, Evidence, Challenges, Reviewers, Settlement, Lab, Activity and Settings. Durable provider budgets and reviewer onboarding lifecycle tests remain fixture evidence unless a row explicitly identifies a live observation. This does not establish live provider usage or six independent operators, and AC31 and AC32 remain DEFERRED until genuine independent reviewers participate.
 
-Checkpoint: `CONTRA-M10.3-LIVE-VALIDATION`
+Checkpoint: `CONTRA-FINAL-IMPLEMENTATION-RELEASE`
 
-Evidence cut-off: M10.2 release `main` commit `717bef52943ce67d2c96dab6535710c2921febfe`. M10.3 credential-independent preparation does not upgrade any live criterion.
+Evidence cut-off: frontend release candidate `1a2af95e6d3387c9951220d7a3289287bb9ee363`, pending protected merge and deployment. Criteria are upgraded only from evidence of the required class.
 
 This is a fresh criterion-by-criterion review of [the frozen acceptance specification](../UX3B_ENGINEERING_ACCEPTANCE.md). PASS means the criterion is supported by current retained evidence at the stated environment boundary. PARTIAL means a material part is proven but one or more required observations are absent. BLOCKED means the required live external evidence cannot exist without an owner-controlled resource or authorisation.
 
@@ -44,20 +44,20 @@ The complete protected-main gate passed in [GitHub Actions run 42624205937](http
 | AC28 | PARTIAL | Operational client and browser evidence | Selected-case consistency, case-switch cancellation and basic pagination are implemented. Broader duplicate-event and multi-page live-index evidence remains incomplete. |
 | AC29 | PASS | Security and service tests | Untrusted evidence is isolated from instructions, browser output is escaped, sessions reject replay and expiry, and cross-case protected data is denied. Current-tree secret and policy checks pass. |
 | AC30 | PARTIAL | Browser accessibility evidence | Keyboard routes, dialog focus, Escape, return focus, text states and responsive evidence exist. A current manual screen-reader session against the final owner frontend is absent. |
-| AC31 | BLOCKED | Requires a complete live testnet case and providers | The contract is deployed on testnet and `contra-creator.testnet` is eligible. Canonical packet validation and the unchallenged Sandbox journey pass, but the packet remains non-executable because six operators, exact evidence, participant consent, provider records and funded authority are absent. B-M09-02, B-M10-01 and B-M10-02 apply. |
-| AC32 | BLOCKED | Requires a complete challenged testnet case and providers | The challenged Sandbox reversal and canonical challenged-packet validation pass. No executable packet or live reversal exists because six operators, counterevidence, participant consent, provider records and funded authority are absent. B-M09-02, B-M10-01 and B-M10-02 apply. |
+| AC31 | DEFERRED | Requires a complete live testnet case and independent reviewers | The contract is deployed on testnet and `contra-creator.testnet` is eligible. Canonical packet validation and the unchallenged Sandbox journey pass. Funded settlement remains protected because six genuine independent reviewers and participant consent are not yet available. |
+| AC32 | DEFERRED | Requires a complete challenged testnet case and independent reviewers | The challenged Sandbox reversal and canonical challenged-packet validation pass. Funded reversal remains protected because six genuine independent reviewers, their consent and signed participation are not yet available. |
 | AC33 | PASS | ABI, API and interface traceability | A01 to A23 remain mapped to contract, service or no-op behaviour. `CONTRA_FRONTEND_INTERFACE_V1` now machine-checks every implemented API route and exact Rust case states. |
 
 ## Result
 
-Current result: **23 PASS, 8 PARTIAL, 2 BLOCKED**.
+Current result: **23 PASS, 8 PARTIAL, 2 DEFERRED**.
 
 The two upgrades from the M05 baseline are evidence-based:
 
 - AC06 moves from PARTIAL to PASS because M06 added durable external-wallet intent, authoritative pre-handoff rejection, interrupted-handoff UNKNOWN locking, receipt-only hash recovery and duplicate-dispatch prevention, all connected to genuine local Sandbox case creation evidence.
 - AC24 moves from PARTIAL to PASS because the complete simulated external-wallet lifecycle now covers browser reload, callback loss, restart, account switching, rejection, concurrent requests, receipt reconciliation and exact identity persistence.
 
-No criterion is upgraded from fixture evidence where its text requires a live provider, independent operator, deployed testnet contract or manual assistive-technology observation. AC31 and AC32 remain BLOCKED.
+No criterion is upgraded from fixture evidence where its text requires a live provider, independent operator, deployed testnet contract or manual assistive-technology observation. AC31 and AC32 remain DEFERRED.
 
 ## Environment boundary
 

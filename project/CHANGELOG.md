@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-12 | Final implementation release candidate
+
+- Completed the owner-supplied operational frontend across all nine navigation destinations and case detail.
+- Added Chromium and Firefox route coverage at five responsive widths.
+- Corrected Cloudflare wallet preparation identity normalisation and added an explicit disabled-by-default signing handoff.
+- Promoted Modal verifier runtime and public deployment evidence through PR 75.
+- Reclassified AC31 and AC32 as DEFERRED because genuine independent reviewer participation is the remaining live authority boundary.
+- No paid provider call or NEAR transaction was executed by this checkpoint.
+
 ## 2026-11-11 | Protected Modal verifier deployed
 
 - Deployed the exact reviewed deterministic verifier from source commit `1a1e06ea91c79641b87dfc8a182c39dd7f49cb8a` as Modal app `ap-2wMup9xpnApV3ehbwwjKrK`.

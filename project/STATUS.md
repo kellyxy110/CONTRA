@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-FINAL-IMPLEMENTATION-RELEASE
+
+The owner-supplied frontend is implemented in PR 73 across Overview, Cases, Case Details, Evidence, Challenges, Reviewers, Settlement, Lab, Activity and Settings. Chromium and Firefox pass every route at 320, 390, 768, 1024 and 1440 pixel widths with no page error or horizontal overflow. Cloudflare wallet preparation now normalises Durable Object records for browser recovery, and the signing handoff remains protected by an explicit server gate that is disabled by default. Modal verifier source and deployment evidence reached `main` through PR 75 at `99599120614165bce80bdac86e9a04de4fa6e3af`.
+
+Provider credentials remain server-only. Meta and Baseten secrets exist, but their model, credit and billing gates are not all verified. The protected Modal verifier is deployed, but its separate Proxy Auth credential is absent. No paid inference has run. The Testnet contract and eligible creator remain unchanged. Funded live journeys remain deferred because genuine independent reviewer consent is unavailable; fixture reviewers are not production authority. Acceptance is 23 PASS, 8 PARTIAL and 2 DEFERRED.
+
 ## Current checkpoint | CONTRA-M10.4-MODAL-VERIFIER-DEPLOYED
 
 The exact repository-owned Modal verifier at source commit `1a1e06ea91c79641b87dfc8a182c39dd7f49cb8a` is deployed as app `ap-2wMup9xpnApV3ehbwwjKrK`. Its protected endpoint is `https://boredom407--contra-verifier-verify.us-east.modal.run`. An unauthenticated POST returned HTTP 401, proving that `requires_proxy_auth=True` is enforced. The current Modal billing summary reports USD 0.00 billed cost.

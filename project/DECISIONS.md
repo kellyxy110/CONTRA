@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-107 | Final release authority boundary | 2026-11-12
+
+The owner-supplied frontend is the release interface. Financial signing may be enabled only by the Cloudflare server gate and an exact bounded execution authority, never by a browser flag. Provider credentials stay server-side and each provider remains independently gated by model access, credits, pricing, billing controls and the authorised programme ceiling. Development reviewer fixtures can verify engineering but cannot become production reviewer authority or justify funded settlement. AC31 and AC32 are DEFERRED until genuine independent reviewers complete the required live actions.
+
 ## D-106 | Live provider credentials do not imply spending readiness | 2026-11-11
 
 ACCEPTED. Each provider remains disabled until its exact model or function, credential, pricing, credits, provider-side billing control and bounded owner authority are independently verified. Meta Standard `muse-spark-1.3` is technically compatible, but Meta currently offers an alert rather than a hard spend cap, so a key alone cannot make it ready. Baseten requires a model-scoped expiring team key and an exact selected model. Modal requires a protected function, scoped Proxy Token, Workspace budget and spend limit. No shared switch can bypass these gates.
