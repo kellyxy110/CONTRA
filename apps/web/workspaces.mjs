@@ -13,7 +13,7 @@ const list = (items,render,empty) => items?.length ? items.map(render).join('') 
 const date = ns => {try{return new Date(Number(BigInt(ns)/1000000n)).toLocaleString();}catch{return 'Unavailable';}};
 const state = {casePage:'0',caseFilter:'',caseSort:'newest',eventCursor:'0',activeView:'overview'};
 const deadlineFields=['fund_by_ns','submit_by_ns','primary_commit_end_ns','primary_reveal_end_ns','challenge_end_ns','fresh_commit_end_ns','fresh_reveal_end_ns'];
-function yocto(value){if(!/^(?:0|[1-9]\d*)(?:\.\d{1,24})?$/.test(value))throw Error('Enter a positive NEAR amount with at most 24 decimal places.');const [whole,fraction='']=value.split('.');const amount=BigInt(whole)*10n**24n+BigInt(fraction.padEnd(24,'0'));if(amount<=0n||amount>100n*10n**24n)throw Error('The contract accepts an amount above zero and at most 100 NEAR.');return amount.toString()}
+function yocto(value){if(!/^(?:0|[1-9]\d*)(?:\.\d{1,24})?$/.test(value))throw Error('Enter a positive NEAR amount with at most 24 decimal places.');const [whole,fraction='']=value.split('.');const amount=BigInt(whole)*10n**24n+BigInt(fraction.padEnd(24,'0'));if(amount<=0n||amount>10n**24n)throw Error('This authorised Testnet journey is limited to 1 NEAR per funding transaction.');return amount.toString()}
 const digestText=async text=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)))].map(byte=>byte.toString(16).padStart(2,'0')).join('');
 
 export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccount,getCaseId,showNotice}){
@@ -29,6 +29,12 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
  const busy=()=>{host.innerHTML=panel('Loading',note('Reading the latest available records.'))};
  async function maybe(path){try{return await request(path)}catch(e){return {__error:e.message}}}
  async function caseRecord(id){return await view('get_case',{case_id:id})}
+ async function caseBoard(title,predicate,description){
+  let cursor='0',items=[];
+  for(let pageIndex=0;pageIndex<3;pageIndex++){const page=await view('list_cases',{from_index:cursor,limit:50});items.push(...(page.items||[]));if(!page.next_index)break;cursor=page.next_index}
+  const matching=items.filter(predicate);
+  host.innerHTML=panel(title,`${note(description)}${list(matching,c=>`<div class="record"><div><a class="case-link" href="#${escape(state.activeView)}/${escape(c.case_id)}">${escape(c.case_id)}</a><small>${escape(c.creator_id)} · ${escape(c.terms?.beneficiary_id||'Beneficiary unavailable')}</small></div><span class="status-pill">${escape(c.state)}</span></div>`,'No matching contract cases returned.')}`,`${matching.length} cases`);
+ }
  async function cases(){
   const [page,config]=await Promise.all([view('list_cases',{from_index:state.casePage,limit:30}),view('get_config',{})]);
   const items=page?.items||[];
@@ -73,7 +79,7 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
   await loadCase(id,{quiet:true});
  }
  async function evidence(){
-  const id=requireCase();if(!id){host.innerHTML=panel('Evidence',note('Open a case to inspect its protected evidence.'));return}
+  const id=requireCase();if(!id){await caseBoard('Evidence Library',c=>['Funded','Submitted','ReviewCommit','ReviewReveal','Provisional','Challenged','ChallengeReview','Resolved','Settled'].includes(c.state),'Choose a case to inspect protected manifests, provenance and submission eligibility.');return}
   const [c,manifests,availability]=await Promise.all([caseRecord(id),maybe(`evidence/manifests?${query({case_id:id})}`),maybe(`availability?${query({case_id:id})}`)]);
   const items=manifests.items||[];
   host.innerHTML=panel('Evidence manifest',`${manifests.__error?error(manifests.__error):list(items,item=>`<div class="record"><div><strong>${escape(item.digest)}</strong><small>${escape(item.kind||item.body?.schema||'Manifest')} · ${escape(item.onchain?'Bound onchain':'Stored offchain')}</small></div><button type="button" data-artifact="${escape(item.digest)}">Inspect</button></div>`,'No authorised evidence manifests returned.')}<div id="artifact-result" aria-live="polite"></div>`,`${items.length} records`)+panel('Provenance and access',`${availability.__error?error(availability.__error):`<dl>${datum('Selected digest',c.evidence_digest)}${datum('Last observation',availability.observed_at)}${datum('Available records',Object.keys(availability.items||{}).length)}</dl>`}${note('Stored evidence is immutable. Its digest must be submitted by a separately authorised contract transaction before it becomes the selected onchain manifest.')}`);
@@ -88,7 +94,7 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
   host.querySelectorAll('[data-artifact]').forEach(button=>button.addEventListener('click',async()=>{const result=host.querySelector('#artifact-result');result.textContent='Loading artifact';try{const data=await request(`artifact?${query({case_id:id,digest:button.dataset.artifact})}`);result.innerHTML=`<pre>${escape(data.text||JSON.stringify(data,null,2))}</pre>`}catch(e){result.innerHTML=error(e.message)}}));
  }
  async function challenges(){
-  const id=requireCase();if(!id){host.innerHTML=panel('Challenges',note('Open a case to inspect challenge eligibility and appeal history.'));return}
+  const id=requireCase();if(!id){await caseBoard('Challenges and appeals',c=>['Provisional','Challenged','ChallengeReview','Resolved','Unresolved'].includes(c.state),'Choose a case to inspect challenge eligibility, deadlines and fresh review.');return}
   const c=await caseRecord(id),fresh=await view('get_round',{case_id:id,round_id:1});
   host.innerHTML=panel('Challenge',`<dl>${datum('Case state',c.state)}${datum('Challenge deadline',date(c.terms?.challenge_end_ns))}${datum('Challenger',c.challenge?.challenger_id)}${datum('Criterion',c.challenge?.criterion_id)}${datum('Counterexample',c.challenge?.counterexample_digest)}${datum('Resolution basis',c.resolution_basis)}</dl>${c.challenge?note('The recorded challenge invokes the frozen fresh committee and its independent review window.'):note('No challenge has been recorded onchain. Storing a counterexample alone does not file a challenge.')}`)+panel('Fresh appeal',`<dl>${datum('Commit deadline',date(c.terms?.fresh_commit_end_ns))}${datum('Reveal deadline',date(c.terms?.fresh_reveal_end_ns))}${datum('Round phase',fresh?.phase)}</dl>${list(fresh?.slots,(slot,i)=>`<div class="record"><span>${escape(c.terms?.fresh_committee?.[i]?.reviewer_id||`Slot ${i+1}`)}</span><span>${escape(slot.disposition|| (slot.commitment?'Committed':'Awaiting'))}</span></div>`,'No fresh-round slots returned.')}`)+panel('Authority',note('Filing a challenge requires a signed contract call by the eligible losing party, an immutable counterexample digest, and the unexpired challenge window. Live financial signing is disabled.'));
   if(getAccount()&&[c.creator_id,c.terms?.beneficiary_id].includes(getAccount())&&!c.challenge){
@@ -124,7 +130,7 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
   }
  }
  async function settlement(){
-  const id=requireCase();if(!id){host.innerHTML=panel('Settlement',note('Open a case to inspect payout and recovery state.'));return}
+  const id=requireCase();if(!id){await caseBoard('Settlement board',c=>['Resolved','Unresolved','SettlementPending','TransferFailed','Settled'].includes(c.state),'Choose a case to inspect payout intent, finality, receipt and recovery.');return}
   const c=await caseRecord(id),payout=await view('get_payout',{case_id:id});
   host.innerHTML=panel('Payout',`<dl>${datum('Contract state',c.state)}${datum('Final disposition',c.final_disposition)}${datum('Resolution basis',c.resolution_basis)}${datum('Intent',payout?.payout_intent_id)}${datum('Recipient',payout?.recipient_id)}${datum('Amount',payout?.amount_yocto?`${payout.amount_yocto} yoctoNEAR`:null)}${datum('Status',payout?.status)}${datum('Attempt',payout?.attempt)}${datum('Last callback result',payout?.last_attempt?.result)}</dl>${note('A payout attempt can only be retried under the contract rules after verified failure. An UNKNOWN operation must be reconciled, never redispatched.')}`)+panel('Transaction inspection',`<form id="receipt-form" class="workspace-form"><label>Finalised Testnet transaction hash<input name="tx_hash" pattern="[1-9A-HJ-NP-Za-km-z]{32,64}" required></label><button type="submit">Inspect receipt</button></form><div id="receipt-result" aria-live="polite"></div>`)+panel('Operation recovery',`<form id="operation-form" class="workspace-form"><label>Persisted operation ID<input name="operation_id" required></label><button type="submit">Inspect operation</button></form><div id="operation-result" aria-live="polite"></div>`);
   host.querySelector('#receipt-form').addEventListener('submit',async e=>{e.preventDefault();const target=host.querySelector('#receipt-result');try{const data=await post('receipt',{tx_hash:new FormData(e.target).get('tx_hash')});target.innerHTML=`<pre>${safeJson(data)}</pre>`}catch(err){target.innerHTML=error(err.message)}});

@@ -8,10 +8,10 @@ The attached dashboard composition guides the CONTRA overview: a dark teal navig
 | --- | --- | --- |
 | Overview totals | `get_config.reserve_summary` and paged `list_cases` | State links open a filtered cases view. Financial values are contract reserve values. |
 | Case list and detail | `list_cases`, `get_case`, `get_round`, `get_events` | Creator and beneficiary actions pass through `/api/wallet/prepare`, server handoff, the wallet and receipt reconciliation only when signing is authorised. |
-| Evidence | Protected `/api/evidence/manifests`, `/api/evidence`, `/api/artifact` | A beneficiary can store an immutable manifest. Submission uses `submit_evidence` only when the contract state and signing gate permit it. |
-| Challenges | `get_case`, `get_round`, `/api/counterexample` | An eligible losing party can store a counterexample. Filing uses `file_challenge` only after the role, state, deadline and signing gate pass. |
+| Evidence | Protected `/api/evidence/manifests`, `/api/evidence`, `/api/artifact` | The evidence board lists eligible contract cases. A beneficiary can store an immutable manifest. Submission uses `submit_evidence` only when the contract state and signing gate permit it. |
+| Challenges | `get_case`, `get_round`, `/api/counterexample` | The challenge board lists contract cases for inspection. An eligible losing party can store a counterexample. Filing uses `file_challenge` only after the role, state, deadline and signing gate pass. |
 | Reviewers | `list_reviewers`, protected invitation, disclosure, workspace, finding and audit APIs | Offchain findings remain distinct from binding contract votes. Six-slot fixtures are development evidence, not independent people. |
-| Settlement | `get_payout`, `/api/receipt`, `/api/operation`, `/api/wallet/reconcile` | A failed payout can be retried only under contract rules. An UNKNOWN operation is inspected and reconciled, never automatically redispatched. |
+| Settlement | `get_payout`, `/api/receipt`, `/api/operation`, `/api/wallet/reconcile` | The settlement board lists cases with resolution or payout state. A failed payout can be retried only under contract rules. An UNKNOWN operation is inspected and reconciled, never automatically redispatched. |
 | Providers | `/api/config`, protected `/api/provider/jobs` | Readiness and recorded jobs are displayed. No inference result is invented. |
 
 ## Current release gates
