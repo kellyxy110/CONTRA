@@ -21,7 +21,7 @@ const deadlineFields=['fund_by_ns','submit_by_ns','primary_commit_end_ns','prima
 function yocto(value){if(!/^(?:0|[1-9]\d*)(?:\.\d{1,24})?$/.test(value))throw Error('Enter a positive NEAR amount with at most 24 decimal places.');const [whole,fraction='']=value.split('.');const amount=BigInt(whole)*10n**24n+BigInt(fraction.padEnd(24,'0'));if(amount<=0n||amount>10n**24n)throw Error('This authorised Testnet journey is limited to 1 NEAR per funding transaction.');return amount.toString()}
 const digestText=async text=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)))].map(byte=>byte.toString(16).padStart(2,'0')).join('');
 
-export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccount,getCaseId,showNotice}){
+export function mountWorkspaces({request,view,loadCase,signCall,prepareCase,canSign,getAccount,getCaseId,showNotice}){
  const host=document.getElementById('workspace');
  const overview=document.querySelector('.key-figures'),dashboard=document.querySelector('.dashboard-grid');
  const dashboardKpis=document.getElementById('overview-kpis');
@@ -62,8 +62,26 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
     const terms={beneficiary_id:data.get('beneficiary_id'),creator_operator_id:data.get('creator_operator_id'),beneficiary_operator_id:data.get('beneficiary_operator_id'),amount_yocto:yocto(data.get('amount')),criteria:[{criterion_id:1,kind:data.get('kind'),requirement_digest:requirement.digest}],evidence_policy_digest:policy.digest,policy_version:1,base_fallback:'BASE_REFUND_V1',challenge_fallback:'KEEP_PRIMARY_V1'};
     deadlineFields.forEach((field,i)=>terms[field]=(BigInt(times[i])*1000000n).toString());
     const requestId=await digestText(crypto.randomUUID()),preview=await view('preview_case',{creator_id:getAccount(),request_id:requestId,terms});
-    result.innerHTML=`<h3>Contract preview</h3><dl>${datum('Case ID',preview.case_id)}${datum('Terms digest',preview.terms_digest)}${datum('Primary reviewers',preview.primary_committee?.map(v=>v.reviewer_id).join(', '))}${datum('Fresh reviewers',preview.fresh_committee?.map(v=>v.reviewer_id).join(', '))}</dl><pre>${safeJson({request_id:requestId,terms,expected_terms_digest:preview.terms_digest})}</pre>${canSign()?'<button type="button" id="create-onchain">Create on Testnet</button>':note('The server has not authorised live signing. This preview has not created a case.')}`;
-    result.querySelector('#create-onchain')?.addEventListener('click',async e=>{e.target.disabled=true;try{const receipt=await signCall('create_case',{request_id:requestId,terms,expected_terms_digest:preview.terms_digest},'1');result.innerHTML=`<pre>${safeJson(receipt)}</pre><a href="#cases/${escape(preview.case_id)}">Open persisted case</a>`}catch(err){result.insertAdjacentHTML('beforeend',error(err.message));e.target.disabled=false}});
+    result.innerHTML=`<h3>Contract preview</h3><dl>${datum('Case ID',preview.case_id)}${datum('Terms digest',preview.terms_digest)}${datum('Primary reviewers',preview.primary_committee?.map(v=>v.reviewer_id).join(', '))}${datum('Fresh reviewers',preview.fresh_committee?.map(v=>v.reviewer_id).join(', '))}</dl><pre>${safeJson({request_id:requestId,terms,expected_terms_digest:preview.terms_digest})}</pre><button type="button" id="prepare-onchain">Prepare Testnet case</button><div id="case-signing-result" role="status"></div>`;
+    const callArgs={request_id:requestId,terms,expected_terms_digest:preview.terms_digest};
+    const signingResult=result.querySelector('#case-signing-result');
+    const prepareButton=result.querySelector('#prepare-onchain');
+    prepareButton.addEventListener('click',async()=>{
+     prepareButton.disabled=true;
+     try{
+      const operation=await prepareCase(callArgs);
+      signingResult.innerHTML=`<dl>${datum('Operation ID',operation.operation_id)}${datum('Payload hash',operation.payload_hash)}</dl><button type="button" id="create-onchain">Request wallet signature</button>`;
+      const signButton=signingResult.querySelector('#create-onchain');
+      signButton.addEventListener('click',async()=>{
+       signButton.disabled=true;
+       try{
+        const receipt=await signCall('create_case',callArgs,'1',operation);
+        const persisted=receipt.operation?.status==='CONFIRMED'?await caseRecord(preview.case_id):null;
+        signingResult.innerHTML=`<pre>${safeJson(receipt)}</pre>${persisted?caseLink(preview.case_id):note('Case creation has not been confirmed. Inspect the operation before retrying.')}`;
+       }catch(err){signingResult.insertAdjacentHTML('beforeend',error(err.message));signButton.disabled=false}
+      });
+     }catch(err){signingResult.innerHTML=error(err.message);prepareButton.disabled=false}
+    });
    }catch(e){result.innerHTML=error(e.message)}finally{form.querySelector('button').disabled=false}
   });
  }
