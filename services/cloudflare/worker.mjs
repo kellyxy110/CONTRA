@@ -499,6 +499,9 @@ export async function executeCaseProvider({store,env,record,round,actor,input}){
  const role=input.kind==='verification'?'verifier':input.role;
  if(provider==='meta'&&!['primary','adversarial','fresh'].includes(role))fail('Evaluator role is invalid');
  if((role==='primary'&&roundId!==0)||(role==='fresh'&&roundId!==1))fail('Evaluator role does not match the case round');
+ const primaryStates=new Set(['Submitted','ReviewCommit','ReviewReveal','Provisional']),freshStates=new Set(['Challenged','ChallengeReview']);
+ if(roundId===0&&!primaryStates.has(record.state))fail('Primary evaluation is unavailable in the current case state');
+ if(roundId===1&&!freshStates.has(record.state))fail('Fresh evaluation is unavailable in the current case state');
  const proposalDigest=input.kind==='verification'?hash(input.proposal_digest,'proposal digest'):null;
  let proposal=null;
  if(proposalDigest){const saved=await store.readArtifact(proposalDigest);proposal=JSON.parse(new TextDecoder().decode(saved.bytes));if(proposal.case_id!==record.case_id||proposal.terms_digest!==record.terms_digest||proposal.round_id!==roundId||proposal.status!=='AI proposed')fail('Proposal identity does not match this case and round');}
