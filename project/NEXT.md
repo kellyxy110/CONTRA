@@ -342,3 +342,7 @@ Agent starts from `HANDOFF_TO_CODING_AGENT.md`. SHA-256 verify original image be
 
 The owner's 2026-10-28 UX3A instruction supplies the dashboard composition and overrides the earlier graph-first layout for this design study. The contract blueprint, safety requirements, historical study and event timing gate remain intact. Review project/artifacts/ux3a/comparison.jpg and design/ux3a/index.html. Owner approval has not been given. Resolve remaining fidelity concerns before freezing the screen as accepted.
 
+# Current task | External validation only
+
+The final engineering release is deployed. The next executable work is the independent-reviewer phase: onboard three primary and three fresh-appeal operators, verify distinct wallet control and consent, then freeze separately authorised funded Testnet journey packets. Provider activation remains gated by verified endpoint, model, credits, pricing, hard billing controls and server-side credentials. Do not treat fixtures as live evidence or enable signing before those gates pass.
+

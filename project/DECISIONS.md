@@ -414,3 +414,6 @@ Cloudflare secret presence is now only one provider-specific readiness gate. CON
 # 2026-11-11 | Modal verification is deterministic and non-binding
 
 The initial Modal function performs deterministic verification rather than model inference. It proves exact proposal digest, case, terms, round and evidence-citation binding at a protected external execution boundary. A successful result remains an AI verification proposal and has no reviewer, transaction, verdict or settlement authority. This avoids unnecessary provider cost and keeps any later model-backed expansion subject to a separate reviewed interface and spending gate.
+# 2026-11-12 | D-108 final engineering release boundary
+
+The owner-supplied frontend and the verified runtime are accepted for deployment from `main` commit `7b03ffbaff4abc424c9ddd4791415b8922acc7bb`. Public deployment does not authorise financial signing, substitute fixture reviewers for independent operators or bypass provider billing gates. AC31 and AC32 use DEFERRED until their live participant and funded-settlement evidence exists.
