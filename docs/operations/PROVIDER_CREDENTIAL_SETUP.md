@@ -95,6 +95,8 @@ The Worker reports independent, redacted provider readiness through `/api/config
 
 After credential installation, first verify that `/api/config` changes only that provider's `credential_installed` gate. Authentication or catalogue probes must use a provider-documented non-billable endpoint. If no such endpoint exists, stop before a model call and obtain bounded spending authority.
 
+The release includes a temporary operator-only probe at `POST /api/operator/provider-probe`. It requires the server-only `CONTRA_ACTIVATION_KEY` in `X-Contra-Activation`, returns only redacted model identifiers and response digests, and never returns credentials or raw provider bodies. Install a random activation value interactively, run the bounded probes, then delete the secret. With the secret absent the route always returns HTTP 401. This route does not enable inference or financial signing.
+
 ## Rotation and incident response
 
 Revoke the old credential first when compromise is suspected. Preserve only non-secret credential identifiers and timestamps in the audit record. Any ambiguous provider call retains its budget reservation until billing reconciliation and is never blindly retried.

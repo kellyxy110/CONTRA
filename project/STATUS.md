@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-12-ACTIVATION-IN-PROGRESS
+
+The owner authorised bounded provider testing at USD 3 Meta, USD 3 Baseten and USD 5 Modal, and bounded NEAR Testnet execution at 1 NEAR per transaction and 2 NEAR total across both acceptance journeys. These approvals are active and must not be requested again. Meta and Baseten credentials are installed in the Cloudflare Worker. A dedicated Modal Proxy Auth credential is now installed separately from deployment credentials, and the workspace has a USD 5 spend limit. Authenticated model, account, pricing and residual billing checks are in progress before paid calls. Six independent reviewer operators remain the sole planned external validation phase, so reviewer-dependent funded journeys remain deferred.
+
 ## Current checkpoint | CONTRA-FINAL-IMPLEMENTATION-RELEASE
 
 The owner-supplied frontend is implemented in PR 73 across Overview, Cases, Case Details, Evidence, Challenges, Reviewers, Settlement, Lab, Activity and Settings. Chromium and Firefox pass every route at 320, 390, 768, 1024 and 1440 pixel widths with no page error or horizontal overflow. Cloudflare wallet preparation now normalises Durable Object records for browser recovery, and the signing handoff remains protected by an explicit server gate that is disabled by default. Modal verifier source and deployment evidence reached `main` through PR 75 at `99599120614165bce80bdac86e9a04de4fa6e3af`.

@@ -114,6 +114,11 @@ describe('Cloudflare durable financial state',()=>{
   const handoff=await SELF.fetch(publicOrigin+'/api/wallet/handoff',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(403);expect((await handoff.json()).error).toMatch(/signing is disabled/i);
  });
 
+ it('keeps provider credential probes closed without operator activation authentication',async()=>{
+  const response=await SELF.fetch(publicOrigin+'/api/operator/provider-probe',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:JSON.stringify({provider:'modal'})});
+  expect(response.status).toBe(401);expect(await response.json()).toEqual({error:'Provider activation authentication required'});
+ });
+
  it('preserves pre-handoff rejection but locks post-handoff uncertainty',async()=>{
   const state=stub('rejection-boundary');await state.prepareOperation(operation('pre'));expect((await state.rejectOperation('pre',true)).status).toBe('FAILED');
   await state.prepareOperation(operation('post'));await state.handoffOperation('post');expect((await state.rejectOperation('post',false)).status).toBe('UNKNOWN');
