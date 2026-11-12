@@ -121,7 +121,8 @@ async function signCall(method,args,deposit='0'){
 let dashboardRequest = 0;
 async function loadDashboard(){
  const requestId = ++dashboardRequest;
- const days = Number($('case-range').value);
+ const range = $('case-range').value;
+ const days = range === 'all' ? 0 : Number(range);
  const values=['total-escrow','active-challenges','settled-value','awaiting-review'];
  try{
   let cursor='0',page,items=[];
