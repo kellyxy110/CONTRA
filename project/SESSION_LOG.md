@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-12 | Final implementation and release verification
+
+PR 75 merged the protected Modal runtime into `main` at `99599120614165bce80bdac86e9a04de4fa6e3af` after Core, Security, the nine-test Sandbox baseline, both complete Contestation journeys and judge quick-start passed. PR 73 was updated with complete Chromium and Firefox route coverage, Cloudflare wallet record normalisation and a gated signing handoff. Local browser testing passed all routes at five widths, Cloudflare tests passed 17/17 and wallet browser tests passed 11/11. The immutable reference remains SHA-256 `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`.
+
 ## 2026-11-11 | CONTRA-M10.4-MODAL-VERIFIER-DEPLOYED
 
 Deployed the protected deterministic Modal verifier after the owner confirmed the USD 5 Workspace spending limit and directed execution to proceed. The first attempt stopped locally because Windows console output was not UTF-8; retrying the same source with UTF-8 output succeeded. Modal created app `ap-2wMup9xpnApV3ehbwwjKrK` and endpoint `https://boredom407--contra-verifier-verify.us-east.modal.run`. An unauthenticated POST returned HTTP 401. A follow-up through the local Modal deployment profile also remained 401, confirming that deployment credentials are not Proxy Auth credentials. No secret was printed or committed, no model inference ran and the billing summary remained USD 0.00.

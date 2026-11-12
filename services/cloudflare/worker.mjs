@@ -1,6 +1,6 @@
 import {DurableObject} from 'cloudflare:workers';
 import {rpcAdapter} from '../chain/rpc.mjs';
-import {validateWalletCall,verifyReceiptIntent,receiptState} from '../wallet/lifecycle.mjs';
+import {validateWalletCall,verifyReceiptIntent,receiptState,walletSigningRequest} from '../wallet/lifecycle.mjs';
 import {assessCreatorEligibility} from '../deployment/creator-eligibility.mjs';
 import {cloudflareProviderReadiness} from './provider-readiness.mjs';
 
@@ -244,8 +244,8 @@ export class ContraState extends DurableObject{
   return row(this.ctx.storage.sql.exec('SELECT * FROM chain_observations WHERE singleton=1'));
  }
 
- async saveRecord({kind,case_id=null,account,body}){
-  required(kind,'record kind');required(account,'account');const text=JSON.stringify(body),bytes=new TextEncoder().encode(text),digest=await sha256(bytes);
+ async saveRecord({kind,case_id=null,account,body,canonicalBody=false}){
+  required(kind,'record kind');required(account,'account');const text=canonicalBody?canonical(body):JSON.stringify(body),bytes=new TextEncoder().encode(text),digest=await sha256(bytes);
   await this.putArtifact({digest,bytes,media_type:'application/json'});
   const existing=row(this.ctx.storage.sql.exec('SELECT * FROM records WHERE digest=?',digest));
   if(existing&&existing.account!==account)fail('Record identity conflict');
@@ -258,6 +258,10 @@ export class ContraState extends DurableObject{
   let sql='SELECT * FROM records WHERE 1=1',args=[];if(kind){sql+=' AND kind=?';args.push(kind);}if(case_id){sql+=' AND case_id=?';args.push(case_id);}if(account){sql+=' AND account=?';args.push(account);}sql+=' ORDER BY created_at';
   return this.ctx.storage.sql.exec(sql,...args).toArray().map(value=>({...value,body:JSON.parse(value.body)}));
  }
+
+ linked(caseId,digest){return !!row(this.ctx.storage.sql.exec('SELECT digest FROM case_links WHERE case_id=? AND digest=?',caseId,digest));}
+ link(caseId,digest,account,kind){this.ctx.storage.sql.exec('INSERT OR IGNORE INTO case_links(case_id,digest,account,kind,created_at) VALUES(?,?,?,?,?)',caseId,digest,account,kind,Date.now());}
+ links(caseId){return this.ctx.storage.sql.exec('SELECT digest,kind FROM case_links WHERE case_id=?',caseId).toArray();}
 
  reserveProviderJob(input){
   const provider=required(input?.provider,'provider'),key=required(input?.idempotency_key,'idempotency key'),account=required(input?.account,'account'),caseId=hash(input?.case_id,'case id'),payloadDigest=hash(input?.payload_digest,'payload digest'),reservation=Number(input?.reservation_micro_usd);
@@ -325,6 +329,61 @@ function canonical(value){if(Array.isArray(value))return `[${value.map(canonical
 function randomBase64(bytes=32){const value=new Uint8Array(bytes);crypto.getRandomValues(value);return btoa(String.fromCharCode(...value));}
 function token(){return `${crypto.randomUUID()}${crypto.randomUUID()}`.replaceAll('-','');}
 async function textHash(value){return sha256(new TextEncoder().encode(value));}
+export async function storeEvidence(store,caseRecord,actor,input){
+ const manifestInput=input?.manifest,criteria=caseRecord.terms?.criteria||[];
+ if(!manifestInput||!Array.isArray(manifestInput.sources)||!Array.isArray(manifestInput.criteria)||manifestInput.sources.length<1||manifestInput.sources.length>64||manifestInput.criteria.length!==criteria.length)fail('Structured evidence must cover every frozen criterion');
+ const sourceIds=new Set(),sources=[];
+ for(const [index,source] of manifestInput.sources.entries()){
+  const sourceId=required(source?.source_id,'source id'),content=required(source?.content,'source content'),origin=required(source?.provenance?.origin,'source origin'),captured=required(source?.provenance?.captured_at,'capture time');
+  if(sourceId.length>64||sourceIds.has(sourceId)||!['text/plain','application/json','text/markdown'].includes(source.media_type)||source.encoding&&source.encoding!=='utf8'||content.length>30000||origin.length>512||!Number.isFinite(Date.parse(captured))||new Date(captured).toISOString()!==captured)fail(`Invalid evidence source ${index+1}`);
+  sourceIds.add(sourceId);const bytes=new TextEncoder().encode(content),digest=await sha256(bytes);
+  if(source.digest&&source.digest!==digest)fail('Declared source digest differs from its bytes');
+  await store.putArtifact({digest,bytes,media_type:source.media_type});store.link(caseRecord.case_id,digest,actor,'evidence-source');
+  sources.push({source_id:sourceId,digest,size:bytes.length,media_type:source.media_type,access:'CASE_PARTICIPANTS',provenance:{origin,captured_at:captured,submitted_by:actor}});
+ }
+ const frozen=new Set(criteria.map(item=>item.criterion_id)),seen=new Set(),entries=[];
+ for(const item of manifestInput.criteria){
+  if(!Number.isSafeInteger(item?.criterion_id)||!frozen.has(item.criterion_id)||seen.has(item.criterion_id)||!item.claim?.trim()||item.claim.length>2000||!Array.isArray(item.source_ids)||!item.source_ids.length||item.source_ids.some(id=>!sourceIds.has(id)))fail('Invalid criterion evidence');
+  seen.add(item.criterion_id);entries.push({criterion_id:item.criterion_id,claim:item.claim.trim(),source_ids:[...new Set(item.source_ids)]});
+ }
+ const created=required(manifestInput.created_at,'manifest timestamp');if(!Number.isFinite(Date.parse(created))||new Date(created).toISOString()!==created)fail('Invalid manifest timestamp');
+ let correction=null;
+ if(manifestInput.correction_of){const target=hash(manifestInput.correction_of,'correction digest');if(!store.linked(caseRecord.case_id,target)||!store.records({kind:'evidence',case_id:caseRecord.case_id}).some(item=>item.digest===target))fail('Correction target does not belong to this case');correction={of:target,reason:required(manifestInput.correction_reason,'correction reason')};}
+ const manifest={schema:'CONTRA_EVIDENCE_V1',case_id:caseRecord.case_id,terms_digest:caseRecord.terms_digest,submitted_by:actor,created_at:created,access:'CASE_PARTICIPANTS',criteria:entries.sort((a,b)=>a.criterion_id-b.criterion_id),sources,correction};
+ const record=await store.saveRecord({kind:'evidence',case_id:caseRecord.case_id,account:actor,body:manifest,canonicalBody:true});
+ return {...record,manifest,onchain:caseRecord.evidence_digest===record.digest,note:'Stored immutably. The exact digest needs a separately authorised signed transaction to become selected evidence.'};
+}
+async function storeCounterexample(store,caseRecord,actor,input){
+ const criterion=caseRecord.terms?.criteria?.find(item=>item.criterion_id===input.criterion_id),text=required(input.text,'counterexample text');
+ if(!criterion||text.length>32768)fail('Counterexample must cite a frozen criterion and contain bounded text');
+ const artifact={schema:'CONTRA_COUNTEREXAMPLE_V1',case_id:caseRecord.case_id,terms_digest:caseRecord.terms_digest,criterion_id:criterion.criterion_id,requirement_digest:criterion.requirement_digest,submitted_by:actor,text,created_at:new Date().toISOString()};
+ const record=await store.saveRecord({kind:'counterexample',case_id:caseRecord.case_id,account:actor,body:artifact,canonicalBody:true});
+ return {...record,artifact,note:'Stored immutably. Filing a challenge requires a separately authorised signed contract call.'};
+}
+export async function storeFinding(store,caseRecord,round,actor,input){
+ if(![0,1].includes(input.round_id)||!appointed(caseRecord,actor,input.round_id)||!['ACCEPT','REJECT','UNRESOLVED'].includes(input.disposition))fail('Reviewer finding authority or disposition is invalid');
+ const manifests=await store.records({kind:'evidence',case_id:caseRecord.case_id});
+ const allowed=new Set([round?.evidence_digest,caseRecord.evidence_digest,caseRecord.challenge?.counterexample_digest,...caseRecord.terms.criteria.map(item=>item.requirement_digest),...manifests.flatMap(item=>(item.body?.sources||[]).map(source=>source.digest))].filter(Boolean));
+ if(!Array.isArray(input.citations)||!input.citations.length||input.citations.length>16||input.citations.some(digest=>!allowed.has(digest)))fail('Finding citation is not bound to this case and round');
+ if(typeof input.explanation!=='string'||!input.explanation.trim()||input.explanation.length>4000||typeof input.limitations!=='string'||input.limitations.length>4000)fail('Invalid finding text');
+ const finding={schema:'CONTRA_HUMAN_FINDING_V1',case_id:caseRecord.case_id,terms_digest:caseRecord.terms_digest,round_id:input.round_id,evidence_digest:round.evidence_digest,reviewer_id:actor,disposition:input.disposition,citations:input.citations,explanation:input.explanation.trim(),limitations:input.limitations.trim(),created_at:new Date().toISOString(),status:'Reviewer finding'};
+ const saved=await store.saveRecord({kind:'finding',case_id:caseRecord.case_id,account:actor,body:finding,canonicalBody:true});return {...saved,finding};
+}
+export async function storeReviewPackage(store,caseRecord,round,actor,input){
+ if(![0,1].includes(input.round_id)||!appointed(caseRecord,actor,input.round_id))fail('Only an appointed reviewer may store a recovery package');
+ for(const name of ['commitment','payload_digest','finding_digest','evidence_digest'])hash(input[name],name);
+ if(!['ACCEPT','REJECT','UNRESOLVED'].includes(input.disposition)||!['xchacha20-poly1305','aes-256-gcm'].includes(input.encryption)||typeof input.ciphertext!=='string'||input.ciphertext.length<48||input.ciphertext.length>65536||!/^[A-Za-z0-9+/_=-]+$/.test(input.ciphertext))fail('Invalid encrypted review package');
+ if(round?.round_id!==input.round_id||round.evidence_digest!==input.evidence_digest)fail('Recovery package does not match the frozen round');
+ const findings=await store.records({kind:'finding',case_id:caseRecord.case_id,account:actor});
+ const finding=findings.find(item=>item.digest===input.finding_digest)?.body;
+ if(!finding||finding.case_id!==caseRecord.case_id||finding.terms_digest!==caseRecord.terms_digest||finding.round_id!==input.round_id||finding.evidence_digest!==round.evidence_digest||finding.reviewer_id!==actor||finding.disposition!==input.disposition)fail('Finding identity does not match the reviewer round');
+ const old=(await store.records({kind:'reviewer-package',case_id:caseRecord.case_id,account:actor})).filter(item=>item.body.round_id===input.round_id);
+ if(!old.length&&round.phase!=='COMMIT')fail('A new recovery package must be saved during the commitment phase');
+ const identity=['commitment','payload_digest','finding_digest','evidence_digest','disposition','encryption'];
+ if(old.some(item=>identity.some(name=>item.body[name]!==input[name])))fail('Conflicting review package already exists');
+ const saved=await store.saveRecord({kind:'reviewer-package',case_id:caseRecord.case_id,account:actor,body:{case_id:caseRecord.case_id,round_id:input.round_id,...Object.fromEntries(identity.map(name=>[name,input[name]])),ciphertext:input.ciphertext}});
+ return saved;
+}
 async function body(request){
  const length=Number(request.headers.get('content-length')||0);if(length>1_000_000)fail('Request body exceeds the one-megabyte application limit');
  if(!request.headers.get('content-type')?.toLowerCase().startsWith('application/json'))fail('JSON content type required');
@@ -332,6 +391,8 @@ async function body(request){
 }
 function rpc(env){return rpcAdapter({url:env.NEAR_RPC_URL,contractAccount:env.CONTRA_CONTRACT_ACCOUNT,network:'testnet',timeoutMs:Number(env.CONTRA_RPC_TIMEOUT_MS||8000)});}
 function state(env){return env.CONTRA_STATE.getByName('contra-testnet');}
+function signingAuthorised(env){return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true';}
+function browserOperation(operation){if(!operation)return operation;const payload=operation.payload||(operation.payload_json?JSON.parse(operation.payload_json):null);return {...operation,operation_id:operation.operation_id||operation.id,payload};}
 async function session(request,env){
  const raw=request.headers.get('authorization')?.replace(/^Bearer /,'');if(!raw)fail('Authentication required');
  const value=await state(env).sessionByToken(await textHash(raw));if(!value)fail('Session expired or unavailable');return {raw,...value};
@@ -363,12 +424,12 @@ async function api(request,env){
   if(request.method!=='GET')fail('Operational probes are read-only');
   const storage=await store.health(),chain=await adapter.health(),ready=chain.status==='ready'&&chain.source?.stale===false;
   if(ready)await store.recordChainObservation({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,block_height:Number(chain.source.block_height),block_hash:chain.source.block_hash});
-  const response={ready,storage,chain,network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,live_signing_authorised:false};
+  const response={ready,storage,chain,network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,live_signing_authorised:signingAuthorised(env)};
   return json(response,path==='/api/ready'&&!ready?503:200);
  }
  if(path==='/api/config'){
   const config=await adapter.view('get_config',{}),eligibility=assessCreatorEligibility(config);
-  return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:false,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:false,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
+  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
  if(path==='/api/session/sandbox')return json({error:'Sandbox sessions are unavailable in the testnet Worker'},403);
  if(path==='/api/session/challenge'&&request.method==='POST'){
@@ -398,9 +459,14 @@ async function api(request,env){
   if(call?.method==='create_case')previewRecord=await adapter.view('preview_case',{creator_id:auth.account,request_id:call.args.request_id,terms:call.args.terms});
   if(call?.method==='confirm_reviewer')configRecord=await adapter.view('get_reviewer',{reviewer_id:auth.account});
   const payload=validateWalletCall({network:'testnet',contractAccount:env.CONTRA_CONTRACT_ACCOUNT,signerId:auth.account,call,caseRecord,configRecord,previewRecord});
-  const operation=await store.prepareOperation({id:input.operation_id,account:auth.account,payload_hash:payload.payload_hash,contract_account:env.CONTRA_CONTRACT_ACCOUNT,payload});return json(operation,201);
+  const operation=browserOperation(await store.prepareOperation({id:input.operation_id,account:auth.account,payload_hash:payload.payload_hash,contract_account:env.CONTRA_CONTRACT_ACCOUNT,payload}));return json({operation,signing_request:null,handoff_required:operation.status==='PREPARED',live_signing_authorized:signingAuthorised(env)},201);
  }
- if(path==='/api/wallet/handoff')return json({error:'Live wallet signing is disabled pending creator-eligibility remediation and separate authority'},403);
+ if(path==='/api/wallet/handoff'&&request.method==='POST'){
+  if(!signingAuthorised(env))return json({error:'Live wallet signing is disabled pending an exact bounded execution authority'},403);
+  const auth=await session(request,env);
+  const input=await body(request),existing=await store.operation(input.operation_id);if(!existing||existing.account!==auth.account)fail('Operation not found');
+  const operation=browserOperation(await store.handoffOperation(input.operation_id));return json({operation,signing_request:walletSigningRequest(operation)});
+ }
  if(path==='/api/wallet/reject'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.rejectOperation(input.operation_id,input.pre_handoff_verified===true));}
  if(path==='/api/wallet/interrupt'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.markUnknown(input.operation_id,input.reason));}
  if(path==='/api/wallet/broadcast'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),operation=await store.operation(input.operation_id);if(operation?.account!==auth.account)fail('Operation not found');return json(await store.attachTransactionHash(input.operation_id,input.tx_hash));}
@@ -411,19 +477,41 @@ async function api(request,env){
  }
  if(path==='/api/operation'&&request.method==='GET'){const auth=await session(request,env),operation=await store.operation(url.searchParams.get('id'));if(!operation||operation.account!==auth.account)fail('Operation not found');return json(operation);}
  if(path==='/api/terms'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),config=await adapter.view('get_config',{});if(!assessCreatorEligibility(config).eligible_creators.includes(auth.account))fail('Creator admission unavailable');return json(await store.saveRecord({kind:'terms',account:auth.account,body:{text:required(input.text,'terms text')}}),201);}
- if(['/api/evidence','/api/finding','/api/counterexample','/api/reviewer/disclosure'].includes(path)&&request.method==='POST'){
+ if(path==='/api/evidence'&&request.method==='POST'){
+  const auth=await session(request,env),input=await body(request),record=await authorisedCase(adapter,input.case_id,auth.account);
+  if(!party(record,auth.account))fail('Only a case party may store evidence');
+  return json(await storeEvidence(store,record,auth.account,input),201);
+ }
+ if(path==='/api/counterexample'&&request.method==='POST'){
+  const auth=await session(request,env),input=await body(request),record=await authorisedCase(adapter,input.case_id,auth.account);
+  if(!party(record,auth.account))fail('Only a case party may store a counterexample');
+  return json(await storeCounterexample(store,record,auth.account,input),201);
+ }
+ if(path==='/api/counterexample/records'&&request.method==='GET'){
+  const auth=await session(request,env),caseId=url.searchParams.get('case_id');await authorisedCase(adapter,caseId,auth.account);
+  return json({case_id:caseId,items:await store.records({kind:'counterexample',case_id:caseId})});
+ }
+ if(path==='/api/finding'&&request.method==='POST'){
+  const auth=await session(request,env),input=await body(request),record=await authorisedCase(adapter,input.case_id,auth.account);
+  const round=await adapter.view('get_round',{case_id:input.case_id,round_id:input.round_id});
+  return json(await storeFinding(store,record,round,auth.account,input),201);
+ }
+ if(path==='/api/reviewer/disclosure'&&request.method==='POST'){
   const auth=await session(request,env),input=await body(request),caseId=input.case_id||null;let caseRecord=null;
   if(caseId)caseRecord=await authorisedCase(adapter,caseId,auth.account);
-  if((path==='/api/evidence'||path==='/api/counterexample')&&!party(caseRecord,auth.account))fail('Only a case party may store this artifact');
-  if(path==='/api/finding'&&(![0,1].includes(input.round_id)||!appointed(caseRecord,auth.account,input.round_id)))fail('Only an appointed reviewer may store a finding');
   const kind=path.split('/').at(-1),record=await store.saveRecord({kind,case_id:caseId,account:auth.account,body:input});return json(record,201);
  }
- if(path==='/api/reviewer/package'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),record=await authorisedCase(adapter,input.case_id,auth.account);if(![0,1].includes(input.round_id)||!appointed(record,auth.account,input.round_id))fail('Only an appointed reviewer may store a recovery package');return json(await store.saveRecord({kind:'reviewer-package',case_id:input.case_id,account:auth.account,body:input}),201);}
- if(path==='/api/reviewer/package'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),roundId=Number(url.searchParams.get('round_id')),record=await authorisedCase(adapter,caseId,auth.account);if(!appointed(record,auth.account,roundId))fail('Only an appointed reviewer may recover this package');const items=await store.records({kind:'reviewer-package',case_id:caseId,account:auth.account});if(!items.length)fail('Reviewer package not found');return json(items.at(-1));}
+ if(path==='/api/reviewer/package'&&request.method==='POST'){const auth=await session(request,env),input=await body(request),record=await authorisedCase(adapter,input.case_id,auth.account);if(![0,1].includes(input.round_id)||!appointed(record,auth.account,input.round_id))fail('Only an appointed reviewer may store a recovery package');const round=await adapter.view('get_round',{case_id:input.case_id,round_id:input.round_id});return json(await storeReviewPackage(store,record,round,auth.account,input),201);}
+ if(path==='/api/reviewer/package'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),roundId=Number(url.searchParams.get('round_id')),record=await authorisedCase(adapter,caseId,auth.account);if(![0,1].includes(roundId)||!appointed(record,auth.account,roundId))fail('Only an appointed reviewer may recover this package');const items=(await store.records({kind:'reviewer-package',case_id:caseId,account:auth.account})).filter(item=>item.body.round_id===roundId);if(!items.length)fail('Reviewer package not found');return json(items.at(-1));}
  if(path==='/api/evidence/manifests'||path==='/api/reviewer/control'||path==='/api/reviewer/workspace'||path==='/api/availability'){
   const auth=await session(request,env),caseId=url.searchParams.get('case_id');const record=await authorisedCase(adapter,caseId,auth.account);
-  if(path==='/api/evidence/manifests')return json({case_id:caseId,onchain_digest:record.evidence_digest||null,items:await store.records({kind:'evidence',case_id:caseId})});
-  if(path==='/api/availability')return json({case_id:caseId,observed_at:new Date().toISOString(),items:(await store.records({case_id:caseId})).map(item=>({digest:item.digest,kind:item.kind,available:true}))});
+  if(path==='/api/evidence/manifests')return json({case_id:caseId,onchain_digest:record.evidence_digest||null,items:(await store.records({kind:'evidence',case_id:caseId})).map(item=>({...item,onchain:item.digest===record.evidence_digest}))});
+  if(path==='/api/availability'){
+   const records=await store.records({case_id:caseId}),links=store.links(caseId),items={};
+   for(const link of links){try{await store.readArtifact(link.digest);items[link.digest]=true}catch{items[link.digest]=false}}
+   const selected=records.find(item=>item.kind==='evidence'&&item.digest===record.evidence_digest);
+   return json({case_id:caseId,observed_at:new Date().toISOString(),items,manifest:selected?.body?.schema==='CONTRA_EVIDENCE_V1'?selected.body:null,criterion_evaluations:[]});
+  }
   return json({case:record,round_id:url.searchParams.get('round_id'),records:await store.records({case_id:caseId}),source:'contract-and-durable-storage'});
  }
  if(path==='/api/reviewer/disclosures'){await session(request,env);return json({items:await store.records({kind:'disclosure'}),independence:'Operator independence requires separately controlled signed accounts.'});}
@@ -435,7 +523,7 @@ async function api(request,env){
  if(path==='/api/reviewer/respond'&&request.method==='POST'){
   const auth=await session(request,env),input=await body(request);if(input.reviewer_id!==auth.account)fail('Reviewer response account does not match the authenticated NEP-413 identity');return json(await store.respondReviewer(input));
  }
- if(path==='/api/artifact'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id');await authorisedCase(adapter,caseId,auth.account);const value=await store.readArtifact(url.searchParams.get('digest'));return json({digest:value.digest,media_type:value.media_type,text:new TextDecoder().decode(value.bytes)});}
+ if(path==='/api/artifact'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),record=await authorisedCase(adapter,caseId,auth.account),digest=hash(url.searchParams.get('digest'),'artifact digest');if(!store.linked(caseId,digest)&&!record.terms.criteria.some(item=>item.requirement_digest===digest)&&record.terms.evidence_policy_digest!==digest)fail('Artifact is not linked to this case');const value=await store.readArtifact(digest);return json({digest:value.digest,media_type:value.media_type,text:new TextDecoder().decode(value.bytes)});}
  if(path==='/api/provider/jobs'&&request.method==='POST'){
   const auth=await session(request,env),input=await body(request);await authorisedCase(adapter,input.case_id,auth.account);
   if(input.mode!=='fixture'||env.CONTRA_PROVIDER_FIXTURES_ENABLED!=='true')return json({error:'Live and paid provider execution is disabled; deterministic fixtures are not enabled in production'},403);

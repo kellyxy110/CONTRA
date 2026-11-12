@@ -69,3 +69,13 @@ test('browser connector explicitly signs in a new Testnet wallet without adding 
  assert.deepEqual(calls,[{walletId:'meteor-wallet'},{network:'testnet'}]);
  assert.equal(calls.some(value=>value?.addFunctionCallKey||value?.contractId),false);
 });
+
+test('Cloudflare prepared operations are normalised for browser recovery',async()=>{
+ globalThis.localStorage=storage();
+ globalThis.fetch=async()=>new Response(JSON.stringify({id:'wallet-cloudflare',status:'PREPARED',tx_hash:null,payload_json:JSON.stringify({signerId:'creator.testnet'})}),{status:201,headers:{'Content-Type':'application/json'}});
+ const module=await import('../apps/web/wallet-source.mjs?cloudflare-prepare');
+ const operation=await module.prepareWalletTransaction({token:'token',accountId:'creator.testnet',operationId:'wallet-cloudflare',call:{method:'create_case',args:{}}});
+ assert.equal(operation.operation_id,'wallet-cloudflare');
+ assert.equal(operation.payload.signerId,'creator.testnet');
+ assert.equal(module.pendingWalletOperations('creator.testnet')['wallet-cloudflare'].status,'PREPARED');
+});
