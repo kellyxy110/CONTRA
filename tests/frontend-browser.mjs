@@ -30,11 +30,13 @@ try{
    }));
    await page.route('**/api/view',async route=>{
     const {method}=route.request().postDataJSON();
+    if(method==='get_events')return route.fulfill({json:{value:{items:[{event:'case_created',data:[{seq:'1',case_id:fixtureCases[0].case_id}]}],next_after_seq:'1',gap:false}}});
     if(method==='list_cases')return route.fulfill({json:{value:{items:fixtureCases}}});
     if(method==='get_config')return route.fulfill({json:{value:{reserve_summary:{held_escrow_yocto:'0',paid_yocto:'0'}}}});
     return route.continue();
    });
-   await page.locator('#case-range').dispatchEvent('change');
+   await page.locator('#refresh').click();
+   await page.locator('#events-list').getByText('case_created',{exact:true}).waitFor();
    const legend=page.getByRole('link',{name:'Challenged, 66.7%, 2 cases',exact:true});
    await legend.waitFor();
    await page.screenshot({path:`ci-output/frontend-${browserName}-${width}-populated-fixture.png`,fullPage:true});
