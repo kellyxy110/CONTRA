@@ -7,7 +7,7 @@ import {evaluationFixtureArgs,submitDevelopmentFixture} from '../apps/web/evalua
 test('case actions retain exact deposits and safeguard payout retry',()=>{
  const c={state:'Draft',creator_id:'creator',terms:{beneficiary_id:'beneficiary',amount_yocto:'1000000000000000000000000'},beneficiary_accepted:true,terms_digest:'terms'};
  assert.deepEqual(eligibleCaseActions('id',c,'creator').map(([method,,deposit])=>[method,deposit]),[['fund_case','1000000000000000000000000'],['cancel_case','1']]);
- assert.deepEqual(eligibleCaseActions('id',c,'beneficiary').map(([method])=>method),['accept_terms']);
+ assert.deepEqual(eligibleCaseActions('id',{...c,beneficiary_accepted:false},'beneficiary').map(([method])=>method),['accept_terms']);
  assert.deepEqual(eligibleCaseActions('id',{...c,terms:{...c.terms,amount_yocto:'1000000000000000000000001'}},'creator').map(([method])=>method),['cancel_case']);
  assert.deepEqual(eligibleCaseActions('id',{state:'TransferFailed',payout:{payout_intent_id:'intent',attempt:'2'}},'any')[0],['retry_payout',{case_id:'id',payout_intent_id:'intent',expected_attempt:2},'0','Retry verified failed payout']);
 });
