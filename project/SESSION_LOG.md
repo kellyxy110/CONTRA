@@ -522,3 +522,7 @@ Verified the Judithorluchee Cloudflare OAuth identity and exact configured accou
 
 Implemented the protected deterministic Modal verification boundary on `feat/m10-modal-verifier`. The endpoint requires Proxy Token authentication and its pure core fails closed on malformed envelopes, digest mutation, identity mismatch, unsupported policy and unapproved nested citations. Local results: repository 156 of 156, Cloudflare 14 of 14, Worker dry run, documentation links and Security policy passed. No deployment, provider request, Cloudflare secret change or spending occurred.
 
+# 2026-11-12 | CONTRA-2026-11-12-FINAL-ENGINEERING-RELEASE
+
+Resolved the acceptance-matrix policy failure by teaching the audit to recognise the owner-required DEFERRED status. PR #73 then passed Core, Security, complete Sandbox, both Contestation journeys and judge quick-start, while separate Contract and Financial P0 workflows passed. PR #73 merged as `b496dd7c745c4b7e8621e561589a1d4b69b97545`; promotion PR #78 merged to `main` as `7b03ffbaff4abc424c9ddd4791415b8922acc7bb`. Deployed Worker `8268ed63-d9bd-42f0-8ae0-236cbfda8e56` and Pages `6d9e9ee5-84a1-4ac0-b133-e4073629c020`. The first static-only Pages command exposed HTML responses on `/api/*`; redeployment through `pages/wrangler.jsonc` restored Functions and the Worker service binding. Production readiness and browser route checks passed. No financial signing, provider inference, transaction or spend occurred.
+
