@@ -116,6 +116,13 @@ main{padding:30px;max-width:1700px}.topbar{gap:16px;flex-wrap:wrap}.topbar h1{fo
 .mobile-navigation{max-height:min(58vh,530px);overflow:auto;margin:12px 0}.mobile-navigation .nav-group{border-bottom:1px solid var(--line)}.mobile-navigation .nav-group summary{padding:11px 6px;cursor:pointer}.mobile-navigation .nav-link{display:block;min-height:35px;padding:8px 16px;text-align:left;color:var(--text)}.mobile-navigation .nav-link.active{background:#254b50;color:#fff}.mobile-range{display:flex;justify-content:space-between;align-items:center;margin:14px 0;font-size:12px}.mobile-range select{background:var(--surface-2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px}
 @media(min-width:761px) and (max-width:1180px){.dashboard-grid .lifecycle-panel{grid-row:1!important}.dashboard-grid .status-panel{grid-row:2!important}.dashboard-grid .evidence-panel{grid-row:3!important}.dashboard-grid .committee-panel{grid-row:4!important}.dashboard-grid .events-panel{grid-row:5!important}}
 @media(max-width:760px){.dashboard-grid .lifecycle-panel{order:1}.dashboard-grid .status-panel{order:2}.dashboard-grid .evidence-panel{order:3}.dashboard-grid .committee-panel{order:4}.dashboard-grid .events-panel{order:5}}
+@media(min-width:1181px){
+ .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto auto auto}
+ .dashboard-grid .lifecycle-panel,.dashboard-grid .status-panel{min-height:225px}
+ .dashboard-grid .evidence-panel,.dashboard-grid .committee-panel{min-height:215px}
+ .dashboard-grid .events-panel{min-height:170px}
+ .dashboard-grid .lifecycle{padding-block:46px 60px}
+}
 @media(min-width:1181px){.topbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 24px}.topbar>div:first-child{grid-column:1;grid-row:1}.topbar .top-actions{grid-column:2;grid-row:1}.topbar .case-search{grid-column:1/-1;grid-row:2;justify-self:start}}
 .status-chart .status-legend-link{display:flex;align-items:center;gap:9px;width:100%;padding:5px 4px;border-radius:5px;text-decoration:none}
 .status-chart .status-legend-link:is(:hover,:focus-visible){background:#dce8e2;text-decoration:underline}
