@@ -25,15 +25,6 @@ try{
   assert.equal(await page.locator('#radar').innerText().then(text=>/\b(?:10|20|30|40|50|60|70|80|90|100)%/.test(text)),false,'no guide percentages');
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+1);assert.equal(overflow,false,`horizontal overflow at ${width}`);
   await page.screenshot({path:`ci-output/frontend-${browserName}-${width}-overview.png`,fullPage:true});
-  if(width===390){await page.locator('#mobile-more').click();assert.equal(await page.locator('#mobile-menu').evaluate(node=>node.open),true);const link=page.locator('#mobile-menu a[href="#settlement"]');const group=link.locator('..');if(!await group.evaluate(node=>node.open))await group.locator('summary').click();await link.click();await page.locator('#workspace .workspace-panel').first().waitFor();assert.equal(new URL(page.url()).hash,'#settlement');}
-  if(width===1440){
-   assert((await page.locator('main').boundingBox()).y<100,'desktop content starts at the top');
-   const lifecycle=await page.locator('.lifecycle-panel').boundingBox(),distribution=await page.locator('.status-panel').boundingBox();
-   assert(Math.abs(lifecycle.y-distribution.y)<3,'lifecycle and distribution share the first analytical row');
-   const committee=await page.locator('.committee-panel').boundingBox(),manifest=await page.locator('.evidence-panel').boundingBox();
-   assert(Math.abs(committee.y-manifest.y)<3,'committee and evidence share the second analytical row');
-   const activity=await page.locator('.events-panel').boundingBox();
-   assert(activity.y>committee.y+committee.height-3,'activity follows the analytical panels');
    const fixtureCases=['Challenged','Challenged','ReviewCommit'].map((state,index)=>({
     state, case_id:String(index+1).repeat(64), created_at_ns:String(BigInt(Date.now())*1000000n),
    }));
@@ -46,6 +37,18 @@ try{
    await page.locator('#case-range').dispatchEvent('change');
    const legend=page.getByRole('link',{name:'Challenged, 66.7%, 2 cases',exact:true});
    await legend.waitFor();
+   await page.screenshot({path:`ci-output/frontend-${browserName}-${width}-populated-fixture.png`,fullPage:true});
+   if(width!==1440)await page.unroute('**/api/view');
+  if(width===390){await page.locator('#mobile-more').click();assert.equal(await page.locator('#mobile-menu').evaluate(node=>node.open),true);const link=page.locator('#mobile-menu a[href="#settlement"]');const group=link.locator('..');if(!await group.evaluate(node=>node.open))await group.locator('summary').click();await link.click();await page.locator('#workspace .workspace-panel').first().waitFor();assert.equal(new URL(page.url()).hash,'#settlement');}
+  if(width===1440){
+   assert((await page.locator('main').boundingBox()).y<100,'desktop content starts at the top');
+   const lifecycle=await page.locator('.lifecycle-panel').boundingBox(),distribution=await page.locator('.status-panel').boundingBox();
+   assert(Math.abs(lifecycle.y-distribution.y)<3,'lifecycle and distribution share the first analytical row');
+   const committee=await page.locator('.committee-panel').boundingBox(),manifest=await page.locator('.evidence-panel').boundingBox();
+   assert(Math.abs(committee.y-manifest.y)<3,'committee and evidence share the second analytical row');
+   const activity=await page.locator('.events-panel').boundingBox();
+   assert(activity.y>committee.y+committee.height-3,'activity follows the analytical panels');
+   const legend=page.getByRole('link',{name:'Challenged, 66.7%, 2 cases',exact:true});
    await legend.focus();
    await page.keyboard.press('Enter');
    await page.waitForURL('**/#cases/state/Challenged');
