@@ -20,7 +20,7 @@ try {
  await mkdir('ci-output',{recursive:true});
  for (const [name,engine] of [['chromium',chromium],['firefox',firefox]]) {
   browser = await engine.launch({headless:true});
-  for (const width of [320,375,768,1024,1440]) {
+  for (const width of [320,375,768,1024,1366,1440,1920]) {
    const page = await browser.newPage({viewport:{width, height:900}});
    await page.goto(origin);
    await page.getByRole('heading', {name:'Contestation Overview'}).waitFor();
@@ -35,6 +35,28 @@ try {
    await page.reload();
    await page.waitForFunction(()=>document.documentElement.dataset.theme==='light');
    if(width===1440)await page.screenshot({path:`ci-output/contra-${name}-1440-light.png`,fullPage:true});
+   if(width===1440||width===375){
+    const cases=['ReviewCommit','Challenged','Settled'].map((state,index)=>({case_id:String(index+1).repeat(64),state,created_at_ns:'1794484800000000000',funded_principal_yocto:'1000000000000000000000000'}));
+    await page.route('**/api/view',route=>{
+     const {method}=route.request().postDataJSON();
+     const data={
+      list_cases:{items:cases,next_index:null},
+      get_events:{items:[{event:'case_funded',data:[{seq:'1',case_id:cases[0].case_id}]}]},
+      get_round:{slots:[{commitment:'commit'},{revealed:true},{}]},
+     };
+     return route.fulfill({json:{value:data[method]??null}});
+    });
+    await page.reload();
+    await page.locator('#case').selectOption(cases[0].case_id);
+    await page.locator('#review-chart .donut').waitFor();
+    assert.equal(await page.locator('#funded').textContent(),'3 NEAR');
+    assert.equal(await page.locator('#case-chart .donut').count(),1);
+    await page.locator('#status').evaluate(node=>{node.textContent='Deterministic visual fixture · no live records';});
+    for(const theme of width===1440?['light','dark']:['dark']){
+     await page.locator('#theme').selectOption(theme);
+     await page.screenshot({path:`ci-output/contra-${name}-${width}-fixture-${theme}.png`,fullPage:true});
+    }
+   }
    await page.close();
   }
   await browser.close();
