@@ -1,4 +1,5 @@
 import {NearConnector} from '@hot-labs/near-connect';
+export {voteCommitment} from '../../packages/protocol/encoding.mjs';
 const METEOR_EXECUTOR_COMMIT='ef1be35fc3712f2de60a7563aed543d78e73f763';
 export const METEOR_EXECUTOR_SHA256='96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50';
 const METEOR_EXECUTOR_URL=typeof location==='object'?new URL('/vendor/meteor-near-connect.js',location.origin).href:'https://contra-near.pages.dev/vendor/meteor-near-connect.js';
