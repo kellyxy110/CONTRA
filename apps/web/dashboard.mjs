@@ -1,6 +1,8 @@
 import {createApiClient} from './api-client.mjs';
 import {readPagedCases, readProtectedCaseRecords} from './contract-operations.mjs';
-import {openAuthenticatedWallet, recoverWallet} from './wallet-operations.mjs';
+import {createWalletOperations, openAuthenticatedWallet, recoverWallet} from './wallet-operations.mjs';
+import {buildEvidenceManifest, storeEvidence, evidenceSubmissionArgs} from './evidence-operations.mjs';
+import {storeCounterexample, challengeEligibility, fileChallenge} from './challenge-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 
 const byId = id => document.getElementById(id);
@@ -197,6 +199,85 @@ brandMark.classList.add('statement-mark');
 document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
 let account = null;
+let wallet = null;
+async function signWorkspaceCall(...args) {
+ const sdk = await import('./wallet.bundle.js');
+ return createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk}).signCall(...args);
+}
+
+function caseArtifactTools(panel, record, isChallenge) {
+ if (!token || !account || ![record.creator_id,record.terms?.beneficiary_id].includes(account)) {
+  panel.append(element('p','An authenticated case participant is required.'));
+  return;
+ }
+ if (isChallenge && record.challenge) {
+  panel.append(element('p','A challenge is already recorded for this case.'));
+  return;
+ }
+ const form = element('form','');
+ function field(labelText,name,type='text') {
+  const label=element('label',labelText);
+  const input=element('input','');
+  input.type=type;
+  input.name=name;
+  input.required=true;
+  label.append(input);
+  form.append(label);
+ }
+ const criteria=record.terms?.criteria ?? [];
+ if(isChallenge){
+  if(!criteria.length)return;
+  const label=element('label','Frozen criterion');
+  const select=element('select','');
+  select.name='criterion_id';
+  criteria.forEach(item=>select.append(new Option(`Criterion ${item.criterion_id}`,item.criterion_id)));
+  label.append(select);
+  form.append(label);
+  field('Counterexample','text');
+ }else{
+  field('Evidence text','content');
+  field('Provenance origin','origin');
+  field('Captured at','captured','datetime-local');
+  criteria.forEach(item=>field(`Claim for criterion ${item.criterion_id}`,`criterion-${item.criterion_id}`));
+ }
+ const save=element('button',isChallenge?'Store counterexample':'Store evidence');
+ const result=element('div','');
+ result.setAttribute('role','status');
+ form.append(save,result);
+ panel.append(form);
+ form.addEventListener('submit',async event=>{
+  event.preventDefault();
+  const data=new FormData(form);
+  save.disabled=true;
+  result.textContent='Storing immutable record…';
+  try{
+   const caseId=record.case_id;
+   const saved=isChallenge ? await storeCounterexample(post,caseId,data) :
+    await storeEvidence({post,caseId,manifest:buildEvidenceManifest(data,record)});
+   result.textContent=`Stored off-chain: ${saved.digest}`;
+   const config=await request('config');
+   const enabled=Boolean(wallet && config.network==='testnet' && config.external_wallet_signing_authorized===true);
+   const eligible=isChallenge ? challengeEligibility(record,account,enabled) :
+    enabled && account===record.terms?.beneficiary_id && record.state==='Funded';
+   if(!eligible){
+    result.append(element('p','On-chain submission requires an eligible case, connected wallet and server signing authorisation.'));
+    return;
+   }
+   const submit=element('button',isChallenge?'Sign challenge':'Sign evidence submission');
+   submit.type='button';
+   result.append(submit);
+   submit.addEventListener('click',async()=>{
+    submit.disabled=true;
+    try{
+     const receipt=isChallenge ? await fileChallenge(signWorkspaceCall,caseId,Number(data.get('criterion_id')),saved.digest) :
+      await signWorkspaceCall('submit_evidence',evidenceSubmissionArgs(caseId,record,saved.digest),'1');
+     result.textContent=`Operation status: ${receipt.operation?.status ?? 'Unavailable'}. Transaction: ${receipt.transaction_hash ?? 'Unavailable'}`;
+    }catch(error){result.append(element('p',error.message));}
+   });
+  }catch(error){result.textContent=error.message;}
+  finally{save.disabled=false;}
+ });
+}
 function settlementTools(panel) {
  if (!token) {
   panel.append(element('p','Connect your wallet to inspect receipts or recover an operation.'));
@@ -277,6 +358,11 @@ async function updateNavigation() {
    const states = route === 'challenges' ? ['Provisional','Challenged','ChallengeReview'] :
     route === 'settlement' ? ['Resolved','Unresolved','SettlementPending','TransferFailed','Settled'] : null;
    show(records.filter(record=>!states||states.includes(record.state)).map(record=>`${record.case_id} · ${readable(record.state)}`));
+   if(route==='challenges'&&generation===routeRequest){
+    const selected=records.find(record=>record.case_id===byId('case').value);
+    if(selected)caseArtifactTools(panel,selected,true);
+    else panel.append(element('p','Select a case on the Overview to store a counterexample.'));
+   }
    if(route==='settlement'&&generation===routeRequest)settlementTools(panel);
   } else if (route === 'activity') {
    const activity = await view('get_events',{case_id:null,after_seq:'0',limit:50});
@@ -293,6 +379,10 @@ async function updateNavigation() {
    if (!caseId) return show(['Select a case on the Overview to inspect its evidence.']);
    const [, records] = await readProtectedCaseRecords(request,caseId);
    show((records?.items ?? []).map(item=>`${item.kind ?? 'Manifest'} · ${item.digest ?? 'Digest unavailable'}`));
+   if(route==='evidence'&&generation===routeRequest){
+    const selected=cases.find(record=>record.case_id===caseId);
+    if(selected)caseArtifactTools(panel,selected,false);
+   }
   } else show(['Choose a destination from the navigation.']);
  } catch {
   show(['The records for this destination are unavailable.']);
@@ -308,7 +398,9 @@ byId('wallet').addEventListener('click', async () => {
  try {
   const config = await request('config');
   const sdk = await import('./wallet.bundle.js');
-  const {session} = await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,...sdk});
+  const connected = await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,...sdk});
+  const {session} = connected;
+  wallet = connected.wallet;
   token = session.token;
   account = session.account;
   sessionStorage.setItem('contra-session',token);
