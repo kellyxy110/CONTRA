@@ -2,7 +2,7 @@
 
 ## 2026-11-12 | Backend completion audit
 
-Implemented case-bound Worker provider execution and cryptographically bound reviewer consent without changing the contract or frontend. The new tests proved Meta and Modal jobs remain non-binding, idempotent and budget bounded, while ambiguous outcomes lock reservations. Read-only RPC showed the deployed contract registry and case list are both empty. The creator account has one FullAccess key but no verified browser-wallet custody path. Repository tests passed 158 of 158 and Cloudflare tests passed 19 of 19.
+Implemented case-bound Worker provider execution and cryptographically bound reviewer consent without changing the contract or frontend. The new tests proved Meta and Modal jobs remain non-binding, idempotent and budget bounded, while ambiguous outcomes lock reservations. Read-only RPC showed the deployed contract registry and case list are both empty. The creator account has one FullAccess key but no verified browser-wallet custody path. Repository tests passed 158 of 158 and Cloudflare tests passed 19 of 19. PR 96 passed Core run 43304448483, Security run 43304448521 and comprehensive Integration run 43304448641, then merged as `04cfc7fcfe9d4926220cd856812f6eeec2afc02d`. Worker version `fe9529e3-3f7c-4fec-b6c3-4f868555f2f5` is deployed.
 
 ## 2026-11-12 | Provider and wallet activation
 
