@@ -104,13 +104,12 @@ async function refresh(){
  }catch(error){text('network-pill','Chain unavailable');$('dialog-connect').disabled=true;$('runtime-notice').hidden=false;$('runtime-notice').textContent='The NEAR chain is unavailable. Case data and transaction results are not simulated.';walletState('unavailable',`Wallet sign-in is unavailable until the chain is ready. ${error.message}`);}finally{await loadDashboard()}
 }
 async function view(method,args){return (await request('view',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({method,args,envelope:true})})).value;}
-async function signCall(method,args,deposit='0'){
+async function signCall(method,args,deposit='0',preparedOperation=null){
  if(!token||!account)throw Error('Connect and authenticate a Testnet wallet before signing.');
  if(!wallet)throw Error('Reconnect the signing wallet. Session recovery alone cannot sign transactions.');
  const config=await request('config');
  if(config.network!=='testnet'||!config.external_wallet_signing_authorized)throw Error('Live Testnet wallet signing is disabled by the server authority gate.');
- const prepared=await prepareWalletTransaction({token,accountId:account,call:{method,args,deposit,receiverId:config.contract_account}});
- const operation=prepared.operation;
+ const operation=preparedOperation||(await prepareWalletTransaction({token,accountId:account,call:{method,args,deposit,receiverId:config.contract_account}})).operation;
  try{
   const sent=await sendPreparedWalletTransaction(wallet,{token,operation});
   const reconciled=await reconcileWalletTransaction({token,accountId:account,operationId:operation.operation_id});
@@ -219,7 +218,10 @@ $('mobile-menu').querySelector('.more-links').replaceWith(mobileNavigation);
 $('mobile-menu').querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>$('mobile-menu').close()));
 try{$('case-id').value=localStorage.getItem('contra.case-id')||''}catch{}
 setTheme(document.documentElement.dataset.theme||'system');updateWalletUi();setUnavailable();recoverSession().then(refresh);
-mountWorkspaces({request,view,loadCase,signCall,canSign:()=>runtimeConfig?.network==='testnet'&&runtimeConfig?.external_wallet_signing_authorized===true&&Boolean(wallet&&token),getAccount:()=>account,getCaseId:()=>$('case-id').value.trim(),showNotice:message=>{$('runtime-notice').hidden=false;$('runtime-notice').textContent=message;}});
+mountWorkspaces({request,view,loadCase,signCall,prepareCase:async args=>{
+ const config=await request('config');
+ return (await prepareWalletTransaction({token,accountId:account,call:{method:'create_case',args,deposit:'1',receiverId:config.contract_account}})).operation;
+},canSign:()=>runtimeConfig?.network==='testnet'&&runtimeConfig?.external_wallet_signing_authorized===true&&Boolean(wallet&&token),getAccount:()=>account,getCaseId:()=>$('case-id').value.trim(),showNotice:message=>{$('runtime-notice').hidden=false;$('runtime-notice').textContent=message;}});
 
 // Persist the desktop navigation preference independently from wallet state.
 const sidebarToggle=document.getElementById("sidebar-collapse");
