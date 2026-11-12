@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-12 | Live provider and wallet activation evidence
+
+- Verified Meta account access and `muse-spark-1.3`, then reconciled one 49-token response at USD 0.000110.
+- Verified Modal Proxy Auth and deterministic proposal verification with zero model tokens.
+- Verified Baseten authentication while preserving its disabled state because no exact model was returned.
+- Repeated creator and beneficiary Testnet NEP-413 signing and recovery without broadcasting a transaction.
+
 ## 2026-11-12 | Bounded Meta live-smoke path
 
 - Bound the smallest Meta authentication smoke call to the durable provider ledger, a USD 0.01 reservation and the existing USD 3 cumulative ceiling.

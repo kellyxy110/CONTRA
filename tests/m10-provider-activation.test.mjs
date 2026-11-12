@@ -26,3 +26,8 @@ test('Modal requires both proxy-token components and an allowlisted function',()
  assert.equal(JSON.stringify(report).includes('modal-key-present'),false);
  assert.equal(JSON.stringify(report).includes('modal-secret-present'),false);
 });
+
+test('Modal accepts the protected root-path function URL',()=>{
+ const report=cloudflareProviderReadiness({MODAL_PROXY_KEY:'key',MODAL_PROXY_SECRET:'secret',MODAL_FUNCTION_ENDPOINT:'https://contra-verifier-verify.modal.run/',MODAL_FUNCTION_ID:'app-id',MODAL_MODEL_VERIFIED:'1',MODAL_ACCOUNT_VERIFIED:'1',MODAL_CREDITS_VERIFIED:'1',MODAL_PRICING_VERIFIED:'1',MODAL_BILLING_LIMIT_VERIFIED:'1',MODAL_SPEND_AUTHORISED:'1',MODAL_LIVE_ENABLED:'true'});
+ assert.equal(report.modal.gates.endpoint_allowed,true);
+});

@@ -17,3 +17,5 @@ An authenticated probe is readiness evidence, not reviewer authority, a contract
 The Modal deployment test also requires `verification_core.py` to be copied into the function image. This prevents a protected endpoint from deploying successfully but failing during container import.
 
 The separately authenticated `POST /api/operator/provider-smoke` path is limited to the verified Meta model. Before its single bounded request it creates a USD 0.01 maximum durable reservation under the USD 3 cumulative cap. A provider permits only one active reservation at a time. Explicit success reconciles reported tokens at the verified per-token rates; timeout, malformed output or uncertain status becomes `UNKNOWN` and retains the reservation.
+
+The accepted live activation evidence is one 49-token Meta response reconciled at 110 microUSD and one Modal deterministic verification reporting zero model tokens. Baseten authentication succeeded, but no exact account-visible model was returned, so its live execution remains disabled.

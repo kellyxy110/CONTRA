@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-12-PROVIDER-WALLET-ACTIVATED
+
+Meta account authentication and `muse-spark-1.3` access are verified. One ledger-bound live smoke used 33 prompt and 16 completion tokens, recorded response digest `1b46fbeda2e729be9d1c0d6663763f9869fa37aeeef83a729d70e702fc544ad0` and reconciled 110 microUSD. Modal Proxy Auth returned a valid zero-token deterministic verification with response digest `82bd618c07f911ba6e781b7258ee95f64d9312cd8daf569c133d0db426c0ee6e`. Baseten authentication succeeded, but the account catalogue exposed no selectable model, so no Baseten inference ran. Creator and beneficiary both repeated genuine keychain-backed NEP-413 signing, recovery, renewal, replay rejection and disconnect with zero broadcasts. AC31 and AC32 remain DEFERRED for six independent reviewers and their genuine consent.
+
 ## Current checkpoint | CONTRA-2026-11-12-ACTIVATION-IN-PROGRESS
 
 The owner authorised bounded provider testing at USD 3 Meta, USD 3 Baseten and USD 5 Modal, and bounded NEAR Testnet execution at 1 NEAR per transaction and 2 NEAR total across both acceptance journeys. These approvals are active and must not be requested again. Meta and Baseten credentials are installed in the Cloudflare Worker. A dedicated Modal Proxy Auth credential is now installed separately from deployment credentials, and the workspace has a USD 5 spend limit. Authenticated model, account, pricing and residual billing checks are in progress before paid calls. Six independent reviewer operators remain the sole planned external validation phase, so reviewer-dependent funded journeys remain deferred.
