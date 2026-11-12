@@ -7,7 +7,14 @@ const routes = {overview:'Overview',cases:'Cases',evidence:'Evidence',lab:'Evalu
 let token = sessionStorage.getItem('contra-session');
 const {request, view} = createApiClient(() => token);
 let cases = [], caseRequest = 0;
-const colours = ['#285845','#5b8d77','#93afa0','#c4bc9c','#ba655b','#667e76'];
+const chartTones = {
+ Challenged:'challenged', ChallengeReview:'challenged', Settled:'verified',
+ ReviewCommit:'review', ReviewReveal:'review', Committed:'committed',
+ Revealed:'verified', Pending:'pending', SettlementPending:'transaction-pending',
+};
+const tone = label => chartTones[label] ?? 'neutral';
+const colour = label => `var(--state-${tone(label)})`;
+const readable = label => label.replace(/([a-z])([A-Z])/g, '$1 $2');
 
 function element(tag, content) {
  const node = document.createElement(tag);
@@ -26,20 +33,22 @@ function chart(id, entries, unit) {
  const ring = element('div', '');
  ring.className = 'donut';
  ring.setAttribute('aria-hidden', 'true');
- ring.append(element('strong', String(total)));
+ const centre = element('div', '');
+ centre.append(element('strong', String(total)), element('small', unit));
+ ring.append(centre);
  let previous = 0;
- ring.style.background = 'conic-gradient(' + entries.map(([, count], i) => {
+ ring.style.background = 'conic-gradient(' + entries.map(([label, count]) => {
   const start = previous;
   previous += count / total * 100;
-  return `${colours[i % colours.length]} ${start}% ${previous}%`;
+  return `${colour(label)} ${start}% ${previous}%`;
  }).join(',') + ')';
  const legend = element('ul', '');
  legend.setAttribute('aria-label', `${total} ${unit}`);
- entries.forEach(([name, count], i) => {
+ entries.forEach(([name, count]) => {
   const item = element('li', '');
   const dot = element('i', '');
-  dot.style.background = colours[i % colours.length];
-  item.append(dot, element('span', name), element('b', new Intl.NumberFormat('en-GB', {style:'percent', maximumFractionDigits:1}).format(count / total)));
+  dot.style.background = colour(name);
+  item.append(dot, element('span', readable(name)), element('b', new Intl.NumberFormat('en-GB', {style:'percent', maximumFractionDigits:1}).format(count / total)));
   legend.append(item);
  });
  target.append(ring, legend);
@@ -75,7 +84,12 @@ async function selectCase() {
  const record = cases.find(item => item.case_id === id);
  const steps = ['Draft','Funded','Submitted','ReviewCommit','ReviewReveal','Provisional','Challenged','ChallengeReview','Resolved','Unresolved','SettlementPending','TransferFailed','Settled'];
  const step = record ? steps.indexOf(record.state) : -1;
- [...byId('timeline').children].forEach((item, i) => item.toggleAttribute('data-reached', step >= [0,2,3,8][i]));
+ const milestones = [0,2,3,8];
+ const current = milestones.findLastIndex(value => step >= value);
+ [...byId('timeline').children].forEach((item, i) => {
+  item.dataset.stage = i < current || (i === current && record?.state === 'Settled') ? 'complete' :
+   i === current ? (['Challenged','ChallengeReview'].includes(record.state) ? 'challenged' : 'current') : 'pending';
+ });
  chart('review-chart', [], 'reviewers');
  table('evidence', [], 4, id ? 'Loading protected evidence…' : 'Select a case to inspect evidence.');
  if (!record) return;
@@ -103,7 +117,8 @@ function renderCases() {
  filtered.forEach(item => states.set(item.state, (states.get(item.state) ?? 0) + 1));
  byId('funded').textContent = near(filtered.reduce((sum,item) => sum + BigInt(item.funded_principal_yocto ?? 0), 0n));
  byId('challenges').textContent = (states.get('Challenged') ?? 0) + (states.get('ChallengeReview') ?? 0);
- byId('payouts').textContent = `${states.get('Settled') ?? 0} cases`;
+ const settled = states.get('Settled') ?? 0;
+ byId('payouts').textContent = `${settled} ${settled === 1 ? 'case' : 'cases'}`;
  byId('active').textContent = filtered.filter(item => !['Cancelled','Settled','Resolved','Unresolved'].includes(item.state)).length;
  chart('case-chart', [...states], 'cases');
  const selector = byId('case');
@@ -129,6 +144,7 @@ byId('theme').addEventListener('change', () => {
 Object.entries(routes).forEach(([route, label]) => {
  const link = element('a', label);
  link.href = '#' + route;
+ if(route==='challenges')link.dataset.tone='challenged';
  byId('navigation').append(link);
 });
 function updateNavigation() {
