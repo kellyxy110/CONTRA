@@ -8,6 +8,11 @@ const note = message => `<p class="workspace-note">${escape(message)}</p>`;
 const error = message => `<p class="workspace-error" role="alert">${escape(message)}</p>`;
 const query = params => new URLSearchParams(params).toString();
 const caseIdValid = id => /^[0-9a-f]{64}$/i.test(id);
+const readHash = () => {
+ const hash = location.hash.slice(1);
+ try { return decodeURIComponent(hash); }
+ catch { return hash; }
+};
 const safeJson = value => escape(JSON.stringify(value,null,2));
 const list = (items,render,empty) => items?.length ? items.map(render).join('') : note(empty);
 const date = ns => {try{return new Date(Number(BigInt(ns)/1000000n)).toLocaleString();}catch{return 'Unavailable';}};
@@ -23,7 +28,7 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
  const caseInput=document.getElementById('case-id');
  const select=id=>{if(!caseIdValid(id))return;caseInput.value=id;location.hash=`#cases/${id}`;};
  const post=(path,body)=>request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
- const selected=()=>{const hash=decodeURIComponent(location.hash.slice(1));const id=hash.split('/')[1]||getCaseId();return caseIdValid(id)?id:null;};
+ const selected=()=>{const id=readHash().split('/')[1]||getCaseId();return caseIdValid(id)?id:null;};
  const requireCase=()=>selected()||null;
  const caseLink=id=>`<a href="#cases/${escape(id)}" class="case-link">${escape(id)}</a>`;
  const busy=()=>{host.innerHTML=panel('Loading',note('Reading the latest available records.'))};
@@ -38,7 +43,7 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
  async function cases(){
   const [page,config]=await Promise.all([view('list_cases',{from_index:state.casePage,limit:30}),view('get_config',{})]);
   const items=page?.items||[];
-  const mine=location.hash==='#cases/my',stateMatch=decodeURIComponent(location.hash).match(/^#cases\/state\/([A-Za-z]+)$/)?.[1];
+  const mine=readHash()==='cases/my',stateMatch=readHash().match(/^cases\/state\/([A-Za-z]+)$/)?.[1];
   const filtered=items.filter(c=>(!mine||getAccount()&&[c.creator_id,c.terms?.beneficiary_id].includes(getAccount()))&&(!stateMatch||c.state===stateMatch)&&[c.case_id,c.creator_id,c.terms?.beneficiary_id,c.state].some(v=>String(v||'').toLowerCase().includes(state.caseFilter.toLowerCase())));
   if(state.caseSort==='state')filtered.sort((a,b)=>String(a.state).localeCompare(String(b.state)));
   if(state.caseSort==='newest')filtered.sort((a,b)=>BigInt(a.created_at_ns)>BigInt(b.created_at_ns)?-1:1);
@@ -151,11 +156,11 @@ export function mountWorkspaces({request,view,loadCase,signCall,canSign,getAccou
   host.innerHTML=panel('Account',`${session.__error?error(session.__error):`<dl>${datum('Account',session.account)}${datum('Session expires',session.expires?new Date(session.expires).toLocaleString():null)}</dl>`}`)+panel('Runtime and safety',`<dl>${datum('Network',config.network||health.network)}${datum('Contract account',config.contract_account)}${datum('Chain status',health.chain?.status||health.chain)}${datum('Live signing',config.external_wallet_signing_authorized===true?'Authorised':'Disabled')}${datum('Hosting',config.hosting?.plan)}</dl>${note('Wallet sessions use NEP-413 message signing. Private provider credentials remain on the server.')}`);
  }
  async function render(){
-  const parts=decodeURIComponent(location.hash.slice(1)).split('/'),route=parts[0]||'overview';state.activeView=route;
+  const parts=readHash().split('/'),route=parts[0]||'overview';state.activeView=route;
   const isOverview=route==='overview';overview.hidden=!isOverview;dashboardKpis.hidden=!isOverview;dashboard.hidden=!isOverview;host.hidden=isOverview;
   document.getElementById('view-title').textContent=route[0].toUpperCase()+route.slice(1);
   document.querySelectorAll('.nav-link,.mobile-tabs a').forEach(link=>{const active=link.hash===location.hash||(!parts[1]&&(link.dataset.view||link.hash.slice(1))===route);link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current')});
-  document.querySelectorAll('.nav-group').forEach(group=>{if(group.querySelector(`a[data-view="${route}"]`))group.open=true});
+  document.querySelectorAll('.nav-group').forEach(group=>{if([...group.querySelectorAll('a[data-view]')].some(link=>link.dataset.view===route))group.open=true});
   if(isOverview){if(parts[1]==='activity')document.querySelector('.events-panel').scrollIntoView();if(parts[1]==='status')document.querySelector('.status-panel').scrollIntoView();return}
   busy();
   try{
