@@ -138,6 +138,17 @@ try {
      await page.getByText('Development fixture: COMPLETED.',{exact:false}).waitFor();
      await page.getByRole('button',{name:'Refresh evaluation jobs'}).click();
      await page.getByText('Evaluation jobs refreshed.',{exact:true}).waitFor();
+     await page.route('**/api/provider/job-result?*',route=>{
+      const url=new URL(route.request().url());
+      assert.equal(url.searchParams.get('id'),'fixture-job');
+      assert.equal(url.searchParams.get('case_id'),cases[0].case_id);
+      return route.fulfill({json:{status:'PROPOSED',binding_authority:false,output:{scenario:'fixture output'}}});
+     });
+     await page.getByRole('button',{name:'Inspect evaluation result'}).click();
+     await page.getByText('fixture output',{exact:false}).waitFor();
+     await page.route('**/api/provider/job-result?*',route=>route.fulfill({status:404,json:{error:'Evaluation job not found'}}));
+     await page.getByRole('button',{name:'Inspect evaluation result'}).click();
+     await page.getByText('Evaluation job not found',{exact:true}).waitFor();
      for(const link of await page.locator('#navigation a').all()){
       const title=await link.innerText();
       if(title==='Overview')continue;

@@ -219,7 +219,23 @@ async function evaluationTools(panel, config) {
   const list=element('ul','');
   for(const job of jobs){
    if(caseId && job.case_id!==caseId)continue;
-   list.append(element('li',`${job.provider} · ${job.status} · Response digest: ${job.response_digest ?? 'Unavailable'}`));
+   const item=element('li',`${job.provider} · ${job.status} · Response digest: ${job.response_digest ?? 'Unavailable'}`);
+   const inspect=element('button','Inspect evaluation result');
+   const result=element('div','');
+   result.setAttribute('role','status');
+   item.append(inspect,result);
+   inspect.addEventListener('click',async()=>{
+    inspect.disabled=true;
+    result.textContent='Loading evaluation result…';
+    try{
+     const detail=await request('provider/job-result?'+new URLSearchParams({case_id:job.case_id,id:job.id}));
+     result.replaceChildren(element('p',`Status: ${detail.status}. Non-binding development result.`));
+     if(detail.output!=null)result.append(element('pre',JSON.stringify(detail.output,null,2)));
+     else result.append(element('p','No persisted result is available.'));
+    }catch(error){result.textContent=error.message;}
+    finally{inspect.disabled=false;}
+   });
+   list.append(item);
   }
   history.replaceChildren(element('h3','Evaluation jobs'),list.children.length?list:element('p','No matching jobs.'));
  }

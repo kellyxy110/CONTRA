@@ -260,6 +260,7 @@ export class ContraState extends DurableObject{
  }
 
  linked(caseId,digest){return !!row(this.ctx.storage.sql.exec('SELECT digest FROM case_links WHERE case_id=? AND digest=?',caseId,digest));}
+ isProviderResult(digest){return Boolean(row(this.ctx.storage.sql.exec("SELECT digest FROM records WHERE digest=? AND kind='provider-proposal'",digest)));}
  link(caseId,digest,account,kind){this.ctx.storage.sql.exec('INSERT OR IGNORE INTO case_links(case_id,digest,account,kind,created_at) VALUES(?,?,?,?,?)',caseId,digest,account,kind,Date.now());}
  links(caseId){return this.ctx.storage.sql.exec('SELECT digest,kind FROM case_links WHERE case_id=?',caseId).toArray();}
 
@@ -289,6 +290,14 @@ export class ContraState extends DurableObject{
  }
 
  providerState(account){return {budgets:this.ctx.storage.sql.exec('SELECT * FROM provider_budgets ORDER BY provider').toArray(),jobs:this.ctx.storage.sql.exec('SELECT * FROM provider_jobs WHERE account=? ORDER BY created_at',account).toArray()};}
+
+ providerJobResult(id,account,caseId){
+  const job=row(this.ctx.storage.sql.exec('SELECT id,provider,status,response_digest FROM provider_jobs WHERE id=? AND account=? AND case_id=?',id,account,caseId));
+  if(!job)return null;
+  const record=job.response_digest&&row(this.ctx.storage.sql.exec("SELECT body FROM records WHERE digest=? AND account=? AND case_id=? AND kind='provider-proposal'",job.response_digest,account,caseId));
+  const body=record?JSON.parse(record.body):null;
+  return {...job,output:body?.binding_authority===false&&body.provider===job.provider?body.output:null,binding_authority:false};
+ }
 
  async createReviewerInvitation(input){
   const digest=hash(input?.digest,'invitation digest'),reviewer=required(input?.reviewer_id,'reviewer id'),operator=hash(input?.operator_id,'operator id'),committee=input?.committee,slot=Number(input?.slot),expires=Number(input?.expires),now=Date.now();
@@ -586,7 +595,7 @@ async function api(request,env){
  if(path==='/api/reviewer/respond'&&request.method==='POST'){
   const auth=await session(request,env),input=await body(request);if(input.reviewer_id!==auth.account)fail('Reviewer response account does not match the authenticated NEP-413 identity');return json(await store.respondReviewer(input));
  }
- if(path==='/api/artifact'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),record=await authorisedCase(adapter,caseId,auth.account),digest=hash(url.searchParams.get('digest'),'artifact digest');if(!store.linked(caseId,digest)&&!record.terms.criteria.some(item=>item.requirement_digest===digest)&&record.terms.evidence_policy_digest!==digest)fail('Artifact is not linked to this case');const value=await store.readArtifact(digest);return json({digest:value.digest,media_type:value.media_type,text:new TextDecoder().decode(value.bytes)});}
+ if(path==='/api/artifact'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),record=await authorisedCase(adapter,caseId,auth.account),digest=hash(url.searchParams.get('digest'),'artifact digest');if(await store.isProviderResult(digest))return json({error:'Evaluation job not found'},404);if(!await store.linked(caseId,digest)&&!record.terms.criteria.some(item=>item.requirement_digest===digest)&&record.terms.evidence_policy_digest!==digest)fail('Artifact is not linked to this case');const value=await store.readArtifact(digest);return json({digest:value.digest,media_type:value.media_type,text:new TextDecoder().decode(value.bytes)});}
  if(path==='/api/provider/jobs'&&request.method==='POST'){
   const auth=await session(request,env),input=await body(request);await authorisedCase(adapter,input.case_id,auth.account);
   if(input.mode!=='fixture'||env.CONTRA_PROVIDER_FIXTURES_ENABLED!=='true')return json({error:'Live and paid provider execution is disabled; deterministic fixtures are not enabled in production'},403);
@@ -594,6 +603,12 @@ async function api(request,env){
   if(job.replayed)return json(job);const record=await store.saveRecord({kind:'provider-proposal',case_id:input.case_id,account:auth.account,body:{provider:input.provider,payload_digest:payloadDigest,output:input.fixture_output,status:'AI proposed',binding_authority:false}});return json(await store.completeProviderJob({id:job.id,response_digest:record.digest,actual_micro_usd:0}),201);
  }
  if(path==='/api/provider/jobs'&&request.method==='GET'){const auth=await session(request,env);return json(await store.providerState(auth.account));}
+ if(path==='/api/provider/job-result'&&request.method==='GET'){
+  const auth=await session(request,env),caseId=hash(url.searchParams.get('case_id'),'case id');
+  await authorisedCase(adapter,caseId,auth.account);
+  const result=await store.providerJobResult(required(url.searchParams.get('id'),'job id'),auth.account,caseId);
+  return result?json(result):json({error:'Evaluation job not found'},404);
+ }
  if(path==='/api/evaluate')return json({error:'Use the authenticated provider jobs API. Live and paid execution remains disabled.'},403);
  return json({error:'API route or method is not supported by the Cloudflare runtime'},404);
 }

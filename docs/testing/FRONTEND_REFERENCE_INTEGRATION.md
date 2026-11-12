@@ -27,3 +27,5 @@ The dashboard document and stylesheets are removed while the frontend logic modu
 ## Reference dashboard visual milestone
 
 Hosted browser checks capture the dark overview at five viewport widths and the desktop light theme. The local server exposes the unavailable-chain state without fabricated records.
+
+Evaluation result inspection is account- and case-bound. Browser fixtures cover result display and denied retrieval. Durable Object tests cover cross-account and cross-case denial.
