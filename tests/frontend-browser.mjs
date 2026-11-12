@@ -77,9 +77,10 @@ try{
     recordedJobs.push(job);
     return route.fulfill({status:201,json:job});
    });
+   await page.goto('about:blank');
    await page.goto(origin+'/#lab',{waitUntil:'networkidle'});
-   await page.getByLabel('Case ID',{exact:true}).last().fill('a'.repeat(64));
-   await page.getByLabel('Provider ledger').selectOption('modal');
+   await page.locator('#evaluation-fixture input[name=case_id]').fill('a'.repeat(64));
+   await page.locator('#evaluation-fixture select[name=provider]').selectOption('modal');
    await page.getByRole('button',{name:'Run development fixture'}).click();
    await page.locator('#evaluation-result').getByText('COMPLETED',{exact:true}).waitFor();
    await page.reload({waitUntil:'networkidle'});
