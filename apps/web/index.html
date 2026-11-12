@@ -27,6 +27,8 @@
    </div>
   </header>
   <p id="status" role="status">Loading contract data…</p>
+  <section id="workspace" hidden aria-live="polite"></section>
+  <div id="overview">
   <section class="kpis" aria-label="Case metrics">
    <article><span>Total Funded</span><strong id="funded">–</strong><small>Funded principal</small></article>
    <article><span>Active Challenges</span><strong id="challenges">–</strong><small>Cases under challenge</small></article>
@@ -38,13 +40,14 @@
     <ol id="timeline"><li>Created</li><li>Evidence</li><li>Review</li><li>Resolution</li></ol>
    </article>
    <article><h2>Case Status Breakdown</h2><div id="case-chart" class="chart"></div></article>
-   <article><h2>Evidence and Provenance Summary</h2><div class="table"><table><thead><tr><th>Type</th><th>Digest</th><th>Provenance</th><th>Binding</th></tr></thead><tbody id="evidence"></tbody></table></div></article>
+   <article><h2 id="evidence-heading">Evidence and Provenance Summary</h2><div class="table evidence-table" role="region" aria-labelledby="evidence-heading" tabindex="0"><table><thead><tr><th scope="col">Type</th><th scope="col">Digest</th><th scope="col">Provenance</th><th scope="col">Binding</th></tr></thead><tbody id="evidence"></tbody></table></div></article>
    <article><h2>Reviewer-Round Overview</h2><label>Round <select id="round"><option value="0">Primary</option><option value="1">Fresh</option></select></label><div id="review-chart" class="chart"></div><a href="#reviewers">Open The Bench →</a></article>
   </section>
   <section class="bottom">
    <article><h2>Recent Activity</h2><div class="table"><table><thead><tr><th>Sequence</th><th>Case</th><th>Event</th></tr></thead><tbody id="events"></tbody></table></div></article>
    <article class="message"><strong>Evidence. Challenge. Resolution.</strong><p>Every consequential decision should withstand a challenge.</p></article>
   </section>
+  </div>
  </main>
 </body>
 </html>

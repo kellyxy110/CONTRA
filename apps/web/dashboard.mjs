@@ -193,13 +193,55 @@ for(const [id,name] of Object.entries({funded:'funded',challenges:'challenges',p
 const brandMark=document.querySelector('.brand svg').cloneNode(true);
 brandMark.classList.add('statement-mark');
 document.querySelector('.message').prepend(brandMark);
-function updateNavigation() {
+let routeRequest = 0;
+let account = null;
+async function updateNavigation() {
+ const generation = ++routeRequest;
  const route = location.hash.slice(1).split('/')[0] || 'overview';
  [...byId('navigation').children].forEach(link => {
   if (link.hash === '#' + route) link.setAttribute('aria-current','page');
   else link.removeAttribute('aria-current');
  });
- byId('status').textContent = route === 'overview' ? '' : `${routes[route] ?? 'Destination'} is pending integration in this preview.`;
+ const overview = route === 'overview' || route === 'main';
+ byId('overview').hidden = !overview;
+ const workspace = byId('workspace');
+ workspace.hidden = overview;
+ document.querySelector('h1').textContent = overview ? 'Contestation Overview' : routes[route] ?? 'Destination unavailable';
+ if (overview) return;
+ const panel = element('article', '');
+ panel.append(element('h2', routes[route] ?? 'Destination unavailable'), element('p','Loading…'));
+ workspace.replaceChildren(panel);
+ const show = entries => {
+  if (generation !== routeRequest) return;
+  const list = element('ul','');
+  entries.forEach(entry=>list.append(element('li',entry)));
+  panel.lastElementChild.replaceWith(entries.length ? list : element('p','No records available.'));
+ };
+ try {
+  if (route === 'cases' || route === 'challenges' || route === 'settlement') {
+   const records = await readPagedCases(view,{maxPages:20});
+   const states = route === 'challenges' ? ['Provisional','Challenged','ChallengeReview'] :
+    route === 'settlement' ? ['Resolved','Unresolved','SettlementPending','TransferFailed','Settled'] : null;
+   show(records.filter(record=>!states||states.includes(record.state)).map(record=>`${record.case_id} · ${readable(record.state)}`));
+  } else if (route === 'activity') {
+   const activity = await view('get_events',{case_id:null,after_seq:'0',limit:50});
+   show(activity.items.map(event=>`${event.data?.[0]?.seq ?? '?'} · ${event.event} · ${event.data?.[0]?.case_id ?? 'Global'}`));
+  } else if (route === 'reviewers') {
+   const registry = await view('list_reviewers',{from_index:'0',limit:32});
+   show(registry.items.map(reviewer=>`${reviewer.reviewer_id} · ${reviewer.confirmed?'Confirmed':reviewer.active?'Active':'Inactive'}`));
+  } else if (route === 'settings' || route === 'lab') {
+   const config = await request('config');
+   show(route === 'settings' ? [`Network: ${config.network ?? 'Unavailable'}`,`Account: ${account ?? 'Disconnected'}`,`Contract: ${config.contract_account ?? 'Unavailable'}`] :
+    ['Meta','Modal'].map(name=>`${name}: ${config.providers?.[name.toLowerCase()]?.status ?? 'Unavailable'}`));
+  } else if (route === 'evidence' || route === 'constellations') {
+   const caseId = byId('case').value;
+   if (!caseId) return show(['Select a case on the Overview to inspect its evidence.']);
+   const [, records] = await readProtectedCaseRecords(request,caseId);
+   show((records?.items ?? []).map(item=>`${item.kind ?? 'Manifest'} · ${item.digest ?? 'Digest unavailable'}`));
+  } else show(['Choose a destination from the navigation.']);
+ } catch {
+  show(['The records for this destination are unavailable.']);
+ }
 }
 addEventListener('hashchange', updateNavigation);
 byId('period').addEventListener('change', renderCases);
@@ -213,9 +255,11 @@ byId('wallet').addEventListener('click', async () => {
   const sdk = await import('./wallet.bundle.js');
   const {session} = await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,...sdk});
   token = session.token;
+  account = session.account;
   sessionStorage.setItem('contra-session',token);
   button.textContent = session.account;
   await selectCase();
+  if (!byId('workspace').hidden) void updateNavigation();
  } catch (error) {
   byId('status').textContent = error.message;
  } finally {
@@ -242,6 +286,7 @@ if (token) {
  try {
   const sdk = await import('./wallet.bundle.js');
   const session = await recoverWallet({token,...sdk});
+  account = session.account;
   byId('wallet').textContent = session.account;
  } catch {
   token = null;

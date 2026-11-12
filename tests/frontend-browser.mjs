@@ -28,6 +28,7 @@ try {
    assert.equal(await page.locator('.kpis article').count(),4);
    assert.equal(await page.locator('.kpis .line-icon').count(),4);
    assert.equal(await page.locator('#navigation a .line-icon').count(),10);
+   assert.equal(await page.locator('#navigation').evaluate(nav=>[...nav.children].every(link=>link.getBoundingClientRect().right<=nav.getBoundingClientRect().right)),true);
    if(width<=375)assert.equal(await page.locator('#navigation').evaluate(nav=>nav.scrollWidth>nav.clientWidth),false);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    for (const path of ['/workflow.css', '/tokens.css']) {
@@ -38,7 +39,7 @@ try {
    await page.reload();
    await page.waitForFunction(()=>document.documentElement.dataset.theme==='light');
    if(width===1440)await page.screenshot({path:`ci-output/contra-${name}-1440-light.png`,fullPage:true});
-   if(width===1440||width===375){
+   if([1440,768,375,320].includes(width)){
     const cases=['ReviewCommit','Challenged','Settled'].map((state,index)=>({case_id:String(index+1).repeat(64),state,created_at_ns:'1794484800000000000',funded_principal_yocto:'1000000000000000000000000'}));
     cases[0].challenge={counterexample_digest:'c'.repeat(64)};
     await page.route('**/api/availability?*',route=>route.fulfill({json:{items:{}}}));
@@ -62,12 +63,22 @@ try {
     for(const status of ['Verified binding','Pending binding','Challenged']){
      await page.locator('#evidence').getByText(status,{exact:true}).waitFor();
     }
+    assert.equal(await page.locator('.evidence-table th').evaluateAll(headers=>headers.every(header=>header.scrollHeight<=header.clientHeight)),true);
     assert.equal(await page.locator('#funded').textContent(),'3 NEAR');
     assert.equal(await page.locator('#case-chart .donut').count(),1);
     await page.locator('#status').evaluate(node=>{node.textContent='Deterministic visual fixture · no live records';});
     for(const theme of width===1440?['light','dark']:['dark']){
      await page.locator('#theme').selectOption(theme);
      await page.screenshot({path:`ci-output/contra-${name}-${width}-fixture-${theme}.png`,fullPage:true});
+    }
+    if(width===375){
+     for(const link of await page.locator('#navigation a').all()){
+      const title=await link.innerText();
+      if(title==='Overview')continue;
+      await link.click();
+      await page.getByRole('heading',{level:1,name:title,exact:true}).waitFor();
+      await page.locator('#workspace article').waitFor();
+     }
     }
    }
    await page.close();

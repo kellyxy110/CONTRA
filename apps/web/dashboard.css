@@ -66,3 +66,15 @@ nav a[data-tone=challenged] .line-icon{color:var(--action-challenge)}
 @media(max-width:900px){body{grid-template-columns:155px minmax(0,1fr)}main{padding:22px 16px}.heading{flex-wrap:wrap}.chart{grid-template-columns:minmax(70px,105px) 1fr}}
 @media(max-width:660px){body{display:block}aside{padding:12px;gap:10px}nav{display:flex;overflow:auto}nav a{white-space:nowrap}.rail-footer{display:none}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.analysis,.bottom{grid-template-columns:minmax(0,1fr);grid-template-rows:auto}.heading{gap:10px}}
 @media(max-width:660px){nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}nav a{white-space:normal;min-height:40px}}
+nav{grid-template-columns:minmax(0,1fr)}
+nav a{min-width:0}
+#workspace article{display:grid;gap:12px}
+#workspace ul{padding-inline-start:20px;overflow-wrap:anywhere}
+#workspace a{text-decoration:underline}
+@media(max-width:900px){
+ nav a{padding-inline:8px;overflow-wrap:anywhere}
+ .evidence-table table{min-width:340px;table-layout:auto}
+ .evidence-table th{white-space:nowrap}
+ .evidence-table td{overflow-wrap:anywhere;max-width:150px}
+}
+@media(max-width:660px){nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
