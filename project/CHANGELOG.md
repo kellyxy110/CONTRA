@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-12 | Bounded Meta live-smoke path
+
+- Bound the smallest Meta authentication smoke call to the durable provider ledger, a USD 0.01 reservation and the existing USD 3 cumulative ceiling.
+- Added a one-active-call concurrency limit and retained reservations whenever an external outcome is uncertain.
+- Kept returned content private and exposed only model, usage, cost and immutable response-digest evidence.
+
 ## 2026-11-12 | Modal package import correction
 
 - Traced the authenticated Modal timeout to a container startup failure caused by a missing `verification_core.py` module.
