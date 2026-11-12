@@ -15,3 +15,5 @@ The Cloudflare suite verifies that `POST /api/operator/provider-probe` returns H
 An authenticated probe is readiness evidence, not reviewer authority, a contract verdict or permission to settle. Any ambiguous call remains charged against the provider's durable reservation until billing is reconciled.
 
 The Modal deployment test also requires `verification_core.py` to be copied into the function image. This prevents a protected endpoint from deploying successfully but failing during container import.
+
+The separately authenticated `POST /api/operator/provider-smoke` path is limited to the verified Meta model. Before its single bounded request it creates a USD 0.01 maximum durable reservation under the USD 3 cumulative cap. A provider permits only one active reservation at a time. Explicit success reconciles reported tokens at the verified per-token rates; timeout, malformed output or uncertain status becomes `UNKNOWN` and retains the reservation.
