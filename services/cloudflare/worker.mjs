@@ -483,7 +483,7 @@ async function api(request,env){
  }
  if(path==='/api/config'){
   const config=await adapter.view('get_config',{}),eligibility=assessCreatorEligibility(config);
-  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
+  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,provider_fixtures_enabled:env.CONTRA_PROVIDER_FIXTURES_ENABLED==='true',providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
  if(path==='/api/operator/provider-probe'&&request.method==='POST')return providerProbe(request,env);
  if(path==='/api/operator/provider-smoke'&&request.method==='POST')return providerSmoke(request,env,store);
