@@ -19,3 +19,7 @@ The attached dashboard composition guides the CONTRA overview: a dark teal navig
 The Cloudflare production signing handoff remains disabled pending exact bounded server authority. The frontend can prepare, sign and reconcile the supported methods when the server gate is legitimately enabled, and otherwise displays the specific blocked state. Provider live execution remains subject to verified credentials, credits and enforceable budgets. Genuine independent reviewer evidence and funded Testnet journeys remain separate acceptance requirements.
 
 Visual fidelity and functional completeness require separate rendered and live journey evidence. Passing fixture tests and route smoke tests alone do not establish either release gate.
+
+## Overview activity browser coverage
+
+The hosted Chromium and Firefox suite intercepts the contract event read and verifies that an overview refresh renders a fixture event alongside the case distribution. The live acceptance check requires finalised contract events from the deployed API.
