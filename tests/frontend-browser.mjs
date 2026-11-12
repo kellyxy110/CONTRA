@@ -155,6 +155,15 @@ try {
       await link.click();
       await page.getByRole('heading',{level:1,name:title,exact:true}).waitFor();
       await page.locator('#workspace article').waitFor();
+      if(title==='Constellations'){
+       const radar=page.getByRole('img',{name:/Eight-axis evidence/});
+       await radar.waitFor();
+       assert.equal(await radar.locator('line').count(),8);
+       await page.getByLabel('Comparison case').selectOption(cases[1].case_id);
+       await page.getByRole('heading',{name:`Comparison · ${cases[1].case_id}`,exact:true}).waitFor();
+       await page.getByLabel('Primary case').selectOption('');
+       await page.getByText('Select a case to compare evidence coverage.',{exact:true}).waitFor();
+      }
      }
     }
    }

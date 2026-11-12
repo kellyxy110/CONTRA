@@ -5,7 +5,7 @@ import {buildEvidenceManifest, storeEvidence, evidenceSubmissionArgs} from './ev
 import {storeCounterexample, challengeEligibility, fileChallenge} from './challenge-operations.mjs';
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {submitDevelopmentFixture} from './evaluation-operations.mjs';
-import {coverage} from './coverage.mjs';
+import {mountConstellations} from './constellations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 
 const byId = id => document.getElementById(id);
@@ -534,15 +534,15 @@ async function updateNavigation() {
    show(route === 'settings' ? [`Network: ${config.network ?? 'Unavailable'}`,`Account: ${account ?? 'Disconnected'}`,`Contract: ${config.contract_account ?? 'Unavailable'}`] :
     ['Meta','Modal'].map(name=>`${name}: ${config.providers?.[name.toLowerCase()]?.status ?? 'Unavailable'}`));
    if(route==='lab'&&generation===routeRequest)await evaluationTools(panel,config);
-  } else if (route === 'evidence' || route === 'constellations') {
+  } else if (route === 'constellations') {
+   const records=cases.length?cases:await readPagedCases(view,{maxPages:20});
+   if(generation!==routeRequest)return;
+   panel.lastElementChild.remove();
+   mountConstellations(panel,{cases:records,selectedCase:byId('case').value,request,view});
+  } else if (route === 'evidence') {
    const caseId = byId('case').value;
    if (!caseId) return show(['Select a case on the Overview to inspect its evidence.']);
-   const [availability, records] = await readProtectedCaseRecords(request,caseId);
-   if(route==='constellations'){
-    const record=cases.find(item=>item.case_id===caseId);
-    show(coverage(record,'Overall',availability).map(metric=>`${metric.label}: ${metric.status==='measured'?`${metric.numerator}/${metric.denominator}`:metric.status}. ${metric.source}`));
-    return;
-   }
+   const [, records] = await readProtectedCaseRecords(request,caseId);
    show((records?.items ?? []).map(item=>`${item.kind ?? 'Manifest'} · ${item.digest ?? 'Digest unavailable'}`));
    if(route==='evidence'&&generation===routeRequest){
     const selected=cases.find(record=>record.case_id===caseId);
