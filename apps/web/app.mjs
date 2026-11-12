@@ -60,10 +60,10 @@ function renderRadar(metrics=blankMetrics()){
  document.querySelectorAll('[data-metric]').forEach(button=>button.addEventListener('click',()=>{const metric=metrics[Number(button.dataset.metric)];document.querySelectorAll('[data-metric]').forEach(node=>node.classList.remove('active'));button.classList.add('active');$('readiness-readout').textContent=`${metric.name}: ${activeSet.has(metric.name)?chartValue(metric):'N/A in this lens'}. ${metric.status==='measured'?`${metric.numerator} of ${metric.denominator} records.`:''} Source: ${metric.source||'unavailable'}. ${metric.reason||''}`;}));
 }
 function renderLifecycle(phase='UNKNOWN'){
- const labels=['Create','Accept','Fund','Evidence','Review','Challenge','Finalise','Settle'];
- const stages={Draft:0,Funded:2,Submitted:3,ReviewCommit:4,ReviewReveal:4,Provisional:5,Challenged:5,ChallengeReview:5,Unresolved:6,Resolved:6,SettlementPending:7,TransferFailed:7,Settled:8};
- const current=stages[phase]??0;
- $('lifecycle').innerHTML=labels.map((label,index)=>`<span data-label="${label}" class="${index<current?'complete':index===current?'current':''} ${label==='Challenge'?'challenge':''}"></span>`).join('');
+ const labels=['Created','Evidence','Committee','Resolution'];
+ const stages={Draft:0,Funded:0,Submitted:1,ReviewCommit:2,ReviewReveal:2,Provisional:2,Challenged:2,ChallengeReview:2,Unresolved:3,Resolved:3,SettlementPending:3,TransferFailed:3,Settled:4};
+ const current=stages[phase];
+ $('lifecycle').innerHTML=labels.map((label,index)=>`<span data-label="${label}" class="${current===undefined?'unknown':index<current?'complete':index===current?'current':'pending'}"></span>`).join('');
  text('lifecycle-state',phase.replaceAll('_',' '));
 }
 function setUnavailable(){
