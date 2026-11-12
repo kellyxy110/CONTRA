@@ -1,6 +1,6 @@
 # Provider credential setup
 
-All three live providers are currently `CREDENTIALS_PENDING`. Fixture transports prove schema, citation, budget and trust-boundary behaviour only. They are not live inference evidence.
+Meta and Baseten credentials are installed in the Cloudflare Worker, but both providers remain independently gated. The Modal verifier is deployed, but its dedicated Proxy Auth token is not installed. Fixture transports prove schema, citation, budget and trust-boundary behaviour only. They are not live inference evidence.
 
 ## Common activation gates
 
@@ -31,17 +31,17 @@ The Model API endpoint is `https://inference.baseten.co/v1/chat/completions`. Ke
 
 Modal requires a deployed protected Web Function before CONTRA has an endpoint to call. `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET` are deployment-tool credentials, not Web Function proxy credentials. Freeze the function code and deployment identity, set `requires_proxy_auth=True`, then use a separately scoped Proxy Token through `MODAL_PROXY_KEY` and `MODAL_PROXY_SECRET`. The Starter plan currently includes USD 30 monthly compute credit, but credits do not cover every product and are not authority to spend. Configure a Workspace budget and a USD 5 spend limit before any call. The programme ceiling is USD 5.
 
-No Modal function or model is currently claimed.
+The protected deterministic verifier is deployed as Modal app `ap-2wMup9xpnApV3ehbwwjKrK` at `https://boredom407--contra-verifier-verify.us-east.modal.run`. An unauthenticated POST returned HTTP 401 on 11 November 2026. No authenticated verification has completed because a dedicated Proxy Auth token is not yet installed.
 
-The reviewed function source is `services/modal/app.py`; its deterministic validation core is `services/modal/verification_core.py`. It accepts only `CONTRA_PROVIDER_VERIFICATION_REQUEST_V1`, recomputes the immutable proposal digest, checks exact case, terms and round identity, restricts every nested citation to the supplied evidence set and returns a non-binding `CONTRA_PROVIDER_VERIFICATION_V1` result. It performs no model inference and reports zero tokens.
+The reviewed function source is `services/modal/app.py`; its deterministic validation core is `services/modal/verification_core.py`. The Modal image pins Python 3.13 and `fastapi[standard]` 0.121.1 because Modal no longer installs FastAPI automatically for `fastapi_endpoint`. It accepts only `CONTRA_PROVIDER_VERIFICATION_REQUEST_V1`, recomputes the immutable proposal digest, checks exact case, terms and round identity, restricts every nested citation to the supplied evidence set and returns a non-binding `CONTRA_PROVIDER_VERIFICATION_V1` result. It performs no model inference and reports zero tokens.
 
-Deployment remains an external gate. After the source PR is green and the owner confirms the Modal USD 5 Workspace budget and spend limit, deploy with:
+The deployed source was produced with:
 
 ```sh
 modal deploy services/modal/app.py --name contra-verifier --profile boredom407
 ```
 
-The endpoint must return HTTP 401 without Proxy Token headers before its URL is accepted. Do not install its Proxy Token in Cloudflare until that negative test passes.
+The required HTTP 401 negative test passes. The next step is to create a dedicated Proxy Auth token and install only that token pair in Cloudflare. Do not install the local `ak-` and `as-` deployment credentials in the Worker.
 
 ## Exact owner inputs
 

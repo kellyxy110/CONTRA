@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-11 | Protected Modal verifier deployed
+
+- Deployed the exact reviewed deterministic verifier from source commit `1a1e06ea91c79641b87dfc8a182c39dd7f49cb8a` as Modal app `ap-2wMup9xpnApV3ehbwwjKrK`.
+- Verified the endpoint rejects an unauthenticated POST with HTTP 401.
+- Confirmed the current Modal billing summary reports USD 0.00 billed cost.
+- Preserved the separation between local Modal deployment credentials and the dedicated Proxy Auth token required by the Cloudflare Worker.
+- Recorded that Meta and Baseten Worker secrets are installed but remain gated, while Modal Proxy Auth remains pending.
+- Kept live provider execution, financial signing and paid inference disabled.
+
 ## 2026-11-11 | M10.3 live validation preparation
 
 - Revalidated Meta, Baseten and Modal credential, pricing, model and billing-control requirements against current official documentation.
@@ -479,4 +488,5 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Added five Python regressions and two Node integration checks, bringing the repository suite to 156 passing tests.
 - Passed 14 Cloudflare tests, Worker dry run, documentation links and Security policy.
 - Did not deploy the Modal function, install its Proxy Token in Cloudflare, call a provider or incur spending.
+- The first deployment preflight failed safely before resource creation because current Modal requires FastAPI in the function image. The corrective image pins Python 3.13 and `fastapi[standard]` 0.121.1.
 

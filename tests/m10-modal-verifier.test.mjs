@@ -12,6 +12,8 @@ test('Modal verifier passes its pure deterministic regression suite',()=>{
 
 test('Modal endpoint is explicitly protected by proxy authentication',async()=>{
  const source=await import('node:fs/promises').then(fs=>fs.readFile('services/modal/app.py','utf8'));
+ assert.match(source,/Image\.debian_slim\(python_version="3\.13"\)\.pip_install\("fastapi\[standard\]==0\.121\.1"\)/);
+ assert.match(source,/@app\.function\(image=image, timeout=30\)/);
  assert.match(source,/fastapi_endpoint\(method="POST", requires_proxy_auth=True\)/);
  assert.doesNotMatch(source,/unauthenticated\s*=\s*True/);
 });
