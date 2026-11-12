@@ -23,3 +23,7 @@ Visual fidelity and functional completeness require separate rendered and live j
 ## Presentation removal
 
 The dashboard document and stylesheets are removed while the frontend logic modules remain available for the next implementation. The browser suite checks the holding page and removed asset responses. The Pages deployment must be verified after a future release to confirm cache behavior.
+
+## Reference dashboard visual milestone
+
+Hosted browser checks capture the dark overview at five viewport widths and the desktop light theme. The local server exposes the unavailable-chain state without fabricated records.

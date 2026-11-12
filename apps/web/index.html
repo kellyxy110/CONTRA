@@ -1,2 +1,50 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CONTRA</title></head><body><main><h1>CONTRA</h1><p>The interface is being updated.</p></main></body></html>
+<html lang="en-GB" data-theme="dark">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Contestation Overview | CONTRA</title>
+ <link rel="stylesheet" href="/dashboard.css">
+ <script type="module" src="/dashboard.mjs"></script>
+</head>
+<body>
+ <a class="skip" href="#main">Skip to content</a>
+ <aside>
+  <a class="brand" href="#overview" aria-label="CONTRA overview">
+   <svg aria-hidden="true" width="36" height="36" viewBox="0 0 64 64"><g fill="none" stroke-width="8"><path d="M24.48 52.67 A22 22 0 0 1 24.48 11.33" transform="translate(0 -3)" stroke="#00EC97"/><path d="M39.52 11.33 A22 22 0 0 1 39.52 52.67" transform="translate(0 3)" stroke="#FF8678"/></g><path d="M32 26.5 L37.5 32 L32 37.5 L26.5 32 Z" fill="#F5F7F5"/></svg>
+   <span>CONTRA</span>
+  </a>
+  <nav aria-label="Primary navigation" id="navigation"></nav>
+  <p class="rail-footer">Contestation on NEAR</p>
+ </aside>
+ <main id="main">
+  <header class="heading">
+   <div><h1>Contestation Overview</h1><p>Track case activity and contestation outcomes on NEAR.</p></div>
+   <div class="toolbar">
+    <label>Case period <select id="period"><option value="0">All time</option><option value="30">Last 30 days</option><option value="7">Last 7 days</option></select></label>
+    <label>Theme <select id="theme"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></label>
+    <button id="wallet">Connect wallet</button>
+   </div>
+  </header>
+  <p id="status" role="status">Loading contract data…</p>
+  <section class="kpis" aria-label="Case metrics">
+   <article><span>Total Funded</span><strong id="funded">–</strong><small>Funded principal</small></article>
+   <article><span>Active Challenges</span><strong id="challenges">–</strong><small>Cases under challenge</small></article>
+   <article><span>Settled Payouts</span><strong id="payouts">–</strong><small>Completed payouts</small></article>
+   <article><span>Active Cases</span><strong id="active">–</strong><small>Open contestations</small></article>
+  </section>
+  <section class="analysis" aria-label="Case analysis">
+   <article><h2>Contestation Timeline</h2><label>Case <select id="case"><option value="">Select a case</option></select></label>
+    <ol id="timeline"><li>Created</li><li>Evidence</li><li>Review</li><li>Resolution</li></ol>
+   </article>
+   <article><h2>Case Status Breakdown</h2><div id="case-chart" class="chart"></div></article>
+   <article><h2>Evidence and Provenance Summary</h2><div class="table"><table><thead><tr><th>Type</th><th>Digest</th><th>Provenance</th><th>Binding</th></tr></thead><tbody id="evidence"></tbody></table></div></article>
+   <article><h2>Reviewer-Round Overview</h2><label>Round <select id="round"><option value="0">Primary</option><option value="1">Fresh</option></select></label><div id="review-chart" class="chart"></div><a href="#reviewers">Open The Bench →</a></article>
+  </section>
+  <section class="bottom">
+   <article><h2>Recent Activity</h2><div class="table"><table><thead><tr><th>Sequence</th><th>Case</th><th>Event</th></tr></thead><tbody id="events"></tbody></table></div></article>
+   <article class="message"><strong>Evidence. Challenge. Resolution.</strong><p>Every consequential decision should withstand a challenge.</p></article>
+  </section>
+ </main>
+</body>
+</html>
