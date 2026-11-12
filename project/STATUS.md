@@ -2,7 +2,7 @@
 
 ## Current checkpoint | CONTRA-2026-11-12-BACKEND-COMPLETION
 
-Cloudflare now has a case-bound Meta evaluation and Modal verification path with strict case, round, terms, evidence, criteria, proposal-digest, idempotency and budget binding. Live calls remain fail closed until every provider readiness flag is true. Reviewer consent now requires a one-time NEP-413 control challenge bound to the invitation, operator and exact disclosure digest. Read-only Testnet observations at final blocks 277394524 and 277394531 show zero registered reviewers and zero cases. The allowlisted creator has one FullAccess key, but browser control of that key is not established. No transaction or provider call occurred in this checkpoint.
+Cloudflare now has a case-bound Meta evaluation and Modal verification path with strict case, round, terms, evidence, criteria, proposal-digest, idempotency and budget binding. Live calls remain fail closed until every provider readiness flag is true. Reviewer consent now requires a one-time NEP-413 control challenge bound to the invitation, operator and exact disclosure digest. Read-only Testnet observations at final blocks 277394524 and 277394531 show zero registered reviewers and zero cases. The allowlisted creator has one FullAccess key, but browser control of that key is not established. PR 96 merged to `main` as `04cfc7fcfe9d4926220cd856812f6eeec2afc02d` after Core, Security and comprehensive Integration passed. Worker version `fe9529e3-3f7c-4fec-b6c3-4f868555f2f5` is live and reports ready with signing, fixtures and both provider live gates disabled. No transaction or provider call occurred in this checkpoint.
 
 ## Current checkpoint | CONTRA-2026-11-12-PROVIDER-WALLET-ACTIVATED
 
