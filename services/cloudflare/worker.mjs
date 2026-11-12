@@ -3,7 +3,7 @@ import {rpcAdapter} from '../chain/rpc.mjs';
 import {validateWalletCall,verifyReceiptIntent,receiptState,walletSigningRequest} from '../wallet/lifecycle.mjs';
 import {assessCreatorEligibility} from '../deployment/creator-eligibility.mjs';
 import {cloudflareProviderReadiness} from './provider-readiness.mjs';
-import {providerRequest,providerOutput,validateFinding,validateVerification} from '../evaluators/provider.mjs';
+import {providerRequest,providerOutput,validateFinding,validateVerification} from './provider-schema.mjs';
 
 const HASH=/^[0-9a-f]{64}$/;
 const TX_HASH=/^[1-9A-HJ-NP-Za-km-z]{32,60}$/;
