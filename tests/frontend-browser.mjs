@@ -28,10 +28,12 @@ try{
   if(width===390){await page.locator('#mobile-more').click();assert.equal(await page.locator('#mobile-menu').evaluate(node=>node.open),true);await page.locator('#mobile-menu a[href="#settlement"]').click();await page.locator('#workspace .workspace-panel').first().waitFor();assert.equal(new URL(page.url()).hash,'#settlement');}
   if(width===1440){
    assert((await page.locator('main').boundingBox()).y<100,'desktop content starts at the top');
-   const bottoms=await Promise.all(['.deadlines-panel','.readiness-panel','.events-panel'].map(async selector=>{const box=await page.locator(selector).boundingBox();return box.y+box.height}));
-   assert(Math.max(...bottoms)-Math.min(...bottoms)<3,'desktop columns end on the same baseline');
+   const lifecycle=await page.locator('.lifecycle-panel').boundingBox(),distribution=await page.locator('.status-panel').boundingBox();
+   assert(Math.abs(lifecycle.y-distribution.y)<3,'lifecycle and distribution share the first analytical row');
    const committee=await page.locator('.committee-panel').boundingBox(),manifest=await page.locator('.evidence-panel').boundingBox();
-   assert(Math.abs(committee.y-manifest.y)<3,'committee and manifest share the bottom row');
+   assert(Math.abs(committee.y-manifest.y)<3,'committee and evidence share the second analytical row');
+   const activity=await page.locator('.events-panel').boundingBox();
+   assert(activity.y>committee.y+committee.height-3,'activity follows the analytical panels');
    for(const route of ['cases','evidence','challenges','reviewers','settlement','lab','activity','settings']){
     await page.locator(`a[href="#${route}"]`).first().click();
     await page.locator('#workspace .workspace-panel').first().waitFor();
