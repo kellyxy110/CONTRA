@@ -20,7 +20,7 @@ test('specific no-change justification is accepted but short placeholders are no
 });
 
 test('judge acceptance matrix contains one classified row for every frozen criterion',()=>{
- const source=fs.readFileSync(new URL('../docs/judges/ACCEPTANCE_MATRIX.md',import.meta.url),'utf8'),rows=[...source.matchAll(/^\| (AC\d{2}) \| (PASS|PARTIAL|BLOCKED) \|/gm)].map(match=>({id:match[1],status:match[2]}));
+ const source=fs.readFileSync(new URL('../docs/judges/ACCEPTANCE_MATRIX.md',import.meta.url),'utf8'),rows=[...source.matchAll(/^\| (AC\d{2}) \| (PASS|PARTIAL|BLOCKED|DEFERRED) \|/gm)].map(match=>({id:match[1],status:match[2]}));
  assert.deepEqual(rows.map(row=>row.id),Array.from({length:33},(_,index)=>`AC${String(index+1).padStart(2,'0')}`));
- assert.deepEqual(Object.fromEntries(['PASS','PARTIAL','BLOCKED'].map(status=>[status,rows.filter(row=>row.status===status).length])),{PASS:23,PARTIAL:8,BLOCKED:2});
+ assert.deepEqual(Object.fromEntries(['PASS','PARTIAL','BLOCKED','DEFERRED'].map(status=>[status,rows.filter(row=>row.status===status).length])),{PASS:23,PARTIAL:8,BLOCKED:0,DEFERRED:2});
 });

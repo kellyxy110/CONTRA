@@ -51,6 +51,7 @@
     {"path":"/api/evidence/manifests","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"List case manifests"},
     {"path":"/api/finding","methods":["POST"],"access":"appointed-reviewer","source":"service","purpose":"Store evidence-bound human finding"},
     {"path":"/api/counterexample","methods":["POST"],"access":"case-participant","source":"service","purpose":"Store criterion-bound counterexample"},
+    {"path":"/api/counterexample/records","methods":["GET"],"access":"case-participant","source":"service","purpose":"List case-linked counterexamples"},
     {"path":"/api/reviewer/disclosure","methods":["POST"],"access":"session","source":"service","purpose":"Store signer-control disclosure"},
     {"path":"/api/reviewer/disclosures","methods":["GET"],"access":"session","source":"service-and-contract","purpose":"Inspect registry disclosures"},
     {"path":"/api/reviewer/control","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect committee control"},

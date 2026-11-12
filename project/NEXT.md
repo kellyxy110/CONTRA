@@ -1,16 +1,21 @@
 # Next execution task
 
-## Active task | Complete protected Modal verification
+## Current execution unit | Final protected release
+
+Finish PR 73 checks, merge the verified frontend and runtime into `implementation/oct28`, promote the identical accepted tree to `main`, deploy it to the existing Cloudflare Free resources and smoke-test `https://contra-near.pages.dev`. Preserve disabled-by-default financial signing and provider gates. After deployment, the remaining external phase is genuine independent reviewer onboarding plus the live actions that require their consent. Meta and Baseten cannot run until their exact financial and model gates pass. Modal cannot authenticate until a dedicated Proxy Auth credential is installed.
+
+
+## Historical task | Complete protected Modal verification
 
 Create one dedicated Modal Proxy Auth token in the verified workspace. Install only its key and secret into Cloudflare as `MODAL_PROXY_KEY` and `MODAL_PROXY_SECRET` through interactive Wrangler prompts. Never reuse the local `ak-` and `as-` deployment pair. Then deploy the reviewed non-secret endpoint configuration, confirm the public readiness report remains gated, run one deterministic authenticated verification with zero model tokens, reconcile the Modal billing summary and preserve the response digest. Keep `MODAL_LIVE_ENABLED=false` until the remaining credits, pricing and bounded spending-authority gates are independently satisfied.
 
 
-## Active task | M10.4 external provider inputs
+## Historical task | M10.4 external provider inputs
 
 Meta and Baseten API secrets are installed in the Worker, but remain independently gated. Verify account access and non-billable model or endpoint availability without exposing credentials. Meta remains gated until a genuine hard billing control or a separately approved risk decision exists. Baseten requires an authenticated exact model selection and verified billing control. Modal requires the dedicated Proxy Auth token and one authenticated deterministic verification. Do not enable billable inference until the exact provider has bounded owner spending authority. Continue independent reviewer recruitment and immutable Testnet journey preparation in parallel.
 
 
-## Active task | M10.3 external evidence and final packet freeze
+## Historical task | M10.3 external evidence and final packet freeze
 
 Use the single action package in `docs/operations/M10_LIVE_VALIDATION_PACKET.md`. Obtain six independently controlled reviewer operators, genuine creator and beneficiary consent, exact evidence, and independently gated provider access. Meta remains blocked by the absence of a hard provider cap; Baseten remains blocked on a selected model and verified billing control; Modal remains blocked on a protected function and scoped Proxy Token. Freeze and approve the two live journey packet digests only after every required identity, deadline, amount and transaction intent is exact. Do not create or reconnect a product UI until the owner supplies a new design direction.
 
