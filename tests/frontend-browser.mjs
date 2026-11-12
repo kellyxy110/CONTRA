@@ -59,6 +59,31 @@ try{
     await page.locator('#workspace .workspace-panel').first().waitFor();
     assert.equal(new URL(page.url()).hash,`#${route}`,`${browserName} route ${route}`);
    }
+   const fixtureAccount='browser-fixture.testnet';
+   const recordedJobs=[];
+   await page.addInitScript(account=>{
+    sessionStorage.setItem('contra-session','browser-fixture');
+    sessionStorage.setItem('contra-account',account);
+   },fixtureAccount);
+   await page.route('**/api/session',route=>route.fulfill({json:{account:fixtureAccount}}));
+   await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',provider_fixtures_enabled:true}}));
+   await page.route('**/api/provider/jobs',route=>{
+    if(route.request().method()==='GET')return route.fulfill({json:{jobs:recordedJobs,budgets:[]}});
+    const input=route.request().postDataJSON();
+    assert.equal(input.mode,'fixture');
+    assert.equal(input.case_id,'a'.repeat(64));
+    assert.equal(input.provider,'modal');
+    const job={id:'browser-job-fixture',status:'COMPLETED',response_digest:'b'.repeat(64)};
+    recordedJobs.push(job);
+    return route.fulfill({status:201,json:job});
+   });
+   await page.goto(origin+'/#lab',{waitUntil:'networkidle'});
+   await page.getByLabel('Case ID',{exact:true}).last().fill('a'.repeat(64));
+   await page.getByLabel('Provider ledger').selectOption('modal');
+   await page.getByRole('button',{name:'Run development fixture'}).click();
+   await page.locator('#evaluation-result').getByText('COMPLETED',{exact:true}).waitFor();
+   await page.reload({waitUntil:'networkidle'});
+   await page.locator('#workspace').getByText('browser-job-fixture',{exact:false}).waitFor();
   }
   if(width===390||width===1440)await page.screenshot({path:`ci-output/frontend-${browserName}-${width}-route.png`,fullPage:true});
   assert.deepEqual(errors,[],`browser errors at ${width}`);
