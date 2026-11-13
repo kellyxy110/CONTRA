@@ -6,7 +6,7 @@ Browser fixtures establish interface behaviour. Live Testnet execution requires 
 
 | Gate | Evidence | Status | Remaining work |
 | --- | --- | --- | --- |
-| Visual Fidelity | Refined dark and light Overview renders preserve the approved composition; expanded, collapsed, tablet and mobile evidence is captured in `artifacts/frontend/` | PASS | Production capture must match the reviewed build after deployment |
+| Visual Fidelity | Refined dark and light Overview renders preserve the approved composition; expanded, collapsed, tablet and mobile evidence is captured in `artifacts/frontend/`; browser coverage rejects malformed SVG icon output | PASS | Production deployment and browser smoke verification completed for the accepted frontend tree |
 | Functional Completeness | Chromium and Firefox action-to-result suite across all ten destinations and eight viewport widths | PASS | Genuine human reviewer actions and operation-specific live transactions remain external gates |
 | Backend Correctness | Existing contract, authentication, evidence isolation, budget, persistence, UNKNOWN and settlement regressions | PASS | No backend authority was broadened by the frontend recovery |
 | Production Readiness | Corrected build not yet deployed | PARTIAL | Merge, deploy, verify production asset identity and capture production screenshots |
@@ -26,7 +26,7 @@ Browser fixtures establish interface behaviour. Live Testnet execution requires 
 | Constellations | Compare eight evidence axes with populated geometry and protected-data denial | Chromium and Firefox responsive matrix with measured polygon and denial states | PASS | Live records remain dependent on a live case |
 | Activity | Filter contract events and open linked cases | Integrated browser activity checks | PASS | |
 | Settings | Persist theme, renew or revoke a session and disconnect a wallet | Browser and wallet lifecycle regressions | PASS | Account switching requires the normal reconnect and reauthentication flow |
-| Shared navigation | Brand returns to Overview and refreshes read-only data, one active route, challenge icon accent, reduced-motion hover and textual collapse | Chromium and Firefox route matrix plus persisted collapse regression | PASS | Production capture remains pending |
+| Shared navigation | Brand returns to Overview and refreshes read-only data, one active route, challenge icon accent, reduced-motion hover and textual collapse | Chromium and Firefox route matrix plus persisted collapse and valid duotone SVG regression | PASS | Verified in the production release follow-up |
 | Theme control | Icon-based Light, Dark and System preference with persistence | Browser theme reload matrix at responsive widths | PASS | |
 | Wallet selection | Feature-filtered Testnet NEP-413 picker, in-dialog progress and errors, no transaction authority | Wallet discovery unit regression and browser dialog checks | PASS | Meteor has genuine prior Testnet authentication evidence; additional providers remain compatibility-verified only |
 | Demo Mode | Explicit simulated-data indicator and isolated read-only workspace presentation | Browser Demo route checks and disabled wallet regression | PASS | Remove public control only after Phase 3 live acceptance |
