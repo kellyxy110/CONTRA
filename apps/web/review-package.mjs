@@ -7,6 +7,12 @@ const base64=bytes=>btoa(String.fromCharCode(...bytes));
 const bytes=value=>Uint8Array.from(atob(value),character=>character.charCodeAt(0));
 const digest=async value=>hex(new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode(value))));
 
+export function reviewPackageBody(record){
+ const value=record?.body??record;
+ if(!value||typeof value!=='object'||typeof value.ciphertext!=='string'||typeof value.commitment!=='string')throw Error('The durable review package is malformed.');
+ return value;
+}
+
 async function key(passphrase,salt){
  if(typeof passphrase!=='string'||passphrase.length<12)throw Error('Use a recovery passphrase of at least 12 characters. It is never sent to CONTRA.');
  const material=await crypto.subtle.importKey('raw',encoder.encode(passphrase),'PBKDF2',false,['deriveKey']);
@@ -33,6 +39,7 @@ export async function createReviewRecoveryPackage({caseRecord,round,account,find
 }
 
 export async function recoverReviewReveal({stored,caseRecord,account,passphrase,voteCommitment}){
+ stored=reviewPackageBody(stored);
  const payload=await decrypt(stored.ciphertext,passphrase),payloadDigest=await digest(canonical(payload));
  if(payloadDigest!==stored.payload_digest||payload.case_id!==stored.case_id||payload.round_id!==stored.round_id||payload.reviewer_id!==account||payload.finding_digest!==stored.finding_digest||payload.evidence_digest!==stored.evidence_digest||payload.disposition!==stored.disposition||payload.commitment!==stored.commitment)throw Error('The recovered review package does not match its durable identity.');
  const calculated=await voteCommitment(reviewerCommitmentArgs(caseRecord,payload.case_id,payload.round_id,account,payload.disposition,payload.evidence_digest,payload.finding_digest,payload.nonce));

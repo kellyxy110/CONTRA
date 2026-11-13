@@ -15,6 +15,8 @@ test('encrypted reviewer package recovers the exact reveal without exposing its 
  assert.match(stored.ciphertext,/^[A-Za-z0-9+/=]+$/);assert.equal(stored.ciphertext.includes('nonce'),false);assert.equal(stored.payload_digest.length,64);
  const reveal=await recoverReviewReveal({stored,caseRecord:record,account,passphrase:'correct horse battery staple',voteCommitment:hash});
  assert.equal(reveal.case_id,record.case_id);assert.equal(reveal.disposition,'ACCEPT');assert.equal(reveal.nonce.length,64);
+ const recoveredEnvelope=await recoverReviewReveal({stored:{digest:'e'.repeat(64),body:stored},caseRecord:record,account,passphrase:'correct horse battery staple',voteCommitment:hash});
+ assert.deepEqual(recoveredEnvelope,reveal);
  await assert.rejects(recoverReviewReveal({stored,caseRecord:record,account,passphrase:'wrong passphrase value',voteCommitment:hash}),/incorrect|changed/);
 });
 
