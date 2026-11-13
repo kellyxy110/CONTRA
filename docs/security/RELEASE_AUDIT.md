@@ -8,7 +8,7 @@ Original audit baseline: `main` at `024eef7ec9e684eaab53e2a834c458f9ed5fc302`, 9
 - The immutable owner reference remains unchanged at SHA-256 `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`.
 - `git fsck --full --no-dangling` passes.
 - Documentation-link verification passes across 75 tracked Markdown files.
-- Core source policy passes across 498 tracked files, with the corresponding hosted Security policy required on the release head.
+- Core and Security source policies pass on the merged Phase 2 release head in runs `43360379499` and `43360379395`.
 - The dependency gate reports 13 low, zero moderate, zero high and zero critical findings. All 13 are the disclosed inherited NEAR JavaScript advisory graph. See [dependency audit](DEPENDENCY_AUDIT.md).
 - Large tracked files are retained historical receipt journals, screenshots and evidence. They are not disposable build outputs.
 
