@@ -55,9 +55,11 @@ CONFIRMED requires a matching, explicitly successful finalised receipt. FAILED r
 
 Evidence, findings, counterexamples, disclosures and recovery packages are immutable digest-addressed artifacts. Protected reads require case participation or the narrower reviewer role stated in the machine contract. The browser must not retain protected artifact bodies when the account changes.
 
+`GET /api/availability` returns retrievability only for ordinary case evidence links. It excludes raw provider responses, provider proposals and Modal verification artifacts from the general digest map. Its `criterion_evaluations` are derived only from provider proposals owned by the authenticated account and mark `verified` only when that same account owns a valid Modal record bound to the proposal digest. Provider bodies remain available only through the narrower job-result route and its exact account and case checks.
+
 An AI proposal displays provider, model, role, case, round, evidence digest, citations, limitations and proposal digest. Modal verification also displays the original proposal digest. Proposal and verification artifacts never create a reviewer commitment, reveal, verdict or settlement action.
 
-Reviewer controls must show the appointed account, committee round, control disclosure and current contract phase. A prepared recovery package is private to that reviewer account. The reveal nonce must not enter general logs, activity feeds or analytics.
+Reviewer controls must show the appointed account, committee round, control disclosure and current contract phase. A prepared recovery package is private to that reviewer account. The browser encrypts reveal material with a reviewer-held passphrase before persistence. The reveal nonce must not enter local storage, general logs, activity feeds or analytics.
 
 ## Error and recovery presentation
 
