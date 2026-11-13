@@ -270,7 +270,7 @@ async function reviewerWorkspace(panel) {
  let workspace;
  try{workspace=await request('reviewer/workspace?'+new URLSearchParams({case_id:caseId,round_id:roundId}));}
  catch(error){feedback.textContent=error.message;return;}
- const record=workspace.case,round=await view('get_round',{case_id:caseId,round_id:roundId});
+ const record=workspace.case,round=workspace.round;
  section.append(element('h3','Assigned case review'),element('p',`Round ${roundId} · ${round.phase ?? record.state} · Next action: ${workspace.next_action ?? 'Inspect evidence'}`),element('p',`Evidence digest: ${round.evidence_digest ?? 'Unavailable'}`));
  const findingForm=element('form','');findingForm.append(element('h4','Store human finding'));
  const dispositionLabel=element('label','Disposition'),disposition=element('select','');disposition.name='disposition';for(const value of ['ACCEPT','REJECT','UNRESOLVED'])disposition.append(new Option(value,value));dispositionLabel.append(disposition);findingForm.append(dispositionLabel);

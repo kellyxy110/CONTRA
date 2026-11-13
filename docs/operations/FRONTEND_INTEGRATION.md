@@ -59,7 +59,7 @@ Evidence, findings, counterexamples, disclosures and recovery packages are immut
 
 An AI proposal displays provider, model, role, case, round, evidence digest, citations, limitations and proposal digest. Modal verification also displays the original proposal digest. Proposal and verification artifacts never create a reviewer commitment, reveal, verdict or settlement action.
 
-Reviewer controls must show the appointed account, committee round, control disclosure and current contract phase. A prepared recovery package is private to that reviewer account. The browser encrypts reveal material with a reviewer-held passphrase before persistence. The reveal nonce must not enter local storage, general logs, activity feeds or analytics.
+Reviewer controls must show the appointed account, committee round, control disclosure and current contract phase. `/api/reviewer/workspace` rejects non-appointed case participants and returns only the caller's durable records for the selected round. A prepared recovery package is private to that reviewer account. The browser encrypts reveal material with a reviewer-held passphrase before persistence. The reveal nonce must not enter local storage, general logs, activity feeds or analytics.
 
 ## Error and recovery presentation
 

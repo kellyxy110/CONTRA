@@ -170,7 +170,7 @@ try {
      const invite={reviewer_id:'browser-fixture.testnet',digest:'7'.repeat(64),committee:'PRIMARY',slot:1,status:'INVITED',expires:Date.now()+3600000};
      const invitationEvents=[];
      await page.route('**/api/reviewer/invitations',route=>route.fulfill({json:{invitations:[invite],events:invitationEvents}}));
-     await page.route('**/api/reviewer/workspace?*',route=>route.fulfill({json:{case:cases[0],round_id:'0',records:[],next_action:'COMMIT'}}));
+     await page.route('**/api/reviewer/workspace?*',route=>route.fulfill({json:{case:cases[0],round_id:0,round:{round_id:0,phase:'COMMIT',evidence_digest:cases[0].evidence_digest},records:[]}}));
      await page.route('**/api/finding',route=>route.fulfill({status:201,json:{digest:'6'.repeat(64)}}));
      await page.route('**/api/reviewer/respond',route=>{
       const response=route.request().postDataJSON();

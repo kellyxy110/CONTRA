@@ -553,6 +553,10 @@ async function chainCase(adapter,caseId){if(!HASH.test(caseId||''))fail('Invalid
 function participant(record,account){return record?.creator_id===account||record?.terms?.beneficiary_id===account||[...(record?.terms?.primary_committee||[]),...(record?.terms?.fresh_committee||[])].some(item=>item.reviewer_id===account);}
 function party(record,account){return record?.creator_id===account||record?.terms?.beneficiary_id===account;}
 function appointed(record,account,roundId){const committee=roundId===0?record?.terms?.primary_committee:roundId===1?record?.terms?.fresh_committee:[];return committee.some(item=>item.reviewer_id===account);}
+export function reviewerWorkspaceRecords(record,records,account,roundId){
+ if(![0,1].includes(roundId)||!appointed(record,account,roundId))fail('Only an appointed reviewer may inspect this round workspace');
+ return (records||[]).filter(item=>item.account===account&&!['provider-response','provider-proposal','provider-verification'].includes(item.kind));
+}
 export function ownedCriterionEvaluations(records,account){
  const owned=(records||[]).filter(item=>item.account===account),verified=new Set(owned.filter(item=>item.kind==='provider-verification'&&item.body?.valid===true).map(item=>item.body.checked_finding_digest)),items=[];
  for(const proposal of owned.filter(item=>item.kind==='provider-proposal'&&item.body?.schema==='CONTRA_PROVIDER_FINDING_V2'))for(const criterion of proposal.body.criteria||[])items.push({criterion_id:criterion.criterion_id,result:criterion.outcome==='SATISFIED'?'FULFILLED':criterion.outcome==='UNSATISFIED'?'NOT_FULFILLED':'INCONCLUSIVE',recorded:true,verified:verified.has(proposal.digest),proposal_digest:proposal.digest});
@@ -673,6 +677,10 @@ async function api(request,env){
  if(path==='/api/evidence/manifests'||path==='/api/reviewer/control'||path==='/api/reviewer/workspace'||path==='/api/availability'){
   const auth=await session(request,env),caseId=url.searchParams.get('case_id');const record=await authorisedCase(adapter,caseId,auth.account);
   if(path==='/api/evidence/manifests')return json({case_id:caseId,onchain_digest:record.evidence_digest||null,items:(await store.records({kind:'evidence',case_id:caseId})).map(item=>({...item,onchain:item.digest===record.evidence_digest}))});
+  if(path==='/api/reviewer/workspace'){
+   const roundId=Number(url.searchParams.get('round_id')),round=await adapter.view('get_round',{case_id:caseId,round_id:roundId}),records=reviewerWorkspaceRecords(record,await store.records({case_id:caseId}),auth.account,roundId);
+   return json({case:record,round_id:roundId,round,records,source:'contract-and-durable-storage'});
+  }
   if(path==='/api/availability'){
     const records=await store.records({case_id:caseId}),links=(await store.links(caseId)).filter(link=>!['provider-response','provider-proposal','provider-verification'].includes(link.kind)),items={};
    for(const link of links){try{await store.readArtifact(link.digest);items[link.digest]=true}catch{items[link.digest]=false}}
