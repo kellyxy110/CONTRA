@@ -19,3 +19,11 @@ The attached dashboard composition guides the CONTRA overview: a dark teal navig
 The Cloudflare production signing handoff remains disabled pending exact bounded server authority. The frontend can prepare, sign and reconcile the supported methods when the server gate is legitimately enabled, and otherwise displays the specific blocked state. Provider live execution remains subject to verified credentials, credits and enforceable budgets. Genuine independent reviewer evidence and funded Testnet journeys remain separate acceptance requirements.
 
 Visual fidelity and functional completeness require separate rendered and live journey evidence. Passing fixture tests and route smoke tests alone do not establish either release gate.
+
+## Integrated dashboard candidate
+
+Hosted browser checks capture the dark overview at five viewport widths and the desktop light theme. The local server exposes the unavailable-chain state without fabricated records.
+
+Evaluation result inspection is account- and case-bound. Browser fixtures cover result display and denied retrieval. Durable Object tests cover cross-account and cross-case denial.
+
+Reviewer consent is not granted by a recovered session. The invited account must reconnect a NEP-413 capable wallet and sign a one-time control challenge bound to the invitation, operator digest, disclosure digest and availability window. Decline and pre-freeze withdrawal remain authenticated lifecycle actions.

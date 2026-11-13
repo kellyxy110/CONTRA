@@ -136,7 +136,11 @@ describe('Cloudflare durable financial state',()=>{
   const jobs=await Promise.all(Array.from({length:6},()=>state.reserveProviderJob(request)));expect(jobs.filter(value=>!value.replayed)).toHaveLength(1);
   await rejection(()=>runInDurableObject(state,instance=>instance.reserveProviderJob({...request,payload_digest:'3'.repeat(64)})),/idempotency conflict/);
   await rejection(()=>runInDurableObject(state,instance=>instance.reserveProviderJob({...request,idempotency_key:'fixture-2',payload_digest:'3'.repeat(64)})),/concurrency limit/);
-  const completed=await state.completeProviderJob({id:jobs[0].id,response_digest:'4'.repeat(64),actual_micro_usd:0});expect(completed.status).toBe('PROPOSED');
+  const saved=await state.saveRecord({kind:'provider-proposal',account:request.account,case_id:request.case_id,body:{provider:'meta',output:{scenario:'fixture'},binding_authority:false}});
+  const completed=await state.completeProviderJob({id:jobs[0].id,response_digest:saved.digest,actual_micro_usd:0});expect(completed.status).toBe('PROPOSED');
+  expect((await state.providerJobResult(jobs[0].id,request.account,request.case_id)).output).toEqual({scenario:'fixture'});
+  expect(await state.providerJobResult(jobs[0].id,'other.testnet',request.case_id)).toBeNull();
+  expect(await state.providerJobResult(jobs[0].id,request.account,'9'.repeat(64))).toBeNull();
   const ledger=await state.providerState('reviewer.testnet'),meta=ledger.budgets.find(value=>value.provider==='meta');expect(meta.cap_micro_usd).toBe(3000000);expect(meta.reserved_micro_usd).toBe(0);expect(meta.used_micro_usd).toBe(0);
  });
 

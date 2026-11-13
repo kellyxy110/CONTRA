@@ -67,6 +67,7 @@
     {"path":"/api/availability","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect case artifact availability"},
     {"path":"/api/artifact","methods":["GET"],"access":"case-participant","source":"service","purpose":"Read case-linked artifact"},
     {"path":"/api/provider/jobs","methods":["GET","POST"],"access":"case-participant","source":"provider-ledger","purpose":"Execute or inspect durable case-bound provider jobs"},
+    {"path":"/api/provider/job-result","methods":["GET"],"access":"case-participant","source":"provider-ledger","purpose":"Read one persisted provider result after exact account and case authorisation"},
     {"path":"/api/evaluate","methods":["POST"],"access":"case-participant","source":"provider","purpose":"Create a case-bound non-binding Meta proposal when every provider gate is ready"}
   ]
 }
