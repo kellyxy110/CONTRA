@@ -1,0 +1,25 @@
+{
+  "schema": "CONTRA_PHASE3_REVIEWER_ACTIVATION_EVIDENCE_V1",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "contract_code_hash": "EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2",
+  "signer_account": "contra-contestation.testnet",
+  "approved_packet_digest": "340ea02123adf9ce9c8c0111c1c47e6847ea6d2ab378212d31fbb345b24258f9",
+  "final_observation_block_height": 277529938,
+  "attached_deposit_total_yocto": "6",
+  "tokens_burnt_total_yocto": "1630268233645600000000",
+  "transactions": [
+    {"reviewer_id":"primary1.testnet","committee":"primary","transaction_hash":"Hy3vJMSxj16sc1wZPoZ5JCppyCwBaYyHTj5kGVt41RU3","block_hash":"Fj1FMYdFZwEUpSWfByPtknqeFtjP41mAt2Z1QCKetLwj","tokens_burnt_yocto":"256186890612500000000","status":"FINAL_SUCCESS"},
+    {"reviewer_id":"primary2.testnet","committee":"primary","transaction_hash":"83H95487QNf8kVMiMyumWL88LtTXfsYhTvRKWJbNVyuN","block_hash":"3WqpSLuxLHcK7BrBWFrihg7jp82AEbio3x3Zwa51Z3zt","tokens_burnt_yocto":"262445762048400000000","status":"FINAL_SUCCESS"},
+    {"reviewer_id":"primary3.testnet","committee":"primary","transaction_hash":"Fg7XEg7WZrs9RSmddHJ8WykhyvW5YpY5NHFoxziou1va","block_hash":"57JBX3teAU8VJYzXT2mmFwXxM8LJMLCQRvxYZqEgQNcR","tokens_burnt_yocto":"268866387313900000000","status":"FINAL_SUCCESS"},
+    {"reviewer_id":"appeal.testnet","committee":"fresh","transaction_hash":"4aFkXuNz4ruJJEa8PK9qfy6ywDeGWeC6Ww15dVqfeNDA","block_hash":"3iqmFwrTGbXiJ8JRBjWaKJJHJ4nAquiyN1wRvKmWEFqd","tokens_burnt_yocto":"274843216985800000000","status":"FINAL_SUCCESS"},
+    {"reviewer_id":"appeal2.testnet","committee":"fresh","transaction_hash":"BbJXYpwpeNqzfhZYjJXUBen66UQUht346K2hwWCjn8ts","block_hash":"FWqMGmF4rabD6b2U3MZCiMj3bwFo3YAE777bPLXkPXuR","tokens_burnt_yocto":"280907129442100000000","status":"FINAL_SUCCESS"},
+    {"reviewer_id":"appeal3.testnet","committee":"fresh","transaction_hash":"Ga9kH4X5LanizMSVhLkriUKadixP7CYrpgf2tcVUFUy5","block_hash":"HAfjqpEQTUrfSuo8RzBETrjm4q34sVDxsquCA1aN2heV","tokens_burnt_yocto":"287018847242900000000","status":"FINAL_SUCCESS"}
+  ],
+  "registry_result": {
+    "registered": 6,
+    "active": 6,
+    "confirmed": 0
+  },
+  "remaining_action": "Each reviewer must personally sign confirm_reviewer for revision 1 and their exact disclosure digest."
+}

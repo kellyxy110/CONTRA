@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-13 | Phase 3 reviewer registration
+
+- Executed the owner-approved activation packet as six sequential owner-authorised `set_reviewer` calls.
+- Reconciled every final receipt, transaction identity, exact contract arguments and registry record.
+- Registered three primary and three fresh reviewers as active revision 1 records while preserving reviewer-personal confirmation as a separate action.
+- Retained the public transaction and expenditure evidence in `project/artifacts/phase3/reviewer-activation.json`.
+
 ## 2026-11-13 | frontend visual hierarchy correction
 
 - Replaced faint page-level icon treatments with larger, complete two-tone filled SVG artwork while preserving the established navigation family.
