@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-13 | Phase 3 committee reconciliation
+
+The owner reported six reviewer confirmations complete. Inspection found that the account names sort into the reverse committee grouping from their invitation labels. Implementation now preserves prior consent while requiring six new wallet-signed acknowledgements of the actual registry-selected roles. Cloudflare tests passed 22 of 22 and focused browser-operation tests passed 8 of 8 before deployment preparation.
+
 ## 2026-11-13 | Phase 3 reviewer activation
 
 Owner approval of digest `340ea02123adf9ce9c8c0111c1c47e6847ea6d2ab378212d31fbb345b24258f9` authorised exactly six registrations. The Windows keychain signer matched the approved contract-owner public key. Code hash, owner, registry and packet expiry passed final preflight. All six transactions reached explicit final success and exact registry read-back. Attached deposits totalled 6 yoctoNEAR and gas burn totalled 1630268233645600000000 yoctoNEAR. Reviewers remain unconfirmed until their six independently controlled wallets sign their own exact `confirm_reviewer` calls.

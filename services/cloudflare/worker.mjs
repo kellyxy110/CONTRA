@@ -325,6 +325,15 @@ export class ContraState extends DurableObject{
   this.ctx.storage.sql.exec('UPDATE reviewer_invitations SET status=? WHERE digest=?',status,digest);this.ctx.storage.sql.exec('INSERT INTO reviewer_events(invitation_digest,reviewer_id,status,body,observed_at) VALUES(?,?,?,?,?)',digest,reviewer_id,status,encoded,now);return row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));
  }
 
+ acknowledgeReviewerAssignment({digest,reviewer_id,body}){
+  const invitation=row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));
+  if(!invitation||invitation.reviewer_id!==reviewer_id||invitation.status!=='CONSENTED')fail('A consented reviewer invitation is required');
+  const encoded=canonical(body||{}),prior=row(this.ctx.storage.sql.exec("SELECT body FROM reviewer_events WHERE invitation_digest=? AND reviewer_id=? AND status='ASSIGNMENT_ACKNOWLEDGED' ORDER BY seq DESC LIMIT 1",digest,reviewer_id));
+  if(prior){if(prior.body===encoded)return {...invitation,assignment_acknowledged:true,replayed:true};fail('A signed committee assignment cannot be replaced');}
+  this.ctx.storage.sql.exec('INSERT INTO reviewer_events(invitation_digest,reviewer_id,status,body,observed_at) VALUES(?,?,?,?,?)',digest,reviewer_id,'ASSIGNMENT_ACKNOWLEDGED',encoded,Date.now());
+  return {...invitation,assignment_acknowledged:true,replayed:false};
+ }
+
  reviewerLifecycle(reviewerId){return {invitations:this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE reviewer_id=? ORDER BY created_at',reviewerId).toArray(),events:this.ctx.storage.sql.exec('SELECT * FROM reviewer_events WHERE reviewer_id=? ORDER BY seq',reviewerId).toArray()};}
 
  reviewerConfirmationConsent(reviewerId,disclosureDigest){
@@ -594,6 +603,23 @@ function reviewerConsentBody(input,authAccount){
  const from=Date.parse(value.available_from),until=Date.parse(value.available_until);if(!Number.isFinite(from)||!Number.isFinite(until)||until<=from||until<=Date.now())fail('Reviewer availability window is invalid');
  return value;
 }
+export async function deterministicCommitteeSelection(adapter,contractAccount='contra-contestation.testnet'){
+ const records=await adapter.view('list_reviewers',{}),eligible=(Array.isArray(records)?records:records?.items||[]).filter(value=>value?.active===true&&value?.confirmed===true).sort((left,right)=>left.reviewer_id<right.reviewer_id?-1:left.reviewer_id>right.reviewer_id?1:0).slice(0,6);
+ if(eligible.length!==6)fail('Exactly six active and confirmed reviewers are required');
+ const assignments=eligible.map((value,index)=>({reviewer_id:value.reviewer_id,operator_id:value.operator_id,revision:String(value.revision),disclosure_digest:value.disclosure_digest,committee:index<3?'primary':'fresh',slot:index%3+1}));
+ return {assignments,selection_digest:await textHash(canonical({schema:'CONTRA_COMMITTEE_SELECTION_V1',contract_account:contractAccount,assignments}))};
+}
+function reviewerAssignmentBody(input,authAccount){
+ const value=input?.body;if(!value||value.schema!=='CONTRA_COMMITTEE_ASSIGNMENT_V1'||value.reviewer_id!==authAccount||value.invitation_digest!==input.digest)fail('Reviewer committee assignment identity is invalid');
+ hash(value.registry_selection_digest,'registry selection digest');
+ if(!['primary','fresh'].includes(value.committee)||!Number.isInteger(value.slot)||value.slot<1||value.slot>3)fail('Reviewer committee assignment is invalid');
+ return value;
+}
+async function validateReviewerAssignment(adapter,input,authAccount){
+ const value=reviewerAssignmentBody(input,authAccount),selection=await deterministicCommitteeSelection(adapter),expected=selection.assignments.find(item=>item.reviewer_id===authAccount);
+ if(!expected||value.registry_selection_digest!==selection.selection_digest||value.committee!==expected.committee||value.slot!==expected.slot)fail('Reviewer committee assignment is stale or does not match the contract registry');
+ return value;
+}
 function publicError(error){
  const message=error instanceof Error?error.message:String(error);
  if(/Authentication|Session/.test(message))return [401,message];
@@ -724,18 +750,25 @@ async function api(request,env){
  if(path==='/api/reviewer/activation-readiness'&&request.method==='GET'){
   const auth=await session(request,env);if(auth.account!=='contra-creator.testnet')fail('Only the authorised creator may reconcile reviewer activation');return json(await store.reviewerActivationReadiness());
  }
+ if(path==='/api/reviewer/committee-readiness'&&request.method==='GET'){
+  const auth=await session(request,env),selection=await deterministicCommitteeSelection(adapter),lifecycle=await store.reviewerLifecycle(auth.account),assignment=selection.assignments.find(item=>item.reviewer_id===auth.account);
+  if(!assignment)fail('The authenticated account is not in the current contract committee selection');
+  const acknowledged=lifecycle.events.some(event=>{if(event.status!=='ASSIGNMENT_ACKNOWLEDGED')return false;try{const value=JSON.parse(event.body);return value.registry_selection_digest===selection.selection_digest&&value.committee===assignment.committee&&value.slot===assignment.slot;}catch{return false;}});
+  return json({...selection,assignment,acknowledged,source:'finalised-contract-registry'});
+ }
  if(path==='/api/reviewer/control-challenge'&&request.method==='POST'){
-  const auth=await session(request,env),input=await body(request),statement=reviewerConsentBody({digest:input.invitation_digest,body:input.statement},auth.account),statementDigest=await textHash(canonical(statement)),id=crypto.randomUUID(),expires=Date.now()+120000,recipient=new URL(env.CONTRA_PUBLIC_ORIGIN).host,challenge={id,account:auth.account,nonce:randomBase64(),recipient,expires};
+  const auth=await session(request,env),input=await body(request),wrapped={digest:input.invitation_digest,body:input.statement},statement=input.statement?.schema==='CONTRA_COMMITTEE_ASSIGNMENT_V1'?await validateReviewerAssignment(adapter,wrapped,auth.account):reviewerConsentBody(wrapped,auth.account),statementDigest=await textHash(canonical(statement)),id=crypto.randomUUID(),expires=Date.now()+120000,recipient=new URL(env.CONTRA_PUBLIC_ORIGIN).host,challenge={id,account:auth.account,nonce:randomBase64(),recipient,expires};
   challenge.message=`CONTRA reviewer control statement. Statement digest: ${statementDigest}. Challenge: ${id}. Expires: ${expires}.`;
   return json(await store.saveChallenge(challenge),201);
  }
  if(path==='/api/reviewer/respond'&&request.method==='POST'){
   const auth=await session(request,env),input=await body(request);if(input.reviewer_id!==auth.account)fail('Reviewer response account does not match the authenticated NEP-413 identity');
-  if(input.status==='CONSENTED'){
-   const statement=reviewerConsentBody(input,auth.account),statementDigest=await textHash(canonical(statement)),challenge=await store.challenge(input.control_challenge_id,auth.account);if(!challenge||!challenge.message.includes(`Statement digest: ${statementDigest}.`))fail('Reviewer control challenge is expired or does not bind this exact control statement');
+  let signedStatement=null;
+  if(['CONSENTED','ASSIGNMENT_ACKNOWLEDGED'].includes(input.status)){
+   signedStatement=input.status==='ASSIGNMENT_ACKNOWLEDGED'?await validateReviewerAssignment(adapter,input,auth.account):reviewerConsentBody(input,auth.account);const statementDigest=await textHash(canonical(signedStatement)),challenge=await store.challenge(input.control_challenge_id,auth.account);if(!challenge||!challenge.message.includes(`Statement digest: ${statementDigest}.`))fail('Reviewer control challenge is expired or does not bind this exact control statement');
    const digest=await crypto.subtle.digest('SHA-256',nep413Bytes(challenge)),signature=Uint8Array.from(atob(input.control_signature||''),character=>character.charCodeAt(0));if(!await verifyEd25519(input.publicKey,signature,digest)||!await adapter.hasAccessKey(auth.account,input.publicKey))fail('Reviewer control signature or account ownership is invalid');await store.consumeChallenge(input.control_challenge_id,auth.account);
   }
-  return json(await store.respondReviewer(input));
+  return json(input.status==='ASSIGNMENT_ACKNOWLEDGED'?await store.acknowledgeReviewerAssignment({digest:input.digest,reviewer_id:input.reviewer_id,body:signedStatement}):await store.respondReviewer(input));
  }
  if(path==='/api/artifact'&&request.method==='GET'){const auth=await session(request,env),caseId=url.searchParams.get('case_id'),record=await authorisedCase(adapter,caseId,auth.account),digest=hash(url.searchParams.get('digest'),'artifact digest');if(await store.isProviderResult(digest))return json({error:'Evaluation job not found'},404);if(!await store.linked(caseId,digest)&&!record.terms.criteria.some(item=>item.requirement_digest===digest)&&record.terms.evidence_policy_digest!==digest)fail('Artifact is not linked to this case');const value=await store.readArtifact(digest);return json({digest:value.digest,media_type:value.media_type,text:new TextDecoder().decode(value.bytes)});}
  if(path==='/api/provider/jobs'&&request.method==='POST'){

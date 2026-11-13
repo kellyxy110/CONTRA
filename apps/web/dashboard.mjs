@@ -6,7 +6,7 @@ import {storeCounterexample, challengeEligibility, fileChallenge} from './challe
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {submitDevelopmentFixture} from './evaluation-operations.mjs';
 import {mountConstellations} from './constellations.mjs';
-import {commitReviewerVote,revealReviewerVote,respondToInvitation,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
+import {commitReviewerVote,revealReviewerVote,respondToInvitation,signCommitteeAssignment,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 import {createReviewRecoveryPackage,recoverReviewReveal,reviewPackageBody} from './review-package.mjs';
 
@@ -372,7 +372,23 @@ async function reviewerInvitations(panel) {
          await refresh();
         }catch(error){feedback.textContent=error.message;confirm.disabled=false;}
        });
-      }else if(reviewer?.confirmed===true)item.append(element('p','Onchain reviewer confirmation: Confirmed'));
+      }else if(reviewer?.confirmed===true){
+       item.append(element('p','Onchain reviewer confirmation: Confirmed'));
+       const readiness=await request('reviewer/committee-readiness'),assignment=readiness.assignment;
+       item.append(element('p',`Contract assignment: ${assignment.committee==='primary'?'Primary':'Appeal'} · Slot ${assignment.slot}`));
+       if(readiness.acknowledged===true)item.append(element('p','Signed committee assignment: Acknowledged'));
+       else{
+        const acknowledge=element('button','Acknowledge contract assignment');acknowledge.type='button';item.append(acknowledge);
+        acknowledge.addEventListener('click',async()=>{
+         acknowledge.disabled=true;feedback.textContent='Preparing the exact committee-assignment statement…';
+         try{
+          if(!wallet)throw Error('Reconnect this reviewer wallet before acknowledging the assignment.');
+          await signCommitteeAssignment({post,wallet,invitation,reviewerId:identity,assignment,selectionDigest:readiness.selection_digest});
+          feedback.textContent='Committee assignment acknowledged with this reviewer wallet.';await refresh();
+         }catch(error){feedback.textContent=error.message;acknowledge.disabled=false;}
+        });
+       }
+      }
      }catch{item.append(element('p','Onchain reviewer registration is not available yet.'));}
     }
    section.append(item);

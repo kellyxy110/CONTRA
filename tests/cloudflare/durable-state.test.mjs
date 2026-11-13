@@ -1,7 +1,7 @@
 import {env} from 'cloudflare:workers';
 import {evictDurableObject,runInDurableObject,SELF} from 'cloudflare:test';
 import {describe,it,expect,vi} from 'vitest';
-import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords,reviewerConfirmationAuthorised} from '../../services/cloudflare/worker.mjs';
+import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords,reviewerConfirmationAuthorised,deterministicCommitteeSelection} from '../../services/cloudflare/worker.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
 const canonical=value=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`:JSON.stringify(value);
@@ -176,6 +176,19 @@ describe('Cloudflare durable financial state',()=>{
   await state.respondReviewer({digest:invitations[1].digest,reviewer_id:'primary2.testnet',status:'WITHDRAWN',body:{reason:'unavailable'}});const history=await state.reviewerLifecycle('primary2.testnet');expect(history.events.map(value=>value.status)).toEqual(['INVITED','WITHDRAWN']);
   const readiness=await state.reviewerActivationReadiness(),primary1=readiness.invitations.find(value=>value.reviewer_id==='primary1.testnet'),primary2=readiness.invitations.find(value=>value.reviewer_id==='primary2.testnet');expect(readiness.invitations).toHaveLength(6);expect(primary1.status).toBe('CONSENTED');expect(primary1.disclosure_digest).toBe('d'.repeat(64));expect(primary2.status).toBe('WITHDRAWN');
   await rejection(()=>runInDurableObject(state,instance=>instance.respondReviewer({digest:invitations[0].digest,reviewer_id:'other.testnet',status:'CONSENTED',body:{}})),/not found/);
+ });
+
+ it('derives the contract committee order and preserves signed assignment acknowledgements',async()=>{
+  const records=['primary3.testnet','appeal2.testnet','primary1.testnet','appeal.testnet','primary2.testnet','appeal3.testnet'].map((reviewer_id,index)=>({reviewer_id,operator_id:String(index+1).repeat(64),revision:'1',disclosure_digest:String(index+7).repeat(64),active:true,confirmed:true}));
+  const selection=await deterministicCommitteeSelection({view:async()=>records});
+  expect(selection.assignments.map(value=>`${value.committee}:${value.slot}:${value.reviewer_id}`)).toEqual(['primary:1:appeal.testnet','primary:2:appeal2.testnet','primary:3:appeal3.testnet','fresh:1:primary1.testnet','fresh:2:primary2.testnet','fresh:3:primary3.testnet']);
+  const state=stub('reviewer-assignment'),body={committee:'primary',slot:1},invitationBody={committee:'fresh',slot:1},invitationDigest=await digest(new TextEncoder().encode(canonical(invitationBody))),operator='a'.repeat(64);
+  await state.createReviewerInvitation({digest:invitationDigest,reviewer_id:'appeal.testnet',operator_id:operator,committee:'fresh',slot:1,expires:Date.now()+60000,body:invitationBody});
+  await state.respondReviewer({digest:invitationDigest,reviewer_id:'appeal.testnet',status:'CONSENTED',body:{operator_id:operator,disclosure_digest:'b'.repeat(64)}});
+  const statement={schema:'CONTRA_COMMITTEE_ASSIGNMENT_V1',reviewer_id:'appeal.testnet',invitation_digest:invitationDigest,registry_selection_digest:selection.selection_digest,...body};
+  expect((await state.acknowledgeReviewerAssignment({digest:invitationDigest,reviewer_id:'appeal.testnet',body:statement})).assignment_acknowledged).toBe(true);
+  expect((await state.acknowledgeReviewerAssignment({digest:invitationDigest,reviewer_id:'appeal.testnet',body:statement})).replayed).toBe(true);
+  await rejection(()=>runInDurableObject(state,instance=>instance.acknowledgeReviewerAssignment({digest:invitationDigest,reviewer_id:'appeal.testnet',body:{...statement,slot:2}})),/cannot be replaced/);
  });
 
  it('executes case-bound Meta and Modal jobs without granting binding authority',async()=>{

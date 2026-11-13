@@ -1,6 +1,6 @@
 # Next execution task
 
-Current action: deploy the reviewed scoped reviewer-confirmation control, then have `primary1.testnet`, `primary2.testnet`, `primary3.testnet`, `appeal.testnet`, `appeal2.testnet` and `appeal3.testnet` each connect at `https://contra-near.pages.dev/#reviewers` and personally sign their own exact `confirm_reviewer` call. Reconcile all six final receipts and require six active confirmed registry records before preparing any case.
+Current action: deploy the contract-derived committee acknowledgement control. Each reviewer must connect at `https://contra-near.pages.dev/#reviewers` and sign the exact role selected by the registry: `appeal.testnet`, `appeal2.testnet`, `appeal3.testnet` are primary; `primary1.testnet`, `primary2.testnet`, `primary3.testnet` are fresh appeal. Require all six immutable acknowledgements before freezing case terms or preparing `create_case`.
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 

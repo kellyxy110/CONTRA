@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-13-PHASE3-COMMITTEE-ACKNOWLEDGEMENT
+
+The owner reports that all six independently controlled reviewer accounts completed their own onchain confirmation. Before case preparation, the deterministic registry policy exposed a role mismatch: ASCII account ordering selects `appeal.testnet`, `appeal2.testnet` and `appeal3.testnet` as primary, followed by `primary1.testnet`, `primary2.testnet` and `primary3.testnet` as fresh appeal. The original signed invitations named the opposite roles. The application now derives the exact registry order from finalised contract reads and requires each reviewer to sign an immutable NEP-413 committee-assignment acknowledgement. No invitation, disclosure or prior consent is rewritten. Case preparation remains blocked until all six assignment acknowledgements are recorded.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-REVIEWERS-REGISTERED
 
 The owner approved activation packet `340ea02123adf9ce9c8c0111c1c47e6847ea6d2ab378212d31fbb345b24258f9`. Fresh final preflight verified the owner signer, FullAccess key, deployed code hash and empty registry. Six sequential `set_reviewer` calls then reached explicit final success. Read-back at block 277529938 shows three primary and three fresh reviewers active at revision 1 with their exact signed operator and disclosure digests. All remain `confirmed: false`, as required until each human personally signs `confirm_reviewer`. Total attached deposit was 6 yoctoNEAR and total gas burn was 0.0016302682336456 testnet NEAR. No case, escrow, provider call or settlement occurred.
