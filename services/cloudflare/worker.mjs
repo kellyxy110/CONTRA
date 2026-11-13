@@ -442,10 +442,13 @@ async function body(request){
 }
 function rpc(env){return rpcAdapter({url:env.NEAR_RPC_URL,contractAccount:env.CONTRA_CONTRACT_ACCOUNT,network:'testnet',timeoutMs:Number(env.CONTRA_RPC_TIMEOUT_MS||8000)});}
 function state(env){return env.CONTRA_STATE.getByName('contra-testnet');}
-function signingAuthorised(env){
+export function signingAuthorised(env,now=Date.now()){
+ const expires=Date.parse(env.CONTRA_SIGNING_EXPIRES_AT||'');
  return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true'
   && Boolean(env.CONTRA_SIGNING_OPERATION_ID)
-  && /^[0-9a-f]{64}$/.test(env.CONTRA_SIGNING_PAYLOAD_HASH||'');
+  && /^[0-9a-f]{64}$/.test(env.CONTRA_SIGNING_PAYLOAD_HASH||'')
+  && Number.isFinite(expires)
+  && now<expires;
 }
 export async function reviewerConfirmationAuthorised({store,adapter,account,payload,contractAccount='contra-contestation.testnet'}){
  if(payload?.methodName!=='confirm_reviewer'||payload.signerId!==account||payload.receiverId!==contractAccount||payload.deposit!=='1'||payload.gas!=='30000000000000')return false;
