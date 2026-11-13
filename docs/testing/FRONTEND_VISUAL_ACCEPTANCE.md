@@ -18,6 +18,8 @@ Historical frontend material is not an implementation reference. Protocol, secur
 | Read-only Testnet | Supply the documented Testnet runtime variables and keep signing disabled | Final contract reads through the configured RPC. |
 | Authorised transaction | Existing exact operation-specific server gate only | Requires the authenticated account, persisted operation ID and payload hash. A browser or fixture flag cannot enable it. |
 
+Browser API reads use a bounded 15-second client timeout. A stalled response therefore becomes an explicit unavailable state instead of leaving the interface in a permanent loading state.
+
 ## Visual evidence procedure
 
 1. Run `npm run test:browser`.

@@ -4,6 +4,8 @@
 
 Merged the design-authority cleanup through PR 105 as `ebf3366587067e88bb846894438caa9afbc41440`, then implemented the focused recovery on `feat/p0-frontend-recovery`. Local verification passed 176 of 176 repository tests, 21 of 21 Cloudflare tests, Chromium and Firefox across eight responsive widths and every active route, the wallet build, documentation checks, source policy and the Worker dry run. Genuine side-by-side dark and light comparisons were inspected against `design/approved/overview-dark.jpeg` and `design/approved/overview-light.jpeg`. No transaction, provider call, secret change or expenditure occurred.
 
+Production smoke testing of merge `04fb155cd4ca53a0dd6c2e3dbf68917c20c09b34` exposed an indefinitely loading read-only state when an API response body stalled. A bounded browser API timeout and regression were added on `fix/frontend-read-timeout`; the repository suite then passed 177 of 177 tests with all existing Cloudflare and browser checks intact.
+
 ## 2026-11-13 | Three-phase completion, Phase 2
 
 PR 95 merged Phase 1 to `main` at `9a1ecc0e4cb9314b2c4896d545098c628e5a20a4`. PR 100 merged Phase 2 at `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after Core `43360379499`, Security `43360379395` and comprehensive Integration `43360379415` passed. Local verification passed 176 of 176 repository tests, 21 of 21 Cloudflare tests, the wallet production build, documentation link checks for 75 Markdown files, and the complete Chromium and Firefox responsive browser suite. The work produced no Testnet transaction, live provider call, deployment or spend. Wrangler correctly stopped deployment under the wrong Cloudflare account identity.
