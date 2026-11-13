@@ -8,7 +8,7 @@
 - Expanded Chromium and Firefox coverage across ten destinations, eight widths, themes, navigation, charts, forms, recovery states and mobile navigation.
 - Added reproducible side-by-side visual comparison output and CI artifact retention.
 - Preserved the contract ABI, wallet security, provider gates, Durable Object state and disabled financial authority.
-- Added a fail-closed browser API timeout after production verification exposed an indefinitely loading read-only state.
+- Added a fail-closed browser API timeout and an explicit successful read-only status after production verification exposed an indefinitely loading label.
 
 ## 2026-11-13 | Phase 2 functional workflows
 

@@ -4,7 +4,7 @@
 
 Merged the design-authority cleanup through PR 105 as `ebf3366587067e88bb846894438caa9afbc41440`, then implemented the focused recovery on `feat/p0-frontend-recovery`. Local verification passed 176 of 176 repository tests, 21 of 21 Cloudflare tests, Chromium and Firefox across eight responsive widths and every active route, the wallet build, documentation checks, source policy and the Worker dry run. Genuine side-by-side dark and light comparisons were inspected against `design/approved/overview-dark.jpeg` and `design/approved/overview-light.jpeg`. No transaction, provider call, secret change or expenditure occurred.
 
-Production smoke testing of merge `04fb155cd4ca53a0dd6c2e3dbf68917c20c09b34` exposed an indefinitely loading read-only state when an API response body stalled. A bounded browser API timeout and regression were added on `fix/frontend-read-timeout`; the repository suite then passed 177 of 177 tests with all existing Cloudflare and browser checks intact.
+Production smoke testing of merge `04fb155cd4ca53a0dd6c2e3dbf68917c20c09b34` exposed an indefinitely loading label. A bounded browser API timeout was added first. Final retesting isolated the precise successful-read defect: an empty Testnet case response did not replace the initial label. The success path now reports its authoritative case count and the browser regression requires that transition.
 
 ## 2026-11-13 | Three-phase completion, Phase 2
 

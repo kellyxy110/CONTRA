@@ -788,6 +788,9 @@ if (caseResult.status === 'fulfilled') {
   byId('status').dataset.mode = 'fixture';
   byId('case').value = cases[0].case_id;
   void selectCase();
+ } else {
+  byId('status').textContent = `Read-only Testnet mode · ${cases.length} ${cases.length === 1 ? 'case' : 'cases'} returned.`;
+  byId('status').dataset.mode = 'read-only';
  }
 } else {
  byId('status').textContent = 'Read-only live mode · contract case data is unavailable.';
