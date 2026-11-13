@@ -1,8 +1,8 @@
 # Next execution task
 
-## Current execution unit | Merge Phase 2 and complete live release gates
+## Current execution unit | Complete Phase 3 live release gates
 
-Merge the verified Phase 2 functional workflow PR after required checks pass, then synchronise `implementation/oct28`. Reauthenticate Wrangler to the verified project Cloudflare account before any deployment. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
+Synchronise `implementation/oct28` with the accepted Phase 2 tree. Reauthenticate Wrangler to the verified project Cloudflare account before deploying the merged release. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, genuine beneficiary participation and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
 
 ## Current execution unit | External identities and exact live case authority
 

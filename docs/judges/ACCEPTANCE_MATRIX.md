@@ -1,14 +1,14 @@
 # AC01 to AC33 acceptance matrix
 
-Final implementation notice: the owner-supplied CONTRA interface is implemented across Overview, Cases, Case Details, Evidence, Challenges, Reviewers, Settlement, Lab, Activity and Settings. Durable provider budgets and reviewer onboarding lifecycle tests remain fixture evidence unless a row explicitly identifies a live observation. This does not establish live provider usage or six independent operators, and AC31 and AC32 remain DEFERRED until genuine independent reviewers participate.
+Final implementation notice: the integrated CONTRA interface and independently testable Phase 2 workflows are merged across Overview, Cases, Case Details, Evidence, Challenges, Reviewers, Settlement, Evaluations, Activity, Settings and Constellations. Durable provider budgets and reviewer workflow tests remain controlled evidence unless a row explicitly identifies a live observation. This does not establish case-bound live inference or six independent operators, and AC31 and AC32 remain DEFERRED until genuine independent reviewers participate.
 
-Checkpoint: `CONTRA-FINAL-IMPLEMENTATION-RELEASE`
+Checkpoint: `CONTRA-2026-11-13-PHASE2-FUNCTIONAL-WORKFLOWS`
 
-Evidence cut-off: frontend release candidate `1a2af95e6d3387c9951220d7a3289287bb9ee363`, pending protected merge and deployment. Criteria are upgraded only from evidence of the required class.
+Evidence cut-off: merged `main` commit `98621162d5d8cefea5922e0ba46a23a8657c4c7f`. Criteria are upgraded only from evidence of the required class. Production deployment of this exact commit remains pending.
 
 This is a fresh criterion-by-criterion review of [the frozen acceptance specification](../UX3B_ENGINEERING_ACCEPTANCE.md). PASS means the criterion is supported by current retained evidence at the stated environment boundary. PARTIAL means a material part is proven but one or more required observations are absent. BLOCKED means the required live external evidence cannot exist without an owner-controlled resource or authorisation.
 
-The complete protected-main gate passed in [GitHub Actions run 42624205937](https://github.com/kellyxy110/CONTRA/actions/runs/42624205937). It includes the corrected nine-test Sandbox baseline, both complete Contestation journeys and the controlled M06 workflow. Core passed in [42624205902](https://github.com/kellyxy110/CONTRA/actions/runs/42624205902) and Security passed in [42624205805](https://github.com/kellyxy110/CONTRA/actions/runs/42624205805).
+The current comprehensive gate passed in [GitHub Actions run 43360379415](https://github.com/kellyxy110/CONTRA/actions/runs/43360379415). It includes the corrected nine-test Sandbox baseline, both complete Contestation journeys and the credential-free judge quick-start. Core passed in [43360379499](https://github.com/kellyxy110/CONTRA/actions/runs/43360379499) and Security passed in [43360379395](https://github.com/kellyxy110/CONTRA/actions/runs/43360379395).
 
 ## Evaluation
 
@@ -28,7 +28,7 @@ The complete protected-main gate passed in [GitHub Actions run 42624205937](http
 | AC12 | PASS | Rust and cross-language vectors | Exact domain separation, serialization, appointed reviewer checks and replay boundaries pass. Reveal nonces are excluded from general audit records. |
 | AC13 | PASS | Rust and Sandbox | Wrong, late, duplicate and conflicting review actions fail. Two matching reveals decide; timeout and no-quorum paths follow frozen fallback rules. |
 | AC14 | PARTIAL | Registry and controlled reviewer fixtures | Account, disclosure, revision, operator identifiers and disjoint 3 plus 3 committees are enforced. Consent now requires a one-time NEP-413 signature bound to the exact invitation, operator and disclosure revision. Final Testnet RPC shows zero registered reviewers, so six-human independence remains absent. |
-| AC15 | PARTIAL | Sandbox and service artifacts | Criterion-bound counterexamples and a confirmed challenged Sandbox journey pass. The complete external-wallet browser challenge flow has not been exercised with a live wallet. |
+| AC15 | PARTIAL | Sandbox, service and browser artifacts | Criterion-bound counterexample storage, filing eligibility, disabled-signing presentation and a confirmed challenged Sandbox journey pass. The complete external-wallet challenge has not been signed against Testnet. |
 | AC16 | PASS | Sandbox concurrency and journeys | Confirmed challenge blocks ordinary finality, and ordering follows contract time and receipt order rather than the browser clock. |
 | AC17 | PASS | Sandbox challenged journey | Fresh committee, fresh evidence bundle, old-round exclusion, reversal from ACCEPT to REJECT and KEEP_PRIMARY timeout behaviour are verified. |
 | AC18 | PASS | Rust and Sandbox deadlines | Submission, commit, reveal, challenge and fresh-review timeouts use contract timestamps and the frozen base or challenge fallback. |
@@ -40,8 +40,8 @@ The complete protected-main gate passed in [GitHub Actions run 42624205937](http
 | AC24 | PASS | Wallet service and browser simulation | PREPARED, SIGNING, PENDING, CONFIRMED, FAILED and UNKNOWN remain distinct across rejection, redirect loss, callback failure, reload, account switch and restart. Recovery uses the original operation and hash with zero redispatch. |
 | AC25 | PARTIAL | RPC and interface tests | Network, contract, finality, block identity, observation time, staleness and regression are explicit and fail closed. A complete deployed-contract field review remains unavailable. |
 | AC26 | PASS | Failure injection | RPC and provider failures remain unavailable or unresolved. The runtime does not fall back to fixture success or invent receipts, findings, identities or amounts. |
-| AC27 | PASS | Coverage unit and browser evidence | Eight sectors, exact numerator and denominator data, N/A versus zero, lenses and non-authoritative semantics are verified. |
-| AC28 | PARTIAL | Operational client and browser evidence | Selected-case consistency, case-switch cancellation and basic pagination are implemented. Broader duplicate-event and multi-page live-index evidence remains incomplete. |
+| AC27 | PASS | Coverage unit and browser evidence | Eight sectors, populated polygon geometry, exact numerator and denominator data, N/A versus zero, protected-data denial, lenses and non-authoritative semantics are verified in Chromium and Firefox. |
+| AC28 | PARTIAL | Operational client and browser evidence | Search, state and account filters, linked case inspection, selected-case consistency, case-switch cancellation and basic pagination are implemented. Broader duplicate-event and multi-page live-index evidence remains incomplete. |
 | AC29 | PASS | Security and service tests | Untrusted evidence is isolated from instructions, browser output is escaped, sessions reject replay and expiry, and cross-case protected data is denied. Current-tree secret and policy checks pass. |
 | AC30 | PARTIAL | Browser accessibility evidence | Keyboard routes, dialog focus, Escape, return focus, text states and responsive evidence exist. A current manual screen-reader session against the final owner frontend is absent. |
 | AC31 | DEFERRED | Requires a complete live testnet case and independent reviewers | The contract is deployed on testnet and `contra-creator.testnet` is eligible. Canonical packet validation and the unchallenged Sandbox journey pass. Funded settlement remains protected because six genuine independent reviewers and participant consent are not yet available. |

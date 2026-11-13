@@ -2,6 +2,8 @@
 
 ## 2026-11-13 | Phase 2 functional workflows
 
+Merged through PR 100 to `main` as `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after Core, Security and comprehensive Integration passed.
+
 - Added encrypted reviewer commit and reveal recovery with durable identity validation.
 - Added assigned review, evidence inspection, Meta evaluation and Modal verification controls to the operational dashboard.
 - Added case search and details, counterexample storage, settlement reconciliation, activity filtering and session controls.
