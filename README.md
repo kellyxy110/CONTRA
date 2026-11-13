@@ -11,7 +11,17 @@
 
 CONTRA is a NEAR-native protocol for challenging consequential decisions with attributable evidence, human review and deterministic settlement. A creator and beneficiary agree immutable conditions, evidence is bound to a case, reviewers commit and reveal their findings, and a timely challenge activates a separate appeal committee. The smart contract, rather than a model or application server, controls final outcomes and funds.
 
-> **Current release status (12 November 2026):** The Testnet contract and Cloudflare backend are deployed, with the provider and reviewer security gates implemented. Local Sandbox contestation journeys pass. The branded, interactive frontend is under integration in [PR #95](https://github.com/kellyxy110/CONTRA/pull/95) and is **not yet part of the released `main` application**. No complete funded Testnet contestation or settlement receipt has been produced. Live signing and case-bound Meta/Modal execution remain gated.
+> **Current release status (13 November 2026):** The NEAR Testnet contract and secured backend are deployed. Frontend PRs #95 and #100 have been merged, but visual acceptance has been reopened after owner review. The production UI has not passed comparison against the final approved screenshots. No complete funded Testnet contestation or finalised settlement receipt is claimed; signing and case-bound provider execution remain gated.
+
+## Final approved desktop interface
+
+The [dark Overview](design/approved/overview-dark.jpeg) and [light Overview](design/approved/overview-light.jpeg) are the sole approved visual references. See [design authority and original image checksums](design/approved/README.md). Historical graph-first or older dashboard designs must not guide new implementation.
+
+| Dark, default | Light |
+| --- | --- |
+| ![Final dark Overview](design/approved/overview-dark.jpeg) | ![Final light Overview](design/approved/overview-light.jpeg) |
+
+Rendered visual acceptance is open until the actual product matches these two designs.
 
 ## Why CONTRA
 
@@ -67,7 +77,7 @@ See the [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V
 | Backend CI | Core, Security and comprehensive Integration passed for [PR #96](https://github.com/kellyxy110/CONTRA/pull/96); the [PR #97](https://github.com/kellyxy110/CONTRA/pull/97) final records Integration gate passed |
 | Testnet contract | Deployed at `contra-contestation.testnet`; [deployment record](docs/operations/TESTNET_DEPLOYMENT.md) |
 | Public service | [contra-near.pages.dev](https://contra-near.pages.dev/) reports storage and chain ready at the backend checkpoint |
-| Frontend release | Approved branded dashboard and workspaces remain in draft [PR #95](https://github.com/kellyxy110/CONTRA/pull/95); reconciliation with `main` is outstanding |
+| Frontend release | PRs #95 and #100 merged; production visual acceptance remains pending actual side-by-side comparison |
 | Genuine independent reviewers | No confirmed human operators registered at the reported Testnet observation; six independently controlled accounts required |
 | Genuine case and settlement | No funded Testnet case or finalised settlement receipt yet |
 | Production provider execution | Case-bound Meta and Modal paths implemented but live execution remains gated |

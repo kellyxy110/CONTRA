@@ -1,3 +1,5 @@
+> **Historical design only:** All previously proposed layout and visual acceptance directions are superseded by [the final approved Overview](../design/approved/README.md). Retain valid contract and testing principles but do not implement older visuals.
+
 # CONTRA UX3B engineering acceptance criteria
 
 M10.1 evidence notice: the public Cloudflare application and NEAR Testnet contract are deployed, and genuine Meteor Wallet NEP-413 authentication succeeded with a disposable account. Provider execution remains fixture-only, six independent reviewer operators remain unavailable and no funded Testnet case was authorised. The current criterion evaluation is maintained in `docs/judges/ACCEPTANCE_MATRIX.md`; AC31 and AC32 remain BLOCKED.
