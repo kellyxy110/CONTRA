@@ -4,11 +4,18 @@ import {eligibleCaseActions,readCaseDetails,readProtectedCaseRecords,readPagedCa
 import {createWalletOperations,openAuthenticatedWallet,recoverWallet} from '../apps/web/wallet-operations.mjs';
 import {evaluationFixtureArgs,submitDevelopmentFixture} from '../apps/web/evaluation-operations.mjs';
 import {createApiClient} from '../apps/web/api-client.mjs';
+import {signCommitteeAssignment} from '../apps/web/reviewer-operations.mjs';
 
 test('browser API reads fail closed instead of loading indefinitely',async()=>{
  const hangingFetch=(_url,{signal})=>new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>reject(new DOMException('Aborted','AbortError')),{once:true}));
  const {view}=createApiClient(()=>null,hangingFetch,{timeoutMs:5});
  await assert.rejects(view('list_cases',{}),/API request timed out/);
+});
+
+test('committee acknowledgement signs the exact contract-derived assignment',async()=>{
+ const calls=[],wallet={signMessage:async input=>{calls.push(input);return {accountId:'appeal.testnet',publicKey:'ed25519:key',signature:'signature'};}},post=async(path,body)=>{calls.push({path,body});return path==='reviewer/control-challenge'?{id:'challenge',message:'bound assignment',nonce:btoa(String.fromCharCode(...new Uint8Array(32))),recipient:'contra-near.pages.dev'}:{status:'CONSENTED',assignment_acknowledged:true};};
+ const result=await signCommitteeAssignment({post,wallet,invitation:{digest:'a'.repeat(64)},reviewerId:'appeal.testnet',assignment:{committee:'primary',slot:1},selectionDigest:'b'.repeat(64)});
+ assert.equal(result.assignment_acknowledged,true);assert.equal(calls[0].body.statement.committee,'primary');assert.equal(calls[0].body.statement.slot,1);assert.equal(calls[2].body.status,'ASSIGNMENT_ACKNOWLEDGED');
 });
 
 test('case actions retain exact deposits and safeguard payout retry',()=>{

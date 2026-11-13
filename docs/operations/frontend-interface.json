@@ -58,6 +58,7 @@
     {"path":"/api/reviewer/control-challenge","methods":["POST"],"access":"reviewer-session","source":"service","purpose":"Issue a NEP-413 challenge bound to an exact invitation, operator and disclosure revision"},
     {"path":"/api/reviewer/invitations","methods":["GET","POST"],"access":"reviewer-session-or-authorised-creator","source":"service","purpose":"Create or inspect immutable reviewer invitations"},
     {"path":"/api/reviewer/activation-readiness","methods":["GET"],"access":"authorised-creator","source":"service","purpose":"Reconcile all consented invitation identities and disclosure digests before exact on-chain registration"},
+    {"path":"/api/reviewer/committee-readiness","methods":["GET"],"access":"authenticated-selected-reviewer","source":"contract-and-service","purpose":"Return the deterministic contract-selected committee role and immutable acknowledgement state"},
     {"path":"/api/reviewer/respond","methods":["POST"],"access":"reviewer-session","source":"wallet-and-service","purpose":"Record signed consent or authenticated withdrawal"},
     {"path":"/api/reviewer/disclosures","methods":["GET"],"access":"session","source":"service-and-contract","purpose":"Inspect registry disclosures"},
     {"path":"/api/reviewer/control","methods":["GET"],"access":"case-participant","source":"service-and-contract","purpose":"Inspect committee control"},

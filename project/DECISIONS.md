@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-114 | Committee role follows the contract registry | 2026-11-13
+
+Reviewer invitation labels do not override the deployed contract's deterministic ASCII account ordering. When that ordering conflicts with an earlier invitation label, preserve the signed invitation and require a separate NEP-413 acknowledgement of the exact contract-derived role. Never silently relabel consent and never prepare a case until all six reviewers acknowledge the actual primary or fresh assignment.
+
 ## D-113 | Reviewer confirmation is a self-authorised scoped wallet action | 2026-11-13
 
 ACCEPTED. A consented reviewer may personally sign only the exact `confirm_reviewer` call matching their authenticated account, active onchain revision and disclosure digest. The Worker rechecks durable signed consent and contract state before handoff. This capability is independent of and cannot bypass the exact operation-specific creator signing gate. A connected wallet remains free to reject the request.

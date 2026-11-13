@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-13 | Signed committee-assignment acknowledgement
+
+- Added a finalised-registry committee readiness route.
+- Added immutable Durable Object audit records for assignment acknowledgement.
+- Added a reviewer wallet action that signs the exact contract-derived committee and slot through NEP-413.
+- Added regression coverage for deterministic ordering, replay and conflicting replacement rejection.
+- No contract write, provider call, case creation or financial transaction occurred.
+
 ## 2026-11-13 | Phase 3 reviewer registration
 
 - Executed the owner-approved activation packet as six sequential owner-authorised `set_reviewer` calls.
