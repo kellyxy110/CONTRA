@@ -1,13 +1,14 @@
 import {createApiClient} from './api-client.mjs';
-import {readPagedCases, readProtectedCaseRecords} from './contract-operations.mjs';
+import {eligibleCaseActions,filterCases,readPagedCases, readProtectedCaseRecords} from './contract-operations.mjs';
 import {createWalletOperations, openAuthenticatedWallet, recoverWallet} from './wallet-operations.mjs';
 import {buildEvidenceManifest, storeEvidence, evidenceSubmissionArgs} from './evidence-operations.mjs';
 import {storeCounterexample, challengeEligibility, fileChallenge} from './challenge-operations.mjs';
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {submitDevelopmentFixture} from './evaluation-operations.mjs';
 import {mountConstellations} from './constellations.mjs';
-import {respondToInvitation, signReviewerConsent} from './reviewer-operations.mjs';
+import {commitReviewerVote,revealReviewerVote,respondToInvitation,signReviewerConsent,storeReviewerFinding} from './reviewer-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
+import {createReviewRecoveryPackage,recoverReviewReveal,reviewPackageBody} from './review-package.mjs';
 
 const byId = id => document.getElementById(id);
 const routes = {overview:'Overview',cases:'Cases',evidence:'Evidence',lab:'Evaluations',challenges:'Challenges',reviewers:'The Bench',settlement:'Settlement',constellations:'Constellations',activity:'Activity',settings:'Settings'};
@@ -262,13 +263,35 @@ async function reviewerInvitations(panel) {
  }
  try{await refresh();}catch(error){feedback.textContent=error.message;}
 }
+async function reviewerWorkspace(panel) {
+ const caseId=byId('case').value,roundId=Number(byId('round').value);
+ if(!token||!account||!caseId){panel.append(element('p','Connect an appointed reviewer wallet and select a case to open the review workspace.'));return;}
+ const section=element('section',''),feedback=element('p','');feedback.setAttribute('role','status');panel.append(section,feedback);
+ let workspace;
+ try{workspace=await request('reviewer/workspace?'+new URLSearchParams({case_id:caseId,round_id:roundId}));}
+ catch(error){feedback.textContent=error.message;return;}
+ const record=workspace.case,round=workspace.round;
+ section.append(element('h3','Assigned case review'),element('p',`Round ${roundId} · ${round.phase ?? record.state} · Next action: ${workspace.next_action ?? 'Inspect evidence'}`),element('p',`Evidence digest: ${round.evidence_digest ?? 'Unavailable'}`));
+ const findingForm=element('form','');findingForm.append(element('h4','Store human finding'));
+ const dispositionLabel=element('label','Disposition'),disposition=element('select','');disposition.name='disposition';for(const value of ['ACCEPT','REJECT','UNRESOLVED'])disposition.append(new Option(value,value));dispositionLabel.append(disposition);findingForm.append(dispositionLabel);
+ for(const [labelText,name] of [['Citation digest','citation'],['Explanation','explanation'],['Limitations','limitations']]){const label=element('label',labelText),input=name==='explanation'||name==='limitations'?element('textarea',''):element('input','');input.name=name;if(name!=='limitations')input.required=true;label.append(input);findingForm.append(label);}
+ const save=element('button','Store human finding'),findingResult=element('div','');findingResult.setAttribute('role','status');findingForm.append(save,findingResult);section.append(findingForm);
+ findingForm.addEventListener('submit',async event=>{event.preventDefault();save.disabled=true;try{const saved=await storeReviewerFinding(post,caseId,roundId,new FormData(findingForm));findingResult.textContent=`Finding stored: ${saved.digest}`;mountCommit(saved.digest,disposition.value);}catch(error){findingResult.textContent=error.message;}finally{save.disabled=false;}});
+ function mountCommit(findingDigest,selectedDisposition){
+  if(section.querySelector('[data-review-commit]'))return;
+  const form=element('form','');form.dataset.reviewCommit='true';const passLabel=element('label','Recovery passphrase'),passphrase=element('input','');passphrase.type='password';passphrase.name='passphrase';passphrase.required=true;passphrase.minLength=12;passLabel.append(passphrase);const submit=element('button','Encrypt recovery package and commit'),result=element('div','');result.setAttribute('role','status');form.append(element('h4','Commit reviewer vote'),passLabel,submit,result);section.append(form);
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{if(!wallet)throw Error('Reconnect the appointed reviewer wallet before committing.');const sdk=await import('./wallet.bundle.js');let built;try{built=reviewPackageBody(await request('reviewer/package?'+new URLSearchParams({case_id:caseId,round_id:roundId})));await recoverReviewReveal({stored:built,caseRecord:record,account,passphrase:passphrase.value,voteCommitment:sdk.voteCommitment});}catch(error){if(!/Reviewer package not found/.test(error.message))throw error;built=await createReviewRecoveryPackage({caseRecord:record,round,account,findingDigest,disposition:selectedDisposition,passphrase:passphrase.value,voteCommitment:sdk.voteCommitment});await post('reviewer/package',built);}const sent=await commitReviewerVote(signWorkspaceCall,caseId,roundId,built.commitment);result.textContent=`Commit operation: ${sent.operation?.status ?? 'Unavailable'}. The nonce is encrypted in the durable recovery package.`;}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
+ }
+ const recoverForm=element('form',''),recoverLabel=element('label','Recovery passphrase'),recoverPass=element('input','');recoverPass.type='password';recoverPass.required=true;recoverLabel.append(recoverPass);const recover=element('button','Recover and reveal vote'),recoverResult=element('div','');recoverResult.setAttribute('role','status');recoverForm.append(element('h4','Reveal committed vote'),recoverLabel,recover,recoverResult);section.append(recoverForm);
+ recoverForm.addEventListener('submit',async event=>{event.preventDefault();recover.disabled=true;try{if(!wallet)throw Error('Reconnect the appointed reviewer wallet before revealing.');const stored=await request('reviewer/package?'+new URLSearchParams({case_id:caseId,round_id:roundId})),sdk=await import('./wallet.bundle.js'),args=await recoverReviewReveal({stored,caseRecord:record,account,passphrase:recoverPass.value,voteCommitment:sdk.voteCommitment}),sent=await revealReviewerVote(signWorkspaceCall,args);recoverResult.textContent=`Reveal operation: ${sent.operation?.status ?? 'Unavailable'}.`;}catch(error){recoverResult.textContent=error.message;}finally{recover.disabled=false;}});
+}
 async function evaluationTools(panel, config) {
  const identity = account;
  const caseId = byId('case').value;
  const history = element('section','');
  const feedback = element('p','');
  feedback.setAttribute('role','status');
- panel.append(element('p','Evaluation proposals are non-binding. Live case-bound provider execution is unavailable.'), history, feedback);
+ panel.append(element('p','Evaluation proposals are non-binding. Live execution appears only when every provider and case authority gate is ready.'), history, feedback);
  if(!token || !identity){
   feedback.textContent='Connect your wallet to inspect your evaluation jobs.';
   return;
@@ -325,6 +348,14 @@ async function evaluationTools(panel, config) {
    }catch(error){feedback.textContent=error.message;}
    finally{run.disabled=false;}
   });
+ }
+ if(caseId&&config.providers?.meta?.status==='READY'){
+  const form=element('form',''),roleLabel=element('label','Evaluation role'),role=element('select','');role.name='role';for(const value of ['primary','adversarial','fresh'])role.append(new Option(readable(value),value));roleLabel.append(role);const roundLabel=element('label','Round'),round=element('select','');round.name='round_id';round.append(new Option('Primary','0'),new Option('Fresh','1'));roundLabel.append(round);const submit=element('button','Run bounded Meta evaluation'),result=element('div','');result.setAttribute('role','status');form.append(roleLabel,roundLabel,submit,result);panel.append(form);
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const job=await post('evaluate',{case_id:caseId,round_id:Number(round.value),role:role.value,idempotency_key:`browser-meta:${caseId}:${round.value}:${role.value}`});result.textContent=`Meta job: ${job.status}. ${job.response_digest ?? 'No response digest.'}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
+ }
+ if(caseId&&config.providers?.modal?.status==='READY'){
+  const form=element('form',''),label=element('label','Meta proposal digest'),input=element('input','');input.name='proposal_digest';input.required=true;input.pattern='[0-9a-f]{64}';label.append(input);const submit=element('button','Verify proposal with Modal'),result=element('div','');result.setAttribute('role','status');form.append(label,submit,result);panel.append(form);
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const roundId=Number(byId('round').value),job=await post('provider/jobs',{mode:'live',kind:'verification',case_id:caseId,round_id:roundId,proposal_digest:input.value,idempotency_key:`browser-modal:${caseId}:${roundId}:${input.value}`});result.textContent=`Modal job: ${job.status}. ${job.response_digest ?? 'No response digest.'}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
  }
  try{await refreshJobs();}catch(error){feedback.textContent=error.message;}
 }
@@ -394,6 +425,7 @@ function caseCreation(panel, config) {
      const operations=createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk});
      const operation=await operations.prepareCase(args);
      result.append(element('p',`Prepared operation: ${operation.operation_id}. Payload hash: ${operation.payload_hash}.`));
+     const cancel=element('button','Cancel unsigned preparation');cancel.type='button';result.append(cancel);cancel.addEventListener('click',async()=>{cancel.disabled=true;try{const cancelled=await sdk.cancelPreparedWalletTransaction({token,operationId:operation.operation_id,accountId:creator,preHandoffVerified:operation.status==='PREPARED'});result.append(element('p',`Unsigned preparation: ${cancelled.status}.`));if(cancelled.status==='FAILED')cancel.remove();}catch(error){result.append(element('p',error.message));cancel.disabled=false;}});
      const attachSigningControl=async()=>{
       const runtime=await request('config');
       if(!wallet||runtime.external_wallet_signing_authorized!==true)return false;
@@ -497,6 +529,28 @@ function caseArtifactTools(panel, record, isChallenge) {
   finally{save.disabled=false;}
  });
 }
+function caseExplorer(panel,records){
+ const controls=element('form',''),searchLabel=element('label','Search cases'),search=element('input','');search.type='search';searchLabel.append(search);const stateLabel=element('label','Case state'),state=element('select','');state.append(new Option('All states',''),...([...new Set(records.map(item=>item.state))].sort().map(value=>new Option(readable(value),value))));stateLabel.append(state);const mineLabel=element('label','My cases only'),mine=element('input','');mine.type='checkbox';mineLabel.append(mine);const results=element('div','');controls.append(searchLabel,stateLabel,mineLabel);panel.append(controls,results);
+ const render=()=>{const filtered=filterCases(records,{account,mine:mine.checked,state:state.value||null,search:search.value});if(!filtered.length){results.replaceChildren(element('p','No matching cases.'));return;}const list=element('ul','');for(const record of filtered){const item=element('li',''),open=element('button',`${record.case_id} · ${readable(record.state)}`);open.type='button';open.addEventListener('click',()=>{byId('case').value=record.case_id;void selectCase();mountCaseDetails(panel,record);});item.append(open);list.append(item);}results.replaceChildren(list);};
+ for(const input of [search,state,mine])input.addEventListener('input',render);render();
+}
+function mountCaseDetails(panel,record){
+ panel.querySelector('[data-case-details]')?.remove();const section=element('section','');section.dataset.caseDetails='true';section.append(element('h3',`Case ${record.case_id}`),element('p',`State: ${readable(record.state)}. Creator: ${record.creator_id}. Beneficiary: ${record.terms?.beneficiary_id ?? 'Unavailable'}.`),element('p',`Terms digest: ${record.terms_digest}. Evidence: ${record.evidence_digest ?? 'Not submitted'}.`));
+ const actions=eligibleCaseActions(record.case_id,record,account),feedback=element('div','');feedback.setAttribute('role','status');for(const [method,args,deposit,label] of actions){const button=element('button',label);button.type='button';button.addEventListener('click',async()=>{button.disabled=true;try{const sent=await signWorkspaceCall(method,args,deposit);feedback.textContent=`${label}: ${sent.operation?.status ?? 'Unavailable'}. Transaction: ${sent.transaction_hash ?? 'Unavailable'}.`;}catch(error){feedback.textContent=error.message;}finally{button.disabled=false;}});section.append(button);}if(!actions.length)section.append(element('p','No case action is available for this account and state.'));section.append(feedback);panel.append(section);
+}
+function evidenceInspector(panel,caseId,records){
+ const section=element('section','');section.append(element('h3','Authorised evidence records'));if(!records.length)section.append(element('p','No evidence or counterexample records are available.'));
+ for(const record of records){const item=element('div',''),button=element('button',`${record.kind ?? 'Record'} · ${record.digest}`),result=element('div','');button.type='button';result.setAttribute('role','status');button.addEventListener('click',async()=>{button.disabled=true;try{const artifact=await request('artifact?'+new URLSearchParams({case_id:caseId,digest:record.digest}));result.replaceChildren(element('p',`${artifact.media_type} · ${artifact.digest}`),element('pre',artifact.text));}catch(error){result.textContent=error.message;}finally{button.disabled=false;}});item.append(button,result);section.append(item);}panel.append(section);
+}
+function activityTools(panel,items){
+ const label=element('label','Filter activity'),input=element('input','');input.type='search';label.append(input);const output=element('ul','');panel.append(label,output);const render=()=>{const query=input.value.toLowerCase(),filtered=items.filter(event=>JSON.stringify(event).toLowerCase().includes(query));output.replaceChildren(...filtered.map(event=>{const data=event.data?.[0]??{},item=element('li',`${data.seq ?? '?'} · ${event.event} · ${data.case_id ?? 'Global'}`);if(data.case_id){const link=element('button','Open case');link.type='button';link.addEventListener('click',()=>{byId('case').value=data.case_id;location.hash='cases';});item.append(' ',link);}return item;}));if(!filtered.length)output.append(element('li','No matching activity.'));};input.addEventListener('input',render);render();
+}
+async function settingsTools(panel,config){
+ panel.append(element('p',`Network: ${config.network ?? 'Unavailable'}`),element('p',`Account: ${account ?? 'Disconnected'}`),element('p',`Contract: ${config.contract_account ?? 'Unavailable'}`));if(!token)return;
+ const renew=element('button','Renew session'),disconnect=element('button','Disconnect wallet'),feedback=element('div','');feedback.setAttribute('role','status');panel.append(renew,disconnect,feedback);
+ renew.addEventListener('click',async()=>{renew.disabled=true;try{const sdk=await import('./wallet.bundle.js'),session=await sdk.renewWalletSession(token);token=session.token;account=session.account;sessionStorage.setItem('contra-session',token);feedback.textContent=`Session renewed for ${account}.`;}catch(error){feedback.textContent=error.message;}finally{renew.disabled=false;}});
+ disconnect.addEventListener('click',async()=>{disconnect.disabled=true;try{const sdk=await import('./wallet.bundle.js');await sdk.disconnectWalletSession({token,wallet});token=null;account=null;wallet=null;sessionStorage.removeItem('contra-session');byId('wallet').textContent='Connect wallet';feedback.textContent='Wallet disconnected and session revoked.';await updateNavigation();}catch(error){feedback.textContent=error.message;disconnect.disabled=false;}});
+}
 function settlementTools(panel) {
  if (!token) {
   panel.append(element('p','Connect your wallet to inspect receipts or recover an operation.'));
@@ -576,7 +630,9 @@ async function updateNavigation() {
    const records = await readPagedCases(view,{maxPages:20});
    const states = route === 'challenges' ? ['Provisional','Challenged','ChallengeReview'] :
     route === 'settlement' ? ['Resolved','Unresolved','SettlementPending','TransferFailed','Settled'] : null;
-   show(records.filter(record=>!states||states.includes(record.state)).map(record=>`${record.case_id} · ${readable(record.state)}`));
+   const matching=records.filter(record=>!states||states.includes(record.state));
+   if(route==='cases'){panel.lastElementChild.remove();caseExplorer(panel,matching);const selected=matching.find(record=>record.case_id===byId('case').value);if(selected)mountCaseDetails(panel,selected);}
+   else show(matching.map(record=>`${record.case_id} · ${readable(record.state)}`));
    if(route==='cases'&&generation===routeRequest){
     const config=await view('get_config',{});
     if(generation===routeRequest)caseCreation(panel,config);
@@ -589,17 +645,17 @@ async function updateNavigation() {
    if(route==='settlement'&&generation===routeRequest)settlementTools(panel);
   } else if (route === 'activity') {
    const activity = await view('get_events',{case_id:null,after_seq:'0',limit:50});
-   show(activity.items.map(event=>`${event.data?.[0]?.seq ?? '?'} · ${event.event} · ${event.data?.[0]?.case_id ?? 'Global'}`));
+   panel.lastElementChild.remove();activityTools(panel,activity.items);
   } else if (route === 'reviewers') {
    try{
     const registry = await view('list_reviewers',{from_index:'0',limit:32});
     show(registry.items.map(reviewer=>`${reviewer.reviewer_id} · ${reviewer.confirmed?'Confirmed':reviewer.active?'Active':'Inactive'}`));
    }catch{show(['Reviewer registry is unavailable.']);}
-   if(generation===routeRequest)await reviewerInvitations(panel);
+   if(generation===routeRequest){await reviewerInvitations(panel);await reviewerWorkspace(panel);}
   } else if (route === 'settings' || route === 'lab') {
    const config = await request('config');
-   show(route === 'settings' ? [`Network: ${config.network ?? 'Unavailable'}`,`Account: ${account ?? 'Disconnected'}`,`Contract: ${config.contract_account ?? 'Unavailable'}`] :
-    ['Meta','Modal'].map(name=>`${name}: ${config.providers?.[name.toLowerCase()]?.status ?? 'Unavailable'}`));
+   if(route==='settings'){panel.lastElementChild.remove();await settingsTools(panel,config);}
+   else show(['Meta','Modal'].map(name=>`${name}: ${config.providers?.[name.toLowerCase()]?.status ?? 'Unavailable'}`));
    if(route==='lab'&&generation===routeRequest)await evaluationTools(panel,config);
   } else if (route === 'constellations') {
    const records=cases.length?cases:await readPagedCases(view,{maxPages:20});
@@ -613,7 +669,7 @@ async function updateNavigation() {
    show((records?.items ?? []).map(item=>`${item.kind ?? 'Manifest'} · ${item.digest ?? 'Digest unavailable'}`));
    if(route==='evidence'&&generation===routeRequest){
     const selected=cases.find(record=>record.case_id===caseId);
-    if(selected)caseArtifactTools(panel,selected,false);
+    if(selected){evidenceInspector(panel,caseId,records?.items??[]);caseArtifactTools(panel,selected,false);}
    }
   } else show(['Choose a destination from the navigation.']);
  } catch {

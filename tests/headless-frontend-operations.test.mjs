@@ -22,6 +22,8 @@ test('protected case reads and paged filters stay independent of presentation',a
  assert.equal(protectedRead[0].__status,'available');
  const blocked=await readProtectedCaseRecords(async()=>{throw Error('403 unauthorised')},'c');
  assert.equal(blocked[0].__status,'inaccessible');
+ const denied=await readProtectedCaseRecords(async()=>{throw Error('Account is not authorised for this case')},'c');
+ assert.equal(denied[0].__status,'inaccessible');
 });
 test('wallet prepare retains bounded create_case and signing remains fail closed',async()=>{
  const observed=[];let authorized=false;
