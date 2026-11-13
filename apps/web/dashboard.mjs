@@ -55,9 +55,11 @@ function icon(name) {
  svg.setAttribute('viewBox', '0 0 24 24');
  svg.setAttribute('aria-hidden', 'true');
  svg.classList.add('line-icon');
- const tonePath = document.createElementNS(ns, 'path');
+ const tonePath = document.createElementNS(ns, 'circle');
  tonePath.setAttribute('class','icon-tone');
- tonePath.setAttribute('d', iconPaths[name].split(' ')[0] ?? iconPaths[name]);
+ tonePath.setAttribute('cx','12');
+ tonePath.setAttribute('cy','12');
+ tonePath.setAttribute('r','10');
  const path = document.createElementNS(ns, 'path');
  path.setAttribute('d', iconPaths[name]);
  svg.append(tonePath,path);

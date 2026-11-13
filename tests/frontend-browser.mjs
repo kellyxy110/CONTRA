@@ -22,6 +22,8 @@ try {
   browser = await engine.launch({headless:true});
   for (const width of [320,375,768,1024,1280,1366,1440,1920]) {
    const page = await browser.newPage({viewport:{width, height:width===1280?848:900}});
+   const consoleErrors=[];
+   page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
    const navigate = async href => {
     if(width<=900 && !await page.locator('#navigation').isVisible())await page.getByRole('button',{name:'Open navigation'}).click();
     await page.locator(`#navigation a[href="${href}"]`).click();
@@ -275,6 +277,7 @@ try {
      }
     }
    }
+   assert.deepEqual(consoleErrors.filter(message=>message.includes('<path> attribute d')),[],`${name} ${width}px icons must not emit malformed SVG errors`);
    await page.close();
   }
   await browser.close();
