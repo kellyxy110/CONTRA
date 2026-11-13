@@ -1,12 +1,21 @@
-export function createApiClient(getToken, fetchImpl = fetch) {
+export function createApiClient(getToken, fetchImpl = fetch, {timeoutMs = 15000} = {}) {
  async function request(path, options = {}) {
   const headers = {...(options.headers || {})};
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
-  const response = await fetchImpl(`/api/${path}`, {...options, headers});
-  const body = await response.json();
-  if (!response.ok) throw Error(body.error || `HTTP ${response.status}`);
-  return body;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+   const response = await fetchImpl(`/api/${path}`, {...options, headers, signal:controller.signal});
+   const body = await response.json();
+   if (!response.ok) throw Error(body.error || `HTTP ${response.status}`);
+   return body;
+  } catch (error) {
+   if (controller.signal.aborted) throw Error('The CONTRA API request timed out.');
+   throw error;
+  } finally {
+   clearTimeout(timer);
+  }
  }
 
  async function view(method, args) {

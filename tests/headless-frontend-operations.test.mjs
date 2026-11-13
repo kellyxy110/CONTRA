@@ -3,6 +3,13 @@ import assert from 'node:assert/strict';
 import {eligibleCaseActions,readCaseDetails,readProtectedCaseRecords,readPagedCases,filterCases} from '../apps/web/contract-operations.mjs';
 import {createWalletOperations,openAuthenticatedWallet,recoverWallet} from '../apps/web/wallet-operations.mjs';
 import {evaluationFixtureArgs,submitDevelopmentFixture} from '../apps/web/evaluation-operations.mjs';
+import {createApiClient} from '../apps/web/api-client.mjs';
+
+test('browser API reads fail closed instead of loading indefinitely',async()=>{
+ const hangingFetch=(_url,{signal})=>new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>reject(new DOMException('Aborted','AbortError')),{once:true}));
+ const {view}=createApiClient(()=>null,hangingFetch,{timeoutMs:5});
+ await assert.rejects(view('list_cases',{}),/API request timed out/);
+});
 
 test('case actions retain exact deposits and safeguard payout retry',()=>{
  const c={state:'Draft',creator_id:'creator',terms:{beneficiary_id:'beneficiary',amount_yocto:'1000000000000000000000000'},beneficiary_accepted:true,terms_digest:'terms'};
