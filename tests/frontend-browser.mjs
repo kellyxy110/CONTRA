@@ -92,6 +92,7 @@ try {
      return route.fulfill({json:{value:data[method]??null}});
     });
     await page.reload();
+    await page.getByText('Read-only Testnet mode · 3 cases returned.').waitFor();
     await page.locator('#case').selectOption(cases[0].case_id);
     await page.locator('#review-chart .donut').waitFor();
     await page.locator('#round').selectOption('1');
@@ -103,7 +104,6 @@ try {
     assert.equal(await page.locator('.evidence-table th').evaluateAll(headers=>headers.every(header=>header.scrollHeight<=header.clientHeight)),true);
     assert.equal(await page.locator('#funded').textContent(),'3 NEAR');
     assert.equal(await page.locator('#case-chart .donut').count(),1);
-    await page.locator('#status').evaluate(node=>{node.textContent='Deterministic visual fixture · no live records';});
     for(const theme of [1280,1440].includes(width)?['light','dark']:['dark']){
      await page.locator('#theme').selectOption(theme);
      await page.evaluate(()=>scrollTo(0,0));
