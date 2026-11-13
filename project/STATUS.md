@@ -2,7 +2,7 @@
 
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-REVIEWERS-INVITED
 
-Six owner-declared independently controlled Testnet accounts were verified through final RPC, each with one FullAccess key and 2.5 testnet NEAR. The authenticated `contra-creator.testnet` session created three primary and three fresh-appeal invitation records in production. No transaction was broadcast. All records remain `INVITED`; zero reviewers have yet supplied their personal NEP-413 consent, disclosure or availability statement, and none is registered or confirmed onchain. The Bench now stores each reviewer's disclosure before binding its resulting digest into the signed control statement, removing the prior manual digest-calculation requirement.
+Six owner-declared independently controlled Testnet accounts were verified through final RPC, each with one FullAccess key and 2.5 testnet NEAR. The authenticated `contra-creator.testnet` session created three primary and three fresh-appeal invitation records in production. The owner reports all six isolated reviewer sessions as `CONSENTED`, and `appeal3.testnet` was independently observed in production with its immutable `INVITED` and `CONSENTED` history. None is registered or confirmed onchain. The owner-only activation readiness route now reconciles the six durable consent records and their exact disclosure digests before any `set_reviewer` transaction is prepared. No transaction was broadcast.
 
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-LIVE-READINESS
 
@@ -22,7 +22,6 @@ The approved dark and light Overview references are now the sole active visual a
 
 Phase 1 merged through PR 95 at `9a1ecc0e4cb9314b2c4896d545098c628e5a20a4`. Phase 2 merged through PR 100 at `98621162d5d8cefea5922e0ba46a23a8657c4c7f`. The independently testable Cases, Evidence, Evaluations, Challenges, The Bench, Settlement, Constellations, Activity and Settings paths are complete. Reviewer reveal material is stored only in a passphrase-encrypted AES-GCM recovery package, each round workspace is restricted to its appointed reviewer, provider result access remains account and case scoped, and UNKNOWN operations remain locked. Core run `43360379499`, Security run `43360379395` and comprehensive Integration run `43360379415` passed on the reviewed head. Local verification passed 176 repository tests, 21 Cloudflare tests, the wallet build, 75 documentation links and the Chromium and Firefox responsive route matrix. No transaction, provider call or reviewer-independence claim occurred. Live Testnet creation and settlement remain blocked on six genuine reviewers and operation-specific signing authority.
 
-Cloudflare deployment is additionally blocked because the local Wrangler session is authenticated to account `56583bd411c295f2a4e9f73b60fab3f5`, not the verified project account `0a8fd0acd086e68c9b558159fac0d7a8`. No deployment was attempted after that identity mismatch.
 
 The current locked npm graph reports 13 low findings and zero moderate, high or critical findings. Historical records of the former 17-finding baseline remain unchanged.
 

@@ -2,9 +2,9 @@
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 
-Production is read-only ready and the independently implementable frontend, backend, provider ledger, reviewer lifecycle and transaction recovery controls are complete. The contract currently has zero registered reviewers and zero cases. Recruit and verify three primary and three fresh-appeal human operators using the six-slot package in `docs/operations/PHASE3_EXTERNAL_ACTION_PACKET.md`. Register and confirm their exact Testnet records, then freeze participant consent, case terms, evidence digests, deadlines, amounts and transaction sequence. Only after `preview_case` returns the immutable case identity may the first operation-specific signing packet be approved. Meta and Modal calls remain case bound and budget bound. Public Demo Mode remains until both genuine journeys and settlements have final receipts.
+Production is read-only ready and the independently implementable frontend, backend, provider ledger, reviewer lifecycle and transaction recovery controls are complete. Six distinct reviewer accounts have owner-reported consent, with one production record independently observed. The contract currently has zero registered reviewers and zero cases. Reconcile the six exact consent and disclosure digests through the owner-only activation route, prepare six bounded `set_reviewer` operations, then require each reviewer to sign its matching `confirm_reviewer` operation. Freeze participant consent, case terms, evidence digests, deadlines, amounts and transaction sequence only after registry read-back confirms six active, confirmed and disjoint reviewers. Meta and Modal calls remain case bound and budget bound. Public Demo Mode remains until both genuine journeys and settlements have final receipts.
 
-The current local Wrangler session is not authenticated to the project Cloudflare account. This does not make the live application unavailable, but it must be corrected before any later production mutation. Do not deploy from the wrong account or replace `ContraState`.
+Use only the verified `judithorluchee` Wrangler profile and account `0a8fd0acd086e68c9b558159fac0d7a8` for production changes. Do not deploy from another account or replace `ContraState`.
 
 
 ## Historical task | Complete protected Modal verification
