@@ -2,7 +2,7 @@
 
 ## Current execution unit | Complete Phase 3 live release gates
 
-Synchronise `implementation/oct28` with the accepted Phase 2 tree. Reauthenticate Wrangler to the verified project Cloudflare account before deploying the merged release. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, genuine beneficiary participation and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
+Complete the protected `implementation/oct28` synchronisation after its required checks pass. The accepted Phase 2 release is already deployed through the verified Cloudflare account. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, genuine beneficiary participation and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
 
 ## Current execution unit | External identities and exact live case authority
 

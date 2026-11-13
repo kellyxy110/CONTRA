@@ -1,7 +1,7 @@
 # CONTRA: three-phase completion plan
 
 **Status:** Phases 1 and 2 complete on `main`; Phase 3 external validation active
-**Baseline:** `main` at `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after [PR #100](https://github.com/kellyxy110/CONTRA/pull/100) merged the reviewed functional workflows.
+**Baseline:** `main` at `13834ba477de450e0ed7a27b2f171da26376a488` after [PR #101](https://github.com/kellyxy110/CONTRA/pull/101) recorded the reviewed functional workflows. This tree is deployed at `https://contra-near.pages.dev` through Worker version `a1888c6d-51a6-491a-96d3-ee298b818306` and Pages deployment `b15da71b`.
 **Date:** 12 November 2026  
 **Authority:** Execute all independently authorised engineering, documentation, testing, review and passing merges without repeated permission requests. Do not broaden financial, wallet, provider or production-secret authority.
 

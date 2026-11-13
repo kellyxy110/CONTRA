@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-13 | Phase 2 production deployment
+
+- Deployed the reviewed `main` tree at `13834ba477de450e0ed7a27b2f171da26376a488` through the verified Cloudflare account.
+- Published Worker version `a1888c6d-51a6-491a-96d3-ee298b818306` and Pages deployment `b15da71b` without replacing the existing Durable Object.
+- Verified the public dashboard hash matches the reviewed artifact and both production health endpoints return HTTP 200.
+- Preserved disabled financial signing and disabled live provider execution.
+
 ## 2026-11-13 | Phase 2 functional workflows
 
 Merged through PR 100 to `main` as `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after Core, Security and comprehensive Integration passed.

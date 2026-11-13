@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-112 | Phase 2 release uses the verified Cloudflare account | 2026-11-13
+
+ACCEPTED. Deploy the reviewed Phase 2 tree only through account `0a8fd0acd086e68c9b558159fac0d7a8`, preserving the existing `ContraState` Durable Object and USD 0 hosting ceiling. Public deployment does not enable financial signing, live provider execution or reviewer authority. The canonical asset hash and production readiness response are retained as deployment evidence.
+
 ## D-110 | Browser reviewer recovery is encrypted and local-secret free | 2026-11-13
 
 Reviewer commit and reveal recovery uses PBKDF2-SHA-256 with 210,000 iterations and AES-GCM. The browser persists and uploads only the encrypted package, never the reviewer nonce or plaintext reveal. Recovery revalidates the durable package identity and frozen commitment before reveal. This preserves the existing commitment encoding and contract ABI.
