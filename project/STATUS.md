@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-13-PHASE2-FUNCTIONAL-WORKFLOWS
+
+Phase 1 merged through PR 95 at `9a1ecc0e4cb9314b2c4896d545098c628e5a20a4` with Core, Security, Contract and comprehensive Integration green. Phase 2 completes the independently testable Cases, Evidence, Evaluations, Challenges, The Bench, Settlement, Constellations, Activity and Settings paths. Reviewer reveal material is stored only in a passphrase-encrypted AES-GCM recovery package, provider result access remains account and case scoped, and UNKNOWN operations remain locked. Local verification passes 176 repository tests, 20 Cloudflare tests, the wallet build, 75 documentation links and the Chromium and Firefox responsive route matrix. No transaction, provider call or reviewer-independence claim occurred. Live Testnet creation and settlement remain blocked on six genuine reviewers and operation-specific signing authority.
+
+Cloudflare deployment is additionally blocked because the local Wrangler session is authenticated to account `56583bd411c295f2a4e9f73b60fab3f5`, not the verified project account `0a8fd0acd086e68c9b558159fac0d7a8`. No deployment was attempted after that identity mismatch.
+
 ## Current checkpoint | CONTRA-2026-11-12-BACKEND-COMPLETION
 
 Cloudflare now has a case-bound Meta evaluation and Modal verification path with strict case, round, terms, evidence, criteria, proposal-digest, idempotency and budget binding. Live calls remain fail closed until every provider readiness flag is true. Reviewer consent now requires a one-time NEP-413 control challenge bound to the invitation, operator and exact disclosure digest. Read-only Testnet observations at final blocks 277394524 and 277394531 show zero registered reviewers and zero cases. The allowlisted creator has one FullAccess key, but browser control of that key is not established. PR 96 merged to `main` as `04cfc7fcfe9d4926220cd856812f6eeec2afc02d` after Core, Security and comprehensive Integration passed. Worker version `fe9529e3-3f7c-4fec-b6c3-4f868555f2f5` is live and reports ready with signing, fixtures and both provider live gates disabled. No transaction or provider call occurred in this checkpoint.

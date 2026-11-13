@@ -40,12 +40,16 @@ try {
    await page.waitForFunction(()=>document.documentElement.dataset.theme==='light');
    if(width===1440)await page.screenshot({path:`ci-output/contra-${name}-1440-light.png`,fullPage:true});
    if([1440,768,375,320].includes(width)){
-    const cases=['ReviewCommit','Challenged','Settled'].map((state,index)=>({case_id:String(index+1).repeat(64),state,created_at_ns:'1794484800000000000',funded_principal_yocto:'1000000000000000000000000'}));
+    const cases=['ReviewCommit','Challenged','Settled'].map((state,index)=>({case_id:String(index+1).repeat(64),state,creator_id:'creator.testnet',terms_digest:'9'.repeat(64),evidence_digest:'a'.repeat(64),created_at_ns:'1794484800000000000',funded_principal_yocto:'1000000000000000000000000',terms:{beneficiary_id:'beneficiary.testnet',chain_id:'testnet',contract_account:'contra-contestation.testnet',criteria:[{criterion_id:1,kind:'KEYBOARD',requirement_digest:'8'.repeat(64)}],primary_committee:[{reviewer_id:'browser-fixture.testnet'}],fresh_committee:[{reviewer_id:'fresh.testnet'}]}}));
+    cases[2].challenge={counterexample_digest:'c'.repeat(64)};
+    cases[2].rounds=[[{disposition:'ACCEPT'},{disposition:'ACCEPT'},{disposition:'REJECT'}],[{commitment:'d'.repeat(64),disposition:'REJECT'},{disposition:'REJECT'},{disposition:'ACCEPT'}]];
+    cases[2].final_disposition='REJECT';cases[2].resolution_basis='FRESH';cases[2].payout={payout_intent_id:'payout-1',last_attempt:{result:'SUCCESS'}};
     cases[0].challenge={counterexample_digest:'c'.repeat(64)};
-    await page.route('**/api/availability?*',route=>route.fulfill({json:{items:{}}}));
+    await page.route('**/api/availability?*',route=>route.fulfill({json:{observed_at:'2026-11-13T00:00:00.000Z',items:{['4'.repeat(64)]:true},manifest:{schema:'CONTRA_EVIDENCE_V1',sources:[{source_id:'source-1',digest:'4'.repeat(64),provenance:{origin:'Fixture',captured_at:'2026-11-12T00:00:00.000Z',submitted_by:'creator.testnet'}}],criteria:[{criterion_id:1,source_ids:['source-1']}]},criterion_evaluations:[{criterion_id:1,result:'FULFILLED',recorded:true,verified:true}]}}));
     await page.route('**/api/evidence/manifests?*',route=>route.fulfill({json:{items:[
      {kind:'Manifest',digest:'a'.repeat(64),onchain:true,body:{sources:[{provenance:{origin:'Fixture source'}}]}},
      {kind:'Manifest',digest:'b'.repeat(64),onchain:false},
+     {kind:'Manifest',digest:'d'.repeat(64),onchain:true},
     ]}}));
     await page.route('**/api/counterexample/records?*',route=>route.fulfill({json:{items:[{kind:'Counterexample',digest:'c'.repeat(64)}]}}));
     await page.route('**/api/view',route=>{
@@ -63,7 +67,7 @@ try {
     await page.locator('#case').selectOption(cases[0].case_id);
     await page.locator('#review-chart .donut').waitFor();
     for(const status of ['Verified binding','Pending binding','Challenged']){
-     await page.locator('#evidence').getByText(status,{exact:true}).waitFor();
+     await page.locator('#evidence').getByText(status,{exact:true}).first().waitFor();
     }
     assert.equal(await page.locator('.evidence-table th').evaluateAll(headers=>headers.every(header=>header.scrollHeight<=header.clientHeight)),true);
     assert.equal(await page.locator('#funded').textContent(),'3 NEAR');
@@ -75,9 +79,11 @@ try {
     }
     if(width===375){
      cases[0].creator_id='browser-fixture.testnet';
-     cases[0].terms={criteria:[{criterion_id:1}]};
+     cases[0].terms={...cases[0].terms,criteria:[{criterion_id:1,kind:'KEYBOARD',requirement_digest:'8'.repeat(64)}]};
+     cases[1].creator_id='browser-fixture.testnet';cases[1].state='Provisional';
      await page.addInitScript(()=>sessionStorage.setItem('contra-session','browser-fixture'));
      await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet'}}));
+     await page.route('**/api/session/renew',route=>route.fulfill({json:{token:'browser-fixture-renewed',account:'browser-fixture.testnet',expires:Date.now()+3600000}}));
      await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:false}}));
      await page.route('**/api/terms',route=>route.fulfill({json:{digest:'f'.repeat(64)}}));
      await page.route('**/api/wallet/prepare',route=>{
@@ -86,16 +92,23 @@ try {
       assert.equal(call.args.expected_terms_digest,'e'.repeat(64));
       return route.fulfill({json:{operation:{operation_id:'fixture-preparation',payload_hash:'a'.repeat(64)}}});
      });
+     await page.route('**/api/wallet/reject',route=>route.fulfill({json:{operation_id:'fixture-preparation',status:'FAILED',payload:{signerId:'browser-fixture.testnet'}}}));
      await page.route('**/api/evidence',route=>{
       const input=route.request().postDataJSON();
       assert.equal(input.case_id,cases[0].case_id);
       assert.equal(input.manifest.sources[0].provenance.origin,'Browser fixture');
       return route.fulfill({status:201,json:{digest:'a'.repeat(64)}});
      });
+     await page.route('**/api/artifact?*',route=>route.fulfill({json:{digest:'a'.repeat(64),media_type:'application/json',text:'{"schema":"CONTRA_EVIDENCE_V1"}'}}));
+     await page.route('**/api/counterexample',route=>{const input=route.request().postDataJSON();assert.equal(input.case_id,cases[1].case_id);return route.fulfill({status:201,json:{digest:'c'.repeat(64)}});});
+     await page.route('**/api/operation?*',route=>{const id=new URL(route.request().url()).searchParams.get('id');return route.fulfill({json:id==='pending-operation'?{operation_id:id,status:'PENDING',tx_hash:'11111111111111111111111111111111'}:{operation_id:id,status:'UNKNOWN',tx_hash:null}});});
+     await page.route('**/api/wallet/reconcile',route=>route.fulfill({json:{operation_id:'pending-operation',status:'CONFIRMED',tx_hash:'11111111111111111111111111111111'}}));
      await page.reload();
      await page.locator('#case').selectOption(cases[0].case_id);
      await page.getByRole('button',{name:'browser-fixture.testnet'}).waitFor();
      await page.locator('#navigation a[href="#evidence"]').click();
+     await page.getByRole('button',{name:/Manifest · a{64}/}).click();
+     await page.getByText('CONTRA_EVIDENCE_V1',{exact:false}).waitFor();
      await page.getByLabel('Evidence text').fill('Fixture record');
      await page.getByLabel('Provenance origin').fill('Browser fixture');
      await page.getByLabel('Captured at').fill('2026-11-12T12:00');
@@ -104,6 +117,9 @@ try {
      await page.getByText('Stored off-chain:',{exact:false}).waitFor();
      assert.equal(await page.getByRole('button',{name:'Sign evidence submission'}).count(),0);
      await page.locator('#navigation a[href="#cases"]').click();
+     await page.getByLabel('Search cases').fill(cases[0].case_id.slice(0,16));
+     await page.getByRole('button',{name:new RegExp(cases[0].case_id)}).click();
+     await page.getByRole('heading',{name:`Case ${cases[0].case_id}`}).waitFor();
      await page.getByLabel('Beneficiary Testnet account').fill('beneficiary.testnet');
      await page.getByLabel('Amount in NEAR').fill('1');
      await page.getByLabel('Creator operator digest').fill('1'.repeat(64));
@@ -119,6 +135,8 @@ try {
      await page.getByRole('button',{name:'Preview case'}).click();
      await page.getByRole('button',{name:'Prepare Testnet case'}).click();
      await page.getByText('Prepared operation: fixture-preparation.',{exact:false}).waitFor();
+     await page.getByRole('button',{name:'Cancel unsigned preparation'}).click();
+     await page.getByText('Unsigned preparation: FAILED.',{exact:true}).waitFor();
      assert.equal(await page.getByRole('button',{name:'Sign case creation'}).count(),0);
      let evaluationJob;
      await page.route('**/api/provider/jobs',route=>{
@@ -152,6 +170,8 @@ try {
      const invite={reviewer_id:'browser-fixture.testnet',digest:'7'.repeat(64),committee:'PRIMARY',slot:1,status:'INVITED',expires:Date.now()+3600000};
      const invitationEvents=[];
      await page.route('**/api/reviewer/invitations',route=>route.fulfill({json:{invitations:[invite],events:invitationEvents}}));
+     await page.route('**/api/reviewer/workspace?*',route=>route.fulfill({json:{case:cases[0],round_id:'0',records:[],next_action:'COMMIT'}}));
+     await page.route('**/api/finding',route=>route.fulfill({status:201,json:{digest:'6'.repeat(64)}}));
      await page.route('**/api/reviewer/respond',route=>{
       const response=route.request().postDataJSON();
       assert.equal(response.reviewer_id,invite.reviewer_id);
@@ -162,6 +182,12 @@ try {
      });
      await page.locator('#navigation a[href="#reviewers"]').click();
      assert.equal(await page.getByRole('button',{name:'Consent',exact:true}).isDisabled(),true);
+     await page.getByLabel('Citation digest').fill('a'.repeat(64));
+     await page.getByLabel('Explanation').fill('Human fixture finding');
+     await page.getByRole('button',{name:'Store human finding'}).click();
+     await page.getByText('Finding stored:',{exact:false}).waitFor();
+     await page.getByLabel('Recovery passphrase').first().fill('browser fixture recovery');
+     assert.equal(await page.getByRole('button',{name:'Encrypt recovery package and commit'}).count(),1);
      await page.getByRole('button',{name:'Decline',exact:true}).click();
      await page.getByText('Invitation response: WITHDRAWN.',{exact:true}).waitFor();
      await page.reload();
@@ -171,6 +197,8 @@ try {
      for(const link of await page.locator('#navigation a').all()){
       const title=await link.innerText();
       if(title==='Overview')continue;
+      if(title==='Challenges')await page.locator('#case').evaluate((select,value)=>{select.value=value;},cases[1].case_id);
+      if(title==='Constellations')await page.locator('#case').evaluate((select,value)=>{select.value=value;},cases[2].case_id);
       await link.click();
       await page.getByRole('heading',{level:1,name:title,exact:true}).waitFor();
       await page.locator('#workspace article').waitFor();
@@ -178,10 +206,34 @@ try {
        const radar=page.getByRole('img',{name:/Eight-axis evidence/});
        await radar.waitFor();
        assert.equal(await radar.locator('line').count(),8);
+       await radar.locator('polygon').waitFor();
+       assert.equal(await radar.locator('polygon').count(),1);
+       await page.unroute('**/api/availability?*');
+       await page.route('**/api/availability?*',route=>new URL(route.request().url()).searchParams.get('case_id')===cases[1].case_id?route.fulfill({status:403,json:{error:'Account is not authorised for this case'}}):route.fulfill({json:{observed_at:'2026-11-13T00:00:00.000Z',items:{['4'.repeat(64)]:true},manifest:{schema:'CONTRA_EVIDENCE_V1',sources:[{source_id:'source-1',digest:'4'.repeat(64),provenance:{origin:'Fixture',captured_at:'2026-11-12T00:00:00.000Z',submitted_by:'creator.testnet'}}],criteria:[{criterion_id:1,source_ids:['source-1']}]},criterion_evaluations:[{criterion_id:1,result:'FULFILLED',recorded:true,verified:true}]}}));
        await page.getByLabel('Comparison case').selectOption(cases[1].case_id);
        await page.getByRole('heading',{name:`Comparison · ${cases[1].case_id}`,exact:true}).waitFor();
+       await page.getByText(/Evidence: inaccessible/).waitFor();
        await page.getByLabel('Primary case').selectOption('');
        await page.getByText('Select a case to compare evidence coverage.',{exact:true}).waitFor();
+      }
+      if(title==='Activity'){
+       await page.getByLabel('Filter activity').fill('case_funded');
+       await page.locator('#workspace').getByText(/case_funded/).waitFor();
+      }
+      if(title==='Challenges'){
+       await page.getByLabel('Counterexample').fill('Browser counterexample');
+       await page.getByRole('button',{name:'Store counterexample'}).click();
+       await page.getByText('Stored off-chain:',{exact:false}).waitFor();
+       assert.equal(await page.getByRole('button',{name:'Sign challenge'}).count(),0);
+      }
+      if(title==='Settlement'){
+       const operation=page.getByLabel('Operation ID');
+       await operation.fill('locked-operation');await page.getByRole('button',{name:'Inspect operation'}).click();await page.getByText('The transaction hash is unknown. This operation remains locked.',{exact:true}).waitFor();
+       await operation.fill('pending-operation');await page.getByRole('button',{name:'Inspect operation'}).click();await page.getByRole('button',{name:'Reconcile with chain'}).click();await page.getByText('Operation status: CONFIRMED',{exact:true}).waitFor();
+      }
+      if(title==='Settings'){
+       await page.getByRole('button',{name:'Renew session'}).click();
+       await page.getByText('Session renewed for browser-fixture.testnet.',{exact:true}).waitFor();
       }
      }
     }

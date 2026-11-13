@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-13 | Phase 2 functional workflows
+
+- Added encrypted reviewer commit and reveal recovery with durable identity validation.
+- Added assigned review, evidence inspection, Meta evaluation and Modal verification controls to the operational dashboard.
+- Added case search and details, counterexample storage, settlement reconciliation, activity filtering and session controls.
+- Added protected Constellation evaluation derivation without cross-account provider leakage.
+- Added explicit unsigned wallet-operation cancellation while preserving UNKNOWN locks.
+- Expanded Chromium and Firefox coverage across functional routes and responsive widths.
+
 ## 2026-11-12 | Case-bound provider and reviewer control backend
 
 - Added authenticated, durable, case-bound Meta evaluation and Modal proposal verification with strict schemas, provenance and conservative UNKNOWN accounting.
