@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-13-PHASE3-REVIEWERS-INVITED
+
+Six owner-declared independently controlled Testnet accounts were verified through final RPC, each with one FullAccess key and 2.5 testnet NEAR. The authenticated `contra-creator.testnet` session created three primary and three fresh-appeal invitation records in production. No transaction was broadcast. All records remain `INVITED`; zero reviewers have yet supplied their personal NEP-413 consent, disclosure or availability statement, and none is registered or confirmed onchain. The Bench now stores each reviewer's disclosure before binding its resulting digest into the signed control statement, removing the prior manual digest-calculation requirement.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-LIVE-READINESS
 
 Read-only production and Testnet preflight completed on 13 November 2026. `https://contra-near.pages.dev/api/live`, `/api/ready` and `/api/health` returned HTTP 200. Durable Object SQLite reported integrity `ok`, schema 3 and the USD 0 hosting boundary. The chain observation was final, fresh and non-regressed on Testnet, and live signing remained disabled. The deployed contract code hash is `EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2`; its creator allowlist contains only `contra-creator.testnet`, held escrow and in-flight or unknown amounts are zero, and read-back found zero reviewers and zero cases.

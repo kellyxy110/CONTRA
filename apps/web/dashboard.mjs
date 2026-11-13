@@ -6,7 +6,7 @@ import {storeCounterexample, challengeEligibility, fileChallenge} from './challe
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {submitDevelopmentFixture} from './evaluation-operations.mjs';
 import {mountConstellations} from './constellations.mjs';
-import {commitReviewerVote,revealReviewerVote,respondToInvitation,signReviewerConsent,storeReviewerFinding} from './reviewer-operations.mjs';
+import {commitReviewerVote,revealReviewerVote,respondToInvitation,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 import {createReviewRecoveryPackage,recoverReviewReveal,reviewPackageBody} from './review-package.mjs';
 
@@ -326,9 +326,10 @@ async function reviewerInvitations(panel) {
     if(invitation.status==='INVITED'){
      consentInput=document.createElement('form');
      consentInput.append(element('h4','Signed reviewer control'));
-     for(const [label,name,type] of [['Operator control digest','operator_id','text'],['Disclosure digest','disclosure_digest','text'],['Available from','available_from','datetime-local'],['Available until','available_until','datetime-local']]){
+     for(const [label,name,type] of [['Available from','available_from','datetime-local'],['Available until','available_until','datetime-local']]){
       const field=element('label',label),input=document.createElement('input');input.name=name;input.type=type;input.required=true;field.append(input);consentInput.append(field);
      }
+     consentInput.append(element('p',`Declared operator: ${invitation.operator_id}`));
      const conflicts=element('label','Conflicts, one per line'),conflictInput=document.createElement('textarea');conflictInput.name='conflicts';conflicts.append(conflictInput);consentInput.append(conflicts);
      item.append(consentInput);
     }
@@ -342,8 +343,10 @@ async function reviewerInvitations(panel) {
       buttons.forEach(control=>{control.disabled=true;});
       try{
        if(account!==identity||!token||expires<=Date.now())throw Error('This invitation is no longer actionable.');
+       const values=status==='CONSENTED'?Object.fromEntries(new FormData(consentInput).entries()):null;
+       const disclosure=status==='CONSENTED'?await storeReviewerDisclosure(post,invitation,identity,values):null;
        const saved=status==='CONSENTED'
-        ?await signReviewerConsent({post,wallet,invitation,reviewerId:identity,input:Object.fromEntries(new FormData(consentInput).entries())})
+        ?await signReviewerConsent({post,wallet,invitation,reviewerId:identity,input:{...values,operator_id:invitation.operator_id,disclosure_digest:disclosure.digest}})
         :await respondToInvitation(post,invitation.digest,identity,status);
        feedback.textContent=`Invitation response: ${saved.status}.`;
        await refresh();
