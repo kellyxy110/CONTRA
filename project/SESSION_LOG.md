@@ -4,6 +4,8 @@
 
 The independently controlled beneficiary `contra-beneficiary2.testnet` completed NEP-413 authentication and supplied a control and participation declaration. Final RPC verified its sole FullAccess key and 1 Testnet NEAR balance. A final contract read verified all six reviewer accounts active and confirmed, zero existing cases, zero held escrow and zero unknown value. The active journey draft now names the correct beneficiary. Exact terms and transaction authority remain deliberately unset.
 
+The owner accepted the proposed unchallenged case direction. A public readiness response was captured into an immutable evidence manifest and the exact terms were submitted only to `preview_case`. The deployed contract returned case ID `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` and terms digest `996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000`. No signed transaction was prepared or broadcast.
+
 ## 2026-11-13 | Phase 3 committee reconciliation
 
 The owner reported six reviewer confirmations complete. Inspection found that the account names sort into the reverse committee grouping from their invitation labels. Implementation now preserves prior consent while requiring six new wallet-signed acknowledgements of the actual registry-selected roles. Cloudflare tests passed 22 of 22 and focused browser-operation tests passed 8 of 8 before deployment preparation.

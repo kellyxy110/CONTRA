@@ -1,6 +1,6 @@
 # Next execution task
 
-Current action: freeze the first live case terms for `contra-creator.testnet` and independently controlled beneficiary `contra-beneficiary2.testnet`. Final RPC has verified the beneficiary key and 1 Testnet NEAR, all six reviewers are active and confirmed, and no case exists. Next, bind participant operator digests, evidence, deadlines, principal and the exact `create_case` intent. Keep the draft non-executable until the resulting digest receives operation-specific authority.
+Current action: reconcile the exact first-case preview with the six signed committee acknowledgements, then build the operation-specific `create_case` authority digest for case ID `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278`. The proposal uses 0.1 Testnet NEAR and remains non-executable. Do not sign or broadcast until the exact operation digest is approved.
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 

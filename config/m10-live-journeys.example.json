@@ -14,10 +14,20 @@
     {
       "journey": "unchallenged",
       "committees": { "primary": [], "fresh": [] },
-      "terms_digest": null,
-      "evidence_manifest_digest": null,
-      "amount_yocto": null,
-      "deadlines": null,
+      "request_id": "c2c6399d39e4db6164d5afe1e77c846c2d64f1fb40a4929302ac135ee762f97e",
+      "case_id": "e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278",
+      "terms_digest": "996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000",
+      "evidence_manifest_digest": "6160d8d0964ac9144f245227c212bee07b359716bb4409f7c842a709286ab6a5",
+      "amount_yocto": "100000000000000000000000",
+      "deadlines": {
+        "fund_by_ns": "1794643200000000000",
+        "submit_by_ns": "1794645000000000000",
+        "primary_commit_end_ns": "1794647700000000000",
+        "primary_reveal_end_ns": "1794650400000000000",
+        "challenge_end_ns": "1794653100000000000",
+        "fresh_commit_end_ns": "1794655800000000000",
+        "fresh_reveal_end_ns": "1794658500000000000"
+      },
       "financial_authorisation": null
     },
     {

@@ -6,6 +6,8 @@
 - Recorded final RPC evidence for its independently supplied FullAccess key and 1 Testnet NEAR balance.
 - Recorded final contract registry read-back showing six active, confirmed reviewers and the deterministic primary and fresh committee order.
 - Preserved the non-executable gate. No case terms, transaction operation or financial authority was invented.
+- Captured an immutable production readiness manifest and obtained a successful finalised read-only contract preview for the proposed unchallenged case.
+- Recorded the exact proposed case ID and terms digest while leaving financial authorisation null.
 
 ## 2026-11-13 | Signed committee-assignment acknowledgement
 
