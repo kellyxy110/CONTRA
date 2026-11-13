@@ -180,7 +180,7 @@ describe('Cloudflare durable financial state',()=>{
 
  it('derives the contract committee order and preserves signed assignment acknowledgements',async()=>{
   const records=['primary3.testnet','appeal2.testnet','primary1.testnet','appeal.testnet','primary2.testnet','appeal3.testnet'].map((reviewer_id,index)=>({reviewer_id,operator_id:String(index+1).repeat(64),revision:'1',disclosure_digest:String(index+7).repeat(64),active:true,confirmed:true}));
-  const selection=await deterministicCommitteeSelection({view:async()=>records});
+  let listArgs=null;const selection=await deterministicCommitteeSelection({view:async(_method,args)=>{listArgs=args;return records;}});expect(listArgs).toEqual({from_index:'0',limit:32});
   expect(selection.assignments.map(value=>`${value.committee}:${value.slot}:${value.reviewer_id}`)).toEqual(['primary:1:appeal.testnet','primary:2:appeal2.testnet','primary:3:appeal3.testnet','fresh:1:primary1.testnet','fresh:2:primary2.testnet','fresh:3:primary3.testnet']);
   const state=stub('reviewer-assignment'),body={committee:'primary',slot:1},invitationBody={committee:'fresh',slot:1},invitationDigest=await digest(new TextEncoder().encode(canonical(invitationBody))),operator='a'.repeat(64);
   await state.createReviewerInvitation({digest:invitationDigest,reviewer_id:'appeal.testnet',operator_id:operator,committee:'fresh',slot:1,expires:Date.now()+60000,body:invitationBody});

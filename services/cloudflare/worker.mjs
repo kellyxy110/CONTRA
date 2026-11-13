@@ -604,7 +604,7 @@ function reviewerConsentBody(input,authAccount){
  return value;
 }
 export async function deterministicCommitteeSelection(adapter,contractAccount='contra-contestation.testnet'){
- const records=await adapter.view('list_reviewers',{}),eligible=(Array.isArray(records)?records:records?.items||[]).filter(value=>value?.active===true&&value?.confirmed===true).sort((left,right)=>left.reviewer_id<right.reviewer_id?-1:left.reviewer_id>right.reviewer_id?1:0).slice(0,6);
+ const records=await adapter.view('list_reviewers',{from_index:'0',limit:32}),eligible=(Array.isArray(records)?records:records?.items||[]).filter(value=>value?.active===true&&value?.confirmed===true).sort((left,right)=>left.reviewer_id<right.reviewer_id?-1:left.reviewer_id>right.reviewer_id?1:0).slice(0,6);
  if(eligible.length!==6)fail('Exactly six active and confirmed reviewers are required');
  const assignments=eligible.map((value,index)=>({reviewer_id:value.reviewer_id,operator_id:value.operator_id,revision:String(value.revision),disclosure_digest:value.disclosure_digest,committee:index<3?'primary':'fresh',slot:index%3+1}));
  return {assignments,selection_digest:await textHash(canonical({schema:'CONTRA_COMMITTEE_SELECTION_V1',contract_account:contractAccount,assignments}))};
