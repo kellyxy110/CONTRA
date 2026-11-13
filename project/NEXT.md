@@ -1,6 +1,6 @@
 # Next execution task
 
-Current action: reconcile the exact first-case preview with the six signed committee acknowledgements, then build the operation-specific `create_case` authority digest for case ID `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278`. The proposal uses 0.1 Testnet NEAR and remains non-executable. Do not sign or broadcast until the exact operation digest is approved.
+Current action: obtain explicit approval of operation authority digest `a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5`. It covers only prepared operation `phase3-create-e6bb304c52aeb9b0`, payload hash `8ae68c1a354bccc8e4dbb44c33d6f2c45915c6beb39bd2df53bba25c8312b1b3`, `create_case`, signer `contra-creator.testnet`, receiver `contra-contestation.testnet` and 1 yoctoNEAR. It does not authorise funding. Do not release or broadcast the signing request before exact approval.
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 

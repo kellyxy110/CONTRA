@@ -6,6 +6,8 @@ Final NEAR Testnet RPC verified `contra-beneficiary2.testnet` with the independe
 
 The first unchallenged terms proposal passed the deployed contract's read-only `preview_case` at final block 277571602. It resolves to case ID `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` and terms digest `996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000`, with 0.1 Testnet NEAR principal. Signing remains disabled and financial authority remains null.
 
+The authenticated production Worker persisted operation `phase3-create-e6bb304c52aeb9b0` in `PREPARED` state with payload hash `8ae68c1a354bccc8e4dbb44c33d6f2c45915c6beb39bd2df53bba25c8312b1b3`. Live signing was false and no signing request was released. The operation-specific authority digest is `a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5`; owner approval remains null.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-COMMITTEE-ACKNOWLEDGEMENT
 
 The owner reports that all six independently controlled reviewer accounts completed their own onchain confirmation. Before case preparation, the deterministic registry policy exposed a role mismatch: ASCII account ordering selects `appeal.testnet`, `appeal2.testnet` and `appeal3.testnet` as primary, followed by `primary1.testnet`, `primary2.testnet` and `primary3.testnet` as fresh appeal. The original signed invitations named the opposite roles. The application now derives the exact registry order from finalised contract reads and requires each reviewer to sign an immutable NEP-413 committee-assignment acknowledgement. No invitation, disclosure or prior consent is rewritten. Case preparation remains blocked until all six assignment acknowledgements are recorded.

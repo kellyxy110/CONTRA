@@ -8,6 +8,8 @@
 - Preserved the non-executable gate. No case terms, transaction operation or financial authority was invented.
 - Captured an immutable production readiness manifest and obtained a successful finalised read-only contract preview for the proposed unchallenged case.
 - Recorded the exact proposed case ID and terms digest while leaving financial authorisation null.
+- Authenticated the creator from Windows Credential Manager without exposing its key and persisted the exact `create_case` operation in `PREPARED` state.
+- Recorded the payload-bound authority digest while leaving live signing disabled and owner approval null.
 
 ## 2026-11-13 | Signed committee-assignment acknowledgement
 
