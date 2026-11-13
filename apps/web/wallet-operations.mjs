@@ -4,6 +4,10 @@ export function createWalletOperations({
  request, getToken, getAccount, getWallet, prepareWalletTransaction,
  sendPreparedWalletTransaction, reconcileWalletTransaction, refresh=async()=>{}
 }) {
+ function stableOperationId(method,args){
+  const anchor=args?.case_id||args?.request_id||args?.reviewer_id||args?.disclosure_digest||'operation';
+  return `contra-${method}-${String(anchor).replace(/[^a-zA-Z0-9-]/g,'').slice(0,24)}`;
+ }
  async function prepareCase(args) {
   const token=getToken(),accountId=getAccount();
   if(!token||!accountId)throw Error('Connect and authenticate a Testnet wallet before preparing a case.');
@@ -19,11 +23,12 @@ export function createWalletOperations({
   if(!wallet)throw Error('Reconnect the signing wallet. Session recovery alone cannot sign transactions.');
   const config=await request('config');
   const scopedReviewerConfirmation=method==='confirm_reviewer'&&config.reviewer_confirmation_signing_authorized===true;
-  if(config.network!=='testnet'||(!config.external_wallet_signing_authorized&&!scopedReviewerConfirmation))
-   throw Error('Live Testnet wallet signing is disabled by the server authority gate.');
-  const operation=preparedOperation||(await prepareWalletTransaction({token,accountId,call:{
+  if(config.network!=='testnet')throw Error('Live Testnet wallet signing is unavailable on this network.');
+  const operation=preparedOperation||(await prepareWalletTransaction({token,accountId,operationId:stableOperationId(method,args),call:{
    method,args,deposit,receiverId:config.contract_account
   }})).operation;
+  if(!config.external_wallet_signing_authorized&&!scopedReviewerConfirmation)
+   throw Error(`Operation ${operation.operation_id} is prepared but signing is disabled by the server authority gate. No transaction was released.`);
   try {
    const sent=await sendPreparedWalletTransaction(wallet,{token,operation});
    const reconciled=await reconcileWalletTransaction({token,accountId,operationId:operation.operation_id});

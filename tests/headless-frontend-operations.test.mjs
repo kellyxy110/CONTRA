@@ -42,15 +42,16 @@ test('protected case reads and paged filters stay independent of presentation',a
 test('wallet prepare retains bounded create_case and signing remains fail closed',async()=>{
  const observed=[];let authorized=false;
  const request=async()=>({network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:authorized});
- const prepareWalletTransaction=async x=>{observed.push(['prepare',x]);return {operation:{operation_id:'op'}};};
+ const prepareWalletTransaction=async x=>{observed.push(['prepare',x]);return {operation:{operation_id:x.operationId||'op'}};};
  const sendPreparedWalletTransaction=async()=>{observed.push(['sent']);return {transactionHash:'hash'};};
  const reconcileWalletTransaction=async x=>{observed.push(['reconcile',x]);return {status:'CONFIRMED'};};
  let wallet={};
  const ops=createWalletOperations({request,getToken:()=> 'token',getAccount:()=> 'account',getWallet:()=>wallet,prepareWalletTransaction,sendPreparedWalletTransaction,reconcileWalletTransaction});
  assert.equal((await ops.prepareCase({request_id:'req'})).operation_id,'op');
  assert.deepEqual(observed[0][1].call,{method:'create_case',args:{request_id:'req'},deposit:'1',receiverId:'contra-contestation.testnet'});
- await assert.rejects(ops.signCall('create_case',{request_id:'req'},'1'),/authority gate/);
- assert.equal(observed.length,1);
+ await assert.rejects(ops.signCall('create_case',{request_id:'req'},'1'),/contra-create_case-req.*prepared.*authority gate/);
+ assert.equal(observed.length,2);
+ assert.equal(observed[1][1].operationId,'contra-create_case-req');
  authorized=true;
  const result=await ops.signCall('create_case',{request_id:'req'},'1',{operation_id:'op'});
  assert.equal(result.transaction_hash,'hash');assert.equal(result.operation.status,'CONFIRMED');

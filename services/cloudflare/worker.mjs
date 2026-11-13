@@ -680,9 +680,9 @@ async function api(request,env){
   const auth=await session(request,env);
   const input=await body(request),existing=await store.operation(input.operation_id);if(!existing||existing.account!==auth.account)fail('Operation not found');
   const payload=JSON.parse(existing.payload_json);
-  const exactCaseCreation=signingAuthorised(env)&&existing.id===env.CONTRA_SIGNING_OPERATION_ID&&existing.payload_hash===env.CONTRA_SIGNING_PAYLOAD_HASH&&existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT&&payload.methodName==='create_case'&&payload.deposit==='1';
+  const exactScopedOperation=signingAuthorised(env)&&existing.id===env.CONTRA_SIGNING_OPERATION_ID&&existing.payload_hash===env.CONTRA_SIGNING_PAYLOAD_HASH&&existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT;
   const reviewerConfirmation=existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT&&await reviewerConfirmationAuthorised({store,adapter,account:auth.account,payload,contractAccount:env.CONTRA_CONTRACT_ACCOUNT});
-  if(!exactCaseCreation&&!reviewerConfirmation){
+  if(!exactScopedOperation&&!reviewerConfirmation){
    return json({error:'The operation does not match an authorised scoped Testnet transaction'},403);
   }
   const operation=browserOperation(await store.handoffOperation(input.operation_id));
