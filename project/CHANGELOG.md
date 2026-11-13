@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-13 | P0 frontend recovery implementation
+
+- Rebuilt the active dashboard styling against the approved dark and light Overview references without restoring superseded designs.
+- Moved the sidebar control to the bottom, replaced the icon-only control with textual Collapse and Expand states, and verified persisted layout changes.
+- Restored truthful KPI, timeline, status, evidence, reviewer-round, activity and brand panels with populated and designed empty states.
+- Expanded Chromium and Firefox coverage across ten destinations, eight widths, themes, navigation, charts, forms, recovery states and mobile navigation.
+- Added reproducible side-by-side visual comparison output and CI artifact retention.
+- Preserved the contract ABI, wallet security, provider gates, Durable Object state and disabled financial authority.
+
 ## 2026-11-13 | Phase 2 functional workflows
 
 Merged through PR 100 to `main` as `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after Core, Security and comprehensive Integration passed.

@@ -1,6 +1,10 @@
 # Next execution task
 
-## Current execution unit | Complete Phase 3 live release gates
+## Current execution unit | P0 frontend recovery release
+
+Complete the focused frontend recovery PR, require Core, Security, Contract and applicable Integration checks, then deploy the exact reviewed build to the existing Cloudflare Worker and Pages project. Verify production navigation, themes, sidebar behaviour, truthful empty data, Durable Object readiness and Testnet read-only health. Do not enable financial signing, paid provider execution or fixture authority.
+
+## Paused execution unit | Complete Phase 3 live release gates
 
 Synchronise `implementation/oct28` with the accepted Phase 2 tree. Reauthenticate Wrangler to the verified project Cloudflare account before deploying the merged release. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, genuine beneficiary participation and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
 
