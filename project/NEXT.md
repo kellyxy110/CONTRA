@@ -1,6 +1,6 @@
 # Next execution task
 
-Current action: the independently controlled beneficiary must inspect case `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` and sign `accept_terms` for terms digest `996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000`. Case creation is final and signing is disabled again. Do not fund the 0.1 Testnet NEAR principal until beneficiary acceptance is final and a separate exact funding authority is prepared.
+Current action: approve exact beneficiary operation digest `55b5e03aef1e0eee32b02f1ab8cf0613c57a53abb1e1df96624150aae82a1334`, then have `contra-beneficiary2.testnet` inspect and sign it in their own wallet. It covers only `accept_terms` for case `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278`, terms digest `996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000` and 1 yoctoNEAR. Do not fund the 0.1 Testnet NEAR principal until beneficiary acceptance is final and a separate exact funding authority is prepared.
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 
