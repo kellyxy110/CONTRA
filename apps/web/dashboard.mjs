@@ -16,7 +16,8 @@ let token = sessionStorage.getItem('contra-session');
 const {request, view} = createApiClient(() => token);
 const post = (path, body) => request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 let cases = [], caseRequest = 0;
-const visualFixtureMode = ['localhost','127.0.0.1'].includes(location.hostname) && new URLSearchParams(location.search).get('mode') === 'fixture';
+const requestedMode = new URLSearchParams(location.search).get('mode');
+const visualFixtureMode = requestedMode === 'demo' || (['localhost','127.0.0.1'].includes(location.hostname) && requestedMode === 'fixture');
 const fixtureCases = ['ReviewCommit','Challenged','Settled'].map((state,index)=>({
  case_id:String(index+1).repeat(64),state,creator_id:'fixture-creator.testnet',
  terms_digest:'9'.repeat(64),evidence_digest:'a'.repeat(64),created_at_ns:'1794484800000000000',
@@ -54,9 +55,12 @@ function icon(name) {
  svg.setAttribute('viewBox', '0 0 24 24');
  svg.setAttribute('aria-hidden', 'true');
  svg.classList.add('line-icon');
+ const tonePath = document.createElementNS(ns, 'path');
+ tonePath.setAttribute('class','icon-tone');
+ tonePath.setAttribute('d', iconPaths[name].split(' ')[0] ?? iconPaths[name]);
  const path = document.createElementNS(ns, 'path');
  path.setAttribute('d', iconPaths[name]);
- svg.append(path);
+ svg.append(tonePath,path);
  return svg;
 }
 
@@ -201,9 +205,13 @@ function renderCases() {
  byId('active').textContent = filtered.filter(item => !['Cancelled','Settled','Resolved','Unresolved'].includes(item.state)).length;
  chart('case-chart', [...states], 'cases');
  const selector = byId('case');
+ const options = byId('case-options');
  const selected = selector.value;
  selector.replaceChildren(new Option('Select a case', ''), ...filtered.map(item => new Option(`${item.case_id.slice(0,12)} · ${item.state}`, item.case_id)));
+ options.replaceChildren(...filtered.map(item=>{const option=document.createElement('option');option.value=`${item.case_id.slice(0,12)} · ${readable(item.state)}`;option.dataset.caseId=item.case_id;option.label=item.case_id;return option;}));
  if (filtered.some(item => item.case_id === selected)) selector.value = selected;
+ const current=filtered.find(item=>item.case_id===selector.value);
+ byId('case-search').value=current?`${current.case_id.slice(0,12)} · ${readable(current.state)}`:'';
  void selectCase();
 }
 
@@ -220,18 +228,16 @@ function caseEventLink(caseId) {
 }
 
 const scheme = matchMedia('(prefers-color-scheme: dark)');
+let themePreference = localStorage.getItem('contra-dashboard-theme') || 'dark';
 function applyTheme() {
- const preference = byId('theme').value;
- document.documentElement.dataset.theme = preference === 'system' ? (scheme.matches ? 'dark' : 'light') : preference;
+ document.documentElement.dataset.theme = themePreference === 'system' ? (scheme.matches ? 'dark' : 'light') : themePreference;
+ byId('theme').querySelectorAll('[data-theme-choice]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.themeChoice===themePreference)));
 }
-const savedTheme = localStorage.getItem('contra-dashboard-theme');
-if (['dark','light','system'].includes(savedTheme)) byId('theme').value = savedTheme;
+if (!['dark','light','system'].includes(themePreference)) themePreference='dark';
 applyTheme();
 scheme.addEventListener('change', applyTheme);
-byId('theme').addEventListener('change', () => {
- localStorage.setItem('contra-dashboard-theme', byId('theme').value);
- applyTheme();
-});
+byId('theme').addEventListener('click',event=>{const button=event.target.closest('[data-theme-choice]');if(!button)return;themePreference=button.dataset.themeChoice;localStorage.setItem('contra-dashboard-theme',themePreference);applyTheme();});
+document.querySelectorAll('[data-mode-choice]').forEach(button=>{button.setAttribute('aria-pressed',String((visualFixtureMode?'demo':'live')===button.dataset.modeChoice));button.addEventListener('click',()=>{const url=new URL(location.href);if(button.dataset.modeChoice==='demo')url.searchParams.set('mode','demo');else url.searchParams.delete('mode');location.assign(url);});});
 Object.entries(routes).forEach(([route, label]) => {
  const link = element('a', '');
  link.href = '#' + route;
@@ -276,6 +282,12 @@ document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
 let account = null;
 let wallet = null;
+document.querySelector('.brand').addEventListener('click',event=>{event.preventDefault();history.replaceState(null,'',location.pathname+location.search+'#overview');void updateNavigation();scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});if(!visualFixtureMode)void refreshOverview();});
+async function refreshOverview(){
+ const [nextCases,nextActivity]=await Promise.allSettled([readPagedCases(view,{maxPages:20}),view('get_events',{case_id:null,after_seq:'0',limit:20})]);
+ if(nextCases.status==='fulfilled'){cases=nextCases.value;renderCases();byId('status').textContent=`Read-only Testnet mode · ${cases.length} ${cases.length===1?'case':'cases'} returned.`;byId('status').dataset.mode='read-only';}
+ if(nextActivity.status==='fulfilled')table('events',nextActivity.value.items.map(event=>{const caseId=event.data?.[0]?.case_id;return [event.data?.[0]?.seq,caseId?caseEventLink(caseId):'Unavailable',event.event];}),3,'No contract events returned.');
+}
 async function reviewerInvitations(panel) {
  const identity=account;
  if(!token||!identity){
@@ -682,6 +694,7 @@ async function updateNavigation() {
   else link.removeAttribute('aria-current');
  });
  const overview = route === 'overview' || route === 'main';
+ byId('period-control').hidden=!overview;
  byId('overview').hidden = !overview;
  const workspace = byId('workspace');
  workspace.hidden = overview;
@@ -690,6 +703,14 @@ async function updateNavigation() {
  const panel = element('article', '');
  panel.append(element('h2', routes[route] ?? 'Destination unavailable'), element('p','Loading…'));
  workspace.replaceChildren(panel);
+ if(visualFixtureMode){
+  const demoCopy={cases:['Explore three simulated cases or prepare a new case in Testnet mode.','Case creation is disabled because Demo Mode has no signing authority.'],evidence:['Inspect illustrative evidence digests, provenance and binding states.','Switch to Testnet mode to access protected case evidence.'],lab:['Meta proposal: simulated, non-binding.','Modal verification: simulated digest binding. No provider request was made.'],challenges:['Illustrative challenged case with bound counterevidence.','A real challenge requires eligibility, a deadline and operation-specific signing authority.'],reviewers:['Primary: three simulated slots. Appeal: three simulated slots.','Fixtures do not represent independent human reviewers.'],settlement:['Illustrative payout: confirmed in simulation only.','No receipt or Testnet payout exists for this demonstration.'],activity:['Case funded · simulated event 1','Challenge filed · simulated event 2','Appeal resolved · simulated event 3'],settings:['Network: Demo Mode, isolated from Testnet','Wallet and transaction actions: disabled']};
+  panel.lastElementChild.remove();
+  const intro=element('section','');intro.append(element('h3',`${routes[route]} demonstration`),element('p','Simulated data is isolated from contract, provider and financial operations.'));
+  const list=element('ul','');(demoCopy[route]||['This workspace has no simulated operation.']).forEach(value=>list.append(element('li',value)));intro.append(list);panel.append(intro);
+  if(route==='constellations'){mountConstellations(panel,{cases:fixtureCases,selectedCase:byId('case').value,request:async()=>{throw Error('Demo records have no protected artifacts.');},view:async()=>null});}
+  return;
+ }
  const show = entries => {
   if (generation !== routeRequest) return;
   const list = element('ul','');
@@ -751,23 +772,23 @@ addEventListener('hashchange', updateNavigation);
 byId('period').addEventListener('change', renderCases);
 byId('case').addEventListener('change', selectCase);
 byId('round').addEventListener('change', selectCase);
+byId('case-search').addEventListener('change',event=>{const query=event.target.value.trim().toLowerCase();const match=cases.find(item=>item.case_id.toLowerCase()===query||`${item.case_id.slice(0,12)} · ${readable(item.state)}`.toLowerCase()===query||item.case_id.toLowerCase().startsWith(query.split(' ')[0]));byId('case').value=match?.case_id||'';void selectCase();});
+document.querySelectorAll('[data-round]').forEach(button=>button.addEventListener('click',()=>{byId('round').value=button.dataset.round;document.querySelectorAll('[data-round]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));void selectCase();}));
 byId('wallet').addEventListener('click', async () => {
  const button = byId('wallet');
  button.disabled = true;
  try {
+  if(visualFixtureMode)throw Error('Wallet connections are disabled in Demo Mode. Switch to Testnet mode to authenticate.');
   const config = await request('config');
   const sdk = await import('./wallet.bundle.js');
-  const connected = await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,...sdk});
-  const {session} = connected;
-  wallet = connected.wallet;
-  token = session.token;
-  account = session.account;
-  sessionStorage.setItem('contra-session',token);
-  button.textContent = session.account;
-  await selectCase();
-  if (!byId('workspace').hidden) void updateNavigation();
+  const listed=await sdk.listCompatibleWallets({network:config.network});
+  const dialog=byId('wallet-dialog'),options=byId('wallet-options'),feedback=byId('wallet-feedback');
+  options.replaceChildren();feedback.textContent='';
+  if(!listed.wallets.length)throw Error('No compatible Testnet wallet with NEP-413 support is currently available.');
+  for(const option of listed.wallets){const choice=element('button','');choice.type='button';choice.className='wallet-option';const image=document.createElement('img');image.src=option.icon;image.alt='';const copy=element('span','');copy.append(element('strong',option.name),element('small',`${option.description} ${option.verification}.`));choice.append(image,copy,element('span','Connect'));choice.addEventListener('click',async()=>{[...options.querySelectorAll('button')].forEach(item=>item.disabled=true);feedback.textContent=`Connecting to ${option.name}…`;try{const connected=await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,walletId:option.id,connector:listed.connector,...sdk});wallet=connected.wallet;token=connected.session.token;account=connected.session.account;sessionStorage.setItem('contra-session',token);button.textContent=connected.session.account;feedback.textContent=`Authenticated as ${connected.session.account}.`;setTimeout(()=>dialog.close(),500);await selectCase();if(!byId('workspace').hidden)void updateNavigation();}catch(error){feedback.textContent=error.message;[...options.querySelectorAll('button')].forEach(item=>item.disabled=false);}});options.append(choice);}
+  dialog.showModal();
  } catch (error) {
-  byId('status').textContent = error.message;
+  byId('wallet-feedback').textContent=error.message;byId('wallet-dialog').showModal?.();
  } finally {
   button.disabled = false;
  }

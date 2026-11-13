@@ -54,12 +54,21 @@ test('browser connector selects a Testnet NEP-413 wallet without financial autho
  assert.equal(calls[0].network,'testnet');
  assert.deepEqual(calls[0].features,{signMessage:true,testnet:true});
  assert.equal(calls[0].autoConnect,false);
- assert.equal(calls[0].manifest.wallets.length,1);
- assert.equal(calls[0].manifest.wallets[0].id,'meteor-wallet');
- assert.equal(calls[0].manifest.wallets[0].executor,'https://contra-near.pages.dev/vendor/meteor-near-connect.js');
+ assert.equal(calls[0].manifest,undefined);
  assert.equal(module.METEOR_EXECUTOR_SHA256,'96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50');
  assert.deepEqual(calls[1],{walletId:'meteor-wallet'});
  assert.equal(calls.some(value=>value?.addFunctionCallKey),false);
+});
+
+test('wallet discovery exposes only Testnet NEP-413 compatible providers',async()=>{
+ const compatible={manifest:{id:'meteor-wallet',name:'Meteor',icon:'icon',description:'Compatible wallet',features:{testnet:true,signMessage:true}}};
+ const wrongNetwork={manifest:{id:'mainnet-only',name:'Mainnet',features:{mainnet:true,signMessage:true}}};
+ const noMessage={manifest:{id:'no-message',name:'No message',features:{testnet:true,signMessage:false}}};
+ const connector={whenManifestLoaded:Promise.resolve(),availableWallets:[compatible,wrongNetwork,noMessage],registerWallet:async()=>{}};
+ const module=await import('../apps/web/wallet-source.mjs?multi-wallet-discovery');
+ const result=await module.listCompatibleWallets({connectorFactory:()=>connector});
+ assert.equal(result.connector,connector);
+ assert.deepEqual(result.wallets.map(value=>value.id),['meteor-wallet']);
 });
 
 test('browser connector explicitly signs in a new Testnet wallet without adding a key',async()=>{

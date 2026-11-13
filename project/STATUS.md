@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current refinement | final interface and multi-wallet verification
+
+The approved Overview composition now includes the owner-requested brand, navigation, duotone icon, typography, chart, case picker, Primary/Appeal and icon-theme refinements. Public Demo Mode is explicit and isolated from wallets, contract mutation, provider billing, reviewer registration and operation creation. The wallet flow now presents a feature-filtered Testnet NEP-413 picker. Meteor retains its checksum-pinned executor and genuine prior CONTRA authentication evidence. Intear and Nightly remain connector-compatibility candidates pending genuine account authentication evidence. Repository tests pass 178 of 178 and Cloudflare tests pass 21 of 21. Production promotion remains pending hosted checks and deployment verification. No financial authority or reviewer-independence status changed.
+
 ## Current checkpoint | CONTRA-2026-11-13-P0-FRONTEND-RECOVERY
 
 The approved dark and light Overview references are now the sole active visual authority. The recovered frontend matches their desktop composition, restores both doughnut charts, distinguishes active navigation from the coral Challenges accent, supports dark and light themes, and provides a working textual Collapse and Expand control at the bottom of the sidebar. Chromium and Firefox passed all ten destinations at 320, 375, 768, 1024, 1280, 1366, 1440 and 1920 pixel widths. Local verification passed 176 repository tests, 21 Cloudflare tests, the wallet build, documentation checks and the Cloudflare dry run. Production readiness remains PARTIAL until the focused PR passes hosted gates and the exact merged build is deployed and smoke-tested.

@@ -36,10 +36,10 @@ export function createWalletOperations({
 }
 
 export async function openAuthenticatedWallet({
- network='testnet',contractAccount,connectWallet,selectWalletAccount,authenticateWallet
+ network='testnet',contractAccount,connectWallet,selectWalletAccount,authenticateWallet,walletId,connector
 }) {
  if(network!=='testnet')throw Error('Only a Testnet wallet may authenticate through this flow.');
- const connected=await connectWallet({network,contractAccount,authenticationAuthorized:true});
+ const connected=await connectWallet({network,contractAccount,authenticationAuthorized:true,walletId,connector});
  const selected=selectWalletAccount(connected.accounts);
  const session=await authenticateWallet(connected.wallet,selected.accountId);
  return {wallet:connected.wallet,session:{...session,account:session.account||selected.accountId}};

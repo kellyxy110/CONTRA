@@ -64,7 +64,7 @@ try {
     assert.equal((await page.request.get(origin + path)).status(), 404);
    }
    await page.screenshot({path:`ci-output/contra-${name}-${width}-dark.png`,fullPage:true});
-   await page.locator('#theme').selectOption('light');
+   await page.locator('[data-theme-choice="light"]').click();
    await page.reload();
    await page.waitForFunction(()=>document.documentElement.dataset.theme==='light');
    if([1280,1440].includes(width))await page.screenshot({path:`ci-output/contra-${name}-${width}-empty-light.png`,fullPage:width!==1280});
@@ -105,7 +105,7 @@ try {
     assert.equal(await page.locator('#funded').textContent(),'3 NEAR');
     assert.equal(await page.locator('#case-chart .donut').count(),1);
     for(const theme of [1280,1440].includes(width)?['light','dark']:['dark']){
-     await page.locator('#theme').selectOption(theme);
+     await page.locator(`[data-theme-choice="${theme}"]`).click();
      await page.evaluate(()=>scrollTo(0,0));
      await page.screenshot({path:`ci-output/contra-${name}-${width}-fixture-${theme}.png`,fullPage:width!==1280});
     }
@@ -236,9 +236,9 @@ try {
       await page.locator('#workspace article').waitFor();
       assert.equal(await page.locator('#navigation a[aria-current="page"]').getAttribute('href'),await link.getAttribute('href'));
       assert.equal(await page.locator('#navigation a[href="#challenges"]').getAttribute('data-tone'),'challenged');
-      await page.locator('#theme').selectOption('light');
+      await page.locator('[data-theme-choice="light"]').click();
       assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
-      await page.locator('#theme').selectOption('dark');
+      await page.locator('[data-theme-choice="dark"]').click();
       if(title==='Constellations'){
        const radar=page.getByRole('img',{name:/Eight-axis evidence/});
        await radar.waitFor();

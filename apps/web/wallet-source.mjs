@@ -4,10 +4,30 @@ const METEOR_EXECUTOR_COMMIT='ef1be35fc3712f2de60a7563aed543d78e73f763';
 export const METEOR_EXECUTOR_SHA256='96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50';
 const METEOR_EXECUTOR_URL=typeof location==='object'?new URL('/vendor/meteor-near-connect.js',location.origin).href:'https://contra-near.pages.dev/vendor/meteor-near-connect.js';
 export const METEOR_MANIFEST={version:'1.0.0',wallets:[{id:'meteor-wallet',name:'Meteor Wallet',icon:'https://raw.githubusercontent.com/Meteor-Wallet/meteor_wallet_sdk/main/assets/meteor-logo-svg.svg',description:'Browser-isolated NEAR wallet authentication.',website:'https://meteorwallet.app/',version:'1.1.1',executor:METEOR_EXECUTOR_URL,type:'sandbox',features:{signMessage:true,signInWithoutAddKey:true,signInAndSignMessage:true,signAndSendTransaction:true,signAndSendTransactions:true,signInWithFunctionCallKey:true,signDelegateActions:true,mainnet:true,testnet:true},platform:{web:'https://wallet.meteorwallet.app',chrome:'https://chromewebstore.google.com/detail/meteor-wallet/pcndjhkinnkaohffealmlmhaepkpmgkb',android:'https://play.google.com/store/apps/details?id=app.meteorwallet.v2',ios:'https://apps.apple.com/us/app/meteor-wallet/id6739558223'},permissions:{storage:true,allowsOpen:['https://chromewebstore.google.com','https://wallet.meteorwallet.app','https://meteorwallet.app','meteorwallet://','meteorwalletdev://'],external:['meteorCom','meteorComV2']}}]};
-export async function connectWallet({network,contractAccount,authenticationAuthorized,connectorFactory=options=>new NearConnector(options),walletId='meteor-wallet'}){
+let sharedConnector;
+const BROWSER_WALLET_MATRIX={
+ 'meteor-wallet':{verification:'Genuine CONTRA Testnet NEP-413 flow verified'},
+ 'intear-wallet':{verification:'Connector compatibility verified, account authentication pending'},
+ 'nightly-wallet':{verification:'Connector compatibility verified, account authentication pending'},
+};
+export async function createWalletConnector({network='testnet',connectorFactory=options=>new NearConnector(options)}={}){
+ if(sharedConnector)return sharedConnector;
+ const connector=connectorFactory({network,features:{testnet:true,signMessage:true},autoConnect:false,footerBranding:null});
+ await connector.whenManifestLoaded?.catch(()=>{});
+ if(Array.isArray(connector.wallets))connector.wallets=connector.wallets.filter(value=>value.manifest?.id!=='meteor-wallet');
+ if(Array.isArray(connector.manifest?.wallets))connector.manifest.wallets=connector.manifest.wallets.filter(value=>value.id!=='meteor-wallet');
+ await connector.registerWallet?.(METEOR_MANIFEST.wallets[0]);
+ sharedConnector=connector;
+ return connector;
+}
+export async function listCompatibleWallets({network='testnet',connectorFactory}={}){
+ const connector=await createWalletConnector({network,connectorFactory});
+ return {connector,wallets:(connector.availableWallets||[]).filter(value=>BROWSER_WALLET_MATRIX[value.manifest?.id]&&value.manifest?.features?.testnet===true&&value.manifest?.features?.signMessage===true).map(value=>({id:value.manifest.id,name:value.manifest.name,icon:value.manifest.icon,description:value.manifest.description||'NEAR Testnet wallet',website:value.manifest.website,verification:BROWSER_WALLET_MATRIX[value.manifest.id].verification}))};
+}
+export async function connectWallet({network,contractAccount,authenticationAuthorized,connectorFactory,walletId='meteor-wallet',connector=null}){
  if(network!=='testnet'||authenticationAuthorized!==true)throw Error('Testnet wallet authentication is not authorized.');
  if(contractAccount!=='contra-contestation.testnet')throw Error('Unexpected Testnet contract account.');
- const connector=connectorFactory({network:'testnet',features:{signMessage:true,testnet:true},autoConnect:false,manifest:METEOR_MANIFEST});
+ connector=connector||await createWalletConnector({network:'testnet',connectorFactory});
  const wallet=await connector.connect({walletId});
  let accounts=await getWalletAccounts(wallet);
  if(!accounts.length){
