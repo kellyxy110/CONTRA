@@ -1,5 +1,13 @@
 # Decision ledger
 
+## D-110 | Browser reviewer recovery is encrypted and local-secret free | 2026-11-13
+
+Reviewer commit and reveal recovery uses PBKDF2-SHA-256 with 210,000 iterations and AES-GCM. The browser persists and uploads only the encrypted package, never the reviewer nonce or plaintext reveal. Recovery revalidates the durable package identity and frozen commitment before reveal. This preserves the existing commitment encoding and contract ABI.
+
+## D-111 | Protected evaluation data stays caller scoped | 2026-11-13
+
+General artifact availability cannot expose provider responses, proposals or Modal verification records. Constellation criterion evaluations are derived only from the authenticated account's proposal and its matching immutable verification. AI records remain non-binding.
+
 ## D-109 | Case-bound production execution remains fail closed | 2026-11-12
 
 ACCEPTED. Provider readiness may release a call only after authentication, case participation, exact case and round reads, immutable evidence binding, a durable reservation and every provider-specific financial gate pass. Reviewer consent requires an independently signed NEP-413 control statement bound to an immutable disclosure revision. Technical verification cannot establish six-human independence. Browser transaction authority remains scoped to an exact persisted operation and cannot be inferred from a FullAccess key held outside the browser.

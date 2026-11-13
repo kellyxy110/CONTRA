@@ -1,7 +1,7 @@
 # CONTRA: three-phase completion plan
 
-**Status:** Active implementation plan  
-**Baseline:** `main` at `2db8ad8edea5f1e838a921c42bddf50313cc98e0` (backend PRs #96 and #97 merged) and frontend draft [PR #95](https://github.com/kellyxy110/CONTRA/pull/95) at `825cb661f456283392561205d021cd806d707b39`.  
+**Status:** Phase 1 complete on `main`; Phase 2 verification in progress
+**Baseline:** `main` at `9a1ecc0e4cb9314b2c4896d545098c628e5a20a4` after [PR #95](https://github.com/kellyxy110/CONTRA/pull/95) merged the reviewed frontend and backend tree.
 **Date:** 12 November 2026  
 **Authority:** Execute all independently authorised engineering, documentation, testing, review and passing merges without repeated permission requests. Do not broaden financial, wallet, provider or production-secret authority.
 

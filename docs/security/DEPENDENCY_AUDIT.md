@@ -1,18 +1,18 @@
 # Dependency security assessment
 
-Date: 9 November 2026
+Date: 13 November 2026
 
-Scope: locked npm graph on the M07 Contestation migration working tree
+Scope: current locked npm graph after the Phase 2 functional workflow implementation
 
 ## Result
 
 The inherited baseline contained 17 findings: 14 low, two high and one critical. The high and critical findings came from `near-workspaces@5.0.0` to `near-sandbox@0.1.5` to `tar@6.2.1`. The vulnerable archive parser was used by development Sandbox installation and was not imported by the production API or browser bundle. It was nevertheless reachable during clean installation and therefore remained a release blocker.
 
-`near-workspaces@5.0.0` requires the legacy `near-sandbox/install` interface, so replacing the Sandbox package itself is incompatible. The root manifest instead retains `near-sandbox@0.1.5` and overrides only its archive parser to `tar@7.5.22`. Clean installs disable dependency lifecycle scripts, then CONTRA downloads the required NEAR Sandbox 2.13.4 archive directly, verifies its SHA-256 and extracts it with the host `tar` command. The current audit contains 15 low findings and zero moderate, high or critical findings. The override must pass the full Linux Sandbox and financial gates before release.
+`near-workspaces@5.0.0` requires the legacy `near-sandbox/install` interface, so replacing the Sandbox package itself is incompatible. The root manifest instead retains `near-sandbox@0.1.5` and overrides only its archive parser to `tar@7.5.22`. Clean installs disable dependency lifecycle scripts, then CONTRA downloads the required NEAR Sandbox 2.13.4 archive directly, verifies its SHA-256 and extracts it with the host `tar` command. The current audit contains 13 low findings and zero moderate, high or critical findings. The override has passed the complete Linux Sandbox and financial gates in comprehensive Integration CI.
 
 ## Current residual findings
 
-The remaining 15 low package findings originate from `elliptic` through `secp256k1` and the NEAR JavaScript account, cryptography, provider, transaction, wallet-selector and `near-api-js` graph. npm proposes downgrades or incompatible major changes rather than a safe in-range remediation. These libraries are used for NEP-413 verification, RPC transaction parsing, wallet request construction and the local test harness, so they are reachable.
+The remaining 13 low package findings originate from `elliptic` through `secp256k1` and the NEAR JavaScript account, cryptography, provider, transaction, wallet and `near-api-js` graph. npm proposes downgrades or incompatible major changes rather than a safe in-range remediation. These libraries are used for NEP-413 verification, RPC transaction parsing, wallet request construction and the local test harness, so they are reachable.
 
 Mitigations:
 
