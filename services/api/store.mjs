@@ -1,10 +1,9 @@
 import {DatabaseSync} from 'node:sqlite';
 import fs from 'node:fs';
 import path from 'node:path';
-import {createHash,randomUUID,randomBytes} from 'node:crypto';
-export const sha256=b=>createHash('sha256').update(b).digest('hex');
-export class ApiError extends Error{constructor(status,message,details={}){super(message);this.status=status;Object.assign(this,details);}}
-export function canonical(value){if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k])).join(',')+'}';return JSON.stringify(value);}
+import {randomUUID,randomBytes} from 'node:crypto';
+import {sha256,ApiError,canonical} from './primitives.mjs';
+export {sha256,ApiError,canonical};
 const SCHEMA_VERSION=5;
 const MIGRATIONS=[
  `CREATE TABLE IF NOT EXISTS blobs(digest TEXT PRIMARY KEY,size INTEGER NOT NULL,media_type TEXT NOT NULL,created_at INTEGER NOT NULL);

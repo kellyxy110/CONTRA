@@ -25,6 +25,8 @@
     "META_PRICING_VERIFIED": "1",
     "META_BILLING_LIMIT_VERIFIED": "0",
     "META_SPEND_AUTHORISED": "1",
+    "META_TIMEOUT_MS": "30000",
+    "META_MAX_REQUEST_MICRO_USD": "250000",
     "META_LIVE_ENABLED": "false",
     "MODAL_FUNCTION_ENDPOINT": "https://boredom407--contra-verifier-verify.us-east.modal.run",
     "MODAL_FUNCTION_ID": "ap-2wMup9xpnApV3ehbwwjKrK",
@@ -34,6 +36,8 @@
     "MODAL_PRICING_VERIFIED": "1",
     "MODAL_BILLING_LIMIT_VERIFIED": "1",
     "MODAL_SPEND_AUTHORISED": "1",
+    "MODAL_TIMEOUT_MS": "30000",
+    "MODAL_MAX_REQUEST_MICRO_USD": "250000",
     "MODAL_LIVE_ENABLED": "false"
   },
   "assets": {

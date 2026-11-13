@@ -1,5 +1,9 @@
 # Next execution task
 
+## Current execution unit | External identities and exact live case authority
+
+The backend implementation is complete to its external boundary. Recruit six distinct human operators, collect their signed control statements, then register and confirm their exact Testnet reviewer records. Separately establish secure browser control of `contra-creator.testnet` or approve an exact state-compatible allowlist change for a named browser-controlled creator. Only after the registry has six active confirmed reviewers may `preview_case` produce the immutable create-case packet and the operation-specific signing gate be configured. Meta and Modal case calls remain disabled until their production readiness flags are intentionally enabled against an existing authorised case.
+
 ## Current execution unit | Independent reviewer onboarding
 
 Provider and non-financial wallet activation are complete to the available external boundary. Recruit and verify three primary and three fresh-appeal human operators with distinct Testnet wallets, control signatures, consent and conflict disclosures. Meta and Modal are the only active providers. Only after reviewer readiness may the two already bounded funded journey packets be frozen and executed. Do not repeat Meta or Modal activation calls.

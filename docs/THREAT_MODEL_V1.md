@@ -1,5 +1,7 @@
 # CONTRA threat model, freeze decisions and verification v1
 
+Cloudflare production bundles isolate shared API errors, canonical serialisation and hashing from the Node SQLite store. The Worker may use Durable Object SQLite only through its binding and must not bundle `node:sqlite`, filesystem access or local database state. The deployment dry-run is inspected for those forbidden imports.
+
 Checkpoint: CONTRA-2026-10-28-UX3C. Documentation freeze, not a smart contract audit or executed contract test report. Baseline plan/ux3b at af0dd97558f134ac9269c7fb58cc7613df6b8202; UX3A frozen at bee5a7481d56c86d4c9860280b8367f82af0cb5a.
 
 Read [CONTRACT_ABI_V1.md](CONTRACT_ABI_V1.md) first; the six UX3C documents jointly define one v1 specification with field-level ownership, not six independent alternatives. Earlier PROTOCOL.md and UX3B concepts remain history/integration context where explicitly superseded. No paid models, deployment, secrets or mainnet actions were used. Credit authorisation remains Meta $3, Baseten $3, Modal $5, subject to verified credits, no unauthorised cash spending.

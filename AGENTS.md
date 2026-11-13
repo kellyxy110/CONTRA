@@ -1,52 +1,33 @@
-# CONTRA agent operating instructions
+# CONTRA engineering instructions
 
-You are implementing CONTRA, a NEAR-native contestation proof-of-concept. Your context comes from local files, not from assumptions about earlier chats.
+## Current authority and work order
 
-## Current product-first directive
+Implement the [three-phase completion plan](docs/COMPLETION_PLAN.md). Start with the latest `main` and open pull requests, preserving completed backend work from PRs #96 and #97. Frontend PR #95 is draft and diverged from `main`; resolve and test its conflicts before merge.
 
-M05 through M07 core functionality, security, persistence, wallet, reviewer, provider and full workflow verification take priority. Suspend visual polish, radar refinement, screenshot comparison and demo production until the owner schedules them after core completion. Do not restart completed M03 or M04 work. Preserve the immutable reference and required active frontend assets, but remove obsolete visual-only tooling only after dependency checks. No testnet deployment, signing, paid inference or production-secret change is authorised.
+Work continuously through independently authorised documentation, implementation, code review, tests and deployment verification. Do not request routine approval for normal engineering actions. Merge reviewed changes when the required checks are green and branch protections permit. Continue independent work while human-held signing or provider gates remain closed.
 
-The live `https://nearhackathon.com/HACKATHON.md` is the governing eligibility and submission source. Fetch it again before submission. Current rules accept code since the 2026-10-19 announcement. Record that CONTRA implementation actually began 2026-10-28 and never rewrite commit history. Primary track is `security`; additional applicable track is `open`.
+## Engineering constraints
 
-## Mandatory resume order
+- Never expose private keys, NEAR seed phrases, provider secrets, reviewer nonces or sensitive case evidence.
+- Do not enable signing, paid inference, create reviewer identities, perform transfers, alter allowlists or change secrets beyond the exact existing authorisation.
+- Preserve immutable terms, six independently controlled eligible reviewers, disjoint primary and fresh committees, challenge lockouts, one payout intent and callback-authenticated settlement.
+- UNKNOWN payout operations remain locked unless an authoritative known transaction hash can be reconciled. Never blind-rebroadcast.
+- AI proposals and Modal verifications remain non-binding. Live provider execution requires case, round, evidence, model and budget readiness.
+- Use native NEAR on Testnet only; no token or mainnet rollout is authorised.
+- Preserve the accepted CONTRA visual direction: mint #00EC97, coral #FF8678, deep slate #16221D, obsidian #0B1110 and soft white #F5F7F5.
+- Do not use em dash characters in copy, code, tests or Markdown.
+- README badges and all claimed tests, receipts, spending, deployment and reviewer independence must be verifiable.
 
-1. project/STATUS.md
-2. project/DECISIONS.md
-3. project/CHANGELOG.md
-4. project/NEXT.md
-5. Relevant docs and tests
+## Verification and reporting
 
-Always report checkpoint ID, tasks completed, files changed, tests executed, unresolved blockers and the exact next step. Add an entry to CHANGELOG.md and update STATUS.md after each milestone. Never claim tests, transactions or deployments that did not happen.
+Before merging, inspect the current PR diff, required Core/Security/Integration/contract checks and relevant hosted browser coverage. Validate backend security when touching frontend integrations. Keep code and docs aligned, run `npm run check:docs` and preserve audit artifacts.
 
-## Non-negotiable engineering constraints
+Update the cumulative acceptance evidence and relevant project log for each substantial engineering milestone. Individual capabilities use PASS, PARTIAL, BLOCKED, FAIL or NOT STARTED; final Visual Fidelity, Functional Completeness and Production Readiness remain independently judged.
 
-- Owner authorised implementation beginning October 28, 2026. Record that actual date. Current official Q-001 makes code since October 19 eligible, but eligibility does not permit rewriting the actual creation date. Keep approved design reference assets separate from production source; preserve The Bench naming. Sandbox and read-only public testnet RPC checks are authorised. Testnet deployment, signing, paid provider use and production secrets require separate authorisation.
-- Never include em dash characters in source, copy, SEO text or documentation.
-- Use meaningful README badges, verified from reality. Do not invent CI pass or deployment success badges.
-- NEAR testnet only until explicitly approved otherwise. No mainnet assets.
-- No new token for v1; escrow native NEAR only.
-- No unapproved spending. Start with $3 Meta, $3 Baseten, $5 Modal usage envelopes, subject to verified credits.
-- Secrets only in server environments. No secrets in browser assets, build logs or commits.
-- Prefer immutable evidence hashes and content-addressed artifacts; minimize personal data and avoid putting private case evidence onchain.
-- Accept a judgment only through deterministic smart contract checks, never because an AI model asserted finality.
-- Do not describe a single operator's multiple reviewer keys as decentralized validator independence.
-- Preserve settlement safety under asynchronous payout failure and retry.
+Do not make historical handoff files authoritative. Current instructions are this file, the three-phase plan, current source, specifications and verified tests. Retain historical evidence in Git history.
 
-## Mandatory handoff format
+## External boundaries
 
-Checkpoint:
-Summary of work:
-Accepted decisions preserved:
-Files changed:
-Tests and observed results:
-Transactions and deployments (verified only):
-Spending and credit reconciliation:
-Remaining blockers:
-Next task:
+Genuine reviewer onboarding, creator wallet custody, explicit operation-specific signing and paid provider activation remain independently controlled. Use existing approved ceilings without asking again for redundant permission, but do not extrapolate an earlier ceiling into permission to broadcast a different transaction or change production secrets.
 
-## Handoff v1.2 and immutable owner screenshot
-
-Read `HANDOFF_TO_CODING_AGENT.md` before making design or implementation changes. The exact user-supplied image at `design/reference/control-ai-policy-dashboard.jpeg` is read-only, with SHA-256 `ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a`. Never alter or regenerate it. Preserve its composition in a coded working frontend using CONTRA/NEAR tokens, without faking functionality by displaying a static screenshot.
-
-## Repository ownership safeguard
-The owner assigned GitHub account `kellyxy110` and authorised repository `CONTRA` on 2026-10-28. GitHub verified its current visibility as public on 2026-11-03. Remote pushes must target that repository. Do not change repository visibility, set repository secrets or deploy without separate owner approval.
+The NEAR Testnet contract is `contra-contestation.testnet`. The public application is https://contra-near.pages.dev/. No complete funded Testnet settlement receipt has yet been verified.

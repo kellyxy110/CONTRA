@@ -1,176 +1,125 @@
 # CONTRA
 
-*A decentralised contestation protocol for evidence-based decisions and enforceable outcomes on NEAR.*
-
-**Product promise:** Every consequential decision should withstand a challenge.
+**Evidence-based contestation with enforceable outcomes on NEAR.**
 
 [![Core CI](https://github.com/kellyxy110/CONTRA/actions/workflows/core.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/core.yml)
 [![Security CI](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml)
-[![Contract CI](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml)
-[![Network: local Sandbox verified](https://img.shields.io/badge/network-local%20Sandbox%20verified-00EC97?style=flat-square&labelColour=0B1110)](#reproduce-the-contestation-journeys)
-[![Testnet deployment: verified](https://img.shields.io/badge/testnet%20deployment-verified-29D391?style=flat-square&labelColour=0B1110)](docs/operations/TESTNET_DEPLOYMENT.md)
-![Licence: MIT](https://img.shields.io/badge/licence-MIT-00EC97?style=flat-square&labelColour=0B1110)
+[![Integration CI](https://github.com/kellyxy110/CONTRA/actions/workflows/integration.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/integration.yml)
+[![Licence: MIT](https://img.shields.io/badge/licence-MIT-16221D?labelColor=0B1110)](LICENSE)
 
-CONTRA enables consequential decisions to be challenged, reviewed against immutable evidence and resolved through enforceable rules. AI contributes evidence-bound proposals, reviewers evaluate contested claims, challenges prevent premature settlement, and the NEAR contract applies the final result or agreed fallback. AI cannot cast votes, change frozen terms or authorise payments.
+[Explore the public application](https://contra-near.pages.dev/) · [How it works](#how-contestation-works) · [Run locally](#run-locally) · [Technical documentation](docs/README.md) · [Completion roadmap](docs/COMPLETION_PLAN.md)
 
-The current repository contains the Rust contract, durable API, wallet lifecycle, reviewer controls, provider fixtures, a neutral operational test interface and reproducible local NEAR Sandbox journeys. The previous product UI has been removed pending a separately authorised design direction. The approved contract is deployed and initialised at `contra-contestation.testnet`. The read-only and authentication-ready application is public at [contra-near.pages.dev](https://contra-near.pages.dev). Genuine Meteor browser-wallet NEP-413 authentication is verified with a disposable Testnet identity. Live transaction signing, live provider calls, a complete live testnet journey and an independent six-operator committee are not claimed.
+CONTRA is a NEAR-native protocol for challenging consequential decisions with attributable evidence, human review and deterministic settlement. A creator and beneficiary agree immutable conditions, evidence is bound to a case, reviewers commit and reveal their findings, and a timely challenge activates a separate appeal committee. The smart contract, rather than a model or application server, controls final outcomes and funds.
 
-## Contents
-
-- [Why CONTRA](#why-contra)
-- [Lifecycle](#lifecycle)
-- [Architecture and trust](#architecture-and-trust)
-- [Verified implementation state](#verified-implementation-state)
-- [Quick start](#quick-start)
-- [Reproduce the contestation journeys](#reproduce-the-contestation-journeys)
-- [Testing and evidence](#testing-and-evidence)
-- [Security and limitations](#security-and-limitations)
-- [Judge and deployment paths](#judge-and-deployment-paths)
-- [Benchmarks](#benchmarks)
-- [Project provenance](#project-provenance)
-- [Licence and acknowledgements](#licence-and-acknowledgements)
+> **Current release status (12 November 2026):** The Testnet contract and Cloudflare backend are deployed, with the provider and reviewer security gates implemented. Local Sandbox contestation journeys pass. The branded, interactive frontend is under integration in [PR #95](https://github.com/kellyxy110/CONTRA/pull/95) and is **not yet part of the released `main` application**. No complete funded Testnet contestation or settlement receipt has been produced. Live signing and case-bound Meta/Modal execution remain gated.
 
 ## Why CONTRA
 
-Escrow and consequential automated decisions need more than a model response. They need frozen terms, attributable evidence, authenticated review, a challenge window and deterministic settlement. CONTRA makes those transitions auditable and places final financial authority in a NEAR smart contract rather than an AI service or application server.
+A decision that affects money or rights needs a transparent path to challenge the evidence, evaluate disagreements and recover from execution failures.
 
-Creators and beneficiaries use the protocol to define and fund an agreement. Evidence contributors submit content-addressed material. Appointed reviewers commit and reveal votes. Challengers identify a contested criterion and counterevidence. Auditors and judges can inspect the resulting state, receipts and exact payout result.
+CONTRA provides:
 
-## Lifecycle
+- **Frozen terms and native NEAR escrow:** Criteria, deadlines and committee membership are contract-bound.
+- **Content-addressed evidence:** Immutable digests and provenance link off-chain records to the case without putting sensitive documents on-chain.
+- **Independent human review:** Reviewers provide evidence-bound findings and submit commit-reveal votes. The primary and appeal committees must be distinct.
+- **Contestable outcomes:** A valid challenge prevents ordinary settlement until the fresh review is resolved.
+- **Deterministic settlement:** The contract decides payout eligibility; asynchronous failures and uncertain operations follow explicit recovery rules.
+- **Bounded AI assistance:** Meta provides non-binding proposals and Modal verifies case-bound outputs. Model responses never vote, change terms or authorise transfers.
 
-1. A creator defines immutable criteria, beneficiary, deadlines and primary and fresh reviewer committees.
-2. The beneficiary consents and the creator funds exact native NEAR escrow.
-3. Evidence is stored offchain with immutable digests and bound to the onchain case.
-4. AI evaluators may propose cited findings, but those artifacts remain non-binding.
-5. Authenticated reviewers commit and reveal decisions against the frozen evidence identity.
-6. A valid challenge locks ordinary settlement and activates the disjoint fresh committee.
-7. The contract resolves quorum or timeout outcomes and creates one immutable payout intent.
-8. Settlement becomes final only after the authenticated NEAR callback verifies the transfer outcome. UNKNOWN outcomes stay locked and are never blindly retried.
+## How contestation works
 
-Authoritative behaviour is defined in [the protocol specification](docs/PROTOCOL.md), [state machine](docs/STATE_MACHINE_V1.md), [contract ABI](docs/CONTRACT_ABI_V1.md) and [settlement recovery rules](docs/SETTLEMENT_RECOVERY_V1.md).
+1. **Create and fund.** An eligible creator proposes a case, the beneficiary consents, and native NEAR is escrowed under frozen terms.
+2. **Submit evidence.** Evidence manifests and their digests are attached to the case with identifiable provenance.
+3. **Evaluate and review.** Optional AI findings remain advisory. The appointed primary reviewers commit and reveal their human decisions.
+4. **Challenge if necessary.** An eligible challenge introduces counterevidence and transfers review to the separate appeal committee.
+5. **Resolve and settle.** The contract applies the agreed quorum and timeout rules, creates one payout intent and verifies finality through the NEAR callback.
 
-## Architecture and trust
+For the authoritative rules, see [the protocol specification](docs/PROTOCOL.md), [state machine](docs/STATE_MACHINE_V1.md) and [contract ABI](docs/CONTRACT_ABI_V1.md).
 
-| Component | Responsibility | Authority boundary |
+## Architecture
+
+```mermaid
+flowchart LR
+    W[Users and NEAR wallets] --> UI[Web application]
+    UI --> API[Cloudflare Worker API]
+    API --> DO[Durable Object: records, jobs and operations]
+    API --> RPC[NEAR Testnet contract]
+    API --> AI[Meta proposals and Modal verification]
+    W -->|authorised signed transactions| RPC
+```
+
+| Layer | Responsibility | Trust boundary |
 | --- | --- | --- |
-| NEAR Contestation contract | Terms, committees, commit and reveal, challenge, resolution and payout | Sole financial and resolution authority |
-| API and durable store | Authentication, transaction intents, evidence objects, audit history and recovery | Cannot fabricate finalised chain state |
-| External wallet adapter | NEP-413 identity and user-approved calls | Live signing disabled unless server configuration authorises it |
-| AI evaluators | Evidence-bound proposals and verification | Cannot vote, mutate terms or settle |
-| Reviewers | Human findings, commitments and reveals | Must match frozen committee and signer identity |
-| Operational client | Minimal workflow and state inspection | Not a source of financial truth |
+| NEAR contract | Case state, immutable terms, committees, challenge, quorum and payout | Sole resolution and financial authority |
+| Wallet and browser | NEP-413 account identity, authorised operations and transaction review | No signing without the actual account and exact operation authority |
+| Cloudflare Worker and durable store | Protected evidence, reviewer lifecycle, provider jobs, idempotency and recovery | Cannot manufacture a finalised chain receipt |
+| Meta and Modal | Evidence-bound proposal and verification | Non-binding outputs, independently budgeted and gated |
+| Human reviewers | Signed consent, findings and commit-reveal actions | Independent account and operator control required |
 
-See [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md), [durable storage](docs/DURABLE_STORAGE.md) and [dependency assessment](docs/security/DEPENDENCY_AUDIT.md).
+See the [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md) and [settlement recovery specification](docs/SETTLEMENT_RECOVERY_V1.md).
 
-## Verified implementation state
+## Verified state and limitations
 
-| Capability | Current evidence |
+| Capability | Verified evidence or present boundary |
 | --- | --- |
-| Contract and financial safety | 18-category F01 to F18 local P0 gate previously passed with archived receipts and balance evidence |
-| Repository tests | 151 tests pass in the current M10.3 verification, including wallet, authority, live-packet and external-authorisation regressions |
-| Local complete journeys | Unchallenged beneficiary payout and challenged primary reversal to creator refund pass in local NEAR Sandbox |
-| Wallet safety | Simulated signing handoff, restart, UNKNOWN recovery, identity matching and duplicate prevention pass |
-| Reviewer controls | Six-account fixture, operator disclosure, committee separation, commitment and reveal recovery pass |
-| Provider interoperability | Meta completed one bounded live smoke and Modal completed one protected deterministic verification. Baseten was retired from the active provider set by owner decision on 12 November 2026. |
-| Testnet deployment | Verified on `contra-contestation.testnet`; [final deployment transaction](https://explorer.testnet.near.org/transactions/BjVBFX1Fe1YsMejSs6B5mMKjfqKFvR9J7YV3dU8EqUfr) |
-| Public backend | Cloudflare Worker and SQLite Durable Object deployed; readiness requires fresh final testnet state; live signing disabled |
-| Independent reviewers | Not yet demonstrated; local accounts are one-process fixtures |
-| Live provider usage | Not authorised and not performed; spend is $0 |
+| Local contestation | Both complete NEAR Sandbox journeys and the judge quick-start pass at the backend completion checkpoint |
+| Backend validation | 158 repository tests and 19 Cloudflare tests passed in the 12 November backend completion report |
+| Backend CI | Core, Security and comprehensive Integration passed for [PR #96](https://github.com/kellyxy110/CONTRA/pull/96); the [PR #97](https://github.com/kellyxy110/CONTRA/pull/97) final records Integration gate passed |
+| Testnet contract | Deployed at `contra-contestation.testnet`; [deployment record](docs/operations/TESTNET_DEPLOYMENT.md) |
+| Public service | [contra-near.pages.dev](https://contra-near.pages.dev/) reports storage and chain ready at the backend checkpoint |
+| Frontend release | Approved branded dashboard and workspaces remain in draft [PR #95](https://github.com/kellyxy110/CONTRA/pull/95); reconciliation with `main` is outstanding |
+| Genuine independent reviewers | No confirmed human operators registered at the reported Testnet observation; six independently controlled accounts required |
+| Genuine case and settlement | No funded Testnet case or finalised settlement receipt yet |
+| Production provider execution | Case-bound Meta and Modal paths implemented but live execution remains gated |
+| Production signing | Exact operation-specific authority is required; broad signing remains disabled |
 
-The current independently reviewed acceptance result is 23 PASS, 8 PARTIAL and 2 BLOCKED. See the [AC01 to AC33 matrix](docs/judges/ACCEPTANCE_MATRIX.md), [project status](project/STATUS.md) and [blockers](project/BLOCKERS.md).
+Fixture tests, Sandbox outcomes, Testnet receipts and production behaviour are reported separately. A green CI result does not establish live financial finality or independent reviewer governance.
 
-## Quick start
+## Run locally
 
-Supported clean host: Ubuntu 24.04, Node.js 26.13.0, Rust 1.98.0 and the `wasm32-unknown-unknown` target.
+Use a supported Node.js and Rust environment. For the full Sandbox journey, use Linux with the pinned NEAR Sandbox dependency.
 
 ```sh
 git clone https://github.com/kellyxy110/CONTRA.git
 cd CONTRA
 npm ci --ignore-scripts --no-audit --no-fund
 npm test
+npm run test:cloudflare
 npm run test:contract
-node scripts/build-contracts.mjs
 npm run build:wallet
 ```
 
-Expected results are 145 repository tests, 28 Rust library tests, production and fault WASM builds with separated exports, and a wallet bundle. The repository tests include exclusive durable-volume ownership, same-host crash recovery, graceful runtime restart, manifest-bound backup, tamper-detecting restore, separate liveness and readiness coverage, acceptance and interface drift checks, judge-report validation and digest-bound external-authorisation checks. Dependency lifecycle scripts are disabled because CONTRA installs its checksum-pinned Sandbox binary explicitly. The same install command supports Windows source, service and frontend work, but Sandbox execution remains Linux-only.
-
-The API defaults to safe unavailable mode:
+Start the local API in its safe default configuration:
 
 ```sh
 cp .env.example .env
 npm run dev
 ```
 
-`GET http://127.0.0.1:4173/api/live` reports process liveness without implying chain or storage readiness. `GET http://127.0.0.1:4173/api/ready` requires intact persistence and a ready chain; unavailable mode returns 503 and refuses transaction submission. `GET http://127.0.0.1:4173/api/health` provides the detailed operator state. See the [runtime service contract](docs/operations/RUNTIME_SERVICE.md).
+The local service exposes `/api/live` for liveness and `/api/ready` for storage and chain readiness. An unavailable dependency must fail closed rather than simulate a ready chain.
 
-## Reproduce the contestation journeys
-
-On the supported Linux host:
+To reproduce the complete controlled contestation journeys on the supported Linux host:
 
 ```sh
 npm run judge:local
 ```
 
-This credential-free command performs a clean install, the source and contract verification, the wallet build, pinned Sandbox setup and the complete controlled Contestation journey. It writes `ci-output/judge-quickstart/report.json` and fails closed if the retained evidence does not prove genuine local Sandbox execution, exact settlement, timeout fallback, zero wallet redispatch and zero AI-created commitments.
+This exercise uses local Sandbox identities and must not be mistaken for a funded public Testnet case. See [reproducibility and evidence](docs/testing/REPRODUCIBILITY.md) and [the judge guide](docs/judges/JUDGE_GUIDE.md).
 
-For the individual component routes:
+## Security
 
-```sh
-node scripts/setup-sandbox.mjs
-npm run test:sandbox
-npm run test:m04:journeys
-npm run test:m06:controlled
-```
+- No private key, seed phrase or provider secret belongs in browser assets, commits or logs.
+- The contract controls money and outcome finality. Reviewer signatures and eligibility are checked independently.
+- UNKNOWN transactions are inspected and reconciled; they are never blindly rebroadcast.
+- Case evidence and evaluation results are access-controlled and bound to the authorised account and case.
+- AI is strictly advisory. Live inference and spending require explicit provider-specific readiness.
 
-These commands use local NEAR Sandbox accounts and deterministic provider and external-wallet simulations. They do not deploy to testnet, call paid providers or prove independent reviewer control. Expected outcomes include exact 1 NEAR settlement to the beneficiary in the unchallenged journey, exact creator refund after a fresh-review reversal in the challenged journey, and no duplicate payout after repeated finalisation.
+See the [security documentation](docs/THREAT_MODEL_V1.md), [dependency audit](docs/security/DEPENDENCY_AUDIT.md) and [runtime runbook](docs/operations/RUNTIME_SERVICE.md).
 
-Detailed clean-start and artifact instructions are in [reproducibility](docs/testing/REPRODUCIBILITY.md).
+## Documentation and project status
 
-## Testing and evidence
+Start with the [documentation index](docs/README.md). The [three-phase completion plan](docs/COMPLETION_PLAN.md) defines the remaining implementation, quality and real Testnet acceptance gates. Historical milestone reports and signed evidence remain available in the repository and Git history; they are not prerequisites for understanding the product.
 
-- [M03 financial verification](docs/FINANCIAL_VERIFICATION_M03.md)
-- [M04 acceptance evidence](docs/M04_ACCEPTANCE.md)
-- [M05 runtime and backend](docs/M05_RUNTIME_BACKEND.md)
-- [M06 provider interoperability](docs/M06_PROVIDER_INTEROPERABILITY.md)
-- [CI risk policy](docs/CI_RISK_POLICY.md)
-- [Historical machine evidence](project/artifacts/)
+## Licence
 
-Historical evidence retains its original names, paths, timestamps and outputs. Current source uses Contestation terminology. The migration does not rewrite commits or signed and transaction evidence.
-
-## Security and limitations
-
-The contract preserves immutable terms, exact deposits, disjoint committees, deterministic quorum, challenge lockouts, callback-authenticated settlement and UNKNOWN payout protection. The M07 dependency remediation removes the inherited critical and high npm findings by retaining the compatible Sandbox harness and overriding its archive parser to `tar` 7.5.22. Fifteen low findings remain in the NEAR JavaScript cryptography and wallet graph and are disclosed in [the dependency assessment](docs/security/DEPENDENCY_AUDIT.md).
-
-Important limitations:
-
-- The testnet contract exists, but no complete funded live-wallet Contestation journey exists yet.
-- Browser-wallet authentication is verified with a disposable Meteor Testnet identity, but this grants no creator, beneficiary or financial authority.
-- Six local reviewer accounts are fixtures controlled by one process, not independent operators.
-- Provider model availability, identifiers, credits and billing are not operationally verified.
-- SQLite and content-addressed objects require one durable volume and coordinated backup.
-- Passing the hackathon engineering gate will not establish production readiness or decentralised governance.
-
-Secrets belong only in server environments. No private key, seed phrase or provider secret may enter browser assets, logs or commits.
-
-## Judge and deployment paths
-
-[The judge guide](docs/judges/JUDGE_GUIDE.md) separates public inspection, credential-free local reproduction and the authorised testnet route. The deployed contract and transaction are publicly inspectable, while the complete live application journey remains blocked rather than simulated. The [frontend integration contract](docs/operations/FRONTEND_INTEGRATION.md) freezes the current routes, recovery states, trust boundaries and accessibility requirements for the later owner-provided interface.
-
-[The testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md) records the fail-closed preflight, custody requirements, matching artifact and final deployment evidence. The [M10 live validation packet](docs/operations/M10_LIVE_VALIDATION_PACKET.md) consolidates the six-reviewer, provider and funded-journey inputs that remain external. The [hosting architecture](docs/operations/HOSTING_ARCHITECTURE.md) records the deployed Cloudflare Workers Free, Static Assets and SQLite-backed Durable Object boundary under a hard USD 0 ceiling. Funded signing, provider spend and production-secret changes require separate owner authorisation.
-
-The [creator eligibility defect report](docs/security/M08_CREATOR_ELIGIBILITY_DEFECT.md) preserves the original defect and verified repair evidence. The [environment guide](docs/operations/ENVIRONMENT_SETUP.md), [provider credential guide](docs/operations/PROVIDER_CREDENTIAL_SETUP.md), [Cloudflare deployment and recovery runbook](docs/operations/CLOUDFLARE_DEPLOYMENT.md), [wallet authority proposal](docs/operations/M09_WALLET_AUTHORITY.md) and [reviewer onboarding procedure](docs/operations/REVIEWER_ONBOARDING.md) define the remaining fail-closed external gates.
-
-## Benchmarks
-
-[The benchmark plan](docs/BENCHMARKS.md) and [30-case scenario plan](benchmarks/case-plan.csv) are inputs, not completed results. No comparative superiority claim is made. Future results must publish denominators, failures, costs, timings and ground-truth limitations.
-
-## Project provenance
-
-Actual implementation began on 28 October 2026 with owner authorisation. Current hackathon rules accept code since the 19 October announcement, but CONTRA preserves the exact start date and Git history. Primary track is `security`; additional applicable track is `open`. See [hackathon compliance](docs/HACKATHON_COMPLIANCE.md).
-
-The owner controls final frontend design, demo production, public X publication and submission. The deployed client is deliberately neutral and limited to service status, wallet authentication and authenticated API verification. Historical design evidence remains in Git history and immutable reference files, but no prior dashboard design is active or shipped. Removed presentation asset routes return non-cacheable `404` responses so earlier CDN entries cannot reactivate deleted designs.
-
-## Licence and acknowledgements
-
-CONTRA is available under the [MIT licence](LICENSE). It uses NEAR Protocol, near-sdk, NEAR JavaScript libraries, Near Connect, Meteor Wallet and the provider interfaces documented in the repository. AI-assisted development is disclosed through the repository history and project records; AI outputs do not become protocol authority.
+Licensed under [MIT](LICENSE). Built with NEAR Protocol, Rust, Cloudflare Workers and Durable Objects, and bounded provider integrations. AI-assisted engineering does not grant AI protocol authority.
