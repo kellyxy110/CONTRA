@@ -44,6 +44,8 @@ test('wallet authentication requires Testnet and restored sessions do not mint s
  await assert.rejects(openAuthenticatedWallet({network:'mainnet'}),/Testnet/);
  const connected=await openAuthenticatedWallet({contractAccount:'contract',connectWallet:async()=>({wallet:{id:'wallet'},accounts:[{accountId:'creator.testnet'}]}),selectWalletAccount:items=>items[0],authenticateWallet:async(_wallet,account)=>({account})});
  assert.equal(connected.session.account,'creator.testnet');
+ const normalised=await openAuthenticatedWallet({contractAccount:'contract',connectWallet:async()=>({wallet:{id:'wallet'},accounts:[{accountId:'creator.testnet'}]}),selectWalletAccount:items=>items[0],authenticateWallet:async()=>({token:'token'})});
+ assert.equal(normalised.session.account,'creator.testnet');
  const recovered=await recoverWallet({token:'tok',recoverWalletSession:async()=>({account:'creator.testnet'}),restoreWalletOperations:async({accountId})=>assert.equal(accountId,'creator.testnet')});
  assert.equal(recovered.wallet,undefined);
 });

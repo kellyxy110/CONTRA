@@ -71,6 +71,7 @@ nav a{min-width:0}
 #workspace article{display:grid;gap:12px}
 #workspace ul{padding-inline-start:20px;overflow-wrap:anywhere}
 #workspace a{text-decoration:underline}
+#workspace pre{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:900px){
  nav a{padding-inline:8px;overflow-wrap:anywhere}
  .evidence-table table{min-width:340px;table-layout:auto}

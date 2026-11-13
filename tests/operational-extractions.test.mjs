@@ -34,6 +34,7 @@ test('reviewer consent requires a fresh wallet signature bound to the disclosure
  const invitation={digest:'a'.repeat(64)},reviewerId='reviewer.testnet',input={operator_id:'b'.repeat(64),disclosure_digest:'c'.repeat(64),available_from:'2099-01-01T00:00:00Z',available_until:'2099-01-02T00:00:00Z',conflicts:'none declared'};
  const statement=reviewerControlStatement(invitation,reviewerId,input);
  assert.equal(statement.invitation_digest,invitation.digest);assert.deepEqual(statement.conflicts,['none declared']);
+ assert.deepEqual(reviewerControlStatement(invitation,reviewerId,input),statement);assert.equal('acknowledged_at' in statement,false);
  const calls=[],post=async(path,body)=>{calls.push([path,body]);return path==='reviewer/control-challenge'?{id:'challenge',message:'bound statement',nonce:btoa(String.fromCharCode(...new Uint8Array(32))),recipient:'contra-near.pages.dev'}:{status:'CONSENTED'};};
  const wallet={signMessage:async request=>{assert.equal(request.message,'bound statement');assert.equal(request.recipient,'contra-near.pages.dev');return {accountId:reviewerId,publicKey:'ed25519:key',signature:'signature'};}};
  assert.equal((await signReviewerConsent({post,wallet,invitation,reviewerId,input})).status,'CONSENTED');
@@ -48,6 +49,7 @@ test('settlement inspection preserves UNKNOWN lock without redispatch',()=>{
  assert.deepEqual(reconciliationRequest('op'),{operation_id:'op'});
  assert.deepEqual(operationRecoveryState({status:'UNKNOWN'}),{canReconcile:false,locked:true});
  assert.deepEqual(operationRecoveryState({status:'UNKNOWN',tx_hash:'tx'}),{canReconcile:true,locked:false});
+ assert.deepEqual(operationRecoveryState({status:'PENDING',tx_hash:'tx'}),{canReconcile:true,locked:false});
  assert.deepEqual(operationRecoveryState({status:'CONFIRMED',tx_hash:'tx'}),{canReconcile:false,locked:false});
 });
 

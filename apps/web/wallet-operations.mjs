@@ -42,7 +42,7 @@ export async function openAuthenticatedWallet({
  const connected=await connectWallet({network,contractAccount,authenticationAuthorized:true});
  const selected=selectWalletAccount(connected.accounts);
  const session=await authenticateWallet(connected.wallet,selected.accountId);
- return {wallet:connected.wallet,session};
+ return {wallet:connected.wallet,session:{...session,account:session.account||selected.accountId}};
 }
 
 export async function recoverWallet({token,accountId,recoverWalletSession,restoreWalletOperations}) {

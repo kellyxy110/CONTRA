@@ -394,15 +394,13 @@ function caseCreation(panel, config) {
      const operations=createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk});
      const operation=await operations.prepareCase(args);
      result.append(element('p',`Prepared operation: ${operation.operation_id}. Payload hash: ${operation.payload_hash}.`));
-     const runtime=await request('config');
-     if(!wallet||runtime.external_wallet_signing_authorized!==true){
-      result.append(element('p','Signing requires the creator wallet and exact server authorisation.'));
-      return;
-     }
-     const sign=element('button','Sign case creation');
-     sign.type='button';
-     result.append(sign);
-     sign.addEventListener('click',async()=>{
+     const attachSigningControl=async()=>{
+      const runtime=await request('config');
+      if(!wallet||runtime.external_wallet_signing_authorized!==true)return false;
+      if(result.querySelector('[data-sign-case]'))return true;
+      const sign=element('button','Sign case creation');
+      sign.type='button';sign.dataset.signCase='true';result.append(sign);
+      sign.addEventListener('click',async()=>{
       sign.disabled=true;
       try{
        if(account!==creator)throw Error('Reconnect the creator account to sign this preview.');
@@ -411,7 +409,14 @@ function caseCreation(panel, config) {
        result.append(element('p',`Operation status: ${receipt.operation?.status ?? 'Unavailable'}. Transaction: ${receipt.transaction_hash ?? 'Unavailable'}.`));
        if(persisted)result.append(element('p',`Case confirmed: ${persisted.case_id}`));
       }catch(error){result.append(element('p',error.message));}
-     });
+      });
+      return true;
+     };
+     if(!await attachSigningControl()){
+      result.append(element('p','Signing requires the creator wallet and exact server authorisation.'));
+      const refreshAuthority=element('button','Refresh signing authority');refreshAuthority.type='button';result.append(refreshAuthority);
+      refreshAuthority.addEventListener('click',async()=>{refreshAuthority.disabled=true;try{if(await attachSigningControl()){refreshAuthority.remove();result.append(element('p','The existing prepared operation is now authorised.'));}else result.append(element('p','Signing authority is not active for this prepared operation.'));}catch(error){result.append(element('p',error.message));}finally{refreshAuthority.disabled=false;}});
+     }
     }catch(error){result.append(element('p',error.message));prepare.disabled=false;}
    });
   }catch(error){result.textContent=error.message;}
@@ -662,6 +667,7 @@ if (token) {
   const session = await recoverWallet({token,...sdk});
   account = session.account;
   byId('wallet').textContent = session.account;
+  await updateNavigation();
  } catch {
   token = null;
   sessionStorage.removeItem('contra-session');

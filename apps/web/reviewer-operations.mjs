@@ -8,7 +8,7 @@ export function reviewerControlStatement(invitation,reviewerId,input) {
   schema:'CONTRA_REVIEWER_CONTROL_V1',reviewer_id:reviewerId,invitation_digest:invitation.digest,
   operator_id:String(input.operator_id||'').trim(),disclosure_digest:String(input.disclosure_digest||'').trim(),
   custody:'independently-controlled',conflicts,available_from:new Date(input.available_from).toISOString(),
-  available_until:new Date(input.available_until).toISOString(),acknowledged_at:new Date().toISOString()
+  available_until:new Date(input.available_until).toISOString()
  };
 }
 export async function signReviewerConsent({post,wallet,invitation,reviewerId,input}) {
