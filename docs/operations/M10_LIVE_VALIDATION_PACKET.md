@@ -31,8 +31,8 @@ The creator, beneficiary, contract account and exposed diagnostic identity `open
 
 | Provider | Required owner input | Hard boundary |
 | --- | --- | --- |
-| Meta | Model API account, unique server key, Standard `muse-spark-1.3` access, current balance and pricing evidence | Meta currently documents an alert rather than a hard spend cap. Live use stays blocked unless a separately accepted control exists. Maximum programme allocation is USD 3. |
-| Modal | Workspace, frozen protected function, function identity, scoped Proxy Token, credit evidence, Workspace budget and spend limit | No function exists. Maximum programme allocation is USD 5. |
+| Meta | Revalidate current balance, pricing and residual billing exposure immediately before the exact case-bound request | Account authentication, model access and one 110 microUSD smoke are verified. Production execution remains disabled until an authorised case exists. Maximum programme allocation is USD 3. |
+| Modal | Bind the exact authorised Meta proposal digest to the protected verifier request | Protected function, Proxy Auth and a zero-token deterministic smoke are verified. Production execution remains disabled until an authorised proposal exists. Maximum programme allocation is USD 5. |
 
 Secrets must be installed interactively with Wrangler and never sent through chat, committed files, frontend assets or logs. Each provider is enabled independently only after its full gate passes.
 

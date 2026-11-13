@@ -1,0 +1,38 @@
+{
+  "checkpoint": "CONTRA-2026-11-13-PHASE3-LIVE-READINESS",
+  "observed_at": "2026-11-13T11:46:40.821Z",
+  "production": {
+    "origin": "https://contra-near.pages.dev",
+    "live_http_status": 200,
+    "ready_http_status": 200,
+    "storage": {
+      "kind": "cloudflare-durable-object-sqlite",
+      "integrity": "ok",
+      "schema_version": 3,
+      "hosting_cost_ceiling_usd": 0
+    },
+    "live_signing_authorised": false
+  },
+  "chain": {
+    "network": "testnet",
+    "contract_account": "contra-contestation.testnet",
+    "code_hash": "EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2",
+    "creator_allowlist": ["contra-creator.testnet"],
+    "registered_reviewers": 0,
+    "cases": 0,
+    "held_escrow_yocto_near": "0",
+    "inflight_or_unknown_yocto_near": "0"
+  },
+  "external_gates": {
+    "independent_reviewers_verified": 0,
+    "independent_reviewers_required": 6,
+    "creator_browser_authority_for_exact_operation": false,
+    "beneficiary_consent_for_exact_journey": false,
+    "operation_specific_transaction_authority": false
+  },
+  "activity": {
+    "transactions": 0,
+    "provider_calls": 0,
+    "spending_usd": 0
+  }
+}

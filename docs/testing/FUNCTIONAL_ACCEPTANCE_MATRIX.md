@@ -10,7 +10,8 @@ Browser fixtures establish interface behaviour. Live Testnet execution requires 
 | Visual hierarchy refinement | Page-level KPI icons use complete two-tone filled artwork; both doughnut charts remain contained and aligned; dense tables render at 14px; KPI, timeline, legend and statement weights preserve the approved hierarchy | Chromium and Firefox geometry, typography and icon assertions across 320px to 1920px | PASS | Corrective evidence supersedes the undersized 12px table and overflowing chart render |
 | Functional Completeness | Chromium and Firefox action-to-result suite across all ten destinations and eight viewport widths | PASS | Genuine human reviewer actions and operation-specific live transactions remain external gates |
 | Backend Correctness | Existing contract, authentication, evidence isolation, budget, persistence, UNKNOWN and settlement regressions | PASS | No backend authority was broadened by the frontend recovery |
-| Production Readiness | Corrected build not yet deployed | PARTIAL | Merge, deploy, verify production asset identity and capture production screenshots |
+| Production Readiness | Accepted frontend is deployed; public liveness, Durable Object integrity and fresh finalised Testnet reads return HTTP 200 | PASS | Full funded-protocol release remains separately blocked on Phase 3 external actors and receipts |
+| Live Testnet Validation | Read-only contract and production observations show the expected code hash, sole creator, zero reviewers, zero cases and zero in-flight value | BLOCKED | Six independent reviewers, genuine participant consent and exact operation-specific authority are required before broadcasts |
 
 | Destination | Feature and integration | Evidence | Status | Remaining work |
 | --- | --- | --- | --- | --- |
