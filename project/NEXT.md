@@ -1,5 +1,7 @@
 # Next execution task
 
+Current action: deploy the reviewed scoped reviewer-confirmation control, then have `primary1.testnet`, `primary2.testnet`, `primary3.testnet`, `appeal.testnet`, `appeal2.testnet` and `appeal3.testnet` each connect at `https://contra-near.pages.dev/#reviewers` and personally sign their own exact `confirm_reviewer` call. Reconcile all six final receipts and require six active confirmed registry records before preparing any case.
+
 ## Current execution unit | Phase 3 external identities and exact live authority
 
 Production is read-only ready and the independently implementable frontend, backend, provider ledger, reviewer lifecycle and transaction recovery controls are complete. Six distinct reviewer accounts have owner-reported consent, with one production record independently observed. The contract currently has zero registered reviewers and zero cases. Reconcile the six exact consent and disclosure digests through the owner-only activation route, prepare six bounded `set_reviewer` operations, then require each reviewer to sign its matching `confirm_reviewer` operation. Freeze participant consent, case terms, evidence digests, deadlines, amounts and transaction sequence only after registry read-back confirms six active, confirmed and disjoint reviewers. Meta and Modal calls remain case bound and budget bound. Public Demo Mode remains until both genuine journeys and settlements have final receipts.

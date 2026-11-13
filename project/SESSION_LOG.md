@@ -4,6 +4,10 @@
 
 Owner approval of digest `340ea02123adf9ce9c8c0111c1c47e6847ea6d2ab378212d31fbb345b24258f9` authorised exactly six registrations. The Windows keychain signer matched the approved contract-owner public key. Code hash, owner, registry and packet expiry passed final preflight. All six transactions reached explicit final success and exact registry read-back. Attached deposits totalled 6 yoctoNEAR and gas burn totalled 1630268233645600000000 yoctoNEAR. Reviewers remain unconfirmed until their six independently controlled wallets sign their own exact `confirm_reviewer` calls.
 
+## 2026-11-13 | Scoped reviewer confirmation implementation
+
+Implemented the missing link between completed reviewer consent and personal onchain confirmation. The frontend presents the action only for a matching active unconfirmed registry record. The Worker admits only `confirm_reviewer` with the authenticated reviewer's exact revision and disclosure digest, 30 TGas and one yoctoNEAR, after durable consent verification. Focused wallet and reviewer tests passed 27 of 27 and Cloudflare tests passed 21 of 21. No transaction was broadcast during implementation.
+
 ## 2026-11-13 | P0 frontend recovery local gate
 
 Merged the design-authority cleanup through PR 105 as `ebf3366587067e88bb846894438caa9afbc41440`, then implemented the focused recovery on `feat/p0-frontend-recovery`. Local verification passed 176 of 176 repository tests, 21 of 21 Cloudflare tests, Chromium and Firefox across eight responsive widths and every active route, the wallet build, documentation checks, source policy and the Worker dry run. Genuine side-by-side dark and light comparisons were inspected against `design/approved/overview-dark.jpeg` and `design/approved/overview-light.jpeg`. No transaction, provider call, secret change or expenditure occurred.

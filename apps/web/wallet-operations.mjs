@@ -18,7 +18,8 @@ export function createWalletOperations({
   if(!token||!accountId)throw Error('Connect and authenticate a Testnet wallet before signing.');
   if(!wallet)throw Error('Reconnect the signing wallet. Session recovery alone cannot sign transactions.');
   const config=await request('config');
-  if(config.network!=='testnet'||!config.external_wallet_signing_authorized)
+  const scopedReviewerConfirmation=method==='confirm_reviewer'&&config.reviewer_confirmation_signing_authorized===true;
+  if(config.network!=='testnet'||(!config.external_wallet_signing_authorized&&!scopedReviewerConfirmation))
    throw Error('Live Testnet wallet signing is disabled by the server authority gate.');
   const operation=preparedOperation||(await prepareWalletTransaction({token,accountId,call:{
    method,args,deposit,receiverId:config.contract_account
