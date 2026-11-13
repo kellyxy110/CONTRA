@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-13 | final interface and multi-wallet refinement
+
+- Refined the recovered frontend with one active navigation state, textual sidebar collapse, 2D duotone icons, compact theme and round controls, searchable case selection and responsive doughnut layouts.
+- Added explicit, isolated public Demo Mode and recorded its Phase 3 removal condition.
+- Replaced the Meteor-only launch path with a Testnet and NEP-413 compatibility-filtered wallet picker while retaining the pinned Meteor executor.
+- Added `DESIGN.md`, `UX-CONTRACT.md`, responsive browser evidence and cumulative acceptance updates.
+
 ## 2026-11-13 | P0 frontend recovery implementation
 
 - Rebuilt the active dashboard styling against the approved dark and light Overview references without restoring superseded designs.

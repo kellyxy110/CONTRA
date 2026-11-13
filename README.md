@@ -11,7 +11,7 @@
 
 CONTRA is a NEAR-native protocol for challenging consequential decisions with attributable evidence, human review and deterministic settlement. A creator and beneficiary agree immutable conditions, evidence is bound to a case, reviewers commit and reveal their findings, and a timely challenge activates a separate appeal committee. The smart contract, rather than a model or application server, controls final outcomes and funds.
 
-> **Current release status (13 November 2026):** The NEAR Testnet contract and secured backend are deployed. Frontend PRs #95 and #100 have been merged, but visual acceptance has been reopened after owner review. The production UI has not passed comparison against the final approved screenshots. No complete funded Testnet contestation or finalised settlement receipt is claimed; signing and case-bound provider execution remain gated.
+> **Current release status (13 November 2026):** The NEAR Testnet contract and secured backend are deployed. The refined frontend is under final release verification against the approved screenshots. No complete funded Testnet contestation or finalised settlement receipt is claimed; signing, independent reviewer participation and case-bound provider execution remain gated.
 
 ## Final approved desktop interface
 
@@ -21,7 +21,7 @@ The [dark Overview](design/approved/overview-dark.jpeg) and [light Overview](des
 | --- | --- |
 | ![Final dark Overview](design/approved/overview-dark.jpeg) | ![Final light Overview](design/approved/overview-light.jpeg) |
 
-Rendered visual acceptance is open until the actual product matches these two designs.
+The implementation preserves this composition and applies the approved navigation, typography, theme, chart, Demo Mode and wallet refinements recorded in [DESIGN.md](DESIGN.md).
 
 ## Why CONTRA
 
@@ -73,17 +73,20 @@ See the [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V
 | Capability | Verified evidence or present boundary |
 | --- | --- |
 | Local contestation | Both complete NEAR Sandbox journeys and the judge quick-start pass at the backend completion checkpoint |
-| Backend validation | 158 repository tests and 19 Cloudflare tests passed in the 12 November backend completion report |
+| Backend validation | 178 repository tests and 21 Cloudflare tests pass on the refined frontend branch |
 | Backend CI | Core, Security and comprehensive Integration passed for [PR #96](https://github.com/kellyxy110/CONTRA/pull/96); the [PR #97](https://github.com/kellyxy110/CONTRA/pull/97) final records Integration gate passed |
 | Testnet contract | Deployed at `contra-contestation.testnet`; [deployment record](docs/operations/TESTNET_DEPLOYMENT.md) |
 | Public service | [contra-near.pages.dev](https://contra-near.pages.dev/) reports storage and chain ready at the backend checkpoint |
-| Frontend release | PRs #95 and #100 merged; production visual acceptance remains pending actual side-by-side comparison |
+| Frontend release | Dark and light, empty and populated, collapsed, tablet and mobile states are exercised in Chromium and Firefox; production promotion remains pending |
+| Wallet compatibility | Meteor has genuine CONTRA Testnet NEP-413 evidence. Intear and Nightly are presented only when the connector manifest advertises Testnet and message-signing support; genuine account authentication remains to be recorded for each additional provider |
 | Genuine independent reviewers | No confirmed human operators registered at the reported Testnet observation; six independently controlled accounts required |
 | Genuine case and settlement | No funded Testnet case or finalised settlement receipt yet |
 | Production provider execution | Case-bound Meta and Modal paths implemented but live execution remains gated |
 | Production signing | Exact operation-specific authority is required; broad signing remains disabled |
 
 Fixture tests, Sandbox outcomes, Testnet receipts and production behaviour are reported separately. A green CI result does not establish live financial finality or independent reviewer governance.
+
+The public interface includes an explicit Demo Mode while genuine Testnet history is sparse. Demo records are visibly labelled and cannot open wallets, mutate the contract, bill providers, register reviewers or create operations. Public Demo Mode is removed only after Phase 3 has verified the authorised Testnet journeys and finalised receipts described in the [completion plan](docs/COMPLETION_PLAN.md).
 
 ## Run locally
 

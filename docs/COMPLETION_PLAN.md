@@ -51,6 +51,8 @@ The only approved desktop Overview references are [dark](../design/approved/over
 
 **Goal:** Demonstrate the complete authorised Testnet journey and publish an evidence-backed release.
 
+Public Demo Mode remains clearly labelled and isolated until this phase has verified authorised end-to-end Testnet journeys covering case creation, genuine independent reviewers, challenge, settlement and finalised receipts. After that acceptance, production must remove the public Demo control and public fixture access, present genuine Testnet data only, and retain deterministic fixtures solely in isolated development and QA environments.
+
 **Work**
 1. Obtain three primary and three fresh independent human reviewers with disjoint operator control. Use the deployed one-time NEP-413 challenges, disclosures, conflict checks, invitation lifecycle and onchain `set_reviewer`/`confirm_reviewer`.
 2. Establish secure browser authority over the allowlisted `contra-creator.testnet` or execute a separately authorised, exact state-compatible allowlist migration. Do not move secret keys into application source.
