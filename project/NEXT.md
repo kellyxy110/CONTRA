@@ -1,24 +1,10 @@
 # Next execution task
 
-## Current execution unit | P0 frontend recovery release
+## Current execution unit | Phase 3 external identities and exact live authority
 
-Complete the focused frontend recovery PR, require Core, Security, Contract and applicable Integration checks, then deploy the exact reviewed build to the existing Cloudflare Worker and Pages project. Verify production navigation, themes, sidebar behaviour, truthful empty data, Durable Object readiness and Testnet read-only health. Do not enable financial signing, paid provider execution or fixture authority.
+Production is read-only ready and the independently implementable frontend, backend, provider ledger, reviewer lifecycle and transaction recovery controls are complete. The contract currently has zero registered reviewers and zero cases. Recruit and verify three primary and three fresh-appeal human operators using the six-slot package in `docs/operations/PHASE3_EXTERNAL_ACTION_PACKET.md`. Register and confirm their exact Testnet records, then freeze participant consent, case terms, evidence digests, deadlines, amounts and transaction sequence. Only after `preview_case` returns the immutable case identity may the first operation-specific signing packet be approved. Meta and Modal calls remain case bound and budget bound. Public Demo Mode remains until both genuine journeys and settlements have final receipts.
 
-## Paused execution unit | Complete Phase 3 live release gates
-
-Synchronise `implementation/oct28` with the accepted Phase 2 tree. Reauthenticate Wrangler to the verified project Cloudflare account before deploying the merged release. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, genuine beneficiary participation and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
-
-## Current execution unit | External identities and exact live case authority
-
-The backend implementation is complete to its external boundary. Recruit six distinct human operators, collect their signed control statements, then register and confirm their exact Testnet reviewer records. Separately establish secure browser control of `contra-creator.testnet` or approve an exact state-compatible allowlist change for a named browser-controlled creator. Only after the registry has six active confirmed reviewers may `preview_case` produce the immutable create-case packet and the operation-specific signing gate be configured. Meta and Modal case calls remain disabled until their production readiness flags are intentionally enabled against an existing authorised case.
-
-## Current execution unit | Independent reviewer onboarding
-
-Provider and non-financial wallet activation are complete to the available external boundary. Recruit and verify three primary and three fresh-appeal human operators with distinct Testnet wallets, control signatures, consent and conflict disclosures. Meta and Modal are the only active providers. Only after reviewer readiness may the two already bounded funded journey packets be frozen and executed. Do not repeat Meta or Modal activation calls.
-
-## Current execution unit | Provider activation and wallet readiness
-
-The owner has authorised bounded live provider verification up to USD 3 Meta, USD 3 Baseten and USD 5 Modal, plus Testnet execution up to 1 NEAR per transaction and 2 NEAR total across the two acceptance journeys. Meta and Baseten credentials and a dedicated Modal Proxy Auth token are installed server-side. Verify account access, models, pricing and residual billing exposure through authenticated probes, then run only the smallest bounded calls after the corresponding fail-closed gate passes. Exercise creator and beneficiary non-financial signing and transaction preflight. Keep funded reviewer-dependent journeys deferred until six genuine independent operators consent.
+The current local Wrangler session is not authenticated to the project Cloudflare account. This does not make the live application unavailable, but it must be corrected before any later production mutation. Do not deploy from the wrong account or replace `ContraState`.
 
 
 ## Historical task | Complete protected Modal verification

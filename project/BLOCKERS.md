@@ -12,16 +12,17 @@ This register consolidates owner-controlled and external requirements. Engineeri
 | B-M10-02 | P1 | M10 | Meta and Modal bounded activation probes succeeded with retained digests and reconciled usage. Production case-bound execution remains intentionally disabled until an authorised case exists and every runtime gate passes. | Engineering and provider owners | Preserve the USD 3 Meta and USD 5 Modal cumulative ceilings. Enable only the exact case-bound request after credits, billing exposure, model and immutable case identity are revalidated. Baseten is retired. | PARTIAL |
 | B-M10-03 | P1 | M10 | Cloudflare schema 3 implements durable provider reservations, jobs, immutable proposal records, UNKNOWN locking, usage accounting and audit history. Live execution remains independently gated. | External provider owners | Supply credentials, verified catalogue/model, pricing, credits, billing controls and bounded spending authority. | RESOLVED ENGINEERING |
 | B-M10-04 | P1 | M10 | Cloudflare schema 3 implements immutable six-slot invitations, account and operator separation, NEP-413 account-scoped consent, withdrawal and audit recovery. | Independent reviewer operators | Recruit and verify six separately controlled human operators. | RESOLVED ENGINEERING |
-| B-M11-01 | P1 | M11 | The integrated frontend and Phase 2 workflows are merged to `main` at `98621162d5d8cefea5922e0ba46a23a8657c4c7f`. Production still serves the earlier release because local Wrangler is authenticated to the wrong Cloudflare account. | Owner and engineering | Reauthenticate Wrangler to Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`, deploy the reviewed release without replacing `ContraState`, then verify version, routes, readiness and persistence. | BLOCKED |
+| B-M11-01 | P1 | M11 | Production serves the accepted frontend and reports healthy Durable Object storage plus fresh finalised Testnet reads. The current local Wrangler session is authenticated to account `56583bd411c295f2a4e9f73b60fab3f5`, not project account `0a8fd0acd086e68c9b558159fac0d7a8`, so a new deployment cannot be administered from this session. | Owner and engineering | Reauthenticate Wrangler to the project account only when another production deployment is required. Do not replace `ContraState`. Public readiness remains independently verified. | PARTIAL |
 
 ## Consolidated owner access request
 
 The current single action package is `docs/operations/M10_LIVE_VALIDATION_PACKET.md`. One coordinated response may satisfy the external gates by providing:
 
-1. Reauthenticate Wrangler to the verified Cloudflare account `0a8fd0acd086e68c9b558159fac0d7a8`. The hosting expenditure ceiling remains USD 0.
+1. Recruit six distinct human reviewer operators, with three primary and three fresh accounts, and collect their signed control, consent, conflict and availability records.
 2. Establish secure browser control of `contra-creator.testnet` and collect genuine beneficiary participation for `contra-beneficiary.testnet`.
-3. Recruit six distinct human reviewer operators, with three primary and three fresh accounts, and collect their signed control, consent, conflict and availability records.
+3. Freeze the exact two journey packets only after reviewer registration and confirmation are visible onchain. Each transaction then requires its own operation-specific authority.
 4. After a case exists, revalidate Meta credits and residual billing exposure before enabling the exact case-bound request. Modal remains separately case bound and budget bound.
+5. Reauthenticate Wrangler to project account `0a8fd0acd086e68c9b558159fac0d7a8` only before a required production mutation. The hosting ceiling remains USD 0.
 
 Private keys, seed phrases and provider secrets must be supplied only through approved secret-management channels, never chat, repository files or logs.
 # Provider activation boundaries

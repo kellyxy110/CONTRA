@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-13-PHASE3-LIVE-READINESS
+
+Read-only production and Testnet preflight completed on 13 November 2026. `https://contra-near.pages.dev/api/live`, `/api/ready` and `/api/health` returned HTTP 200. Durable Object SQLite reported integrity `ok`, schema 3 and the USD 0 hosting boundary. The chain observation was final, fresh and non-regressed on Testnet, and live signing remained disabled. The deployed contract code hash is `EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2`; its creator allowlist contains only `contra-creator.testnet`, held escrow and in-flight or unknown amounts are zero, and read-back found zero reviewers and zero cases.
+
+Stage 1 is BLOCKED only at its external boundary: six different human operators have not supplied independently controlled Testnet accounts and signed disclosures, browser control for the allowlisted creator and beneficiary participation are not established for an exact journey, and no operation-specific transaction packet exists. Consequently Stages 2 and 3 cannot safely broadcast transactions. Meta and Modal retain their prior bounded smoke evidence, but case-bound execution remains disabled until an authorised case exists. Public Demo Mode remains required. No transaction, provider call, secret mutation, reviewer claim or spending occurred during this audit.
+
 ## Current refinement | final interface and multi-wallet verification
 
 The approved Overview composition now includes the owner-requested brand, navigation, duotone icon, typography, chart, case picker, Primary/Appeal and icon-theme refinements. Public Demo Mode is explicit and isolated from wallets, contract mutation, provider billing, reviewer registration and operation creation. The wallet flow now presents a feature-filtered Testnet NEP-413 picker. Meteor retains its checksum-pinned executor and genuine prior CONTRA authentication evidence. Intear and Nightly remain connector-compatibility candidates pending genuine account authentication evidence. Repository tests pass 178 of 178 and Cloudflare tests pass 21 of 21. Production promotion remains pending hosted checks and deployment verification. No financial authority or reviewer-independence status changed.
