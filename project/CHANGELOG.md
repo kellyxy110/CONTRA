@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-13 | frontend visual hierarchy correction
+
+- Replaced faint page-level icon treatments with larger, complete two-tone filled SVG artwork while preserving the established navigation family.
+- Contained and aligned both Overview doughnut charts so their rings and legends no longer overflow panel geometry.
+- Increased dense table, timeline, chart legend, KPI label, status and branded-statement typography with stronger semantic weights.
+- Added Chromium and Firefox regression assertions for chart containment, readable table sizing and KPI icon presentation across supported viewports.
+
 ## 2026-11-13 | final interface and multi-wallet refinement
 
 - Refined the recovered frontend with one active navigation state, textual sidebar collapse, 2D duotone icons, compact theme and round controls, searchable case selection and responsive doughnut layouts.

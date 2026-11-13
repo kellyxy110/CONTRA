@@ -48,6 +48,20 @@ const iconPaths = {
  funded:'M4 7h16v13H4z M4 7l4-4h8l4 4 M8 12h8',
  payouts:'M4 4h16v16H4z M8 12l3 3 5-6',
 };
+const iconTonePaths = {
+ overview:'M3 3h7v7H3z M14 14h7v7h-7z',
+ cases:'M3 7h7l2 2h9v4H3z',
+ evidence:'M14 3l5 5h-5z',
+ lab:'M8 15h8l3 5H5z',
+ challenges:'M12 3 3 20h18z',
+ reviewers:'M3 21v-3a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v3z',
+ settlement:'M3 6h18v5H3z',
+ constellations:'M5 17 11 5l8 11z',
+ activity:'M3 12h4l3-7 2 7z',
+ settings:'M4 5h16v3H4z M4 17h16v3H4z',
+ funded:'M4 7h16v5H4z',
+ payouts:'M4 4h16v6H4z',
+};
 
 function icon(name) {
  const ns = 'http://www.w3.org/2000/svg';
@@ -55,11 +69,9 @@ function icon(name) {
  svg.setAttribute('viewBox', '0 0 24 24');
  svg.setAttribute('aria-hidden', 'true');
  svg.classList.add('line-icon');
- const tonePath = document.createElementNS(ns, 'circle');
+ const tonePath = document.createElementNS(ns, 'path');
  tonePath.setAttribute('class','icon-tone');
- tonePath.setAttribute('cx','12');
- tonePath.setAttribute('cy','12');
- tonePath.setAttribute('r','10');
+ tonePath.setAttribute('d',iconTonePaths[name] ?? 'M4 4h16v16H4z');
  const path = document.createElementNS(ns, 'path');
  path.setAttribute('d', iconPaths[name]);
  svg.append(tonePath,path);

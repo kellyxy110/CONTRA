@@ -7,6 +7,7 @@ Browser fixtures establish interface behaviour. Live Testnet execution requires 
 | Gate | Evidence | Status | Remaining work |
 | --- | --- | --- | --- |
 | Visual Fidelity | Refined dark and light Overview renders preserve the approved composition; expanded, collapsed, tablet and mobile evidence is captured in `artifacts/frontend/`; browser coverage rejects malformed SVG icon output | PASS | Production deployment and browser smoke verification completed for the accepted frontend tree |
+| Visual hierarchy refinement | Page-level KPI icons use complete two-tone filled artwork; both doughnut charts remain contained and aligned; dense tables render at 14px; KPI, timeline, legend and statement weights preserve the approved hierarchy | Chromium and Firefox geometry, typography and icon assertions across 320px to 1920px | PASS | Corrective evidence supersedes the undersized 12px table and overflowing chart render |
 | Functional Completeness | Chromium and Firefox action-to-result suite across all ten destinations and eight viewport widths | PASS | Genuine human reviewer actions and operation-specific live transactions remain external gates |
 | Backend Correctness | Existing contract, authentication, evidence isolation, budget, persistence, UNKNOWN and settlement regressions | PASS | No backend authority was broadened by the frontend recovery |
 | Production Readiness | Corrected build not yet deployed | PARTIAL | Merge, deploy, verify production asset identity and capture production screenshots |

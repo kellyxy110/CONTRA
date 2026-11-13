@@ -33,6 +33,7 @@ try {
    await page.getByText('Read-only live mode · contract case data is unavailable.').waitFor();
    assert.equal(await page.locator('.kpis article').count(),4);
    assert.equal(await page.locator('.kpis .line-icon').count(),4);
+   assert.equal(await page.locator('.kpis .icon-tone').count(),4);
    assert.equal(await page.locator('#navigation a .line-icon').count(),10);
    assert.equal(await page.locator('#case-chart .donut').count(),1);
    assert.equal(await page.locator('#review-chart .donut').count(),1);
@@ -48,6 +49,18 @@ try {
    assert.equal(await page.locator('#navigation').evaluate(nav=>[...nav.children].every(link=>link.getBoundingClientRect().right<=nav.getBoundingClientRect().right)),true);
    if(width<=375)assert.equal(await page.locator('#navigation').evaluate(nav=>nav.scrollWidth>nav.clientWidth),false);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+   if(width>=1024){
+    const chartGeometry=await page.evaluate(()=>{
+     const panel=document.querySelector('.analysis article:nth-child(2)').getBoundingClientRect();
+     const chart=document.querySelector('#case-chart').getBoundingClientRect();
+     const tableText=parseFloat(getComputedStyle(document.querySelector('td')).fontSize);
+     const kpiIcon=document.querySelector('.kpis .line-icon').getBoundingClientRect();
+     return {contained:chart.top>=panel.top&&chart.bottom<=panel.bottom,tableText,iconSize:kpiIcon.width};
+    });
+    assert.equal(chartGeometry.contained,true,'case status chart must remain inside its panel');
+    assert.ok(chartGeometry.tableText>=14,'dense table text must remain readable');
+    assert.ok(chartGeometry.iconSize>=32,'page-level KPI icons must retain the duotone presentation size');
+   }
    if(width===1280){
     if(await page.locator('body').evaluate(node=>node.classList.contains('sidebar-collapsed')))await page.getByRole('button',{name:'Expand'}).click();
     const expanded=await page.locator('main').evaluate(node=>node.getBoundingClientRect().left);
