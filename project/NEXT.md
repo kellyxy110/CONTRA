@@ -1,5 +1,9 @@
 # Next execution task
 
+## Current execution unit | Complete Phase 3 live release gates
+
+Synchronise `implementation/oct28` with the accepted Phase 2 tree. Reauthenticate Wrangler to the verified project Cloudflare account before deploying the merged release. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, genuine beneficiary participation and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
+
 ## Current execution unit | External identities and exact live case authority
 
 The backend implementation is complete to its external boundary. Recruit six distinct human operators, collect their signed control statements, then register and confirm their exact Testnet reviewer records. Separately establish secure browser control of `contra-creator.testnet` or approve an exact state-compatible allowlist change for a named browser-controlled creator. Only after the registry has six active confirmed reviewers may `preview_case` produce the immutable create-case packet and the operation-specific signing gate be configured. Meta and Modal case calls remain disabled until their production readiness flags are intentionally enabled against an existing authorised case.

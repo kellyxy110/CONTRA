@@ -40,7 +40,7 @@ export async function readProtectedCaseRecords(request,caseId) {
    {items:[...(manifests.items||[]),...(counterexamples.items||[])]},
   ];
  } catch (error) {
-  return [{__status:/401|403|authenticate|participant/i.test(error.message)?'inaccessible':'unavailable',__reason:error.message},null];
+  return [{__status:/401|403|authenticate|authorised|participant/i.test(error.message)?'inaccessible':'unavailable',__reason:error.message},null];
  }
 }
 

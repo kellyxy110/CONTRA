@@ -1,7 +1,7 @@
 import {env} from 'cloudflare:workers';
 import {evictDurableObject,runInDurableObject,SELF} from 'cloudflare:test';
 import {describe,it,expect,vi} from 'vitest';
-import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider} from '../../services/cloudflare/worker.mjs';
+import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords} from '../../services/cloudflare/worker.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
 const canonical=value=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`:JSON.stringify(value);
@@ -16,6 +16,16 @@ async function rejection(call,pattern){
 function base58(bytes){const alphabet='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';let value=0n;for(const byte of bytes)value=(value<<8n)+BigInt(byte);let out='';while(value){out=alphabet[Number(value%58n)]+out;value/=58n;}for(const byte of bytes){if(byte!==0)break;out='1'+out;}return out;}
 
 describe('Cloudflare durable financial state',()=>{
+ it('derives coverage only from the account-owned proposal and matching verification',()=>{
+  const proposal={digest:'a'.repeat(64),kind:'provider-proposal',account:'creator.testnet',body:{schema:'CONTRA_PROVIDER_FINDING_V2',criteria:[{criterion_id:1,outcome:'SATISFIED'},{criterion_id:2,outcome:'UNRESOLVED'}]}},verification={kind:'provider-verification',account:'creator.testnet',body:{valid:true,checked_finding_digest:proposal.digest}},foreign={...proposal,digest:'b'.repeat(64),account:'other.testnet'};
+  expect(ownedCriterionEvaluations([proposal,verification,foreign],'creator.testnet')).toEqual([{criterion_id:1,result:'FULFILLED',recorded:true,verified:true,proposal_digest:proposal.digest},{criterion_id:2,result:'INCONCLUSIVE',recorded:true,verified:true,proposal_digest:proposal.digest}]);
+ });
+ it('isolates a reviewer workspace to the appointed account and selected round',()=>{
+  const record={terms:{primary_committee:[{reviewer_id:'primary.testnet'}],fresh_committee:[{reviewer_id:'fresh.testnet'}]}},own={kind:'finding',account:'primary.testnet'},ownPackage={kind:'reviewer-package',account:'primary.testnet'},foreign={kind:'finding',account:'fresh.testnet'},provider={kind:'provider-proposal',account:'primary.testnet'};
+  expect(reviewerWorkspaceRecords(record,[own,ownPackage,foreign,provider],'primary.testnet',0)).toEqual([own,ownPackage]);
+  expect(()=>reviewerWorkspaceRecords(record,[own],'fresh.testnet',0)).toThrow(/appointed reviewer/);
+  expect(()=>reviewerWorkspaceRecords(record,[own],'primary.testnet',2)).toThrow(/appointed reviewer/);
+ });
  it('serialises concurrent duplicate preparation and rejects conflicting reuse',async()=>{
   const state=stub('concurrent-prepare'),results=await Promise.all(Array.from({length:8},()=>state.prepareOperation(operation('op-1'))));
   expect(results.filter(value=>!value.replayed)).toHaveLength(1);expect(results.every(value=>value.id==='op-1')).toBe(true);
