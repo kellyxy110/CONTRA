@@ -49,6 +49,15 @@ test('wallet prepare retains bounded create_case and signing remains fail closed
  assert.equal(result.transaction_hash,'hash');assert.equal(result.operation.status,'CONFIRMED');
  wallet=null;await assert.rejects(ops.signCall('create_case',{},'1'),/Reconnect the signing wallet/);
 });
+test('reviewer confirmation uses only its explicit scoped signing capability',async()=>{
+ const observed=[];
+ const request=async()=>({network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:false,reviewer_confirmation_signing_authorized:true});
+ const operations=createWalletOperations({request,getToken:()=> 'token',getAccount:()=> 'primary1.testnet',getWallet:()=>({}),prepareWalletTransaction:async input=>{observed.push(input);return {operation:{operation_id:'confirm-op'}};},sendPreparedWalletTransaction:async()=>({transactionHash:'hash'}),reconcileWalletTransaction:async()=>({status:'CONFIRMED'})});
+ const args={revision:'1',disclosure_digest:'a'.repeat(64)},result=await operations.signCall('confirm_reviewer',args,'1');
+ assert.equal(result.operation.status,'CONFIRMED');
+ assert.deepEqual(observed[0].call,{method:'confirm_reviewer',args,deposit:'1',receiverId:'contra-contestation.testnet'});
+ await assert.rejects(operations.signCall('create_case',{},'1'),/authority gate/);
+});
 test('wallet authentication requires Testnet and restored sessions do not mint signers',async()=>{
  await assert.rejects(openAuthenticatedWallet({network:'mainnet'}),/Testnet/);
  const connected=await openAuthenticatedWallet({contractAccount:'contract',connectWallet:async()=>({wallet:{id:'wallet'},accounts:[{accountId:'creator.testnet'}]}),selectWalletAccount:items=>items[0],authenticateWallet:async(_wallet,account)=>({account})});

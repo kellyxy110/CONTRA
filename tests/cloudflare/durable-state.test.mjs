@@ -1,7 +1,7 @@
 import {env} from 'cloudflare:workers';
 import {evictDurableObject,runInDurableObject,SELF} from 'cloudflare:test';
 import {describe,it,expect,vi} from 'vitest';
-import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords} from '../../services/cloudflare/worker.mjs';
+import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords,reviewerConfirmationAuthorised} from '../../services/cloudflare/worker.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
 const canonical=value=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`:JSON.stringify(value);
@@ -119,9 +119,9 @@ describe('Cloudflare durable financial state',()=>{
   expect(await verifyEd25519(publicKey,signature,digest)).toBe(true);const changed=new Uint8Array(digest);changed[0]^=1;expect(await verifyEd25519(publicKey,signature,changed)).toBe(false);
  });
 
- it('rejects cross-origin writes and keeps live signing disabled',async()=>{
+ it('rejects cross-origin writes and unauthenticated signing handoffs',async()=>{
   const crossOrigin=await SELF.fetch(publicOrigin+'/api/session/challenge',{method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});expect(crossOrigin.status).toBe(403);
-  const handoff=await SELF.fetch(publicOrigin+'/api/wallet/handoff',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(403);expect((await handoff.json()).error).toMatch(/signing is disabled/i);
+  const handoff=await SELF.fetch(publicOrigin+'/api/wallet/handoff',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(401);expect((await handoff.json()).error).toMatch(/Authentication required/i);
  });
 
  it('keeps provider credential probes closed without operator activation authentication',async()=>{
@@ -166,6 +166,11 @@ describe('Cloudflare durable financial state',()=>{
   for(const committee of ['primary','fresh'])for(let slot=1;slot<=3;slot++){const body={committee,slot,purpose:'CONTRA reviewer onboarding'},digestValue=await digest(new TextEncoder().encode(canonical(body)));invitations.push(await state.createReviewerInvitation({digest:digestValue,reviewer_id:`${committee}${slot}.testnet`,operator_id:(committee==='primary'?'a':'b').repeat(63)+slot,committee,slot,expires:Date.now()+60000,body}));}
   expect(invitations).toHaveLength(6);expect(new Set(invitations.map(value=>value.reviewer_id)).size).toBe(6);expect(new Set(invitations.map(value=>value.operator_id)).size).toBe(6);
   const acceptedBody={operator_id:invitations[0].operator_id,disclosure_digest:'d'.repeat(64),conflicts:[],custody:'independently-controlled'},accepted=await state.respondReviewer({digest:invitations[0].digest,reviewer_id:'primary1.testnet',status:'CONSENTED',body:acceptedBody});expect(accepted.status).toBe('CONSENTED');
+  const payload={methodName:'confirm_reviewer',signerId:'primary1.testnet',receiverId:'contra-contestation.testnet',deposit:'1',gas:'30000000000000',args:{revision:'1',disclosure_digest:'d'.repeat(64)}};
+  const adapter={view:async()=>({reviewer_id:'primary1.testnet',active:true,confirmed:false,revision:'1',disclosure_digest:'d'.repeat(64)})};
+  expect(await reviewerConfirmationAuthorised({store:state,adapter,account:'primary1.testnet',payload})).toBe(true);
+  expect(await reviewerConfirmationAuthorised({store:state,adapter,account:'other.testnet',payload})).toBe(false);
+  expect(await reviewerConfirmationAuthorised({store:state,adapter,account:'primary1.testnet',payload:{...payload,methodName:'create_case'}})).toBe(false);
   expect((await state.respondReviewer({digest:invitations[0].digest,reviewer_id:'primary1.testnet',status:'CONSENTED',body:acceptedBody})).replayed).toBe(true);
   await rejection(()=>runInDurableObject(state,instance=>instance.respondReviewer({digest:invitations[0].digest,reviewer_id:'primary1.testnet',status:'CONSENTED',body:{...acceptedBody,conflicts:['changed']}})),/cannot be replaced/);
   await state.respondReviewer({digest:invitations[1].digest,reviewer_id:'primary2.testnet',status:'WITHDRAWN',body:{reason:'unavailable'}});const history=await state.reviewerLifecycle('primary2.testnet');expect(history.events.map(value=>value.status)).toEqual(['INVITED','WITHDRAWN']);

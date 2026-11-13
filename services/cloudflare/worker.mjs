@@ -327,6 +327,14 @@ export class ContraState extends DurableObject{
 
  reviewerLifecycle(reviewerId){return {invitations:this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE reviewer_id=? ORDER BY created_at',reviewerId).toArray(),events:this.ctx.storage.sql.exec('SELECT * FROM reviewer_events WHERE reviewer_id=? ORDER BY seq',reviewerId).toArray()};}
 
+ reviewerConfirmationConsent(reviewerId,disclosureDigest){
+  const invitation=row(this.ctx.storage.sql.exec("SELECT digest FROM reviewer_invitations WHERE reviewer_id=? AND status='CONSENTED'",reviewerId));
+  if(!invitation)return false;
+  const event=row(this.ctx.storage.sql.exec("SELECT body FROM reviewer_events WHERE invitation_digest=? AND reviewer_id=? AND status='CONSENTED' ORDER BY seq DESC LIMIT 1",invitation.digest,reviewerId));
+  if(!event)return false;
+  try{return JSON.parse(event.body).disclosure_digest===disclosureDigest;}catch{return false;}
+ }
+
  reviewerActivationReadiness(){
   const invitations=this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations ORDER BY committee,slot').toArray();
   return {invitations:invitations.map(invitation=>{
@@ -429,6 +437,12 @@ function signingAuthorised(env){
  return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true'
   && Boolean(env.CONTRA_SIGNING_OPERATION_ID)
   && /^[0-9a-f]{64}$/.test(env.CONTRA_SIGNING_PAYLOAD_HASH||'');
+}
+export async function reviewerConfirmationAuthorised({store,adapter,account,payload,contractAccount='contra-contestation.testnet'}){
+ if(payload?.methodName!=='confirm_reviewer'||payload.signerId!==account||payload.receiverId!==contractAccount||payload.deposit!=='1'||payload.gas!=='30000000000000')return false;
+ const reviewer=await adapter.view('get_reviewer',{reviewer_id:account});
+ if(!reviewer||reviewer.reviewer_id!==account||reviewer.active!==true||reviewer.confirmed===true||String(reviewer.revision)!==payload.args?.revision||reviewer.disclosure_digest!==payload.args?.disclosure_digest)return false;
+ return store.reviewerConfirmationConsent(account,reviewer.disclosure_digest);
 }
 async function activationAuthorised(request,env){
  const supplied=request.headers.get('x-contra-activation')||'',expected=env.CONTRA_ACTIVATION_KEY||'';
@@ -602,7 +616,7 @@ async function api(request,env){
  }
  if(path==='/api/config'){
   const config=await adapter.view('get_config',{}),eligibility=assessCreatorEligibility(config);
-  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:signing,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,provider_fixtures_enabled:env.CONTRA_PROVIDER_FIXTURES_ENABLED==='true',providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
+  const signing=signingAuthorised(env);return json({network:'testnet',contract_account:env.CONTRA_CONTRACT_ACCOUNT,external_wallet_enabled:true,external_wallet_preparation_enabled:true,external_wallet_signing_authorized:signing,reviewer_confirmation_signing_authorized:true,provider_fixtures_enabled:env.CONTRA_PROVIDER_FIXTURES_ENABLED==='true',providers:cloudflareProviderReadiness(env),hosting:{plan:'cloudflare-free',cost_ceiling_usd:0,automatic_paid_upgrade:false},creator_eligibility:eligibility});
  }
  if(path==='/api/operator/provider-probe'&&request.method==='POST')return providerProbe(request,env);
  if(path==='/api/operator/provider-smoke'&&request.method==='POST')return providerSmoke(request,env,store);
@@ -637,12 +651,13 @@ async function api(request,env){
   const operation=browserOperation(await store.prepareOperation({id:input.operation_id,account:auth.account,payload_hash:payload.payload_hash,contract_account:env.CONTRA_CONTRACT_ACCOUNT,payload}));return json({operation,signing_request:null,handoff_required:operation.status==='PREPARED',live_signing_authorized:signingAuthorised(env)},201);
  }
  if(path==='/api/wallet/handoff'&&request.method==='POST'){
-  if(!signingAuthorised(env))return json({error:'Live wallet signing is disabled pending an exact bounded execution authority'},403);
   const auth=await session(request,env);
   const input=await body(request),existing=await store.operation(input.operation_id);if(!existing||existing.account!==auth.account)fail('Operation not found');
   const payload=JSON.parse(existing.payload_json);
-  if(existing.id!==env.CONTRA_SIGNING_OPERATION_ID||existing.payload_hash!==env.CONTRA_SIGNING_PAYLOAD_HASH||existing.contract_account!==env.CONTRA_CONTRACT_ACCOUNT||payload.methodName!=='create_case'||payload.deposit!=='1'){
-   return json({error:'The operation does not match the authorised one-yocto Testnet case creation'},403);
+  const exactCaseCreation=signingAuthorised(env)&&existing.id===env.CONTRA_SIGNING_OPERATION_ID&&existing.payload_hash===env.CONTRA_SIGNING_PAYLOAD_HASH&&existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT&&payload.methodName==='create_case'&&payload.deposit==='1';
+  const reviewerConfirmation=existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT&&await reviewerConfirmationAuthorised({store,adapter,account:auth.account,payload,contractAccount:env.CONTRA_CONTRACT_ACCOUNT});
+  if(!exactCaseCreation&&!reviewerConfirmation){
+   return json({error:'The operation does not match an authorised scoped Testnet transaction'},403);
   }
   const operation=browserOperation(await store.handoffOperation(input.operation_id));
   return json({operation,signing_request:operation.replayed?null:walletSigningRequest(operation)});

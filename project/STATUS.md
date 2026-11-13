@@ -4,6 +4,10 @@
 
 The owner approved activation packet `340ea02123adf9ce9c8c0111c1c47e6847ea6d2ab378212d31fbb345b24258f9`. Fresh final preflight verified the owner signer, FullAccess key, deployed code hash and empty registry. Six sequential `set_reviewer` calls then reached explicit final success. Read-back at block 277529938 shows three primary and three fresh reviewers active at revision 1 with their exact signed operator and disclosure digests. All remain `confirmed: false`, as required until each human personally signs `confirm_reviewer`. Total attached deposit was 6 yoctoNEAR and total gas burn was 0.0016302682336456 testnet NEAR. No case, escrow, provider call or settlement occurred.
 
+## Current implementation | scoped reviewer onchain confirmation
+
+The Bench now offers `Confirm on NEAR` only to an authenticated reviewer whose durable signed consent matches an active, unconfirmed onchain registry record. The Worker revalidates the account, contract, method, revision, disclosure digest, gas and one-yocto deposit at signing handoff. This narrow capability does not enable case creation or any other transaction and does not alter the operation-specific creator gate. Each reviewer still provides the actual wallet signature and may reject it.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-REVIEWERS-INVITED
 
 Six owner-declared independently controlled Testnet accounts were verified through final RPC, each with one FullAccess key and 2.5 testnet NEAR. The authenticated `contra-creator.testnet` session created three primary and three fresh-appeal invitation records in production. The owner reports all six isolated reviewer sessions as `CONSENTED`, and `appeal3.testnet` was independently observed in production with its immutable `INVITED` and `CONSENTED` history. None is registered or confirmed onchain. The owner-only activation readiness route now reconciles the six durable consent records and their exact disclosure digests before any `set_reviewer` transaction is prepared. No transaction was broadcast.

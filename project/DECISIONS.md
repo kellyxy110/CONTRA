@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-113 | Reviewer confirmation is a self-authorised scoped wallet action | 2026-11-13
+
+ACCEPTED. A consented reviewer may personally sign only the exact `confirm_reviewer` call matching their authenticated account, active onchain revision and disclosure digest. The Worker rechecks durable signed consent and contract state before handoff. This capability is independent of and cannot bypass the exact operation-specific creator signing gate. A connected wallet remains free to reject the request.
+
 ## D-112 | Approved Overview references govern the active frontend | 2026-11-13
 
 ACCEPTED. `design/approved/overview-dark.jpeg` and `design/approved/overview-light.jpeg` are the only active desktop Overview design references. Dark remains the default. The sidebar uses a textual Collapse control at the bottom in place of the former icon-only top control and the former Contestation on NEAR footer. Deterministic visual fixtures remain local, explicitly simulated and unable to gain protocol or financial authority.

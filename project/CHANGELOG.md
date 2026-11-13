@@ -7,6 +7,13 @@
 - Registered three primary and three fresh reviewers as active revision 1 records while preserving reviewer-personal confirmation as a separate action.
 - Retained the public transaction and expenditure evidence in `project/artifacts/phase3/reviewer-activation.json`.
 
+## 2026-11-13 | Scoped reviewer confirmation interface
+
+- Added a The Bench action for each reviewer to personally sign the exact onchain `confirm_reviewer` call.
+- Added a fail-closed Worker handoff limited to the authenticated reviewer's matching durable consent and active registry revision.
+- Preserved the disabled general signing gate and exact operation-specific case-creation authority.
+- Added browser orchestration and Durable Object regressions for allowed confirmation and denied unrelated methods or accounts.
+
 ## 2026-11-13 | frontend visual hierarchy correction
 
 - Replaced faint page-level icon treatments with larger, complete two-tone filled SVG artwork while preserving the established navigation family.

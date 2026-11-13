@@ -355,6 +355,26 @@ async function reviewerInvitations(panel) {
      });
     }
    }
+    if(invitation.reviewer_id===identity&&invitation.status==='CONSENTED'){
+     try{
+      const reviewer=await view('get_reviewer',{reviewer_id:identity});
+      const consentEvent=[...events].reverse().find(event=>event.invitation_digest===invitation.digest&&event.status==='CONSENTED');
+      let consentDisclosure=null;try{const consentBody=typeof consentEvent?.body==='string'?JSON.parse(consentEvent.body):consentEvent?.body;consentDisclosure=consentBody?.disclosure_digest||null;}catch{}
+      if(reviewer?.active===true&&reviewer.confirmed!==true){
+       const confirm=element('button','Confirm on NEAR');confirm.type='button';item.append(confirm);
+       confirm.addEventListener('click',async()=>{
+        confirm.disabled=true;feedback.textContent='Preparing your exact reviewer confirmation…';
+        try{
+         if(!wallet)throw Error('Reconnect this reviewer wallet before confirming on NEAR.');
+         if(!consentDisclosure||reviewer.disclosure_digest!==consentDisclosure)throw Error('The onchain disclosure does not match your signed consent.');
+         const result=await signWorkspaceCall('confirm_reviewer',{revision:String(reviewer.revision),disclosure_digest:reviewer.disclosure_digest},'1');
+         feedback.textContent=`Reviewer confirmation: ${result.operation?.status??'Unavailable'}. Transaction: ${result.transaction_hash??'Unavailable'}.`;
+         await refresh();
+        }catch(error){feedback.textContent=error.message;confirm.disabled=false;}
+       });
+      }else if(reviewer?.confirmed===true)item.append(element('p','Onchain reviewer confirmation: Confirmed'));
+     }catch{item.append(element('p','Onchain reviewer registration is not available yet.'));}
+    }
    section.append(item);
   }
   const audit=element('ul','');
