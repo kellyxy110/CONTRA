@@ -17,8 +17,8 @@
   "authorises_funding": false,
   "authorises_other_methods": false,
   "authority_digest": "a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5",
-  "owner_approval": null,
-  "signing_request_released": false,
-  "transaction_hash": null,
+  "owner_approval": "I approve operation authority digest a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5",
+  "signing_request_released": true,
+  "transaction_hash": "Hd3dkxrno2rMnGZHvp7oq2qhrmQdTuiKT3cxcf9eaeQS",
   "notice": "Approval is valid only for the exact prepared create_case operation. It does not authorise funding or any later case transition."
 }

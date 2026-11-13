@@ -1,6 +1,6 @@
 # Next execution task
 
-Current action: obtain explicit approval of operation authority digest `a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5`. It covers only prepared operation `phase3-create-e6bb304c52aeb9b0`, payload hash `8ae68c1a354bccc8e4dbb44c33d6f2c45915c6beb39bd2df53bba25c8312b1b3`, `create_case`, signer `contra-creator.testnet`, receiver `contra-contestation.testnet` and 1 yoctoNEAR. It does not authorise funding. Do not release or broadcast the signing request before exact approval.
+Current action: the independently controlled beneficiary must inspect case `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` and sign `accept_terms` for terms digest `996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000`. Case creation is final and signing is disabled again. Do not fund the 0.1 Testnet NEAR principal until beneficiary acceptance is final and a separate exact funding authority is prepared.
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 

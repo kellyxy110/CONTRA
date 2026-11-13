@@ -10,6 +10,8 @@
 - Recorded the exact proposed case ID and terms digest while leaving financial authorisation null.
 - Authenticated the creator from Windows Credential Manager without exposing its key and persisted the exact `create_case` operation in `PREPARED` state.
 - Recorded the payload-bound authority digest while leaving live signing disabled and owner approval null.
+- Executed the owner-approved exact `create_case` transaction and reconciled final success through the Worker and independent RPC.
+- Restored live signing to false and removed both operation-specific Cloudflare secrets immediately after confirmation.
 
 ## 2026-11-13 | Signed committee-assignment acknowledgement
 

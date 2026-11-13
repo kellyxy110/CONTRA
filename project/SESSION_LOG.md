@@ -8,6 +8,8 @@ The owner accepted the proposed unchallenged case direction. A public readiness 
 
 The approved creator credential was read only inside the local process and used to complete a NEP-413 session. The production Worker persisted the exact case-creation payload as `phase3-create-e6bb304c52aeb9b0` with hash `8ae68c1a354bccc8e4dbb44c33d6f2c45915c6beb39bd2df53bba25c8312b1b3`. It remained `PREPARED`; no handoff, signature or broadcast occurred.
 
+After the owner approved authority digest `a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5`, the exact operation was released once and signed with the approved creator key. Transaction `Hd3dkxrno2rMnGZHvp7oq2qhrmQdTuiKT3cxcf9eaeQS` reached final success and created the expected Draft case. Worker reconciliation returned `CONFIRMED`. The signing gate was immediately disabled and the scoped operation secrets were removed. No principal was funded.
+
 ## 2026-11-13 | Phase 3 committee reconciliation
 
 The owner reported six reviewer confirmations complete. Inspection found that the account names sort into the reverse committee grouping from their invitation labels. Implementation now preserves prior consent while requiring six new wallet-signed acknowledgements of the actual registry-selected roles. Cloudflare tests passed 22 of 22 and focused browser-operation tests passed 8 of 8 before deployment preparation.

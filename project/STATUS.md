@@ -6,7 +6,9 @@ Final NEAR Testnet RPC verified `contra-beneficiary2.testnet` with the independe
 
 The first unchallenged terms proposal passed the deployed contract's read-only `preview_case` at final block 277571602. It resolves to case ID `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` and terms digest `996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000`, with 0.1 Testnet NEAR principal. Signing remains disabled and financial authority remains null.
 
-The authenticated production Worker persisted operation `phase3-create-e6bb304c52aeb9b0` in `PREPARED` state with payload hash `8ae68c1a354bccc8e4dbb44c33d6f2c45915c6beb39bd2df53bba25c8312b1b3`. Live signing was false and no signing request was released. The operation-specific authority digest is `a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5`; owner approval remains null.
+The authenticated production Worker persisted operation `phase3-create-e6bb304c52aeb9b0` in `PREPARED` state with payload hash `8ae68c1a354bccc8e4dbb44c33d6f2c45915c6beb39bd2df53bba25c8312b1b3`. Live signing was false and no signing request was released before approval. The operation-specific authority digest is `a1cb88d459fa74ab7e3ec1781fad024528f6ae6c3a5fdf24e86cc74ffe81f4e5`.
+
+The owner approved that exact digest. Transaction `Hd3dkxrno2rMnGZHvp7oq2qhrmQdTuiKT3cxcf9eaeQS` reached final `SuccessValue`, and both the Worker and a separate final RPC read confirmed the intended case in `Draft` state with the exact terms digest and beneficiary. The signing gate was restored to false and both operation-specific Cloudflare secrets were deleted. Principal funding remains zero.
 
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-COMMITTEE-ACKNOWLEDGEMENT
 
