@@ -1,6 +1,6 @@
 # Next execution task
 
-Current action: deploy the contract-derived committee acknowledgement control. Each reviewer must connect at `https://contra-near.pages.dev/#reviewers` and sign the exact role selected by the registry: `appeal.testnet`, `appeal2.testnet`, `appeal3.testnet` are primary; `primary1.testnet`, `primary2.testnet`, `primary3.testnet` are fresh appeal. Require all six immutable acknowledgements before freezing case terms or preparing `create_case`.
+Current action: freeze the first live case terms for `contra-creator.testnet` and independently controlled beneficiary `contra-beneficiary2.testnet`. Final RPC has verified the beneficiary key and 1 Testnet NEAR, all six reviewers are active and confirmed, and no case exists. Next, bind participant operator digests, evidence, deadlines, principal and the exact `create_case` intent. Keep the draft non-executable until the resulting digest receives operation-specific authority.
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 

@@ -5,7 +5,7 @@
   "contract_account": "contra-contestation.testnet",
   "contract_code_hash": "EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2",
   "creator_id": "contra-creator.testnet",
-  "beneficiary_id": "contra-beneficiary.testnet",
+  "beneficiary_id": "contra-beneficiary2.testnet",
   "limits": {
     "maximum_attached_deposit_yocto": "1000000000000000000000000",
     "maximum_journey_expenditure_yocto": "2000000000000000000000000"

@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-13 | Phase 3 beneficiary preflight
+
+- Replaced the obsolete live-journey beneficiary draft with `contra-beneficiary2.testnet`.
+- Recorded final RPC evidence for its independently supplied FullAccess key and 1 Testnet NEAR balance.
+- Recorded final contract registry read-back showing six active, confirmed reviewers and the deterministic primary and fresh committee order.
+- Preserved the non-executable gate. No case terms, transaction operation or financial authority was invented.
+
 ## 2026-11-13 | Signed committee-assignment acknowledgement
 
 - Added a finalised-registry committee readiness route.

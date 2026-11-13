@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-115 | Use independently controlled beneficiary | 2026-11-13
+
+Use `contra-beneficiary2.testnet` for the genuine Testnet journey. Do not use the environment-custodied `contra-beneficiary.testnet` as evidence of independent participant control. Treat NEP-413 authentication and the general participation declaration as readiness evidence only. Require the beneficiary's onchain `accept_terms` transaction for the exact immutable terms digest.
+
 ## D-114 | Committee role follows the contract registry | 2026-11-13
 
 Reviewer invitation labels do not override the deployed contract's deterministic ASCII account ordering. When that ordering conflicts with an earlier invitation label, preserve the signed invitation and require a separate NEP-413 acknowledgement of the exact contract-derived role. Never silently relabel consent and never prepare a case until all six reviewers acknowledge the actual primary or fresh assignment.

@@ -1,0 +1,17 @@
+{
+  "schema": "CONTRA_PHASE3_BENEFICIARY_READINESS_V1",
+  "observed_at": "2026-11-13T22:24:00Z",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "beneficiary_account": "contra-beneficiary2.testnet",
+  "beneficiary_public_key": "ed25519:GTqSSmZ73Vmo7p6UXvTL6G1NAuy339oJLuxEtPU6z5Zg",
+  "access_key_permission": "FullAccess",
+  "account_final_block_height": 277570207,
+  "account_final_block_hash": "AgtZrtwg1D6VdkYNa1BWR61SD9hRrKvAhPBrye2hDAak",
+  "balance_yocto": "1000000000000000000000000",
+  "nep413_authentication_reported_complete": true,
+  "operator_control_declaration": "I exclusively control contra-beneficiary2.testnet and consent to act as beneficiary for the authorised CONTRA Testnet journey.",
+  "exact_case_terms_accepted": false,
+  "transaction_broadcast_by_contra": false,
+  "notice": "Authentication and a general participation declaration do not replace the onchain acceptance of an immutable case terms digest."
+}

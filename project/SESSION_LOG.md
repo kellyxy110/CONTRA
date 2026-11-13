@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-13 | Beneficiary and registry readiness
+
+The independently controlled beneficiary `contra-beneficiary2.testnet` completed NEP-413 authentication and supplied a control and participation declaration. Final RPC verified its sole FullAccess key and 1 Testnet NEAR balance. A final contract read verified all six reviewer accounts active and confirmed, zero existing cases, zero held escrow and zero unknown value. The active journey draft now names the correct beneficiary. Exact terms and transaction authority remain deliberately unset.
+
 ## 2026-11-13 | Phase 3 committee reconciliation
 
 The owner reported six reviewer confirmations complete. Inspection found that the account names sort into the reverse committee grouping from their invitation labels. Implementation now preserves prior consent while requiring six new wallet-signed acknowledgements of the actual registry-selected roles. Cloudflare tests passed 22 of 22 and focused browser-operation tests passed 8 of 8 before deployment preparation.

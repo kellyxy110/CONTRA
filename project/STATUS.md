@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Phase 3 beneficiary and committee preflight, 13 November 2026
+
+Final NEAR Testnet RPC verified `contra-beneficiary2.testnet` with the independently supplied FullAccess public key `ed25519:GTqSSmZ73Vmo7p6UXvTL6G1NAuy339oJLuxEtPU6z5Zg` and exactly 1 Testnet NEAR. The beneficiary completed NEP-413 authentication and supplied a control and participation declaration. Exact case-terms consent remains pending until an immutable case exists. Contract read-back at final block 277570514 verified all six reviewers active and confirmed. The contract contains zero cases, zero held escrow and zero in-flight or unknown value. No CONTRA transaction was broadcast during this preflight.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-COMMITTEE-ACKNOWLEDGEMENT
 
 The owner reports that all six independently controlled reviewer accounts completed their own onchain confirmation. Before case preparation, the deterministic registry policy exposed a role mismatch: ASCII account ordering selects `appeal.testnet`, `appeal2.testnet` and `appeal3.testnet` as primary, followed by `primary1.testnet`, `primary2.testnet` and `primary3.testnet` as fresh appeal. The original signed invitations named the opposite roles. The application now derives the exact registry order from finalised contract reads and requires each reviewer to sign an immutable NEP-413 committee-assignment acknowledgement. No invitation, disclosure or prior consent is rewritten. Case preparation remains blocked until all six assignment acknowledgements are recorded.
