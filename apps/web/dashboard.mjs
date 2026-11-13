@@ -226,8 +226,8 @@ async function reviewerInvitations(panel) {
    if(invitation.reviewer_id===identity && expires>Date.now() && ['INVITED','CONSENTED'].includes(invitation.status)){
     let consentInput=null;
     if(invitation.status==='INVITED'){
-     consentInput=element('fieldset','');
-     consentInput.append(element('legend','Signed reviewer control'));
+     consentInput=document.createElement('form');
+     consentInput.append(element('h4','Signed reviewer control'));
      for(const [label,name,type] of [['Operator control digest','operator_id','text'],['Disclosure digest','disclosure_digest','text'],['Available from','available_from','datetime-local'],['Available until','available_until','datetime-local']]){
       const field=element('label',label),input=document.createElement('input');input.name=name;input.type=type;input.required=true;field.append(input);consentInput.append(field);
      }
