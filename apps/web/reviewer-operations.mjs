@@ -19,6 +19,10 @@ export async function signReviewerConsent({post,wallet,invitation,reviewerId,inp
  if(signed.accountId!==reviewerId)throw Error('Reviewer control signature account does not match the invitation.');
  return post('reviewer/respond',{digest:invitation.digest,reviewer_id:reviewerId,status:'CONSENTED',body:statement,control_challenge_id:challenge.id,publicKey:signed.publicKey,control_signature:signed.signature});
 }
+export async function storeReviewerDisclosure(post,invitation,reviewerId,input) {
+ const conflicts=String(input.conflicts||'').split('\n').map(value=>value.trim()).filter(Boolean);
+ return post('reviewer/disclosure',{schema:'CONTRA_REVIEWER_DISCLOSURE_V1',reviewer_id:reviewerId,operator_id:invitation.operator_id,custody:'independently-controlled',conflicts,available_from:new Date(input.available_from).toISOString(),available_until:new Date(input.available_until).toISOString(),attested_at:new Date().toISOString()});
+}
 export function findingArgs(caseId,roundId,data) {
  return {case_id:caseId,round_id:roundId,disposition:data.get('disposition'),citations:[data.get('citation')],explanation:data.get('explanation'),limitations:data.get('limitations')};
 }
