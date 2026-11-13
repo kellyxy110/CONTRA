@@ -2,9 +2,18 @@
 
 Browser fixtures establish interface behaviour. Live Testnet execution requires finalised receipts.
 
+## Frontend release gates
+
+| Gate | Evidence | Status | Remaining work |
+| --- | --- | --- | --- |
+| Visual Fidelity | Native 1280 x 848 Chromium dark and light renders inspected side by side with both approved references; empty, expanded, collapsed, tablet and mobile captures generated in both Chromium and Firefox | PASS | Production capture must match the reviewed build after deployment |
+| Functional Completeness | Chromium and Firefox action-to-result suite across all ten destinations and eight viewport widths | PASS | Genuine human reviewer actions and operation-specific live transactions remain external gates |
+| Backend Correctness | Existing contract, authentication, evidence isolation, budget, persistence, UNKNOWN and settlement regressions | PASS | No backend authority was broadened by the frontend recovery |
+| Production Readiness | Corrected build not yet deployed | PARTIAL | Merge, deploy, verify production asset identity and capture production screenshots |
+
 | Destination | Feature and integration | Evidence | Status | Remaining work |
 | --- | --- | --- | --- | --- |
-| Overview | Approved layout, themes, contract reads, timeline and charts | Integrated Chromium and Firefox suite at 320 to 1920 pixels | PASS | |
+| Overview | Approved layout, dark and light themes, authoritative reads, truthful fixture and empty modes, timeline and two independent doughnut charts | Side-by-side approved-reference inspection plus integrated Chromium and Firefox suite at 320 to 1920 pixels | PASS | Production capture remains pending |
 | Cases | Validate terms, preview, prepare and safely cancel an unsigned wallet operation | Repository wallet and browser suites, including explicit pre-handoff cancellation | PASS | Live creation remains separately blocked |
 | Cases | Genuine Testnet creation | No finalised receipt | BLOCKED | Eligible creator, six independent reviewers and exact signing authority |
 | Evidence | Store immutable manifest, inspect authorised artifacts and show provenance | Integrated browser storage and protected artifact inspection | PASS | Onchain binding requires an authorised live case |

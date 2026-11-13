@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-112 | Approved Overview references govern the active frontend | 2026-11-13
+
+ACCEPTED. `design/approved/overview-dark.jpeg` and `design/approved/overview-light.jpeg` are the only active desktop Overview design references. Dark remains the default. The sidebar uses a textual Collapse control at the bottom in place of the former icon-only top control and the former Contestation on NEAR footer. Deterministic visual fixtures remain local, explicitly simulated and unable to gain protocol or financial authority.
+
 ## D-110 | Browser reviewer recovery is encrypted and local-secret free | 2026-11-13
 
 Reviewer commit and reveal recovery uses PBKDF2-SHA-256 with 210,000 iterations and AES-GCM. The browser persists and uploads only the encrypted package, never the reviewer nonce or plaintext reveal. Recovery revalidates the durable package identity and frozen commitment before reveal. This preserves the existing commitment encoding and contract ABI.

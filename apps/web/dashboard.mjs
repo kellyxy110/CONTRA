@@ -16,6 +16,15 @@ let token = sessionStorage.getItem('contra-session');
 const {request, view} = createApiClient(() => token);
 const post = (path, body) => request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 let cases = [], caseRequest = 0;
+const visualFixtureMode = ['localhost','127.0.0.1'].includes(location.hostname) && new URLSearchParams(location.search).get('mode') === 'fixture';
+const fixtureCases = ['ReviewCommit','Challenged','Settled'].map((state,index)=>({
+ case_id:String(index+1).repeat(64),state,creator_id:'fixture-creator.testnet',
+ terms_digest:'9'.repeat(64),evidence_digest:'a'.repeat(64),created_at_ns:'1794484800000000000',
+ funded_principal_yocto:'1000000000000000000000000',
+ terms:{beneficiary_id:'fixture-beneficiary.testnet',criteria:[{criterion_id:1,kind:'KEYBOARD',requirement_digest:'8'.repeat(64)}],primary_committee:[{reviewer_id:'fixture-primary.testnet'}],fresh_committee:[{reviewer_id:'fixture-fresh.testnet'}]},
+}));
+fixtureCases[1].challenge={counterexample_digest:'c'.repeat(64)};
+fixtureCases[2].payout={last_attempt:{result:'SUCCESS'}};
 const chartTones = {
  Challenged:'challenged', ChallengeReview:'challenged', Settled:'verified',
  ReviewCommit:'review', ReviewReveal:'review', Committed:'committed',
@@ -60,9 +69,20 @@ function element(tag, content) {
 function chart(id, entries, unit) {
  const target = byId(id);
  target.replaceChildren();
+ target.classList.remove('chart-empty');
  const total = entries.reduce((sum, [, count]) => sum + count, 0);
  if (!total) {
-  target.append(element('p', 'No records to display.'));
+  target.classList.add('chart-empty');
+  const ring = element('div', '');
+  ring.className = 'donut';
+  ring.setAttribute('aria-hidden', 'true');
+  const centre = element('div', '');
+  centre.append(element('strong', '0'), element('small', unit));
+  ring.append(centre);
+  const explanation = element('div', '');
+  explanation.append(element('strong', `No ${unit} returned`), element('p', 'The panel remains available without inventing records.'));
+  target.setAttribute('aria-label', `No ${unit} returned`);
+  target.append(ring, explanation);
   return;
  }
  const ring = element('div', '');
@@ -133,6 +153,19 @@ async function selectCase() {
  chart('review-chart', [], 'reviewers');
  table('evidence', [], 4, id ? 'Loading protected evidence…' : 'Select a case to inspect evidence.');
  if (!record) return;
+ if (visualFixtureMode) {
+  chart('review-chart', [['Committed',1],['Revealed',1],['Pending',1]], 'reviewers');
+  const fixtureEvidence = [
+   ['Manifest','aaaaaaaaaaaa','Fixture source','Verified binding','verified'],
+   ['Manifest','bbbbbbbbbbbb','Unavailable','Pending binding','pending'],
+   ['Counterexample','cccccccccccc','Unavailable','Challenged','challenged'],
+  ];
+  table('evidence', fixtureEvidence.map(([kind,digest,provenance,label,bindingTone]) => {
+   const binding = element('span', label);binding.className='evidence-status';binding.dataset.tone=bindingTone;
+   return [kind,digest,provenance,binding];
+  }),4,'No fixture evidence records returned.');
+  return;
+ }
  const [round, protectedData] = await Promise.allSettled([
   view('get_round', {case_id:id, round_id:Number(byId('round').value)}),
   readProtectedCaseRecords(request, id),
@@ -147,9 +180,7 @@ async function selectCase() {
  chart('review-chart', [...counts], 'reviewers');
  const records = protectedData.status === 'fulfilled' ? protectedData.value[1]?.items ?? [] : [];
  table('evidence', records.map(item => {
-  const challenged = Boolean(record.challenge && item.digest && (
-   item.digest === record.challenge.counterexample_digest || item.digest === record.evidence_digest
-  ));
+  const challenged = Boolean(record.challenge && item.digest === record.challenge.counterexample_digest);
   const binding = element('span', challenged ? 'Challenged' : item.onchain === true ? 'Verified binding' : 'Pending binding');
   binding.className = 'evidence-status';
   binding.dataset.tone = challenged ? 'challenged' : item.onchain === true ? 'verified' : 'pending';
@@ -176,6 +207,18 @@ function renderCases() {
  void selectCase();
 }
 
+function caseEventLink(caseId) {
+ const link = element('a', caseId.slice(0,12));
+ link.className = 'event-link';
+ link.href = '#cases/' + caseId;
+ link.title = `Open case ${caseId}`;
+ link.addEventListener('click', () => {
+  byId('case').value = caseId;
+  void selectCase();
+ });
+ return link;
+}
+
 const scheme = matchMedia('(prefers-color-scheme: dark)');
 function applyTheme() {
  const preference = byId('theme').value;
@@ -190,11 +233,39 @@ byId('theme').addEventListener('change', () => {
  applyTheme();
 });
 Object.entries(routes).forEach(([route, label]) => {
- const link = element('a', label);
+ const link = element('a', '');
  link.href = '#' + route;
- link.prepend(icon(route));
+ link.title = label;
+ const text = element('span', label);
+ text.className = 'nav-label';
+ link.append(icon(route), text);
  if(route==='challenges')link.dataset.tone='challenged';
  byId('navigation').append(link);
+});
+
+const sidebarToggle = byId('sidebar-toggle');
+const desktopMedia = matchMedia('(min-width: 901px)');
+function setSidebar(collapsed, {persist = true} = {}) {
+ if (desktopMedia.matches) {
+  document.body.classList.toggle('sidebar-collapsed', collapsed);
+  document.body.classList.remove('mobile-nav-open');
+  sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+  sidebarToggle.title = collapsed ? 'Expand navigation' : 'Collapse navigation';
+  sidebarToggle.querySelector('.toggle-label').textContent = collapsed ? 'Expand' : 'Collapse';
+  if (persist) localStorage.setItem('contra-sidebar-collapsed', String(collapsed));
+ } else {
+  document.body.classList.remove('sidebar-collapsed');
+  document.body.classList.toggle('mobile-nav-open', !collapsed);
+  sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+  sidebarToggle.title = collapsed ? 'Open navigation' : 'Close navigation';
+  sidebarToggle.querySelector('.toggle-label').textContent = sidebarToggle.title;
+ }
+}
+setSidebar(desktopMedia.matches ? localStorage.getItem('contra-sidebar-collapsed') === 'true' : true, {persist:false});
+sidebarToggle.addEventListener('click', () => setSidebar(sidebarToggle.getAttribute('aria-expanded') === 'true'));
+desktopMedia.addEventListener('change', () => setSidebar(desktopMedia.matches ? localStorage.getItem('contra-sidebar-collapsed') === 'true' : true, {persist:false}));
+byId('navigation').addEventListener('click', event => {
+ if (!desktopMedia.matches && event.target.closest('a')) setSidebar(true, {persist:false});
 });
 for(const [id,name] of Object.entries({funded:'funded',challenges:'challenges',payouts:'payouts',active:'cases'})){
  byId(id).closest('article').prepend(icon(name));
@@ -702,21 +773,32 @@ byId('wallet').addEventListener('click', async () => {
  }
 });
 
-const [caseResult, activity] = await Promise.allSettled([
- readPagedCases(view, {maxPages:20}),
- view('get_events', {case_id:null,after_seq:'0',limit:20}),
-]);
+const [caseResult, activity] = visualFixtureMode
+ ? [{status:'fulfilled',value:fixtureCases},{status:'fulfilled',value:{items:[{event:'case_funded',data:[{seq:'1',case_id:fixtureCases[0].case_id}]}]}}]
+ : await Promise.allSettled([
+   readPagedCases(view, {maxPages:20}),
+   view('get_events', {case_id:null,after_seq:'0',limit:20}),
+  ]);
 updateNavigation();
 if (caseResult.status === 'fulfilled') {
  cases = caseResult.value;
  renderCases();
+ if (visualFixtureMode) {
+  byId('status').textContent = 'Deterministic visual fixture · simulated records · no financial authority';
+  byId('status').dataset.mode = 'fixture';
+  byId('case').value = cases[0].case_id;
+  void selectCase();
+ }
 } else {
- byId('status').textContent = 'Contract case data is unavailable.';
+ byId('status').textContent = 'Read-only live mode · contract case data is unavailable.';
  byId('period').disabled = true;
  chart('case-chart', [], 'cases');
  void selectCase();
 }
-table('events', activity.status === 'fulfilled' ? activity.value.items.map(event => [event.data?.[0]?.seq,event.data?.[0]?.case_id?.slice(0,12),event.event]) : [], 3, activity.status === 'fulfilled' ? 'No contract events returned.' : 'Contract activity is unavailable.');
+table('events', activity.status === 'fulfilled' ? activity.value.items.map(event => {
+ const caseId=event.data?.[0]?.case_id;
+ return [event.data?.[0]?.seq,caseId?caseEventLink(caseId):'Unavailable',event.event];
+}) : [], 3, activity.status === 'fulfilled' ? 'No contract events returned.' : 'Contract activity is unavailable.');
 if (token) {
  try {
   const sdk = await import('./wallet.bundle.js');

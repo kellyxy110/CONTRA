@@ -9,13 +9,15 @@
 </head>
 <body>
  <a class="skip" href="#main">Skip to content</a>
- <aside>
-  <a class="brand" href="#overview" aria-label="CONTRA overview">
-   <svg aria-hidden="true" width="36" height="36" viewBox="0 0 64 64"><g fill="none" stroke-width="8"><path d="M24.48 52.67 A22 22 0 0 1 24.48 11.33" transform="translate(0 -3)" stroke="#00EC97"/><path d="M39.52 11.33 A22 22 0 0 1 39.52 52.67" transform="translate(0 3)" stroke="#FF8678"/></g><path d="M32 26.5 L37.5 32 L32 37.5 L26.5 32 Z" fill="#F5F7F5"/></svg>
-   <span>CONTRA</span>
-  </a>
+ <aside id="sidebar">
+  <div class="brand-row">
+   <a class="brand" href="#overview" aria-label="CONTRA overview">
+    <svg aria-hidden="true" width="36" height="36" viewBox="0 0 64 64"><g fill="none" stroke-width="8"><path d="M24.48 52.67 A22 22 0 0 1 24.48 11.33" transform="translate(0 -3)" stroke="#00EC97"/><path d="M39.52 11.33 A22 22 0 0 1 39.52 52.67" transform="translate(0 3)" stroke="#FF8678"/></g><path d="M32 26.5 L37.5 32 L32 37.5 L26.5 32 Z" fill="#F5F7F5"/></svg>
+    <span>CONTRA</span>
+   </a>
+  </div>
   <nav aria-label="Primary navigation" id="navigation"></nav>
-  <p class="rail-footer">Contestation on NEAR</p>
+  <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-controls="navigation" aria-expanded="true" title="Collapse navigation"><span class="toggle-label">Collapse</span></button>
  </aside>
  <main id="main">
   <header class="heading">
@@ -23,7 +25,7 @@
    <div class="toolbar">
     <label>Case period <select id="period"><option value="0">All time</option><option value="30">Last 30 days</option><option value="7">Last 7 days</option></select></label>
     <label>Theme <select id="theme"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></label>
-    <button id="wallet">Connect wallet</button>
+    <button id="wallet" type="button">Connect wallet</button>
    </div>
   </header>
   <p id="status" role="status">Loading contract data…</p>

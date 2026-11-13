@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-13-P0-FRONTEND-RECOVERY
+
+The approved dark and light Overview references are now the sole active visual authority. The recovered frontend matches their desktop composition, restores both doughnut charts, distinguishes active navigation from the coral Challenges accent, supports dark and light themes, and provides a working textual Collapse and Expand control at the bottom of the sidebar. Chromium and Firefox passed all ten destinations at 320, 375, 768, 1024, 1280, 1366, 1440 and 1920 pixel widths. Local verification passed 176 repository tests, 21 Cloudflare tests, the wallet build, documentation checks and the Cloudflare dry run. Production readiness remains PARTIAL until the focused PR passes hosted gates and the exact merged build is deployed and smoke-tested.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE2-FUNCTIONAL-WORKFLOWS
 
 Phase 1 merged through PR 95 at `9a1ecc0e4cb9314b2c4896d545098c628e5a20a4`. Phase 2 merged through PR 100 at `98621162d5d8cefea5922e0ba46a23a8657c4c7f`. The independently testable Cases, Evidence, Evaluations, Challenges, The Bench, Settlement, Constellations, Activity and Settings paths are complete. Reviewer reveal material is stored only in a passphrase-encrypted AES-GCM recovery package, each round workspace is restricted to its appointed reviewer, provider result access remains account and case scoped, and UNKNOWN operations remain locked. Core run `43360379499`, Security run `43360379395` and comprehensive Integration run `43360379415` passed on the reviewed head. Local verification passed 176 repository tests, 21 Cloudflare tests, the wallet build, 75 documentation links and the Chromium and Firefox responsive route matrix. No transaction, provider call or reviewer-independence claim occurred. Live Testnet creation and settlement remain blocked on six genuine reviewers and operation-specific signing authority.
