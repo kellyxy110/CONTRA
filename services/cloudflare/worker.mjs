@@ -327,6 +327,15 @@ export class ContraState extends DurableObject{
 
  reviewerLifecycle(reviewerId){return {invitations:this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE reviewer_id=? ORDER BY created_at',reviewerId).toArray(),events:this.ctx.storage.sql.exec('SELECT * FROM reviewer_events WHERE reviewer_id=? ORDER BY seq',reviewerId).toArray()};}
 
+ reviewerActivationReadiness(){
+  const invitations=this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations ORDER BY committee,slot').toArray();
+  return {invitations:invitations.map(invitation=>{
+   const event=row(this.ctx.storage.sql.exec("SELECT body,observed_at FROM reviewer_events WHERE invitation_digest=? AND status='CONSENTED' ORDER BY seq DESC LIMIT 1",invitation.digest));
+   let consent=null;try{consent=event?JSON.parse(event.body):null}catch{}
+   return {digest:invitation.digest,reviewer_id:invitation.reviewer_id,operator_id:invitation.operator_id,committee:invitation.committee,slot:invitation.slot,status:invitation.status,expires:invitation.expires,consented_at:event?.observed_at||null,disclosure_digest:consent?.disclosure_digest||null};
+  }),source:'durable-reviewer-lifecycle'};
+ }
+
  async backup(){
   const tables=['operations','operation_events','sessions','challenges','artifacts','chain_observations','records','case_links','provider_budgets','provider_jobs','provider_events','reviewer_invitations','reviewer_events'],data={};
   for(const table of tables)data[table]=this.ctx.storage.sql.exec(`SELECT * FROM ${table} ORDER BY rowid`).toArray().map(value=>Object.fromEntries(Object.entries(value).map(([key,item])=>[key,item instanceof ArrayBuffer||ArrayBuffer.isView(item)?btoa(String.fromCharCode(...new Uint8Array(item instanceof ArrayBuffer?item:item.buffer))):item])));
@@ -697,6 +706,9 @@ async function api(request,env){
   const auth=await session(request,env);if(auth.account!=='contra-creator.testnet')fail('Only the authorised creator may issue reviewer invitations');const input=await body(request);return json(await store.createReviewerInvitation(input),201);
  }
  if(path==='/api/reviewer/invitations'&&request.method==='GET'){const auth=await session(request,env);return json(await store.reviewerLifecycle(auth.account));}
+ if(path==='/api/reviewer/activation-readiness'&&request.method==='GET'){
+  const auth=await session(request,env);if(auth.account!=='contra-creator.testnet')fail('Only the authorised creator may reconcile reviewer activation');return json(await store.reviewerActivationReadiness());
+ }
  if(path==='/api/reviewer/control-challenge'&&request.method==='POST'){
   const auth=await session(request,env),input=await body(request),statement=reviewerConsentBody({digest:input.invitation_digest,body:input.statement},auth.account),statementDigest=await textHash(canonical(statement)),id=crypto.randomUUID(),expires=Date.now()+120000,recipient=new URL(env.CONTRA_PUBLIC_ORIGIN).host,challenge={id,account:auth.account,nonce:randomBase64(),recipient,expires};
   challenge.message=`CONTRA reviewer control statement. Statement digest: ${statementDigest}. Challenge: ${id}. Expires: ${expires}.`;
