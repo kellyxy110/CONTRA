@@ -12,8 +12,16 @@ const currentFiles=textFiles.filter(({file})=>!file.startsWith('project/artifact
 const obsoleteTerm=new RegExp('adjudic'+'at','i'),inventedActor=new RegExp('contes'+'tator','i');
 for(const {file,text}of currentFiles){if(obsoleteTerm.test(text))failures.push(`${file}: obsolete contestation terminology`);if(inventedActor.test(text))failures.push(`${file}: invented contestation actor term`);}
 for(const file of files.filter(file=>!file.startsWith('project/artifacts/'))){if(obsoleteTerm.test(file))failures.push(`${file}: obsolete terminology in tracked path`);}
-const image=fs.readFileSync(path.join(root,'design/reference/control-ai-policy-dashboard.jpeg'));
-if(createHash('sha256').update(image).digest('hex')!=='ab63545c28f2fa2644ed3fa7b06925260d7b83fe30125daf40b7db66446fe55a')failures.push('immutable owner screenshot checksum mismatch');
+const approvedImages=[
+ ['design/approved/overview-dark.jpeg','3b184ab7c74fd3106d858c4b5e465c746b72136a189963de55264791e51111f4'],
+ ['design/approved/overview-light.jpeg','e00b0fa987058aaf5ef8d6371e1eced0be02e33a0702e66aca156e9bc5002a41']
+];
+for(const [file,expected] of approvedImages){
+ try{
+  const image=fs.readFileSync(path.join(root,file));
+  if(createHash('sha256').update(image).digest('hex')!==expected)failures.push(`${file}: approved image integrity failure`);
+ }catch{failures.push(`${file}: approved image missing`);}
+}
 for(const file of files.filter(v=>/\.(?:m?js|cjs)$/.test(v))){const checked=spawnSync(process.execPath,['--check',file],{cwd:root,encoding:'utf8'});if(checked.status!==0)failures.push(`${file}: JavaScript syntax check failed\n${checked.stderr}`);}
 
 if(mode==='security'){
@@ -37,7 +45,7 @@ if(mode==='security'){
  ];
  const scan=(label,text)=>{for(const [name,re]of patterns){re.lastIndex=0;if(re.test(text))failures.push(`${label}: detected ${name}`);}};
  for(const {file,text}of textFiles)scan(file,text);
- const history=git(['log','-p','--all','--full-history','--','.',' :(exclude)project/artifacts/**',' :(exclude)design/reference/**'].map(v=>v.trim()));
+ const history=git(['log','-p','--all','--full-history','--','.',' :(exclude)project/artifacts/**',' :(exclude)design/reference/**',' :(exclude)design/approved/**'].map(v=>v.trim()));
  scan('Git history outside archived artifacts and immutable references',history);
  const baseline=JSON.parse(fs.readFileSync(path.join(root,'ci/contract-abi-baseline.json'))),allowed=new Set([...baseline.production_exports,...baseline.fault_only_exports].filter(v=>v!=='memory'&&v!=='contract_source_metadata'));
  const source=fs.readFileSync(path.join(root,'contracts/contestation/src/lib.rs'),'utf8'),methods=[...source.matchAll(/pub fn\s+([A-Za-z0-9_]+)/g)].map(v=>v[1]);for(const method of methods)if(!allowed.has(method))failures.push(`contracts/contestation/src/lib.rs: unauthorized public method ${method}`);

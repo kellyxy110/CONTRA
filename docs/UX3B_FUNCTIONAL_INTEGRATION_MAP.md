@@ -1,3 +1,5 @@
+> **Historical design only:** All visual directions and references to UX3A in this document are superseded by [the final approved dark/light Overview](../design/approved/README.md). This file remains for historical operational mapping, not as an active visual reference.
+
 # CONTRA UX3B functional integration map
 
 Current product name: The Bench. The case dashboard at /cases/:id uses this name in its heading and browser/navigation titles. This owner-authorised naming change does not change routes, component geometry, workflow behaviour or the UX3C protocol freeze.

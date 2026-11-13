@@ -1,9 +1,13 @@
 # CONTRA: three-phase completion plan
 
-**Status:** Phases 1 and 2 complete on `main`; Phase 3 external validation active
+**Status:** Phase 1 and 2 engineering was merged, but visual acceptance is reopened as a P0 release gate. Phase 3 remains separately dependent on genuine external participation.
 **Baseline:** `main` at `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after [PR #100](https://github.com/kellyxy110/CONTRA/pull/100) merged the reviewed functional workflows.
 **Date:** 12 November 2026  
 **Authority:** Execute all independently authorised engineering, documentation, testing, review and passing merges without repeated permission requests. Do not broaden financial, wallet, provider or production-secret authority.
+
+## Final visual authority and P0 acceptance gate
+
+The only approved desktop Overview references are [dark](../design/approved/overview-dark.jpeg) and [light](../design/approved/overview-light.jpeg). See the [visual implementation contract](../design/approved/README.md). Do not reinstate or follow old UX2, UX3A, graph-first or previous dashboard designs. Visual acceptance requires real dark/light browser screenshot comparisons, sidebar collapse and working chart/control behaviour. No production completion claim is valid before this gate passes.
 
 ## Operating rules
 
@@ -22,7 +26,7 @@
 **Work**
 1. Replace the stale README with an accurate public product overview, architecture, operating instructions, verification summary and limitations.
 2. Retire the obsolete root coding-agent handoff and consolidate current execution guidance in this plan and `AGENTS.md`. Index active technical documents and label milestone records as historical.
-3. Reconcile the 58-commit frontend branch divergence reported against the newer backend merges. Resolve PR #95 conflicts file by file, especially `apps/web`, `services/cloudflare/worker.mjs`, Pages bindings, tests and documentation.
+3. Preserve merged PRs #95 and #100, then fix the actual rendered UI to match the owner-approved screenshots, including sidebar, charts, responsive layouts and interaction states, while retaining secured backend integration.
 4. Validate the ten approved destinations, themes, responsive behaviour, wallet session and all supported API contracts against the merged Worker. Preserve existing auth, idempotency, signing, reviewer independence and provider budget controls.
 5. Run the repository, contract, Cloudflare, wallet, docs-link, source-policy, Core, Security and Integration checks. Run Chromium and Firefox on integrated fixtures, including mobile widths.
 6. Complete PR review, merge passing engineering work and deploy the integrated app through the existing release procedure. Verify the deployed commit, routes, `/api/live` and `/api/ready`.
