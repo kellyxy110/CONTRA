@@ -1,96 +1,212 @@
 # CONTRA
 
-**Evidence-based contestation with enforceable outcomes on NEAR.**
+**A decentralised contestation protocol for evidence-based decisions and enforceable outcomes on NEAR.**
 
 [![Core CI](https://github.com/kellyxy110/CONTRA/actions/workflows/core.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/core.yml)
 [![Security CI](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/security.yml)
+[![Contract CI](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/contract.yml)
 [![Integration CI](https://github.com/kellyxy110/CONTRA/actions/workflows/integration.yml/badge.svg?branch=main)](https://github.com/kellyxy110/CONTRA/actions/workflows/integration.yml)
-[![Licence: MIT](https://img.shields.io/badge/licence-MIT-16221D?labelColor=0B1110)](LICENSE)
+[![Licence: MIT](https://img.shields.io/github/license/kellyxy110/CONTRA?label=licence&color=00EC97&labelColor=16221D)](LICENSE)
 
-[Explore the public application](https://contra-near.pages.dev/) · [How it works](#how-contestation-works) · [Run locally](#run-locally) · [Technical documentation](docs/README.md) · [Completion roadmap](docs/COMPLETION_PLAN.md)
+[Open CONTRA](https://contra-near.pages.dev/) · [Inspect the Testnet contract](https://testnet.nearblocks.io/address/contra-contestation.testnet) · [Judge quick-start](docs/judges/JUDGE_GUIDE.md) · [Run locally](#run-contra-locally)
 
-CONTRA is a NEAR-native protocol for challenging consequential decisions with attributable evidence, human review and deterministic settlement. A creator and beneficiary agree immutable conditions, evidence is bound to a case, reviewers commit and reveal their findings, and a timely challenge activates a separate appeal committee. The smart contract, rather than a model or application server, controls final outcomes and funds.
+CONTRA is a NEAR Hackathon project built to make consequential decisions contestable. It gives creators, beneficiaries and independent reviewers a shared protocol for freezing decision criteria, binding evidence to a case, challenging a provisional result and enforcing the final outcome through a NEAR smart contract.
 
-> **Current release status (13 November 2026):** The NEAR Testnet contract and secured backend are deployed. The refined frontend is under final release verification against the approved screenshots. No complete funded Testnet contestation or finalised settlement receipt is claimed; signing, independent reviewer participation and case-bound provider execution remain gated.
+**Every consequential decision should withstand a challenge.**
 
-## Final approved desktop interface
+The public engineering release combines a NEAR Testnet contract, a Cloudflare-hosted application, NEP-413 wallet authentication, durable operation recovery, evidence provenance, human commit-reveal review, non-binding Meta evaluation and deterministic Modal verification.
 
-The [dark Overview](design/approved/overview-dark.jpeg) and [light Overview](design/approved/overview-light.jpeg) are the sole approved visual references. See [design authority and original image checksums](design/approved/README.md). Historical graph-first or older dashboard designs must not guide new implementation.
+## Contents
 
-| Dark, default | Light |
-| --- | --- |
-| ![Final dark Overview](design/approved/overview-dark.jpeg) | ![Final light Overview](design/approved/overview-light.jpeg) |
+- [What CONTRA solves](#what-contra-solves)
+- [How contestation works](#how-contestation-works)
+- [What judges can inspect](#what-judges-can-inspect)
+- [Application workspaces](#application-workspaces)
+- [System architecture](#system-architecture)
+- [Wallets and transaction safety](#wallets-and-transaction-safety)
+- [Evidence and AI assistance](#evidence-and-ai-assistance)
+- [Reviewer and committee integrity](#reviewer-and-committee-integrity)
+- [Settlement and financial safety](#settlement-and-financial-safety)
+- [Demo Mode and live Testnet data](#demo-mode-and-live-testnet-data)
+- [Run CONTRA locally](#run-contra-locally)
+- [Testing](#testing)
+- [Security model](#security-model)
+- [Public deployment](#public-deployment)
+- [Hackathon disclosure](#hackathon-disclosure)
 
-The implementation preserves this composition and applies the approved navigation, typography, theme, chart, Demo Mode and wallet refinements recorded in [DESIGN.md](DESIGN.md).
+## What CONTRA solves
 
-## Why CONTRA
+Many consequential decisions are produced by opaque services, unverifiable model outputs or processes with no safe appeal path. Even when evidence exists, the affected party may be unable to prove which evidence was considered, who reviewed it or whether settlement occurred under the agreed rules.
 
-A decision that affects money or rights needs a transparent path to challenge the evidence, evaluate disagreements and recover from execution failures.
+CONTRA provides five linked guarantees:
 
-CONTRA provides:
-
-- **Frozen terms and native NEAR escrow:** Criteria, deadlines and committee membership are contract-bound.
-- **Content-addressed evidence:** Immutable digests and provenance link off-chain records to the case without putting sensitive documents on-chain.
-- **Independent human review:** Reviewers provide evidence-bound findings and submit commit-reveal votes. The primary and appeal committees must be distinct.
-- **Contestable outcomes:** A valid challenge prevents ordinary settlement until the fresh review is resolved.
-- **Deterministic settlement:** The contract decides payout eligibility; asynchronous failures and uncertain operations follow explicit recovery rules.
-- **Bounded AI assistance:** Meta provides non-binding proposals and Modal verifies case-bound outputs. Model responses never vote, change terms or authorise transfers.
+1. **Terms are frozen before funds move.** Criteria, participants, committee identities, deadlines and fallback rules become immutable case terms.
+2. **Evidence is attributable.** Protected off-chain records are content-addressed, while their digests and bindings can be verified against the case.
+3. **Review is human-controlled.** AI can propose findings, but only eligible reviewers can commit and reveal votes.
+4. **Challenges block premature settlement.** A valid counterexample moves the decision to a disjoint appeal committee.
+5. **The contract enforces the outcome.** NEAR controls case state, finality and the single payout intent.
 
 ## How contestation works
 
-1. **Create and fund.** An eligible creator proposes a case, the beneficiary consents, and native NEAR is escrowed under frozen terms.
-2. **Submit evidence.** Evidence manifests and their digests are attached to the case with identifiable provenance.
-3. **Evaluate and review.** Optional AI findings remain advisory. The appointed primary reviewers commit and reveal their human decisions.
-4. **Challenge if necessary.** An eligible challenge introduces counterevidence and transfers review to the separate appeal committee.
-5. **Resolve and settle.** The contract applies the agreed quorum and timeout rules, creates one payout intent and verifies finality through the NEAR callback.
+### 1. Create an agreement
 
-For the authoritative rules, see [the protocol specification](docs/PROTOCOL.md), [state machine](docs/STATE_MACHINE_V1.md) and [contract ABI](docs/CONTRACT_ABI_V1.md).
+An allowlisted creator previews the exact case, beneficiary, amount, criteria, evidence policy, committees and deadlines. The contract derives a stable case identifier and terms digest. The beneficiary must accept the same digest before funding.
 
-## Architecture
+### 2. Fund native NEAR escrow
+
+The creator deposits the exact agreed amount. The contract rejects missing consent, an incorrect deposit, changed terms, duplicate funding and unauthorised callers.
+
+### 3. Submit evidence
+
+The beneficiary creates an immutable evidence manifest containing provenance, capture time and criterion-bound claims. The protected record remains off-chain; its digest is submitted to the contract before the evidence deadline.
+
+### 4. Evaluate and review
+
+Meta may produce an evidence-bound, non-binding proposal. Modal may verify the immutable proposal digest against deterministic rules. Neither provider can vote or change case state. Three eligible primary reviewers independently store findings and commit hidden votes.
+
+### 5. Reveal the primary decision
+
+After the commit window closes, reviewers reveal the disposition, evidence digest, finding digest and nonce. The contract checks each commitment and calculates the provisional result from authenticated reveals and frozen quorum rules.
+
+### 6. Challenge with counterevidence
+
+During the challenge window, an eligible participant can bind counterevidence to a contested criterion. A valid challenge blocks ordinary settlement and activates three different appeal reviewers.
+
+### 7. Resolve and settle
+
+The appeal committee repeats commit and reveal without overlapping the primary committee. The contract applies the final decision or agreed timeout fallback, creates one payout intent and reconciles the asynchronous NEAR transfer callback. Duplicate settlement cannot create another payout.
+
+## What judges can inspect
+
+### Route A: Public verification
+
+No credentials are required to:
+
+- open the [public application](https://contra-near.pages.dev/);
+- inspect the deployed account [`contra-contestation.testnet`](https://testnet.nearblocks.io/address/contra-contestation.testnet);
+- review live case states and public transaction identities;
+- inspect the protocol, ABI, state machine and threat model;
+- view Demo Mode without confusing simulated records with Testnet activity;
+- review CI workflows and reproducible test commands.
+
+### Route B: Local reproduction
+
+The local judge runner builds and exercises the complete controlled contestation journey using NEAR Sandbox. It requires no paid provider account, funded wallet or production secret.
+
+```sh
+npm ci --ignore-scripts --no-audit --no-fund
+npm run judge:local
+```
+
+Expected evidence includes case transitions, operation identities, receipts, challenge lockout, committee decisions, final settlement and recipient balance checks.
+
+### Route C: Testnet exploration
+
+Judges can connect a supported NEAR Testnet wallet, authenticate with NEP-413 and inspect account-scoped application state. Connecting a wallet does not grant transaction authority. Every mutation is prepared as an exact operation and still requires the wallet holder to approve the displayed transaction.
+
+See the [judge guide](docs/judges/JUDGE_GUIDE.md) for the full verification matrix and expected results.
+
+## Application workspaces
+
+| Workspace | Purpose |
+| --- | --- |
+| Overview | Funding, challenge, settlement, evidence, reviewer and activity summaries |
+| Cases | Search cases, inspect frozen terms, create eligible cases and recover prepared operations |
+| Evidence | Create manifests, inspect provenance and submit an eligible evidence digest |
+| Evaluations | Run and inspect non-binding Meta proposals and Modal verification records |
+| Challenges | Check eligibility, bind counterevidence and prepare a challenge transaction |
+| The Bench | Reviewer invitations, consent, disclosures, findings, commitments, reveals and recovery |
+| Settlement | Inspect transaction identity, finality, receipts and locked UNKNOWN operations |
+| Constellations | Compare case evidence across eight provenance and coverage dimensions |
+| Activity | Read human-friendly audit events with their original technical identifiers |
+| Settings | Inspect network, contract, wallet, session and theme configuration |
+
+Dark mode is the default. Light and system preferences are supported. The interface includes responsive navigation, keyboard focus, accessible names and intentional loading, empty, unavailable and error states.
+
+## System architecture
 
 ```mermaid
 flowchart LR
-    W[Users and NEAR wallets] --> UI[Web application]
-    UI --> API[Cloudflare Worker API]
-    API --> DO[Durable Object: records, jobs and operations]
-    API --> RPC[NEAR Testnet contract]
-    API --> AI[Meta proposals and Modal verification]
-    W -->|authorised signed transactions| RPC
+    U[Creator, beneficiary and reviewers] --> W[NEAR wallets]
+    U --> WEB[CONTRA web application]
+    WEB --> API[Cloudflare Worker API]
+    API --> DO[SQLite Durable Object]
+    API --> META[Meta evaluation]
+    API --> MODAL[Modal verification]
+    WEB -->|exact wallet-approved transaction| NEAR[NEAR Testnet contract]
+    API -->|read and reconcile| NEAR
+    W -->|NEP-413 authentication| API
 ```
 
-| Layer | Responsibility | Trust boundary |
+| Layer | Responsibility | Authority boundary |
 | --- | --- | --- |
-| NEAR contract | Case state, immutable terms, committees, challenge, quorum and payout | Sole resolution and financial authority |
-| Wallet and browser | NEP-413 account identity, authorised operations and transaction review | No signing without the actual account and exact operation authority |
-| Cloudflare Worker and durable store | Protected evidence, reviewer lifecycle, provider jobs, idempotency and recovery | Cannot manufacture a finalised chain receipt |
-| Meta and Modal | Evidence-bound proposal and verification | Non-binding outputs, independently budgeted and gated |
-| Human reviewers | Signed consent, findings and commit-reveal actions | Independent account and operator control required |
+| Contestation contract | Terms, escrow, committees, rounds, challenge, finality and payout | Sole protocol and financial authority |
+| Browser wallet | Account control, NEP-413 messages and user-approved transactions | No application custody of private keys |
+| Cloudflare Worker | Authentication, protected APIs, chain reads and operation validation | Cannot manufacture a receipt or sign for a user |
+| Durable Object | Sessions, artifacts, audit events, provider jobs and transaction recovery | Durable application record, not chain finality |
+| Meta | Evidence-bound proposal | Advisory only |
+| Modal | Proposal-digest verification | Advisory only |
+| Human reviewers | Findings and commit-reveal votes | Must be eligible, authenticated and committee-bound |
 
-See the [architecture](docs/ARCHITECTURE.md), [threat model](docs/THREAT_MODEL_V1.md) and [settlement recovery specification](docs/SETTLEMENT_RECOVERY_V1.md).
+Technical references: [architecture](docs/ARCHITECTURE.md), [protocol](docs/PROTOCOL.md), [contract ABI](docs/CONTRACT_ABI_V1.md), [state machine](docs/STATE_MACHINE_V1.md) and [settlement recovery](docs/SETTLEMENT_RECOVERY_V1.md).
 
-## Verified state and limitations
+## Wallets and transaction safety
 
-| Capability | Verified evidence or present boundary |
-| --- | --- |
-| Local contestation | Both complete NEAR Sandbox journeys and the judge quick-start pass at the backend completion checkpoint |
-| Backend validation | 178 repository tests and 21 Cloudflare tests pass on the refined frontend branch |
-| Backend CI | Core, Security and comprehensive Integration passed for [PR #96](https://github.com/kellyxy110/CONTRA/pull/96); the [PR #97](https://github.com/kellyxy110/CONTRA/pull/97) final records Integration gate passed |
-| Testnet contract | Deployed at `contra-contestation.testnet`; [deployment record](docs/operations/TESTNET_DEPLOYMENT.md) |
-| Public service | [contra-near.pages.dev](https://contra-near.pages.dev/) reports storage and chain ready at the backend checkpoint |
-| Frontend release | Dark and light, empty and populated, collapsed, tablet and mobile states are exercised in Chromium and Firefox; production promotion remains pending |
-| Wallet compatibility | Meteor has genuine CONTRA Testnet NEP-413 evidence. Intear and Nightly are presented only when the connector manifest advertises Testnet and message-signing support; genuine account authentication remains to be recorded for each additional provider |
-| Genuine independent reviewers | No confirmed human operators registered at the reported Testnet observation; six independently controlled accounts required |
-| Genuine case and settlement | No funded Testnet case or finalised settlement receipt yet |
-| Production provider execution | Case-bound Meta and Modal paths implemented but live execution remains gated |
-| Production signing | Exact operation-specific authority is required; broad signing remains disabled |
+CONTRA separates authentication from transaction authority.
 
-Fixture tests, Sandbox outcomes, Testnet receipts and production behaviour are reported separately. A green CI result does not establish live financial finality or independent reviewer governance.
+- NEP-413 proves control of a Testnet account using a domain-bound challenge.
+- Challenges expire and cannot be replayed.
+- Sessions survive ordinary reloads and can be renewed or revoked.
+- Account switching invalidates an incompatible session.
+- Transaction intent is persisted before wallet handoff.
+- The Worker reloads the operation and validates signer, contract, method, arguments, deposit and current contract state.
+- The wallet holder reviews and approves the exact transaction.
+- Transaction hashes are unique and durably attached to their operation.
+- Finality checks require explicit success and a matching hash, signer, receiver, action, arguments, deposit and network.
+- Interrupted or ambiguous operations become `UNKNOWN` and are never blindly redispatched.
 
-The public interface includes an explicit Demo Mode while genuine Testnet history is sparse. Demo records are visibly labelled and cannot open wallets, mutate the contract, bill providers, register reviewers or create operations. Public Demo Mode is removed only after Phase 3 has verified the authorised Testnet journeys and finalised receipts described in the [completion plan](docs/COMPLETION_PLAN.md).
+The public connector advertises only wallets that provide the required Testnet and message-signing capabilities. Wallet support is capability-based rather than inferred from a wallet's Mainnet availability.
 
-## Run locally
+## Evidence and AI assistance
 
-Use a supported Node.js and Rust environment. For the full Sandbox journey, use Linux with the pinned NEAR Sandbox dependency.
+Evidence manifests record the case and frozen criterion, a content digest, provenance origin and capture time, criterion-bound claims, and access and binding state.
+
+Meta produces structured proposals with citations, model provenance and execution metadata. Modal verifies a specific immutable proposal digest. Invalid, malformed, stale, cross-case or uncited responses fail closed.
+
+AI artifacts cannot register reviewers, create or reveal votes, alter frozen criteria, authorise transactions, choose a binding verdict, or trigger settlement.
+
+## Reviewer and committee integrity
+
+A valid contested case uses six reviewer slots: three primary reviewers and three different appeal reviewers.
+
+Reviewer onboarding records account-control authentication, operator-control disclosure, conflict disclosure, availability, explicit consent and revision identity. The contract requires active and confirmed registry entries. Committee membership is frozen into the case terms, and the two committees must be disjoint.
+
+Local Sandbox reviewer accounts are test fixtures. They demonstrate protocol behaviour but are never described as independent human operators.
+
+## Settlement and financial safety
+
+CONTRA uses native Testnet NEAR and does not introduce a project token.
+
+Financial protections include exact escrow funding, an immutable beneficiary and amount, deterministic quorum and fallback policy, challenge settlement lockout, one payout intent per resolved case, private callback-authenticated payout completion, duplicate-finalisation protection, exact recipient checks, and locked UNKNOWN payout state until a known transaction can be reconciled.
+
+The application cannot convert a missing or ambiguous receipt into success.
+
+## Demo Mode and live Testnet data
+
+Demo Mode provides a populated explanation of CONTRA before a visitor connects a wallet. It is visibly labelled and completely isolated from live records. It cannot open a signing request, mutate the contract, register a reviewer, create a production operation, call a paid provider, create a receipt, or contribute to Testnet analytics.
+
+Testnet mode displays live or honestly empty data. An unavailable backend is reported as unavailable rather than converted into zero activity.
+
+## Run CONTRA locally
+
+### Prerequisites
+
+- Node.js 20 or newer
+- npm
+- Rust toolchain from `rust-toolchain.toml`
+- Linux for the complete local NEAR Sandbox gate
+
+### Install and verify
 
 ```sh
 git clone https://github.com/kellyxy110/CONTRA.git
@@ -102,37 +218,66 @@ npm run test:contract
 npm run build:wallet
 ```
 
-Start the local API in its safe default configuration:
+### Start the safe local runtime
 
 ```sh
 cp .env.example .env
 npm run dev
 ```
 
-The local service exposes `/api/live` for liveness and `/api/ready` for storage and chain readiness. An unavailable dependency must fail closed rather than simulate a ready chain.
+The safe default does not enable live signing or paid inference. `/api/live` reports process liveness. `/api/ready` requires valid storage and a fresh Testnet chain observation.
 
-To reproduce the complete controlled contestation journeys on the supported Linux host:
+### Run the judge journey
 
 ```sh
 npm run judge:local
 ```
 
-This exercise uses local Sandbox identities and must not be mistaken for a funded public Testnet case. See [reproducibility and evidence](docs/testing/REPRODUCIBILITY.md) and [the judge guide](docs/judges/JUDGE_GUIDE.md).
+See [environment setup](docs/operations/ENVIRONMENT_SETUP.md), [reproducibility](docs/testing/REPRODUCIBILITY.md) and [Cloudflare operations](docs/operations/CLOUDFLARE_DEPLOYMENT.md).
 
-## Security
+## Testing
 
-- No private key, seed phrase or provider secret belongs in browser assets, commits or logs.
-- The contract controls money and outcome finality. Reviewer signatures and eligibility are checked independently.
-- UNKNOWN transactions are inspected and reconciled; they are never blindly rebroadcast.
-- Case evidence and evaluation results are access-controlled and bound to the authorised account and case.
-- AI is strictly advisory. Live inference and spending require explicit provider-specific readiness.
+| Gate | Coverage |
+| --- | --- |
+| Core CI | Node tests, builds, documentation and source policy |
+| Security CI | Secret scanning, dependency baseline and security policy |
+| Contract CI | Rust format, Clippy, tests, WASM builds, ABI and commitment vectors |
+| Focused Integration | Changed wallet, provider, reviewer or Sandbox pathways |
+| Financial P0 | F01 through F18 escrow, payout, challenge and recovery invariants |
+| Comprehensive Integration | Nine-test Sandbox baseline and both complete contestation journeys |
+| Browser verification | Chromium and Firefox routes, responsive layouts, keyboard and recovery states |
 
-See the [security documentation](docs/THREAT_MODEL_V1.md), [dependency audit](docs/security/DEPENDENCY_AUDIT.md) and [runtime runbook](docs/operations/RUNTIME_SERVICE.md).
+The current branch verification includes 185 repository tests and 23 Cloudflare Durable Object tests. Hosted workflow badges above report the state of `main`; local results are not substituted for hosted CI.
 
-## Documentation and project status
+## Security model
 
-Start with the [documentation index](docs/README.md). The [three-phase completion plan](docs/COMPLETION_PLAN.md) defines the remaining implementation, quality and real Testnet acceptance gates. Historical milestone reports and signed evidence remain available in the repository and Git history; they are not prerequisites for understanding the product.
+CONTRA assumes the web service can fail, wallets can be interrupted, providers can return malformed output, reviewers can abstain and NEAR RPC observations can be delayed.
+
+The system fails closed: private keys and provider secrets remain wallet-held or server-side, protected evidence is account-scoped, mutation routes use rate limits and durable idempotency, provider requests use strict schemas, reviewer control statements are revision-bound, stale chain observations are rejected, production fault hooks are absent, and UNKNOWN financial operations are never automatically retried.
+
+Review the [threat model](docs/THREAT_MODEL_V1.md), [dependency audit](docs/security/DEPENDENCY_AUDIT.md) and [release audit](docs/security/RELEASE_AUDIT.md).
+
+## Public deployment
+
+| Component | Public identity |
+| --- | --- |
+| Application | [https://contra-near.pages.dev/](https://contra-near.pages.dev/) |
+| NEAR network | Testnet |
+| Contract account | [`contra-contestation.testnet`](https://testnet.nearblocks.io/address/contra-contestation.testnet) |
+| Contract artifact | `contra_contestation.wasm` |
+| Approved production WASM SHA-256 | `49cff947a68ae2fddbc5843c22fad1d655162e50b1e81957443584ca90377a5f` |
+| Current verified contract code hash | `EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2` |
+| Hosting | Cloudflare Workers, Pages and SQLite Durable Objects |
+| Hosting cost ceiling | USD 0 on Cloudflare Free |
+
+Deployment and upgrade transactions are recorded in the [Testnet deployment runbook](docs/operations/TESTNET_DEPLOYMENT.md). No Mainnet deployment is claimed or authorised.
+
+## Hackathon disclosure
+
+CONTRA is a NEAR Hackathon project. The repository preserves eligible engineering history, truthful environment boundaries and reproducible evidence. NEAR is essential because the contract freezes the agreement, authenticates reviewer actions, blocks settlement during a challenge and enforces the final payout.
+
+The project uses AI-assisted engineering and optional AI-assisted evidence evaluation. AI has no protocol vote, signing key or settlement authority.
 
 ## Licence
 
-Licensed under [MIT](LICENSE). Built with NEAR Protocol, Rust, Cloudflare Workers and Durable Objects, and bounded provider integrations. AI-assisted engineering does not grant AI protocol authority.
+Licensed under the [MIT Licence](LICENSE).

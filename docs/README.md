@@ -6,8 +6,8 @@ Start with the [project README](../README.md) for the product, current verified 
 
 | Topic | Source |
 | --- | --- |
-| Approved visual authority | [Final dark and light Overview](../design/approved/README.md) |
-| Completion and acceptance | [Three-phase completion plan](COMPLETION_PLAN.md) |
+| Interface and browser verification | [Frontend browser verification](testing/FRONTEND_BROWSER.md) |
+| Completion and acceptance | [Functional acceptance matrix](testing/FUNCTIONAL_ACCEPTANCE_MATRIX.md) |
 | System boundaries | [Architecture](ARCHITECTURE.md), [durable storage](DURABLE_STORAGE.md) |
 | Contract and protocol | [Protocol](PROTOCOL.md), [state machine](STATE_MACHINE_V1.md), [ABI](CONTRACT_ABI_V1.md), [committee policy](COMMITTEE_POLICY_V1.md) |
 | Settlement guarantees | [Settlement recovery](SETTLEMENT_RECOVERY_V1.md), [commitment test vectors](COMMITMENT_TEST_VECTORS.md) |

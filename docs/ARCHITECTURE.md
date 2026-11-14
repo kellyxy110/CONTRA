@@ -46,4 +46,4 @@ Baseten is retired from the active provider set. Retained earlier records are hi
 
 The backend and Testnet contract were deployed and verified at the 12 November 2026 backend checkpoint. Production signing and live provider case-bound inference were gated. The approved branded dashboard remained on draft PR #95 rather than the deployed `main`.
 
-Release acceptance and remaining actions are defined in [the three-phase completion plan](COMPLETION_PLAN.md), with detailed operational runbooks under [operations](operations/CLOUDFLARE_DEPLOYMENT.md) and [reproducibility](testing/REPRODUCIBILITY.md).
+Release verification is defined by the current source, acceptance matrix and hosted checks, with detailed operational runbooks under [operations](operations/CLOUDFLARE_DEPLOYMENT.md) and [reproducibility](testing/REPRODUCIBILITY.md).

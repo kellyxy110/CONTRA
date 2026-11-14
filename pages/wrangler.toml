@@ -1,9 +1,0 @@
-name = "contra-near"
-pages_build_output_dir = "../dist/cloudflare-static"
-compatibility_date = "2026-11-10"
-compatibility_flags = [ "nodejs_compat" ]
-
-[[services]]
-binding = "BACKEND"
-service = "contra-testnet"
-

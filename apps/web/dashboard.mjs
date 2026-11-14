@@ -671,8 +671,13 @@ function caseArtifactTools(panel, record, isChallenge) {
   input.type=type;
   input.name=name;
   input.required=true;
+  if(type==='datetime-local'){
+   const now=new Date(),local=new Date(now.getTime()-now.getTimezoneOffset()*60000);
+   input.value=local.toISOString().slice(0,16);
+  }
   label.append(input);
   form.append(label);
+  return input;
  }
  const criteria=record.terms?.criteria ?? [];
  if(isChallenge){
