@@ -20,26 +20,70 @@ try {
  await mkdir('ci-output',{recursive:true});
  for (const [name,engine] of [['chromium',chromium],['firefox',firefox]]) {
   browser = await engine.launch({headless:true});
-  for (const width of [320,375,768,1024,1366,1440,1920]) {
-   const page = await browser.newPage({viewport:{width, height:900}});
+  for (const width of [320,375,768,1024,1280,1366,1440,1920]) {
+   const page = await browser.newPage({viewport:{width, height:width===1280?848:900}});
+   const consoleErrors=[];
+   page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
+   const navigate = async href => {
+    if(width<=900 && !await page.locator('#navigation').isVisible())await page.getByRole('button',{name:'Open navigation'}).click();
+    await page.locator(`#navigation a[href="${href}"]`).click();
+   };
    await page.goto(origin);
    await page.getByRole('heading', {name:'Contestation Overview'}).waitFor();
-   await page.getByText('Contract case data is unavailable.').waitFor();
+   await page.getByText('Read-only live mode · contract case data is unavailable.').waitFor();
    assert.equal(await page.locator('.kpis article').count(),4);
    assert.equal(await page.locator('.kpis .line-icon').count(),4);
+   assert.equal(await page.locator('.kpis .icon-tone').count(),4);
    assert.equal(await page.locator('#navigation a .line-icon').count(),10);
+   assert.equal(await page.locator('#case-chart .donut').count(),1);
+   assert.equal(await page.locator('#review-chart .donut').count(),1);
+   assert.equal(await page.locator('#navigation a[aria-current="page"]').getAttribute('href'),'#overview');
+   if(width<=900){
+    assert.equal(await page.locator('#navigation').isVisible(),false);
+    await page.getByRole('button',{name:'Open navigation'}).click();
+    assert.equal(await page.locator('#navigation').isVisible(),true);
+    if([768,375,320].includes(width))await page.screenshot({path:`ci-output/contra-${name}-${width}-mobile-navigation.png`,fullPage:false});
+    await navigate('#overview');
+    assert.equal(await page.locator('#navigation').isVisible(),false);
+   }
    assert.equal(await page.locator('#navigation').evaluate(nav=>[...nav.children].every(link=>link.getBoundingClientRect().right<=nav.getBoundingClientRect().right)),true);
    if(width<=375)assert.equal(await page.locator('#navigation').evaluate(nav=>nav.scrollWidth>nav.clientWidth),false);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+   if(width>=1024){
+    const chartGeometry=await page.evaluate(()=>{
+     const panel=document.querySelector('.analysis article:nth-child(2)').getBoundingClientRect();
+     const chart=document.querySelector('#case-chart').getBoundingClientRect();
+     const tableText=parseFloat(getComputedStyle(document.querySelector('td')).fontSize);
+     const kpiIcon=document.querySelector('.kpis .line-icon').getBoundingClientRect();
+     return {contained:chart.top>=panel.top&&chart.bottom<=panel.bottom,tableText,iconSize:kpiIcon.width};
+    });
+    assert.equal(chartGeometry.contained,true,'case status chart must remain inside its panel');
+    assert.ok(chartGeometry.tableText>=14,'dense table text must remain readable');
+    assert.ok(chartGeometry.iconSize>=32,'page-level KPI icons must retain the duotone presentation size');
+   }
+   if(width===1280){
+    if(await page.locator('body').evaluate(node=>node.classList.contains('sidebar-collapsed')))await page.getByRole('button',{name:'Expand'}).click();
+    const expanded=await page.locator('main').evaluate(node=>node.getBoundingClientRect().left);
+    await page.getByRole('button',{name:'Collapse'}).click();
+    await page.waitForFunction(value=>document.querySelector('main').getBoundingClientRect().left<value-100,expanded);
+    const collapsed=await page.locator('main').evaluate(node=>node.getBoundingClientRect().left);
+    assert.ok(collapsed<expanded-100,'collapsed navigation must expand the content canvas');
+    assert.equal(await page.locator('#navigation .nav-label').first().isVisible(),false);
+    await page.screenshot({path:`ci-output/contra-${name}-1280-sidebar-collapsed.png`,fullPage:false});
+    await page.reload();
+    assert.equal(await page.locator('body').evaluate(node=>node.classList.contains('sidebar-collapsed')),true);
+    await page.getByRole('button',{name:'Expand'}).click();
+    await page.waitForFunction(value=>document.querySelector('main').getBoundingClientRect().left>value-2,expanded);
+   }
    for (const path of ['/workflow.css', '/tokens.css']) {
     assert.equal((await page.request.get(origin + path)).status(), 404);
    }
    await page.screenshot({path:`ci-output/contra-${name}-${width}-dark.png`,fullPage:true});
-   await page.locator('#theme').selectOption('light');
+   await page.locator('[data-theme-choice="light"]').click();
    await page.reload();
    await page.waitForFunction(()=>document.documentElement.dataset.theme==='light');
-   if(width===1440)await page.screenshot({path:`ci-output/contra-${name}-1440-light.png`,fullPage:true});
-   if([1440,768,375,320].includes(width)){
+   if([1280,1440].includes(width))await page.screenshot({path:`ci-output/contra-${name}-${width}-empty-light.png`,fullPage:width!==1280});
+   if([1440,1280,768,375,320].includes(width)){
     const cases=['ReviewCommit','Challenged','Settled'].map((state,index)=>({case_id:String(index+1).repeat(64),state,creator_id:'creator.testnet',terms_digest:'9'.repeat(64),evidence_digest:'a'.repeat(64),created_at_ns:'1794484800000000000',funded_principal_yocto:'1000000000000000000000000',terms:{beneficiary_id:'beneficiary.testnet',chain_id:'testnet',contract_account:'contra-contestation.testnet',criteria:[{criterion_id:1,kind:'KEYBOARD',requirement_digest:'8'.repeat(64)}],primary_committee:[{reviewer_id:'browser-fixture.testnet'}],fresh_committee:[{reviewer_id:'fresh.testnet'}]}}));
     cases[2].challenge={counterexample_digest:'c'.repeat(64)};
     cases[2].rounds=[[{disposition:'ACCEPT'},{disposition:'ACCEPT'},{disposition:'REJECT'}],[{commitment:'d'.repeat(64),disposition:'REJECT'},{disposition:'REJECT'},{disposition:'ACCEPT'}]];
@@ -49,41 +93,45 @@ try {
     await page.route('**/api/evidence/manifests?*',route=>route.fulfill({json:{items:[
      {kind:'Manifest',digest:'a'.repeat(64),onchain:true,body:{sources:[{provenance:{origin:'Fixture source'}}]}},
      {kind:'Manifest',digest:'b'.repeat(64),onchain:false},
-     {kind:'Manifest',digest:'d'.repeat(64),onchain:true},
     ]}}));
     await page.route('**/api/counterexample/records?*',route=>route.fulfill({json:{items:[{kind:'Counterexample',digest:'c'.repeat(64)}]}}));
     await page.route('**/api/view',route=>{
-     const {method}=route.request().postDataJSON();
+     const {method,args={}}=route.request().postDataJSON();
      const data={
       list_cases:{items:cases,next_index:null},
       get_events:{items:[{event:'case_funded',data:[{seq:'1',case_id:cases[0].case_id}]}]},
-      get_round:{slots:[{commitment:'commit'},{revealed:true},{}]},
+      get_round:{slots:args.round_id===1?[{commitment:'commit'},{commitment:'second'},{}]:[{commitment:'commit'},{revealed:true},{}]},
       get_config:{creator_allowlist:['browser-fixture.testnet']},
       preview_case:{case_id:'d'.repeat(64),terms_digest:'e'.repeat(64)},
      };
      return route.fulfill({json:{value:data[method]??null}});
     });
     await page.reload();
+    await page.getByText('Read-only Testnet mode · 3 cases returned.').waitFor();
     await page.locator('#case').selectOption(cases[0].case_id);
     await page.locator('#review-chart .donut').waitFor();
+    await page.locator('#round').selectOption('1');
+    await page.locator('#review-chart li').filter({hasText:'Committed'}).getByText('66.7%').waitFor();
+    await page.locator('#round').selectOption('0');
     for(const status of ['Verified binding','Pending binding','Challenged']){
      await page.locator('#evidence').getByText(status,{exact:true}).first().waitFor();
     }
     assert.equal(await page.locator('.evidence-table th').evaluateAll(headers=>headers.every(header=>header.scrollHeight<=header.clientHeight)),true);
     assert.equal(await page.locator('#funded').textContent(),'3 NEAR');
     assert.equal(await page.locator('#case-chart .donut').count(),1);
-    await page.locator('#status').evaluate(node=>{node.textContent='Deterministic visual fixture · no live records';});
-    for(const theme of width===1440?['light','dark']:['dark']){
-     await page.locator('#theme').selectOption(theme);
-     await page.screenshot({path:`ci-output/contra-${name}-${width}-fixture-${theme}.png`,fullPage:true});
+    for(const theme of [1280,1440].includes(width)?['light','dark']:['dark']){
+     await page.locator(`[data-theme-choice="${theme}"]`).click();
+     await page.evaluate(()=>scrollTo(0,0));
+     await page.screenshot({path:`ci-output/contra-${name}-${width}-fixture-${theme}.png`,fullPage:width!==1280});
     }
     if(width===375){
      cases[0].creator_id='browser-fixture.testnet';
      cases[0].terms={...cases[0].terms,criteria:[{criterion_id:1,kind:'KEYBOARD',requirement_digest:'8'.repeat(64)}]};
      cases[1].creator_id='browser-fixture.testnet';cases[1].state='Provisional';
-     await page.addInitScript(()=>sessionStorage.setItem('contra-session','browser-fixture'));
-     await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet'}}));
+     await page.addInitScript(()=>localStorage.setItem('contra-auth-session-v1',JSON.stringify({token:'browser-fixture',account:'browser-fixture.testnet',expires:Date.now()+7*24*60*60*1000})));
+     await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet',expires:Date.now()+7*24*60*60*1000}}));
      await page.route('**/api/session/renew',route=>route.fulfill({json:{token:'browser-fixture-renewed',account:'browser-fixture.testnet',expires:Date.now()+3600000}}));
+     await page.route('**rpc.testnet.near.org**',route=>route.fulfill({headers:{'Access-Control-Allow-Origin':'*'},json:{jsonrpc:'2.0',result:{amount:'2750000000000000000000000',block_height:42,block_hash:'BLOCK42'}}}));
      await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:false}}));
      await page.route('**/api/terms',route=>route.fulfill({json:{digest:'f'.repeat(64)}}));
      await page.route('**/api/wallet/prepare',route=>{
@@ -106,7 +154,11 @@ try {
      await page.reload();
      await page.locator('#case').selectOption(cases[0].case_id);
      await page.getByRole('button',{name:'browser-fixture.testnet'}).waitFor();
-     await page.locator('#navigation a[href="#evidence"]').click();
+     await page.getByRole('button',{name:'browser-fixture.testnet'}).click();
+     await page.locator('#account-menu-balance').waitFor();
+     await page.getByText('Separate from funds held by the CONTRA contract',{exact:true}).waitFor();
+     await page.keyboard.press('Escape');
+     await navigate('#evidence');
      await page.getByRole('button',{name:/Manifest · a{64}/}).click();
      await page.getByText('CONTRA_EVIDENCE_V1',{exact:false}).waitFor();
      await page.getByLabel('Evidence text').fill('Fixture record');
@@ -115,8 +167,9 @@ try {
      await page.getByLabel('Claim for criterion 1').fill('Fixture claim');
      await page.getByRole('button',{name:'Store evidence'}).click();
      await page.getByText('Stored off-chain:',{exact:false}).waitFor();
+     assert.equal(await page.locator('[data-workspace-case="true"]').count(),1);
      assert.equal(await page.getByRole('button',{name:'Sign evidence submission'}).count(),0);
-     await page.locator('#navigation a[href="#cases"]').click();
+     await navigate('#cases');
      await page.getByLabel('Search cases').fill(cases[0].case_id.slice(0,16));
      await page.getByRole('button',{name:new RegExp(cases[0].case_id)}).click();
      await page.getByRole('heading',{name:`Case ${cases[0].case_id}`}).waitFor();
@@ -150,7 +203,7 @@ try {
       return route.fulfill({json:{jobs:evaluationJob?[evaluationJob]:[]}});
      });
      await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',provider_fixtures_enabled:true}}));
-     await page.locator('#navigation a[href="#lab"]').click();
+     await navigate('#lab');
      await page.getByLabel('Development fixture provider').selectOption('modal');
      await page.getByRole('button',{name:'Run non-binding development fixture'}).click();
      await page.getByText('Development fixture: COMPLETED.',{exact:false}).waitFor();
@@ -180,7 +233,7 @@ try {
       invitationEvents.push({status:response.status,observed_at:Date.now()});
       return route.fulfill({json:invite});
      });
-     await page.locator('#navigation a[href="#reviewers"]').click();
+     await navigate('#reviewers');
      assert.equal(await page.getByRole('button',{name:'Consent',exact:true}).isDisabled(),true);
      await page.getByLabel('Citation digest').fill('a'.repeat(64));
      await page.getByLabel('Explanation').fill('Human fixture finding');
@@ -192,27 +245,33 @@ try {
      await page.getByText('Invitation response: WITHDRAWN.',{exact:true}).waitFor();
      await page.reload();
      assert.equal(await page.getByRole('button',{name:'Consent',exact:true}).count(),0);
-     await page.locator('#navigation a[href="#overview"]').click();
+     await navigate('#overview');
      await page.locator('#case').selectOption(cases[0].case_id);
      for(const link of await page.locator('#navigation a').all()){
       const title=await link.innerText();
       if(title==='Overview')continue;
       if(title==='Challenges')await page.locator('#case').evaluate((select,value)=>{select.value=value;},cases[1].case_id);
       if(title==='Constellations')await page.locator('#case').evaluate((select,value)=>{select.value=value;},cases[2].case_id);
-      await link.click();
+      await navigate(await link.getAttribute('href'));
       await page.getByRole('heading',{level:1,name:title,exact:true}).waitFor();
       await page.locator('#workspace article').waitFor();
+      assert.equal(await page.locator('#navigation a[aria-current="page"]').getAttribute('href'),await link.getAttribute('href'));
+      assert.equal(await page.locator('#navigation a[href="#challenges"]').getAttribute('data-tone'),'challenged');
+      await page.locator('[data-theme-choice="light"]').click();
+      assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+      await page.locator('[data-theme-choice="dark"]').click();
       if(title==='Constellations'){
        const radar=page.getByRole('img',{name:/Eight-axis evidence/});
        await radar.waitFor();
        assert.equal(await radar.locator('line').count(),8);
-       await radar.locator('polygon').waitFor();
-       assert.equal(await radar.locator('polygon').count(),1);
+       await radar.locator('polygon[stroke="var(--mint)"]').waitFor();
+       assert.equal(await radar.locator('polygon[stroke="var(--mint)"]').count(),1);
        await page.unroute('**/api/availability?*');
        await page.route('**/api/availability?*',route=>new URL(route.request().url()).searchParams.get('case_id')===cases[1].case_id?route.fulfill({status:403,json:{error:'Account is not authorised for this case'}}):route.fulfill({json:{observed_at:'2026-11-13T00:00:00.000Z',items:{['4'.repeat(64)]:true},manifest:{schema:'CONTRA_EVIDENCE_V1',sources:[{source_id:'source-1',digest:'4'.repeat(64),provenance:{origin:'Fixture',captured_at:'2026-11-12T00:00:00.000Z',submitted_by:'creator.testnet'}}],criteria:[{criterion_id:1,source_ids:['source-1']}]},criterion_evaluations:[{criterion_id:1,result:'FULFILLED',recorded:true,verified:true}]}}));
        await page.getByLabel('Comparison case').selectOption(cases[1].case_id);
-       await page.getByRole('heading',{name:`Comparison · ${cases[1].case_id}`,exact:true}).waitFor();
-       await page.getByText(/Evidence: inaccessible/).waitFor();
+       await page.locator(`.constellation-legend [title="${cases[1].case_id}"]`).waitFor();
+       await page.locator('.constellation-table').getByText('Locked',{exact:true}).first().waitFor();
+       if(name==='chromium'&&width===1440)await page.screenshot({path:'artifacts/frontend/workspace-constellations-comparative.png',fullPage:true});
        await page.getByLabel('Primary case').selectOption('');
        await page.getByText('Select a case to compare evidence coverage.',{exact:true}).waitFor();
       }
@@ -238,6 +297,7 @@ try {
      }
     }
    }
+   assert.deepEqual(consoleErrors.filter(message=>message.includes('<path> attribute d')),[],`${name} ${width}px icons must not emit malformed SVG errors`);
    await page.close();
   }
   await browser.close();

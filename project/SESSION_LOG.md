@@ -1,5 +1,27 @@
 # CONTRA session log
 
+## 2026-11-14 | Live settlement and provider verification
+
+Operation `wallet-f77abf56-380f-43e6-9a59-2e10208943e3` was released through its exact owner-approved digest and signed by `appeal3.testnet`. Official final RPC verified `finalize_case`, payout dispatch, the native transfer to `contra-creator.testnet`, callback application and final `Settled` read-back with one attempt. The gate was then disabled. Live Meta evaluation initially exposed reasoning-token exhaustion; the corrected bounded request produced immutable proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d`. Modal logs exposed and then verified a strict payload-allowlist correction, producing digest `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427`. Both artifacts are retrospective and non-binding. The challenged journey remains separate.
+
+## 2026-11-13 | Phase 3 committee reconciliation
+
+The owner reported six reviewer confirmations complete. Inspection found that the account names sort into the reverse committee grouping from their invitation labels. Implementation now preserves prior consent while requiring six new wallet-signed acknowledgements of the actual registry-selected roles. Cloudflare tests passed 22 of 22 and focused browser-operation tests passed 8 of 8 before deployment preparation.
+
+## 2026-11-13 | Phase 3 reviewer activation
+
+Owner approval of digest `340ea02123adf9ce9c8c0111c1c47e6847ea6d2ab378212d31fbb345b24258f9` authorised exactly six registrations. The Windows keychain signer matched the approved contract-owner public key. Code hash, owner, registry and packet expiry passed final preflight. All six transactions reached explicit final success and exact registry read-back. Attached deposits totalled 6 yoctoNEAR and gas burn totalled 1630268233645600000000 yoctoNEAR. Reviewers remain unconfirmed until their six independently controlled wallets sign their own exact `confirm_reviewer` calls.
+
+## 2026-11-13 | Scoped reviewer confirmation implementation
+
+Implemented the missing link between completed reviewer consent and personal onchain confirmation. The frontend presents the action only for a matching active unconfirmed registry record. The Worker admits only `confirm_reviewer` with the authenticated reviewer's exact revision and disclosure digest, 30 TGas and one yoctoNEAR, after durable consent verification. Focused wallet and reviewer tests passed 27 of 27 and Cloudflare tests passed 21 of 21. No transaction was broadcast during implementation.
+
+## 2026-11-13 | P0 frontend recovery local gate
+
+Merged the design-authority cleanup through PR 105 as `ebf3366587067e88bb846894438caa9afbc41440`, then implemented the focused recovery on `feat/p0-frontend-recovery`. Local verification passed 176 of 176 repository tests, 21 of 21 Cloudflare tests, Chromium and Firefox across eight responsive widths and every active route, the wallet build, documentation checks, source policy and the Worker dry run. Genuine side-by-side dark and light comparisons were inspected against `design/approved/overview-dark.jpeg` and `design/approved/overview-light.jpeg`. No transaction, provider call, secret change or expenditure occurred.
+
+Production smoke testing of merge `04fb155cd4ca53a0dd6c2e3dbf68917c20c09b34` exposed an indefinitely loading label. A bounded browser API timeout was added first. Final retesting isolated the precise successful-read defect: an empty Testnet case response did not replace the initial label. The success path now reports its authoritative case count and the browser regression requires that transition.
+
 ## 2026-11-13 | Three-phase completion, Phase 2
 
 PR 95 merged Phase 1 to `main` at `9a1ecc0e4cb9314b2c4896d545098c628e5a20a4`. PR 100 merged Phase 2 at `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after Core `43360379499`, Security `43360379395` and comprehensive Integration `43360379415` passed. Local verification passed 176 of 176 repository tests, 21 of 21 Cloudflare tests, the wallet production build, documentation link checks for 75 Markdown files, and the complete Chromium and Firefox responsive browser suite. The work produced no Testnet transaction, live provider call, deployment or spend. Wrangler correctly stopped deployment under the wrong Cloudflare account identity.
@@ -525,6 +547,14 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - Updated authoritative notices and five project logs, retaining prior history. No approved visual source changes, production implementation, model calls, live transactions, deployment, secrets or mainnet actions. Actual spending $0; approved $3/$3/$5 provider envelopes unchanged.
 - Remaining: execution gates (ABI compilation, worst-case gas/storage, sandbox invariants, independent operator evidence, credits, deployment/key control). No unresolved G01-G07 specification alternatives; unknown-outcome lock is an explicit residual limitation.
 - Next: first November 1 fresh Rust escrow/accounting/payout sandbox milestone, then reviewer protocol/services and approved frontend.
+
+## 2026-11-14 | Wallet, Constellations and workspace completion pass
+
+- Preserved current PR #118 and its Phase 3 reviewer work while leaving three untracked reviewer-authority artifacts untouched.
+- Added expiry-aware wallet-session renewal, provider-backed signer restoration, account-change reauthentication, a compact account menu, final Testnet wallet balance, Switch wallet and Disconnect. Session restoration still grants no transaction authority.
+- Rebuilt Constellations around the eight canonical coverage calculations with primary and comparison selection, readable axes, exact values, source inspection and honest gaps for missing or protected data. Both Overview doughnut charts remain unchanged.
+- Refined shared workspace forms, panels, typography, overlays, scrollbars and responsive layouts without changing contract or provider APIs.
+- Passed 184 repository tests, 23 Cloudflare tests, 15 focused wallet tests, documentation links, Cloudflare static build and the complete Chromium and Firefox responsive browser matrix. No transaction, provider call, secret mutation or spending occurred.
 
 # 2026-11-11 | CONTRA-M10.4-PROVIDER-CREDENTIAL-READY
 

@@ -1,10 +1,43 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-14-LIVE-SETTLEMENT-PROVIDER-VERIFIED
+
+Testnet case `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` reached `Settled` through final transaction `GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk`. Final RPC read-back reports callback-authenticated `SUCCESS_VERIFIED`, one payout attempt, `BASE_REFUND`, and an exact 0.1 NEAR return to `contra-creator.testnet`. The one-use signing gate was disabled immediately afterwards. Meta `muse-spark-1.3` produced non-binding retrospective proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d`; Modal produced deterministic verification `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427` bound to that exact proposal. These provider artifacts did not create votes, alter the verdict or authorise settlement. Repository tests pass 185 of 185 and Cloudflare tests pass 22 of 22. A genuine challenged Testnet journey remains outstanding.
+
+## Current checkpoint | CONTRA-2026-11-13-PHASE3-COMMITTEE-ACKNOWLEDGEMENT
+
+The owner reports that all six independently controlled reviewer accounts completed their own onchain confirmation. Before case preparation, the deterministic registry policy exposed a role mismatch: ASCII account ordering selects `appeal.testnet`, `appeal2.testnet` and `appeal3.testnet` as primary, followed by `primary1.testnet`, `primary2.testnet` and `primary3.testnet` as fresh appeal. The original signed invitations named the opposite roles. The application now derives the exact registry order from finalised contract reads and requires each reviewer to sign an immutable NEP-413 committee-assignment acknowledgement. No invitation, disclosure or prior consent is rewritten. Case preparation remains blocked until all six assignment acknowledgements are recorded.
+
+## Current checkpoint | CONTRA-2026-11-13-PHASE3-REVIEWERS-REGISTERED
+
+The owner approved activation packet `340ea02123adf9ce9c8c0111c1c47e6847ea6d2ab378212d31fbb345b24258f9`. Fresh final preflight verified the owner signer, FullAccess key, deployed code hash and empty registry. Six sequential `set_reviewer` calls then reached explicit final success. Read-back at block 277529938 shows three primary and three fresh reviewers active at revision 1 with their exact signed operator and disclosure digests. All remain `confirmed: false`, as required until each human personally signs `confirm_reviewer`. Total attached deposit was 6 yoctoNEAR and total gas burn was 0.0016302682336456 testnet NEAR. No case, escrow, provider call or settlement occurred.
+
+## Current implementation | scoped reviewer onchain confirmation
+
+The Bench now offers `Confirm on NEAR` only to an authenticated reviewer whose durable signed consent matches an active, unconfirmed onchain registry record. The Worker revalidates the account, contract, method, revision, disclosure digest, gas and one-yocto deposit at signing handoff. This narrow capability does not enable case creation or any other transaction and does not alter the operation-specific creator gate. Each reviewer still provides the actual wallet signature and may reject it.
+
+## Current checkpoint | CONTRA-2026-11-13-PHASE3-REVIEWERS-INVITED
+
+Six owner-declared independently controlled Testnet accounts were verified through final RPC, each with one FullAccess key and 2.5 testnet NEAR. The authenticated `contra-creator.testnet` session created three primary and three fresh-appeal invitation records in production. The owner reports all six isolated reviewer sessions as `CONSENTED`, and `appeal3.testnet` was independently observed in production with its immutable `INVITED` and `CONSENTED` history. None is registered or confirmed onchain. The owner-only activation readiness route now reconciles the six durable consent records and their exact disclosure digests before any `set_reviewer` transaction is prepared. No transaction was broadcast.
+
+## Current checkpoint | CONTRA-2026-11-13-PHASE3-LIVE-READINESS
+
+Read-only production and Testnet preflight completed on 13 November 2026. `https://contra-near.pages.dev/api/live`, `/api/ready` and `/api/health` returned HTTP 200. Durable Object SQLite reported integrity `ok`, schema 3 and the USD 0 hosting boundary. The chain observation was final, fresh and non-regressed on Testnet, and live signing remained disabled. The deployed contract code hash is `EtUc3f99vfTwVoRJfS9MNCirxpQ5KpNFNen7XZUD7LA2`; its creator allowlist contains only `contra-creator.testnet`, held escrow and in-flight or unknown amounts are zero, and read-back found zero reviewers and zero cases.
+
+Stage 1 is BLOCKED only at its external boundary: six different human operators have not supplied independently controlled Testnet accounts and signed disclosures, browser control for the allowlisted creator and beneficiary participation are not established for an exact journey, and no operation-specific transaction packet exists. Consequently Stages 2 and 3 cannot safely broadcast transactions. Meta and Modal retain their prior bounded smoke evidence, but case-bound execution remains disabled until an authorised case exists. Public Demo Mode remains required. No transaction, provider call, secret mutation, reviewer claim or spending occurred during this audit.
+
+## Current refinement | final interface and multi-wallet verification
+
+The approved Overview composition now includes the owner-requested brand, navigation, duotone icon, typography, chart, case picker, Primary/Appeal and icon-theme refinements. Public Demo Mode is explicit and isolated from wallets, contract mutation, provider billing, reviewer registration and operation creation. The wallet flow now presents a feature-filtered Testnet NEP-413 picker. Meteor retains its checksum-pinned executor and genuine prior CONTRA authentication evidence. Intear and Nightly remain connector-compatibility candidates pending genuine account authentication evidence. Repository tests pass 178 of 178 and Cloudflare tests pass 21 of 21. Production promotion remains pending hosted checks and deployment verification. No financial authority or reviewer-independence status changed.
+
+## Current checkpoint | CONTRA-2026-11-13-P0-FRONTEND-RECOVERY
+
+The approved dark and light Overview references are now the sole active visual authority. The recovered frontend matches their desktop composition, restores both doughnut charts, distinguishes active navigation from the coral Challenges accent, supports dark and light themes, and provides a working textual Collapse and Expand control at the bottom of the sidebar. Chromium and Firefox passed all ten destinations at 320, 375, 768, 1024, 1280, 1366, 1440 and 1920 pixel widths. Local verification passed 176 repository tests, 21 Cloudflare tests, the wallet build, documentation checks and the Cloudflare dry run. Production readiness remains PARTIAL until the focused PR passes hosted gates and the exact merged build is deployed and smoke-tested.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE2-FUNCTIONAL-WORKFLOWS
 
 Phase 1 merged through PR 95 at `9a1ecc0e4cb9314b2c4896d545098c628e5a20a4`. Phase 2 merged through PR 100 at `98621162d5d8cefea5922e0ba46a23a8657c4c7f`. The independently testable Cases, Evidence, Evaluations, Challenges, The Bench, Settlement, Constellations, Activity and Settings paths are complete. Reviewer reveal material is stored only in a passphrase-encrypted AES-GCM recovery package, each round workspace is restricted to its appointed reviewer, provider result access remains account and case scoped, and UNKNOWN operations remain locked. Core run `43360379499`, Security run `43360379395` and comprehensive Integration run `43360379415` passed on the reviewed head. Local verification passed 176 repository tests, 21 Cloudflare tests, the wallet build, 75 documentation links and the Chromium and Firefox responsive route matrix. No transaction, provider call or reviewer-independence claim occurred. Live Testnet creation and settlement remain blocked on six genuine reviewers and operation-specific signing authority.
 
-Cloudflare deployment is additionally blocked because the local Wrangler session is authenticated to account `56583bd411c295f2a4e9f73b60fab3f5`, not the verified project account `0a8fd0acd086e68c9b558159fac0d7a8`. No deployment was attempted after that identity mismatch.
 
 The current locked npm graph reports 13 low findings and zero moderate, high or critical findings. Historical records of the former 17-finding baseline remain unchanged.
 

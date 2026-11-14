@@ -1,5 +1,60 @@
 # Change log
 
+## 2026-11-14 | Live settlement and provider verification
+
+- Verified final Testnet settlement transaction `GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk`, callback success and exact 0.1 NEAR BASE_REFUND recipient.
+- Disabled the operation-specific signing gate immediately after confirmation.
+- Corrected Muse Spark reasoning-token exhaustion, accepted its current structured response envelope and retained strict finding validation.
+- Corrected the Modal request allowlist and retry identity without weakening UNKNOWN job locks.
+- Retained Meta proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d` and Modal verification `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427` as non-binding retrospective artifacts.
+- Repository tests passed 185 of 185 and Cloudflare tests passed 22 of 22.
+
+## 2026-11-13 | Signed committee-assignment acknowledgement
+
+- Added a finalised-registry committee readiness route.
+- Added immutable Durable Object audit records for assignment acknowledgement.
+- Added a reviewer wallet action that signs the exact contract-derived committee and slot through NEP-413.
+- Added regression coverage for deterministic ordering, replay and conflicting replacement rejection.
+- No contract write, provider call, case creation or financial transaction occurred.
+
+## 2026-11-13 | Phase 3 reviewer registration
+
+- Executed the owner-approved activation packet as six sequential owner-authorised `set_reviewer` calls.
+- Reconciled every final receipt, transaction identity, exact contract arguments and registry record.
+- Registered three primary and three fresh reviewers as active revision 1 records while preserving reviewer-personal confirmation as a separate action.
+- Retained the public transaction and expenditure evidence in `project/artifacts/phase3/reviewer-activation.json`.
+
+## 2026-11-13 | Scoped reviewer confirmation interface
+
+- Added a The Bench action for each reviewer to personally sign the exact onchain `confirm_reviewer` call.
+- Added a fail-closed Worker handoff limited to the authenticated reviewer's matching durable consent and active registry revision.
+- Preserved the disabled general signing gate and exact operation-specific case-creation authority.
+- Added browser orchestration and Durable Object regressions for allowed confirmation and denied unrelated methods or accounts.
+
+## 2026-11-13 | frontend visual hierarchy correction
+
+- Replaced faint page-level icon treatments with larger, complete two-tone filled SVG artwork while preserving the established navigation family.
+- Contained and aligned both Overview doughnut charts so their rings and legends no longer overflow panel geometry.
+- Increased dense table, timeline, chart legend, KPI label, status and branded-statement typography with stronger semantic weights.
+- Added Chromium and Firefox regression assertions for chart containment, readable table sizing and KPI icon presentation across supported viewports.
+
+## 2026-11-13 | final interface and multi-wallet refinement
+
+- Refined the recovered frontend with one active navigation state, textual sidebar collapse, 2D duotone icons, compact theme and round controls, searchable case selection and responsive doughnut layouts.
+- Added explicit, isolated public Demo Mode and recorded its Phase 3 removal condition.
+- Replaced the Meteor-only launch path with a Testnet and NEP-413 compatibility-filtered wallet picker while retaining the pinned Meteor executor.
+- Added `DESIGN.md`, `UX-CONTRACT.md`, responsive browser evidence and cumulative acceptance updates.
+
+## 2026-11-13 | P0 frontend recovery implementation
+
+- Rebuilt the active dashboard styling against the approved dark and light Overview references without restoring superseded designs.
+- Moved the sidebar control to the bottom, replaced the icon-only control with textual Collapse and Expand states, and verified persisted layout changes.
+- Restored truthful KPI, timeline, status, evidence, reviewer-round, activity and brand panels with populated and designed empty states.
+- Expanded Chromium and Firefox coverage across ten destinations, eight widths, themes, navigation, charts, forms, recovery states and mobile navigation.
+- Added reproducible side-by-side visual comparison output and CI artifact retention.
+- Preserved the contract ABI, wallet security, provider gates, Durable Object state and disabled financial authority.
+- Added a fail-closed browser API timeout and an explicit successful read-only status after production verification exposed an indefinitely loading label.
+
 ## 2026-11-13 | Phase 2 functional workflows
 
 Merged through PR 100 to `main` as `98621162d5d8cefea5922e0ba46a23a8657c4c7f` after Core, Security and comprehensive Integration passed.
@@ -560,4 +615,11 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Removed Baseten from Cloudflare secrets, runtime readiness, provider probes, durable job admission and active credential templates by owner decision.
 - Preserved historical Baseten fixture and authenticated-probe evidence without treating it as an active integration.
 - Future OpenRouter or other provider support requires a separate explicit owner decision and integration review.
+
+# 2026-11-14 | Three-phase frontend completion
+
+- Restored wallet sessions and provider connections safely, added proactive renewal and explicit reauthentication after expiry or account change.
+- Added a compact account menu with final Testnet wallet balance, Switch wallet and Disconnect, clearly separated from contract funding.
+- Replaced the prior Constellations presentation with a comparative eight-axis graph and exact-value table using the existing coverage calculations.
+- Refined all workspace surfaces through shared layout, form, feedback, responsive and accessibility rules while preserving APIs and financial gates.
 

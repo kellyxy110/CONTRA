@@ -1,0 +1,14 @@
+{
+  "schema": "CONTRA_PHASE3_INVITATIONS_V1",
+  "created_at": "2026-11-13T12:51:33.893Z",
+  "transaction_broadcast": false,
+  "expires": 1794747080087,
+  "invitations": [
+    {"reviewer_id":"primary1.testnet","committee":"primary","slot":1,"digest":"3afb85a94fa95442471af12072b9c8c619a1e70895bfe3bebaf178aa8d78733b","operator_id":"8ee3c635944bdf3722fa738cdbe655e72f850a6daa8d656828c1736d8e75732e","status":"INVITED"},
+    {"reviewer_id":"primary2.testnet","committee":"primary","slot":2,"digest":"44eb9db4aa845d62a2799eeb217a52fc0604aa27333b13b84f3b258f017619c4","operator_id":"b7a2188fd4f2fb1ac9c5ce1a8d0f24724babdc210515a8d3eee77619bf91a5cc","status":"INVITED"},
+    {"reviewer_id":"primary3.testnet","committee":"primary","slot":3,"digest":"105b152057206dd83e58be19c9b9399c1bdbe67e77d7e03e6953999c75bcd318","operator_id":"1ad2eb67e407de2897dc309024f734d9f02778e0b0f756ec85ff8a0e74f4aa9a","status":"INVITED"},
+    {"reviewer_id":"appeal.testnet","committee":"fresh","slot":1,"digest":"14c22ba160ed962cbc4e931e91a63035105c25c8a3ce6b9faf14a3412e331c1a","operator_id":"fc6ffbfb43932de1c309a38cc7f23d73c5440126e6fb0d1ce5753f37d3dcb1eb","status":"INVITED"},
+    {"reviewer_id":"appeal2.testnet","committee":"fresh","slot":2,"digest":"84cc4ba4ccaed6e897a02a5439427c1d25423b24d67ff34683ee3c59b47706c2","operator_id":"8a6be4fc391c366734f61903b1257c5a29203c8582e155617439d81ab0cd3ff8","status":"INVITED"},
+    {"reviewer_id":"appeal3.testnet","committee":"fresh","slot":3,"digest":"82f25d9fce915bf295e3be009b8db880738b5b3c805870ff60b9a072e7e90e9b","operator_id":"eae6a5bb7638a3664527be7b3ba52613fce01f7de755433eb13e390c7231e47c","status":"INVITED"}
+  ]
+}

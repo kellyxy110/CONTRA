@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {counterexampleRequest,challengeEligibility,challengeSubmissionArgs,storeCounterexample,fileChallenge} from '../apps/web/challenge-operations.mjs';
-import {invitationResponseArgs,reviewerControlStatement,signReviewerConsent,findingArgs,reviewerCommitmentArgs,commitmentTransactionArgs,revealTransactionArgs,verifyReviewerReveal,respondToInvitation,storeReviewerFinding,commitReviewerVote,revealReviewerVote} from '../apps/web/reviewer-operations.mjs';
+import {invitationResponseArgs,reviewerControlStatement,signReviewerConsent,storeReviewerDisclosure,findingArgs,reviewerCommitmentArgs,commitmentTransactionArgs,revealTransactionArgs,verifyReviewerReveal,respondToInvitation,storeReviewerFinding,commitReviewerVote,revealReviewerVote} from '../apps/web/reviewer-operations.mjs';
 import {receiptRequest,operationReadPath,reconciliationRequest,operationRecoveryState,inspectReceipt,inspectOperation,reconcileKnownOperation} from '../apps/web/settlement-operations.mjs';
 
 test('challenge arguments and losing-party deadline eligibility are preserved',()=>{
@@ -39,6 +39,8 @@ test('reviewer consent requires a fresh wallet signature bound to the disclosure
  const wallet={signMessage:async request=>{assert.equal(request.message,'bound statement');assert.equal(request.recipient,'contra-near.pages.dev');return {accountId:reviewerId,publicKey:'ed25519:key',signature:'signature'};}};
  assert.equal((await signReviewerConsent({post,wallet,invitation,reviewerId,input})).status,'CONSENTED');
  assert.equal(calls[0][0],'reviewer/control-challenge');assert.equal(calls[1][1].control_challenge_id,'challenge');assert.equal(calls[1][1].body.disclosure_digest,input.disclosure_digest);
+ const disclosureCalls=[],saved=await storeReviewerDisclosure(async(path,body)=>{disclosureCalls.push([path,body]);return {digest:'d'.repeat(64)};},{...invitation,operator_id:input.operator_id},reviewerId,input);
+ assert.equal(saved.digest,'d'.repeat(64));assert.equal(disclosureCalls[0][0],'reviewer/disclosure');assert.equal(disclosureCalls[0][1].operator_id,input.operator_id);assert.equal(disclosureCalls[0][1].custody,'independently-controlled');
  await assert.rejects(signReviewerConsent({post,wallet:null,invitation,reviewerId,input}),/recovered session cannot sign/);
  await assert.rejects(signReviewerConsent({post,wallet:{signMessage:async()=>({accountId:'other.testnet'})},invitation,reviewerId,input}),/does not match/);
 });

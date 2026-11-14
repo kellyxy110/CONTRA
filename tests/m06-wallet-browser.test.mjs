@@ -53,13 +53,45 @@ test('browser connector selects a Testnet NEP-413 wallet without financial autho
  assert.deepEqual(connected.accounts,await wallet.getAccounts());
  assert.equal(calls[0].network,'testnet');
  assert.deepEqual(calls[0].features,{signMessage:true,testnet:true});
- assert.equal(calls[0].autoConnect,false);
- assert.equal(calls[0].manifest.wallets.length,1);
- assert.equal(calls[0].manifest.wallets[0].id,'meteor-wallet');
- assert.equal(calls[0].manifest.wallets[0].executor,'https://contra-near.pages.dev/vendor/meteor-near-connect.js');
+ assert.equal(calls[0].autoConnect,true);
+ assert.equal(calls[0].manifest,undefined);
  assert.equal(module.METEOR_EXECUTOR_SHA256,'96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50');
+ assert.equal(module.METEOR_MANIFEST.wallets[0].executor,'https://raw.githubusercontent.com/Meteor-Wallet/meteor_wallet_sdk/ef1be35fc3712f2de60a7563aed543d78e73f763/storage/meteor-near-connect-latest.js');
  assert.deepEqual(calls[1],{walletId:'meteor-wallet'});
  assert.equal(calls.some(value=>value?.addFunctionCallKey),false);
+});
+
+test('wallet identity restoration remains non-sensitive and account scoped',async()=>{
+ globalThis.localStorage=storage();
+ const account={accountId:'creator.testnet',publicKey:'ed25519:11111111111111111111111111111111'},wallet={getAccounts:async()=>[account]};
+ const connector={wallet:async id=>{assert.equal(id,'meteor-wallet');return wallet;}};
+ const module=await import('../apps/web/wallet-source.mjs?identity-restoration');
+ assert.equal(module.rememberWalletIdentity({walletId:'meteor-wallet',accountId:account.accountId}),true);
+ assert.deepEqual(module.recalledWalletIdentity(),{walletId:'meteor-wallet',accountId:account.accountId});
+ const restored=await module.restoreConnectedWallet({connectorFactory:()=>connector});
+ assert.equal(restored.wallet,wallet);assert.equal(restored.account.accountId,account.accountId);
+ module.forgetWalletIdentity();assert.equal(module.recalledWalletIdentity(),null);
+});
+
+test('Testnet balance reads final account state without wallet signing',async()=>{
+ const calls=[],transport=async(_url,options)=>{calls.push(JSON.parse(options.body));return new Response(JSON.stringify({jsonrpc:'2.0',result:{amount:'1234000000000000000000000',block_height:42,block_hash:'BLOCK42'}}),{status:200,headers:{'Content-Type':'application/json'}});};
+ const module=await import('../apps/web/wallet-source.mjs?balance');
+ assert.deepEqual(await module.getTestnetAccountBalance('creator.testnet',{transport}),{accountId:'creator.testnet',availableYocto:'1234000000000000000000000',blockHeight:42,blockHash:'BLOCK42'});
+ assert.equal(calls[0].params.request_type,'view_account');assert.equal(calls[0].params.finality,'final');
+});
+
+test('wallet discovery exposes only Testnet NEP-413 compatible providers',async()=>{
+ const compatible={manifest:{id:'meteor-wallet',name:'Meteor',icon:'icon',description:'Compatible wallet',features:{testnet:true,signMessage:true}}};
+ const intear={manifest:{id:'intear-wallet',name:'Intear',icon:'icon',features:{testnet:true,signMessage:true}}};
+ const nightly={manifest:{id:'nightly-wallet',name:'Nightly',icon:'icon',features:{testnet:true,signMessage:true}}};
+ const unverified={manifest:{id:'ledger',name:'Ledger',icon:'icon',features:{testnet:true,signMessage:true}}};
+ const wrongNetwork={manifest:{id:'mainnet-only',name:'Mainnet',features:{mainnet:true,signMessage:true}}};
+ const noMessage={manifest:{id:'no-message',name:'No message',features:{testnet:true,signMessage:false}}};
+ const connector={whenManifestLoaded:Promise.resolve(),availableWallets:[compatible,intear,nightly,unverified,wrongNetwork,noMessage],registerWallet:async()=>{}};
+ const module=await import('../apps/web/wallet-source.mjs?multi-wallet-discovery');
+ const result=await module.listCompatibleWallets({connectorFactory:()=>connector});
+ assert.equal(result.connector,connector);
+ assert.deepEqual(result.wallets.map(value=>value.id),['meteor-wallet','intear-wallet','nightly-wallet']);
 });
 
 test('browser connector explicitly signs in a new Testnet wallet without adding a key',async()=>{

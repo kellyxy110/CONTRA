@@ -1,20 +1,12 @@
 # Next execution task
 
-## Current execution unit | Complete Phase 3 live release gates
+Current action: preserve the verified settled BASE_REFUND journey and its provider artifacts, then prepare a separate exact challenged-journey packet. Do not reuse any completed operation identity or reopen the disabled signing gate. The challenged journey must have fresh terms, evidence, counterevidence, operation-specific authorities, primary and fresh votes, finalised settlement and exact balance reconciliation before it can be marked complete.
 
-Synchronise `implementation/oct28` with the accepted Phase 2 tree. Reauthenticate Wrangler to the verified project Cloudflare account before deploying the merged release. The remaining protocol gates are external: six distinct human reviewer operators, browser authority for the allowlisted creator, genuine beneficiary participation and exact operation-specific transaction approval. Keep Meta and Modal live execution case bound and budget bound. Do not represent controlled browser, provider or Sandbox evidence as a funded Testnet settlement.
+## Current execution unit | Phase 3 external identities and exact live authority
 
-## Current execution unit | External identities and exact live case authority
+Production is read-only ready and the independently implementable frontend, backend, provider ledger, reviewer lifecycle and transaction recovery controls are complete. Six distinct reviewer accounts have owner-reported consent, with one production record independently observed. The contract currently has zero registered reviewers and zero cases. Reconcile the six exact consent and disclosure digests through the owner-only activation route, prepare six bounded `set_reviewer` operations, then require each reviewer to sign its matching `confirm_reviewer` operation. Freeze participant consent, case terms, evidence digests, deadlines, amounts and transaction sequence only after registry read-back confirms six active, confirmed and disjoint reviewers. Meta and Modal calls remain case bound and budget bound. Public Demo Mode remains until both genuine journeys and settlements have final receipts.
 
-The backend implementation is complete to its external boundary. Recruit six distinct human operators, collect their signed control statements, then register and confirm their exact Testnet reviewer records. Separately establish secure browser control of `contra-creator.testnet` or approve an exact state-compatible allowlist change for a named browser-controlled creator. Only after the registry has six active confirmed reviewers may `preview_case` produce the immutable create-case packet and the operation-specific signing gate be configured. Meta and Modal case calls remain disabled until their production readiness flags are intentionally enabled against an existing authorised case.
-
-## Current execution unit | Independent reviewer onboarding
-
-Provider and non-financial wallet activation are complete to the available external boundary. Recruit and verify three primary and three fresh-appeal human operators with distinct Testnet wallets, control signatures, consent and conflict disclosures. Meta and Modal are the only active providers. Only after reviewer readiness may the two already bounded funded journey packets be frozen and executed. Do not repeat Meta or Modal activation calls.
-
-## Current execution unit | Provider activation and wallet readiness
-
-The owner has authorised bounded live provider verification up to USD 3 Meta, USD 3 Baseten and USD 5 Modal, plus Testnet execution up to 1 NEAR per transaction and 2 NEAR total across the two acceptance journeys. Meta and Baseten credentials and a dedicated Modal Proxy Auth token are installed server-side. Verify account access, models, pricing and residual billing exposure through authenticated probes, then run only the smallest bounded calls after the corresponding fail-closed gate passes. Exercise creator and beneficiary non-financial signing and transaction preflight. Keep funded reviewer-dependent journeys deferred until six genuine independent operators consent.
+Use only the verified `judithorluchee` Wrangler profile and account `0a8fd0acd086e68c9b558159fac0d7a8` for production changes. Do not deploy from another account or replace `ContraState`.
 
 
 ## Historical task | Complete protected Modal verification

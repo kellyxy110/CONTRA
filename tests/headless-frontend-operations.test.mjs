@@ -3,6 +3,20 @@ import assert from 'node:assert/strict';
 import {eligibleCaseActions,readCaseDetails,readProtectedCaseRecords,readPagedCases,filterCases} from '../apps/web/contract-operations.mjs';
 import {createWalletOperations,openAuthenticatedWallet,recoverWallet} from '../apps/web/wallet-operations.mjs';
 import {evaluationFixtureArgs,submitDevelopmentFixture} from '../apps/web/evaluation-operations.mjs';
+import {createApiClient} from '../apps/web/api-client.mjs';
+import {signCommitteeAssignment} from '../apps/web/reviewer-operations.mjs';
+
+test('browser API reads fail closed instead of loading indefinitely',async()=>{
+ const hangingFetch=(_url,{signal})=>new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>reject(new DOMException('Aborted','AbortError')),{once:true}));
+ const {view}=createApiClient(()=>null,hangingFetch,{timeoutMs:5});
+ await assert.rejects(view('list_cases',{}),/API request timed out/);
+});
+
+test('committee acknowledgement signs the exact contract-derived assignment',async()=>{
+ const calls=[],wallet={signMessage:async input=>{calls.push(input);return {accountId:'appeal.testnet',publicKey:'ed25519:key',signature:'signature'};}},post=async(path,body)=>{calls.push({path,body});return path==='reviewer/control-challenge'?{id:'challenge',message:'bound assignment',nonce:btoa(String.fromCharCode(...new Uint8Array(32))),recipient:'contra-near.pages.dev'}:{status:'CONSENTED',assignment_acknowledged:true};};
+ const result=await signCommitteeAssignment({post,wallet,invitation:{digest:'a'.repeat(64)},reviewerId:'appeal.testnet',assignment:{committee:'primary',slot:1},selectionDigest:'b'.repeat(64)});
+ assert.equal(result.assignment_acknowledged,true);assert.equal(calls[0].body.statement.committee,'primary');assert.equal(calls[0].body.statement.slot,1);assert.equal(calls[2].body.status,'ASSIGNMENT_ACKNOWLEDGED');
+});
 
 test('case actions retain exact deposits and safeguard payout retry',()=>{
  const c={state:'Draft',creator_id:'creator',terms:{beneficiary_id:'beneficiary',amount_yocto:'1000000000000000000000000'},beneficiary_accepted:true,terms_digest:'terms'};
@@ -41,6 +55,15 @@ test('wallet prepare retains bounded create_case and signing remains fail closed
  const result=await ops.signCall('create_case',{request_id:'req'},'1',{operation_id:'op'});
  assert.equal(result.transaction_hash,'hash');assert.equal(result.operation.status,'CONFIRMED');
  wallet=null;await assert.rejects(ops.signCall('create_case',{},'1'),/Reconnect the signing wallet/);
+});
+test('reviewer confirmation uses only its explicit scoped signing capability',async()=>{
+ const observed=[];
+ const request=async()=>({network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:false,reviewer_confirmation_signing_authorized:true});
+ const operations=createWalletOperations({request,getToken:()=> 'token',getAccount:()=> 'primary1.testnet',getWallet:()=>({}),prepareWalletTransaction:async input=>{observed.push(input);return {operation:{operation_id:'confirm-op'}};},sendPreparedWalletTransaction:async()=>({transactionHash:'hash'}),reconcileWalletTransaction:async()=>({status:'CONFIRMED'})});
+ const args={revision:'1',disclosure_digest:'a'.repeat(64)},result=await operations.signCall('confirm_reviewer',args,'1');
+ assert.equal(result.operation.status,'CONFIRMED');
+ assert.deepEqual(observed[0].call,{method:'confirm_reviewer',args,deposit:'1',receiverId:'contra-contestation.testnet'});
+ await assert.rejects(operations.signCall('create_case',{},'1'),/authority gate/);
 });
 test('wallet authentication requires Testnet and restored sessions do not mint signers',async()=>{
  await assert.rejects(openAuthenticatedWallet({network:'mainnet'}),/Testnet/);
