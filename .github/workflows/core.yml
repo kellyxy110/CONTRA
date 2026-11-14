@@ -54,8 +54,6 @@ jobs:
         run: npx playwright install --with-deps chromium firefox
       - name: Verify approved frontend across browsers and viewports
         run: npm run test:browser
-      - name: Build approved Overview comparison evidence
-        run: npm run build:visual-comparison
       - name: Retrospective evidence integrity review
         run: node scripts/ci-historical-evidence.mjs
       - name: Upload core reports
