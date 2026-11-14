@@ -16,7 +16,7 @@
   "authorises_other_methods": false,
   "authority_digest": "55b5e03aef1e0eee32b02f1ab8cf0613c57a53abb1e1df96624150aae82a1334",
   "owner_approval": "I approve operation authority digest 55b5e03aef1e0eee32b02f1ab8cf0613c57a53abb1e1df96624150aae82a1334",
-  "beneficiary_signature": null,
-  "transaction_hash": null,
+  "beneficiary_signature": "Provided directly by the independently controlled wallet and verified by the finalised transaction",
+  "transaction_hash": "3RCimJuPMpv5Yw2ftFeXRw7vQNcabFJzHnqZzu3CHTTt",
   "notice": "The server may release only this exact accept_terms request. The independently controlled beneficiary must inspect and sign it in their own wallet."
 }

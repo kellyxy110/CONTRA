@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-14 | Beneficiary acceptance and funding preparation
+
+- Reconciled final Testnet success for the independently signed beneficiary `accept_terms` transaction.
+- Verified the exact signer, receiver, case, terms digest, accepted flag, revision and zero funded principal through final RPC.
+- Disabled the scoped signing gate and removed its operation secrets after confirmation.
+- Prepared the exact 0.1 Testnet NEAR `fund_case` operation while keeping signing disabled and the authority request unapproved.
+
 ## 2026-11-13 | Phase 3 beneficiary preflight
 
 - Replaced the obsolete live-journey beneficiary draft with `contra-beneficiary2.testnet`.

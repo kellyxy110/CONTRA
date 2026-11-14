@@ -1,5 +1,11 @@
 # CONTRA session log
 
+## 2026-11-14 | Beneficiary acceptance confirmed
+
+Transaction `3RCimJuPMpv5Yw2ftFeXRw7vQNcabFJzHnqZzu3CHTTt` reached final explicit success for `contra-beneficiary2.testnet` calling `accept_terms` on the exact Phase 3 case. Independent final RPC read-back confirmed beneficiary acceptance, revision 2 and zero principal funding. The signing gate was closed immediately after reconciliation.
+
+The creator authenticated from Windows Credential Manager without exposing private material and persisted the exact funding operation as `PREPARED`. Its payload hash is `7a236d12313a474e50255c845e1177f1b6ca5630e5f1d645be19f1e0c62877bc`. The Worker returned `live_signing_authorized: false` and released no signing request. No funding transaction has been signed or broadcast.
+
 ## 2026-11-13 | Beneficiary and registry readiness
 
 The independently controlled beneficiary `contra-beneficiary2.testnet` completed NEP-413 authentication and supplied a control and participation declaration. Final RPC verified its sole FullAccess key and 1 Testnet NEAR balance. A final contract read verified all six reviewer accounts active and confirmed, zero existing cases, zero held escrow and zero unknown value. The active journey draft now names the correct beneficiary. Exact terms and transaction authority remain deliberately unset.

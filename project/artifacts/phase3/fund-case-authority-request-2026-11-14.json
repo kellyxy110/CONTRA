@@ -1,0 +1,23 @@
+{
+  "schema": "CONTRA_OPERATION_AUTHORITY_V1",
+  "network": "testnet",
+  "operation_id": "contra-fund_case-e6bb304c52aeb9b0251b052c",
+  "operation_status": "PREPARED",
+  "payload_hash": "7a236d12313a474e50255c845e1177f1b6ca5630e5f1d645be19f1e0c62877bc",
+  "signer_id": "contra-creator.testnet",
+  "receiver_id": "contra-contestation.testnet",
+  "method": "fund_case",
+  "attached_deposit_yocto": "100000000000000000000000",
+  "case_id": "e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278",
+  "terms_digest": "996ca53f26baffb90eeb474cef355a41ede1d24ce927248de7c03f30ad278000",
+  "expires_at": "2026-11-14T07:45:00Z",
+  "authorises_handoff": true,
+  "authorises_broadcast": true,
+  "authorises_funding": true,
+  "authorises_other_methods": false,
+  "authority_digest": "6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358",
+  "owner_approval": null,
+  "signing_request_released": false,
+  "transaction_hash": null,
+  "notice": "Approval would authorise exactly 0.1 Testnet NEAR principal funding for this accepted case. It does not authorise evidence submission, review, challenge, settlement or any other transaction."
+}

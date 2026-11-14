@@ -350,3 +350,7 @@ The owner's 2026-10-28 UX3A instruction supplies the dashboard composition and o
 
 The final engineering release is deployed. The next executable work is the independent-reviewer phase: onboard three primary and three fresh-appeal operators, verify distinct wallet control and consent, then freeze separately authorised funded Testnet journey packets. Provider activation remains gated by verified endpoint, model, credits, pricing, hard billing controls and server-side credentials. Do not treat fixtures as live evidence or enable signing before those gates pass.
 
+# Immediate next action, 14 November 2026
+
+Beneficiary acceptance is complete and final. The exact 0.1 Testnet NEAR `fund_case` operation is persisted as `PREPARED`, but signing remains disabled and no request was released. Obtain explicit approval for authority digest `6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358`, then perform one bounded handoff, reconcile the original transaction hash and close the gate. Do not proceed after an UNKNOWN outcome and do not infer authority for later case transitions.
+

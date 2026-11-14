@@ -1,5 +1,11 @@
 # CONTRA status checkpoint
 
+## Phase 3 beneficiary acceptance and funding preparation, 14 November 2026
+
+The independently controlled beneficiary signed the exact `accept_terms` operation. Transaction `3RCimJuPMpv5Yw2ftFeXRw7vQNcabFJzHnqZzu3CHTTt` reached final `SuccessValue` with signer `contra-beneficiary2.testnet`, receiver `contra-contestation.testnet`, one yoctoNEAR attached deposit and the approved immutable case identity. Final contract read-back reports `beneficiary_accepted: true`, case revision 2, state `Draft` and zero funded principal. The operation-specific signing gate was disabled and its secrets removed after reconciliation.
+
+The authenticated creator subsequently prepared, but did not hand off or sign, operation `contra-fund_case-e6bb304c52aeb9b0251b052c`. Its exact payload hash is `7a236d12313a474e50255c845e1177f1b6ca5630e5f1d645be19f1e0c62877bc` and its requested principal is 0.1 Testnet NEAR. Live signing remains disabled. Funding requires separate approval of authority digest `6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358`.
+
 ## Phase 3 beneficiary and committee preflight, 13 November 2026
 
 Final NEAR Testnet RPC verified `contra-beneficiary2.testnet` with the independently supplied FullAccess public key `ed25519:GTqSSmZ73Vmo7p6UXvTL6G1NAuy339oJLuxEtPU6z5Zg` and exactly 1 Testnet NEAR. The beneficiary completed NEP-413 authentication and supplied a control and participation declaration. Exact case-terms consent remains pending until an immutable case exists. Contract read-back at final block 277570514 verified all six reviewers active and confirmed. The contract contains zero cases, zero held escrow and zero in-flight or unknown value. No CONTRA transaction was broadcast during this preflight.
