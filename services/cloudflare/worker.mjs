@@ -444,9 +444,23 @@ async function body(request){
 function rpc(env){return rpcAdapter({url:env.NEAR_RPC_URL,contractAccount:env.CONTRA_CONTRACT_ACCOUNT,network:'testnet',timeoutMs:Number(env.CONTRA_RPC_TIMEOUT_MS||8000)});}
 function state(env){return env.CONTRA_STATE.getByName('contra-testnet');}
 function signingAuthorised(env){
- return env.CONTRA_LIVE_SIGNING_AUTHORISED==='true'
+ return env.CONTRA_WALLET_CONFIRMATION_AUTHORISED==='true'||(
+  env.CONTRA_LIVE_SIGNING_AUTHORISED==='true'
   && Boolean(env.CONTRA_SIGNING_OPERATION_ID)
-  && /^[0-9a-f]{64}$/.test(env.CONTRA_SIGNING_PAYLOAD_HASH||'');
+  && /^[0-9a-f]{64}$/.test(env.CONTRA_SIGNING_PAYLOAD_HASH||''));
+}
+const WALLET_CONFIRMED_METHODS=new Set(['create_case','accept_terms','cancel_case','fund_case','submit_evidence','advance_round','commit_vote','reveal_vote','file_challenge','finalize_case']);
+export async function walletConfirmationAuthorised({env,adapter,account,payload,contractAccount='contra-contestation.testnet'}){
+ if(env?.CONTRA_WALLET_CONFIRMATION_AUTHORISED!=='true'||!WALLET_CONFIRMED_METHODS.has(payload?.methodName))return false;
+ if(payload.signerId!==account||payload.receiverId!==contractAccount||BigInt(payload.deposit||'-1')>10n**24n)return false;
+ const config=await adapter.view('get_config',{});let caseRecord=null,previewRecord=null,configRecord=config;
+ if(payload.args?.case_id)caseRecord=await chainCase(adapter,payload.args.case_id);
+ if(payload.methodName==='create_case')previewRecord=await adapter.view('preview_case',{creator_id:account,request_id:payload.args.request_id,terms:payload.args.terms});
+ if(payload.methodName==='confirm_reviewer')configRecord=await adapter.view('get_reviewer',{reviewer_id:account});
+ try{
+  const verified=validateWalletCall({network:'testnet',contractAccount,signerId:account,call:{method:payload.methodName,args:payload.args,deposit:payload.deposit,receiverId:payload.receiverId},caseRecord,configRecord,previewRecord});
+  return verified.payload_hash===payload.payload_hash;
+ }catch{return false;}
 }
 export async function reviewerConfirmationAuthorised({store,adapter,account,payload,contractAccount='contra-contestation.testnet'}){
  if(payload?.methodName!=='confirm_reviewer'||payload.signerId!==account||payload.receiverId!==contractAccount||payload.deposit!=='1'||payload.gas!=='30000000000000')return false;
@@ -692,9 +706,10 @@ async function api(request,env){
   const auth=await session(request,env);
   const input=await body(request),existing=await store.operation(input.operation_id);if(!existing||existing.account!==auth.account)fail('Operation not found');
   const payload=JSON.parse(existing.payload_json);
-  const exactScopedOperation=signingAuthorised(env)&&existing.id===env.CONTRA_SIGNING_OPERATION_ID&&existing.payload_hash===env.CONTRA_SIGNING_PAYLOAD_HASH&&existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT;
+  const exactScopedOperation=env.CONTRA_LIVE_SIGNING_AUTHORISED==='true'&&existing.id===env.CONTRA_SIGNING_OPERATION_ID&&existing.payload_hash===env.CONTRA_SIGNING_PAYLOAD_HASH&&existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT;
+  const walletConfirmedOperation=existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT&&await walletConfirmationAuthorised({env,adapter,account:auth.account,payload:{...payload,payload_hash:existing.payload_hash},contractAccount:env.CONTRA_CONTRACT_ACCOUNT});
   const reviewerConfirmation=existing.contract_account===env.CONTRA_CONTRACT_ACCOUNT&&await reviewerConfirmationAuthorised({store,adapter,account:auth.account,payload,contractAccount:env.CONTRA_CONTRACT_ACCOUNT});
-  if(!exactScopedOperation&&!reviewerConfirmation){
+  if(!exactScopedOperation&&!walletConfirmedOperation&&!reviewerConfirmation){
    return json({error:'The operation does not match an authorised scoped Testnet transaction'},403);
   }
   const operation=browserOperation(await store.handoffOperation(input.operation_id));

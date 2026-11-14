@@ -10,6 +10,7 @@
     "CONTRA_HOSTING_PLAN": "cloudflare-free",
     "CONTRA_HOSTING_COST_CEILING_USD": "0",
     "CONTRA_LIVE_SIGNING_AUTHORISED": "false",
+    "CONTRA_WALLET_CONFIRMATION_AUTHORISED": "true",
     "CONTRA_CONTRACT_ACCOUNT": "contra-contestation.testnet",
     "NEAR_RPC_URL": "https://test.rpc.fastnear.com",
     "CONTRA_RPC_TIMEOUT_MS": "8000",

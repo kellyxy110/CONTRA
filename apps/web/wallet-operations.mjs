@@ -1,5 +1,6 @@
-// Presentation-free wallet orchestration. Server-authorised handoff and wallet
-// custody are mandatory; recovered session tokens are never signing authority.
+// Presentation-free wallet orchestration. The server revalidates the exact
+// persisted payload and the wallet confirms every handoff. A recovered session
+// token is never transaction signing authority.
 export function createWalletOperations({
  request, getToken, getAccount, getWallet, prepareWalletTransaction,
  sendPreparedWalletTransaction, reconcileWalletTransaction, refresh=async()=>{}

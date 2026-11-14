@@ -1,7 +1,8 @@
 import {env} from 'cloudflare:workers';
 import {evictDurableObject,runInDurableObject,SELF} from 'cloudflare:test';
 import {describe,it,expect,vi} from 'vitest';
-import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords,reviewerConfirmationAuthorised,deterministicCommitteeSelection} from '../../services/cloudflare/worker.mjs';
+import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords,reviewerConfirmationAuthorised,walletConfirmationAuthorised,deterministicCommitteeSelection} from '../../services/cloudflare/worker.mjs';
+import {validateWalletCall} from '../../services/wallet/lifecycle.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
 const canonical=value=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`:JSON.stringify(value);
@@ -122,6 +123,19 @@ describe('Cloudflare durable financial state',()=>{
  it('rejects cross-origin writes and unauthenticated signing handoffs',async()=>{
   const crossOrigin=await SELF.fetch(publicOrigin+'/api/session/challenge',{method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:JSON.stringify({account:'creator.testnet'})});expect(crossOrigin.status).toBe(403);
   const handoff=await SELF.fetch(publicOrigin+'/api/wallet/handoff',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(401);expect((await handoff.json()).error).toMatch(/Authentication required/i);
+ });
+
+ it('revalidates an exact persisted payload before wallet-confirmed handoff',async()=>{
+  const caseId='4'.repeat(64),termsDigest='5'.repeat(64),record={case_id:caseId,creator_id:'creator.testnet',terms_digest:termsDigest,terms:{beneficiary_id:'beneficiary.testnet',amount_yocto:'100000000000000000000000',primary_committee:[],fresh_committee:[]}};
+  const config={owner_id:'owner.testnet',creator_allowlist:['creator.testnet']},adapter={view:async(method,args)=>method==='get_config'?config:method==='get_case'&&args.case_id===caseId?record:null};
+  const call={method:'fund_case',receiverId:'contra-contestation.testnet',args:{case_id:caseId,terms_digest:termsDigest},deposit:record.terms.amount_yocto};
+  const payload=validateWalletCall({network:'testnet',contractAccount:'contra-contestation.testnet',signerId:'creator.testnet',call,caseRecord:record,configRecord:config});
+  const runtime={CONTRA_WALLET_CONFIRMATION_AUTHORISED:'true'};
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'creator.testnet',payload})).toBe(true);
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'other.testnet',payload})).toBe(false);
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'creator.testnet',payload:{...payload,payload_hash:'6'.repeat(64)}})).toBe(false);
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'creator.testnet',payload:{...payload,methodName:'retry_payout'}})).toBe(false);
+  expect(await walletConfirmationAuthorised({env:{CONTRA_WALLET_CONFIRMATION_AUTHORISED:'false'},adapter,account:'creator.testnet',payload})).toBe(false);
  });
 
  it('keeps provider credential probes closed without operator activation authentication',async()=>{

@@ -167,6 +167,7 @@ try {
      await page.getByLabel('Claim for criterion 1').fill('Fixture claim');
      await page.getByRole('button',{name:'Store evidence'}).click();
      await page.getByText('Stored off-chain:',{exact:false}).waitFor();
+     assert.equal(await page.locator('[data-workspace-case="true"]').count(),1);
      assert.equal(await page.getByRole('button',{name:'Sign evidence submission'}).count(),0);
      await navigate('#cases');
      await page.getByLabel('Search cases').fill(cases[0].case_id.slice(0,16));

@@ -1,6 +1,12 @@
 # Cloudflare Free deployment and recovery
 
-Status: publicly deployed with live signing disabled. The machine-readable execution record is [`config/m09-cloudflare-authority-proposal.json`](../../config/m09-cloudflare-authority-proposal.json).
+Status: publicly deployed with exact wallet-confirmed Testnet signing enabled and server-side transaction dispatch disabled. The machine-readable execution record is [`config/m09-cloudflare-authority-proposal.json`](../../config/m09-cloudflare-authority-proposal.json).
+
+## Browser wallet transaction boundary
+
+Production may expose wallet-confirmed signing without a per-operation Worker redeployment when `CONTRA_WALLET_CONFIRMATION_AUTHORISED=true`. This does not grant the application custody or general signing authority. Before every handoff, the Worker reloads the persisted operation, checks the authenticated account, revalidates the exact payload against current Testnet contract state, enforces the contract destination and method allowlist, and limits the attached deposit to at most 1 NEAR. The wallet must then display and approve that exact transaction.
+
+`retry_payout`, reviewer administration and storage sponsorship remain excluded from this browser-confirmed path. UNKNOWN operations remain locked and cannot be redispatched. The legacy digest-scoped environment gate remains available for exceptional, separately authorised operations.
 
 Public origin: `https://contra-near.pages.dev`. Pages project: `contra-near`. Verified Pages deployment: `88bd4a69.contra-near.pages.dev`. Verified backend Worker version: `7134221e-6ee1-477d-9352-6a52ea841db5`. Wrangler authenticated the verified owner account locally. Its personal login identifier is omitted from active public metadata. The credential remains encrypted locally and was not printed or committed. The current OAuth grant is not represented as a dedicated least-privilege API token.
 
