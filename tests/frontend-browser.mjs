@@ -240,6 +240,7 @@ try {
      await page.getByRole('button',{name:'Decline',exact:true}).click();
      await page.getByText('Invitation response: WITHDRAWN.',{exact:true}).waitFor();
      assert.equal(await page.getByRole('button',{name:'Consent',exact:true}).count(),0);
+     assert.equal(await page.getByRole('button',{name:'Restore consent',exact:true}).count(),1);
      await navigate('#overview');
      await navigate('#reviewers');
      await page.getByRole('button',{name:'Encrypt recovery package and commit'}).waitFor();

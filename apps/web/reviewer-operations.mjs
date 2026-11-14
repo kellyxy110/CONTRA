@@ -19,6 +19,13 @@ export async function signReviewerConsent({post,wallet,invitation,reviewerId,inp
  if(signed.accountId!==reviewerId)throw Error('Reviewer control signature account does not match the invitation.');
  return post('reviewer/respond',{digest:invitation.digest,reviewer_id:reviewerId,status:'CONSENTED',body:statement,control_challenge_id:challenge.id,publicKey:signed.publicKey,control_signature:signed.signature});
 }
+export async function restoreReviewerConsent({post,wallet,invitation,reviewerId,statement}) {
+ if(!wallet?.signMessage)throw Error('Reconnect a NEP-413 wallet before restoring consent.');
+ const challenge=await post('reviewer/control-challenge',{invitation_digest:invitation.digest,statement});
+ const signed=await wallet.signMessage({message:challenge.message,nonce:Uint8Array.from(atob(challenge.nonce),value=>value.charCodeAt(0)),recipient:challenge.recipient});
+ if(signed.accountId!==reviewerId)throw Error('Reviewer control signature account does not match the invitation.');
+ return post('reviewer/respond',{digest:invitation.digest,reviewer_id:reviewerId,status:'CONSENTED',body:statement,control_challenge_id:challenge.id,publicKey:signed.publicKey,control_signature:signed.signature});
+}
 export async function signCommitteeAssignment({post,wallet,invitation,reviewerId,assignment,selectionDigest}) {
  if(!wallet?.signMessage)throw Error('Reconnect a NEP-413 wallet before acknowledging the committee assignment.');
  const statement={schema:'CONTRA_COMMITTEE_ASSIGNMENT_V1',reviewer_id:reviewerId,invitation_digest:invitation.digest,registry_selection_digest:selectionDigest,committee:assignment.committee,slot:assignment.slot};

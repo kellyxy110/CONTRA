@@ -6,7 +6,7 @@ import {storeCounterexample, challengeEligibility, fileChallenge} from './challe
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {submitDevelopmentFixture} from './evaluation-operations.mjs';
 import {mountConstellations} from './constellations.mjs';
-import {commitReviewerVote,revealReviewerVote,respondToInvitation,signCommitteeAssignment,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
+import {commitReviewerVote,revealReviewerVote,respondToInvitation,restoreReviewerConsent,signCommitteeAssignment,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 import {createReviewRecoveryPackage,recoverReviewReveal,reviewPackageBody} from './review-package.mjs';
 
@@ -321,7 +321,7 @@ async function reviewerInvitations(panel) {
    item.append(element('p',`${invitation.committee} · Slot ${invitation.slot} · ${invitation.status}`));
    const expires=Number(invitation.expires);
    item.append(element('p',`Expires: ${new Date(expires).toLocaleString('en-GB')}`));
-   if(invitation.reviewer_id===identity && expires>Date.now() && ['INVITED','CONSENTED'].includes(invitation.status)){
+   if(invitation.reviewer_id===identity && expires>Date.now() && ['INVITED','CONSENTED','WITHDRAWN'].includes(invitation.status)){
     let consentInput=null;
     if(invitation.status==='INVITED'){
      consentInput=document.createElement('form');
@@ -333,10 +333,11 @@ async function reviewerInvitations(panel) {
      const conflicts=element('label','Conflicts, one per line'),conflictInput=document.createElement('textarea');conflictInput.name='conflicts';conflicts.append(conflictInput);consentInput.append(conflicts);
      item.append(consentInput);
     }
-    for(const [label,status] of (invitation.status==='INVITED'?[['Consent','CONSENTED'],['Decline','WITHDRAWN']]:[['Withdraw consent','WITHDRAWN']])){
+    const priorConsent=[...events].reverse().find(event=>event.invitation_digest===invitation.digest&&event.status==='CONSENTED');
+    for(const [label,status] of (invitation.status==='INVITED'?[['Consent','CONSENTED'],['Decline','WITHDRAWN']]:invitation.status==='WITHDRAWN'?[['Restore consent','RESTORE']]:[['Withdraw consent','WITHDRAWN']])){
      const button=element('button',label);
      button.type='button';
-     if(status==='CONSENTED'&&!wallet){button.disabled=true;button.title='Reconnect the invited wallet to sign reviewer control.';}
+     if(['CONSENTED','RESTORE'].includes(status)&&!wallet){button.disabled=true;button.title='Reconnect the invited wallet to sign reviewer control.';}
      item.append(button);
      button.addEventListener('click',async()=>{
       const buttons=[...item.querySelectorAll('button')];
@@ -345,7 +346,10 @@ async function reviewerInvitations(panel) {
        if(account!==identity||!token||expires<=Date.now())throw Error('This invitation is no longer actionable.');
        const values=status==='CONSENTED'?Object.fromEntries(new FormData(consentInput).entries()):null;
        const disclosure=status==='CONSENTED'?await storeReviewerDisclosure(post,invitation,identity,values):null;
-       const saved=status==='CONSENTED'
+       let priorStatement=null;try{priorStatement=typeof priorConsent?.body==='string'?JSON.parse(priorConsent.body):priorConsent?.body}catch{}
+       const saved=status==='RESTORE'
+        ?await restoreReviewerConsent({post,wallet,invitation,reviewerId:identity,statement:priorStatement})
+        :status==='CONSENTED'
         ?await signReviewerConsent({post,wallet,invitation,reviewerId:identity,input:{...values,operator_id:invitation.operator_id,disclosure_digest:disclosure.digest}})
         :await respondToInvitation(post,invitation.digest,identity,status);
        feedback.textContent=`Invitation response: ${saved.status}.`;

@@ -319,7 +319,13 @@ export class ContraState extends DurableObject{
  }
 
  respondReviewer({digest,reviewer_id,status,body}){
-  const invitation=row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));if(!invitation||invitation.reviewer_id!==reviewer_id)fail('Reviewer invitation not found');if(invitation.expires<=Date.now())fail('Reviewer invitation expired');if(!['CONSENTED','WITHDRAWN'].includes(status))fail('Reviewer response is invalid');if(invitation.status==='WITHDRAWN'||invitation.status==='FROZEN')fail('Reviewer invitation is immutable in its current state');const now=Date.now(),encoded=canonical(body||{});
+  const invitation=row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));if(!invitation||invitation.reviewer_id!==reviewer_id)fail('Reviewer invitation not found');if(invitation.expires<=Date.now())fail('Reviewer invitation expired');if(!['CONSENTED','WITHDRAWN'].includes(status))fail('Reviewer response is invalid');if(invitation.status==='FROZEN')fail('Reviewer invitation is immutable in its current state');const now=Date.now(),encoded=canonical(body||{});
+  if(invitation.status==='WITHDRAWN'){
+   if(status!=='CONSENTED')fail('Reviewer invitation is immutable in its current state');
+   const prior=row(this.ctx.storage.sql.exec("SELECT body FROM reviewer_events WHERE invitation_digest=? AND reviewer_id=? AND status='CONSENTED' ORDER BY seq DESC LIMIT 1",digest,reviewer_id));
+   if(!prior||prior.body!==encoded)fail('Withdrawn consent can only be restored with the exact previously signed control statement');
+   this.ctx.storage.sql.exec("UPDATE reviewer_invitations SET status='CONSENTED' WHERE digest=?",digest);this.ctx.storage.sql.exec("INSERT INTO reviewer_events(invitation_digest,reviewer_id,status,body,observed_at) VALUES(?,?,'CONSENTED',?,?)",digest,reviewer_id,encoded,now);return row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));
+  }
   if(status==='CONSENTED'&&body?.operator_id!==invitation.operator_id)fail('Reviewer control statement operator does not match the invitation');
   if(invitation.status==='CONSENTED'){const prior=row(this.ctx.storage.sql.exec("SELECT body FROM reviewer_events WHERE invitation_digest=? AND status='CONSENTED' ORDER BY seq DESC LIMIT 1",digest));if(status==='CONSENTED'&&prior?.body===encoded)return {...invitation,replayed:true};if(status==='CONSENTED')fail('A consented reviewer statement cannot be replaced');}
   this.ctx.storage.sql.exec('UPDATE reviewer_invitations SET status=? WHERE digest=?',status,digest);this.ctx.storage.sql.exec('INSERT INTO reviewer_events(invitation_digest,reviewer_id,status,body,observed_at) VALUES(?,?,?,?,?)',digest,reviewer_id,status,encoded,now);return row(this.ctx.storage.sql.exec('SELECT * FROM reviewer_invitations WHERE digest=?',digest));
