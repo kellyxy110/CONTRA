@@ -352,5 +352,5 @@ The final engineering release is deployed. The next executable work is the indep
 
 # Immediate next action, 14 November 2026
 
-Beneficiary acceptance and exact 0.1 Testnet NEAR funding are complete and final. Prepare the immutable evidence record and a separate beneficiary-signed `submit_evidence` operation before the contract deadline. Keep signing disabled until its exact operation identity, payload hash and authority digest are approved. Do not infer authority from funding for evidence, review, challenge or settlement.
+Beneficiary acceptance and exact 0.1 Testnet NEAR funding are complete and final. Immutable evidence digest `f3d8882feb17e0b16c8b8dd4e598ff7234a04951c772ebba208521578ed2a508` is stored, and the beneficiary prepared exact operation `contra-submit_evidence-e6bb304c52aeb9b0251b052c` with payload hash `ab276d45e73f8fddc131f62b9eb5af62841671cc79e174cec49956471a623f90`. Obtain explicit approval for authority digest `281805c7781860cca93cd4627b5147ab940e6961d0516ddcb24e83cba107903b`, then allow the beneficiary to inspect and sign it once. Do not infer authority for evaluation, review, challenge or settlement.
 
