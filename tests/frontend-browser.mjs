@@ -148,7 +148,7 @@ try {
      });
      await page.route('**/api/artifact?*',route=>route.fulfill({json:{digest:'a'.repeat(64),media_type:'application/json',text:'{"schema":"CONTRA_EVIDENCE_V1"}'}}));
      await page.route('**/api/counterexample',route=>{const input=route.request().postDataJSON();assert.equal(input.case_id,cases[1].case_id);return route.fulfill({status:201,json:{digest:'c'.repeat(64)}});});
-     await page.route('**/api/operation?*',route=>{const id=new URL(route.request().url()).searchParams.get('id');return route.fulfill({json:id==='pending-operation'?{operation_id:id,status:'PENDING',tx_hash:'11111111111111111111111111111111'}:{operation_id:id,status:'UNKNOWN',tx_hash:null}});});
+     await page.route('**/api/operation?*',route=>{const id=new URL(route.request().url()).searchParams.get('id'),identity={operation_id:id,account:'browser-fixture.testnet',payload_hash:'a'.repeat(64),contract_account:'contra-contestation.testnet'};return route.fulfill({json:id==='pending-operation'?{...identity,status:'PENDING',tx_hash:'11111111111111111111111111111111'}:{...identity,status:'UNKNOWN',tx_hash:null}});});
      await page.route('**/api/wallet/reconcile',route=>route.fulfill({json:{operation_id:'pending-operation',status:'CONFIRMED',tx_hash:'11111111111111111111111111111111'}}));
      await page.reload();
      await page.locator('#case').selectOption(cases[0].case_id,{force:true});
@@ -285,7 +285,7 @@ try {
       }
       if(title==='Settlement'){
        const operation=page.getByLabel('Operation ID');
-       await operation.fill('locked-operation');await page.getByRole('button',{name:'Inspect operation'}).click();await page.getByText('The transaction hash is unknown. This operation remains locked.',{exact:true}).waitFor();
+       await operation.fill('locked-operation');await page.getByRole('button',{name:'Inspect operation'}).click();await page.getByText('The transaction hash is unknown. This operation remains locked.',{exact:true}).waitFor();await page.getByText('Payload hash',{exact:true}).waitFor();
        await operation.fill('pending-operation');await page.getByRole('button',{name:'Inspect operation'}).click();await page.getByRole('button',{name:'Reconcile with chain'}).click();await page.getByText('Operation status: CONFIRMED',{exact:true}).waitFor();
       }
       if(title==='Settings'){

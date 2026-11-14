@@ -731,6 +731,12 @@ function settlementTools(panel) {
   const operation = await inspectOperation(request,id);
   const state = operationRecoveryState(operation);
   result.textContent = `Operation status: ${operation.status ?? 'Unavailable'}`;
+  const identity=element('dl','operation-identity');
+  for(const [label,value] of [['Operation ID',operation.operation_id||operation.id],['Account',operation.account],['Payload hash',operation.payload_hash],['Contract',operation.contract_account]]){
+   if(!value)continue;
+   identity.append(element('dt',label),element('dd',String(value)));
+  }
+  result.append(identity);
   if (state.locked) result.append(element('p','The transaction hash is unknown. This operation remains locked.'));
   if (!state.canReconcile) return;
   const reconcile = element('button','Reconcile with chain');
