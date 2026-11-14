@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-14 | Evidence submitted and reconciled
+
+The independently controlled beneficiary signed transaction `HRoBPKBciBkpWS5ZqcL4ngc195WhmwKwZ6aPS5Xvn4Bm` for the exact approved manifest. Worker reconciliation reported `CONFIRMED`; final RPC reports state `Submitted`, revision 4 and evidence digest `f3d8882feb17e0b16c8b8dd4e598ff7234a04951c772ebba208521578ed2a508`. No retry occurred. The live-signing gate was disabled and its scoped secrets were removed.
+
 ## 2026-11-14 | Exact principal funded
 
 After explicit approval of digest `6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358`, the Worker released only the persisted `fund_case` request. The Windows Credential Manager creator key signed transaction `DBC1iLae4W94vyLCdTNCrxZgJtZyTzeXFNXuYUYDvB5P`, which reached final explicit success. Worker and independent RPC reconciliation agree that the case is `Funded` with exactly 0.1 Testnet NEAR held. No retry occurred. The signing gate is false and its scoped secrets are absent.

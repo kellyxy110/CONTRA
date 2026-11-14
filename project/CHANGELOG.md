@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-14 | Exact evidence submission
+
+- Reconciled final success for the beneficiary-signed `submit_evidence` transaction.
+- Verified the exact immutable manifest digest and `Submitted` case state at revision 4.
+- Closed live signing and removed all scoped operation secrets.
+- Separated each evidence digest and its action into a responsive, accessible record layout.
+
 ## 2026-11-14 | Exact Testnet principal funding
 
 - Executed the owner-approved, payload-bound `fund_case` operation exactly once.

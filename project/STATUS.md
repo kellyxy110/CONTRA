@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Phase 3 evidence submitted, 14 November 2026
+
+The independently controlled beneficiary signed the exact evidence operation approved by digest `281805c7781860cca93cd4627b5147ab940e6961d0516ddcb24e83cba107903b`. Transaction `HRoBPKBciBkpWS5ZqcL4ngc195WhmwKwZ6aPS5Xvn4Bm` reached final `SuccessValue`. Final contract read-back reports state `Submitted`, evidence digest `f3d8882feb17e0b16c8b8dd4e598ff7234a04951c772ebba208521578ed2a508` and revision 4. Total transaction and receipt gas burn was `1725427156200400000000` yoctoNEAR. The live-signing gate is false and all scoped secrets are absent.
+
 ## Phase 3 exact principal funding, 14 November 2026
 
 The owner approved funding authority digest `6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358`. Final preflight verified the exact prepared payload, creator key, accepted unfunded case, 0.1 Testnet NEAR deposit and unexpired authority. Transaction `DBC1iLae4W94vyLCdTNCrxZgJtZyTzeXFNXuYUYDvB5P` reached final `SuccessValue`. Worker reconciliation returned `CONFIRMED`, and independent final RPC read-back reports state `Funded`, principal bucket `HELD`, exactly `100000000000000000000000` yoctoNEAR funded and revision 3. Total transaction and receipt gas burn was `1722343794096700000000` yoctoNEAR. The live-signing gate was immediately disabled and all three operation-specific secrets were removed.
