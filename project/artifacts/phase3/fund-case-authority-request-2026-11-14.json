@@ -16,8 +16,8 @@
   "authorises_funding": true,
   "authorises_other_methods": false,
   "authority_digest": "6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358",
-  "owner_approval": null,
-  "signing_request_released": false,
-  "transaction_hash": null,
+  "owner_approval": "I approve operation authority digest 6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358",
+  "signing_request_released": true,
+  "transaction_hash": "DBC1iLae4W94vyLCdTNCrxZgJtZyTzeXFNXuYUYDvB5P",
   "notice": "Approval would authorise exactly 0.1 Testnet NEAR principal funding for this accepted case. It does not authorise evidence submission, review, challenge, settlement or any other transaction."
 }

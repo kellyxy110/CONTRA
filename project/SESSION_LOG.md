@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-14 | Exact principal funded
+
+After explicit approval of digest `6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358`, the Worker released only the persisted `fund_case` request. The Windows Credential Manager creator key signed transaction `DBC1iLae4W94vyLCdTNCrxZgJtZyTzeXFNXuYUYDvB5P`, which reached final explicit success. Worker and independent RPC reconciliation agree that the case is `Funded` with exactly 0.1 Testnet NEAR held. No retry occurred. The signing gate is false and its scoped secrets are absent.
+
 ## 2026-11-14 | Beneficiary acceptance confirmed
 
 Transaction `3RCimJuPMpv5Yw2ftFeXRw7vQNcabFJzHnqZzu3CHTTt` reached final explicit success for `contra-beneficiary2.testnet` calling `accept_terms` on the exact Phase 3 case. Independent final RPC read-back confirmed beneficiary acceptance, revision 2 and zero principal funding. The signing gate was closed immediately after reconciliation.

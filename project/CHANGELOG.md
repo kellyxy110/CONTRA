@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-11-14 | Exact Testnet principal funding
+
+- Executed the owner-approved, payload-bound `fund_case` operation exactly once.
+- Reconciled transaction `DBC1iLae4W94vyLCdTNCrxZgJtZyTzeXFNXuYUYDvB5P` as final explicit success.
+- Verified the held principal is exactly 0.1 Testnet NEAR and case revision is 3.
+- Closed live signing and removed the operation ID, payload hash and expiry secrets after confirmation.
+
 ## 2026-11-14 | Beneficiary acceptance and funding preparation
 
 - Reconciled final Testnet success for the independently signed beneficiary `accept_terms` transaction.

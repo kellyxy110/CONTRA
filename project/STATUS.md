@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Phase 3 exact principal funding, 14 November 2026
+
+The owner approved funding authority digest `6f9df04b47fd48c0a9e00e042219b171d9d82b10cbacf29f74e2e25c33d70358`. Final preflight verified the exact prepared payload, creator key, accepted unfunded case, 0.1 Testnet NEAR deposit and unexpired authority. Transaction `DBC1iLae4W94vyLCdTNCrxZgJtZyTzeXFNXuYUYDvB5P` reached final `SuccessValue`. Worker reconciliation returned `CONFIRMED`, and independent final RPC read-back reports state `Funded`, principal bucket `HELD`, exactly `100000000000000000000000` yoctoNEAR funded and revision 3. Total transaction and receipt gas burn was `1722343794096700000000` yoctoNEAR. The live-signing gate was immediately disabled and all three operation-specific secrets were removed.
+
 ## Phase 3 beneficiary acceptance and funding preparation, 14 November 2026
 
 The independently controlled beneficiary signed the exact `accept_terms` operation. Transaction `3RCimJuPMpv5Yw2ftFeXRw7vQNcabFJzHnqZzu3CHTTt` reached final `SuccessValue` with signer `contra-beneficiary2.testnet`, receiver `contra-contestation.testnet`, one yoctoNEAR attached deposit and the approved immutable case identity. Final contract read-back reports `beneficiary_accepted: true`, case revision 2, state `Draft` and zero funded principal. The operation-specific signing gate was disabled and its secrets removed after reconciliation.
