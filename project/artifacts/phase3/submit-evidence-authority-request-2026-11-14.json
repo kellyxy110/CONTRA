@@ -17,7 +17,7 @@
   "authorises_funding": false,
   "authorises_other_methods": false,
   "authority_digest": "281805c7781860cca93cd4627b5147ab940e6961d0516ddcb24e83cba107903b",
-  "owner_approval": null,
+  "owner_approval": "I approve operation authority digest 281805c7781860cca93cd4627b5147ab940e6961d0516ddcb24e83cba107903b",
   "signing_request_released": false,
   "transaction_hash": null,
   "notice": "Approval would authorise only the independently controlled beneficiary to submit this exact immutable evidence digest with one yoctoNEAR. It does not authorise evaluation, reviewer actions, challenge or settlement."
