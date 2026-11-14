@@ -52,6 +52,8 @@ test('wallet prepare retains bounded create_case and signing remains fail closed
  await assert.rejects(ops.signCall('create_case',{request_id:'req'},'1'),/contra-create_case-req.*prepared.*authority gate/);
  assert.equal(observed.length,2);
  assert.equal(observed[1][1].operationId,'contra-create_case-req');
+ const reviewerOps=createWalletOperations({request,getToken:()=> 'token',getAccount:()=> 'appeal2.testnet',getWallet:()=>({}),prepareWalletTransaction:async input=>({operation:{operation_id:input.operationId}}),sendPreparedWalletTransaction:async()=>({transactionHash:'hash'}),reconcileWalletTransaction:async()=>({status:'CONFIRMED'})});
+ await assert.rejects(reviewerOps.signCall('commit_vote',{case_id:'a'.repeat(64),round_id:0,commitment:'b'.repeat(64)},'0'),/contra-commit_vote-aaaaaaaaaaaaaaaaaaaaaaaa-appeal2-testnet-r0.*signing is disabled/);
  authorized=true;
  const result=await ops.signCall('create_case',{request_id:'req'},'1',{operation_id:'op'});
  assert.equal(result.transaction_hash,'hash');assert.equal(result.operation.status,'CONFIRMED');

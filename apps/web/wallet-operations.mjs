@@ -4,9 +4,12 @@ export function createWalletOperations({
  request, getToken, getAccount, getWallet, prepareWalletTransaction,
  sendPreparedWalletTransaction, reconcileWalletTransaction, refresh=async()=>{}
 }) {
- function stableOperationId(method,args){
+ function stableOperationId(method,args,accountId){
   const anchor=args?.case_id||args?.request_id||args?.reviewer_id||args?.disclosure_digest||'operation';
-  return `contra-${method}-${String(anchor).replace(/[^a-zA-Z0-9-]/g,'').slice(0,24)}`;
+  const base=`contra-${method}-${String(anchor).replace(/[^a-zA-Z0-9-]/g,'').slice(0,24)}`;
+  if(!['commit_vote','reveal_vote'].includes(method))return base;
+  const reviewer=String(accountId||'reviewer').replace(/[^a-zA-Z0-9-]/g,'-').slice(0,24);
+  return `${base}-${reviewer}-r${args.round_id}`;
  }
  async function prepareCase(args) {
   const token=getToken(),accountId=getAccount();
@@ -24,7 +27,7 @@ export function createWalletOperations({
   const config=await request('config');
   const scopedReviewerConfirmation=method==='confirm_reviewer'&&config.reviewer_confirmation_signing_authorized===true;
   if(config.network!=='testnet')throw Error('Live Testnet wallet signing is unavailable on this network.');
-  const operation=preparedOperation||(await prepareWalletTransaction({token,accountId,operationId:stableOperationId(method,args),call:{
+  const operation=preparedOperation||(await prepareWalletTransaction({token,accountId,operationId:stableOperationId(method,args,accountId),call:{
    method,args,deposit,receiverId:config.contract_account
   }})).operation;
   if(!config.external_wallet_signing_authorized&&!scopedReviewerConfirmation)

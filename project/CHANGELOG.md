@@ -4,6 +4,7 @@
 
 - Restored the reviewer commitment control from durable human-finding or encrypted-package records after navigation and reload recovery.
 - Showed the reveal control only after a recovery package exists, removing the misleading reveal-only state observed during the live primary review.
+- Scoped reviewer commitment and reveal operation identifiers by reviewer account and round to prevent different committee members from colliding on one durable operation identity.
 - Verified the behaviour across the complete Chromium and Firefox browser matrix.
 
 ## 2026-11-14 | Exact evidence submission
