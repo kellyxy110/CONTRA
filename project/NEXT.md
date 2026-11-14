@@ -1,6 +1,6 @@
 # Next execution task
 
-Current action: deploy the contract-derived committee acknowledgement control. Each reviewer must connect at `https://contra-near.pages.dev/#reviewers` and sign the exact role selected by the registry: `appeal.testnet`, `appeal2.testnet`, `appeal3.testnet` are primary; `primary1.testnet`, `primary2.testnet`, `primary3.testnet` are fresh appeal. Require all six immutable acknowledgements before freezing case terms or preparing `create_case`.
+Current action: preserve the verified settled BASE_REFUND journey and its provider artifacts, then prepare a separate exact challenged-journey packet. Do not reuse any completed operation identity or reopen the disabled signing gate. The challenged journey must have fresh terms, evidence, counterevidence, operation-specific authorities, primary and fresh votes, finalised settlement and exact balance reconciliation before it can be marked complete.
 
 ## Current execution unit | Phase 3 external identities and exact live authority
 

@@ -1,0 +1,29 @@
+{
+  "schema": "CONTRA_OPERATION_AUTHORITY_V1",
+  "network": "testnet",
+  "operation_id": "wallet-f77abf56-380f-43e6-9a59-2e10208943e3",
+  "operation_status": "PREPARED",
+  "payload_hash": "6ca919ff44c372c3247546e7bcb577dfc172938a5c321c029e17a82055005390",
+  "signer_id": "appeal3.testnet",
+  "receiver_id": "contra-contestation.testnet",
+  "method": "finalize_case",
+  "attached_deposit_yocto": "0",
+  "case_id": "e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278",
+  "expected_resolution_basis": "BASE_REFUND",
+  "expected_recipient_id": "contra-creator.testnet",
+  "expected_principal_yocto": "100000000000000000000000",
+  "expires_at": "2026-11-14T17:00:00Z",
+  "authorises_handoff": true,
+  "authorises_broadcast": true,
+  "authorises_funding": false,
+  "authorises_other_methods": false,
+  "authority_digest_algorithm": "sha256-canonical-json-without-authority-metadata",
+  "authority_digest": "0400510d05db308eb95e1c406f89f240dcd2ce2fdf924e43d01c9a5198c9f5e1",
+  "owner_approval": {
+    "approved_at": "2026-11-14T13:32:00Z",
+    "statement": "I approve operation authority digest 0400510d05db308eb95e1c406f89f240dcd2ce2fdf924e43d01c9a5198c9f5e1"
+  },
+  "signing_request_released": true,
+  "transaction_hash": "GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk",
+  "notice": "Authorises only appeal3.testnet to call finalize_case with zero attached deposit for this unresolved case. The contract must apply BASE_REFUND and transfer the held 0.1 NEAR principal to contra-creator.testnet through its authenticated payout callback."
+}

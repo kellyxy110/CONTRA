@@ -19,8 +19,9 @@
     "backup:storage": "node scripts/backup-storage.mjs",
     "judge:local": "node scripts/run-judge-quickstart.mjs",
     "build:cloudflare": "node scripts/build-cloudflare-static.mjs",
+    "deploy:cloudflare": "npm run build:cloudflare && wrangler deploy && cd pages && wrangler pages deploy ../dist/cloudflare-static --project-name contra-near --branch main --commit-dirty=true",
     "test:cloudflare": "vitest run --config vitest.config.mjs",
-    "check:cloudflare": "npm run build:cloudflare && wrangler deploy --dry-run --outdir dist/cloudflare-worker",
+    "check:cloudflare": "npm run build:cloudflare && node scripts/check-cloudflare-release.mjs && wrangler deploy --dry-run --outdir dist/cloudflare-worker",
     "test:m09:wallet-authority": "node --test tests/m09-wallet-authority.test.mjs",
     "test:m10:live": "node --test tests/m10-live-contestation.test.mjs",
     "test:phase3:invitations": "node --test tests/phase3-reviewer-invitations.test.mjs"

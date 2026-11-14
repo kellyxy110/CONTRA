@@ -128,8 +128,8 @@ try {
      cases[0].creator_id='browser-fixture.testnet';
      cases[0].terms={...cases[0].terms,criteria:[{criterion_id:1,kind:'KEYBOARD',requirement_digest:'8'.repeat(64)}]};
      cases[1].creator_id='browser-fixture.testnet';cases[1].state='Provisional';
-     await page.addInitScript(()=>sessionStorage.setItem('contra-session','browser-fixture'));
-     await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet'}}));
+     await page.addInitScript(()=>localStorage.setItem('contra-auth-session-v1',JSON.stringify({token:'browser-fixture',account:'browser-fixture.testnet',expires:Date.now()+7*24*60*60*1000})));
+     await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet',expires:Date.now()+7*24*60*60*1000}}));
      await page.route('**/api/session/renew',route=>route.fulfill({json:{token:'browser-fixture-renewed',account:'browser-fixture.testnet',expires:Date.now()+3600000}}));
      await page.route('**rpc.testnet.near.org**',route=>route.fulfill({headers:{'Access-Control-Allow-Origin':'*'},json:{jsonrpc:'2.0',result:{amount:'2750000000000000000000000',block_height:42,block_hash:'BLOCK42'}}}));
      await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:false}}));

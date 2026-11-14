@@ -1,5 +1,9 @@
 # Decision ledger
 
+## D-115 | Retrospective provider evidence remains non-binding | 2026-11-14
+
+The live Meta proposal and Modal verification are retained as evidence that the provider boundary works against immutable case data. Because the case had already settled through BASE_REFUND, neither artifact is represented as an input to the contract verdict. The provider path cannot create reviewer commitments, alter settlement or reopen a completed case.
+
 ## D-114 | Committee role follows the contract registry | 2026-11-13
 
 Reviewer invitation labels do not override the deployed contract's deterministic ASCII account ordering. When that ordering conflicts with an earlier invitation label, preserve the signed invitation and require a separate NEP-413 acknowledgement of the exact contract-derived role. Never silently relabel consent and never prepare a case until all six reviewers acknowledge the actual primary or fresh assignment.

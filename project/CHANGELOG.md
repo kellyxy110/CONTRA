@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-14 | Live settlement and provider verification
+
+- Verified final Testnet settlement transaction `GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk`, callback success and exact 0.1 NEAR BASE_REFUND recipient.
+- Disabled the operation-specific signing gate immediately after confirmation.
+- Corrected Muse Spark reasoning-token exhaustion, accepted its current structured response envelope and retained strict finding validation.
+- Corrected the Modal request allowlist and retry identity without weakening UNKNOWN job locks.
+- Retained Meta proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d` and Modal verification `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427` as non-binding retrospective artifacts.
+- Repository tests passed 185 of 185 and Cloudflare tests passed 22 of 22.
+
 ## 2026-11-13 | Signed committee-assignment acknowledgement
 
 - Added a finalised-registry committee readiness route.

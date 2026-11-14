@@ -7,6 +7,8 @@ export function createApiClient(getToken, fetchImpl = fetch, {timeoutMs = 15000}
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
    const response = await fetchImpl(`/api/${path}`, {...options, headers, signal:controller.signal});
+   const contentType=response.headers.get('content-type')||'';
+   if(!contentType.toLowerCase().includes('application/json'))throw Error(`The CONTRA API returned ${contentType||'an unknown content type'} instead of JSON. Refresh after the deployment finishes.`);
    const body = await response.json();
    if (!response.ok) throw Error(body.error || `HTTP ${response.status}`);
    return body;

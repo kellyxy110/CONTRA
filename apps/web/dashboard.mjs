@@ -9,11 +9,13 @@ import {mountConstellations} from './constellations.mjs';
 import {commitReviewerVote,revealReviewerVote,respondToInvitation,signCommitteeAssignment,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 import {createReviewRecoveryPackage,recoverReviewReveal,reviewPackageBody} from './review-package.mjs';
+import {readPersistentSession,writePersistentSession,clearPersistentSession,saveWorkspaceDraft,restoreWorkspaceDraft} from './browser-state.mjs';
 
 const byId = id => document.getElementById(id);
 const routes = {overview:'Overview',cases:'Cases',evidence:'Evidence',lab:'Evaluations',challenges:'Challenges',reviewers:'The Bench',settlement:'Settlement',constellations:'Constellations',activity:'Activity',settings:'Settings'};
-let token = sessionStorage.getItem('contra-session');
-let sessionExpires = Number(sessionStorage.getItem('contra-session-expires')) || 0;
+const recoveredBrowserSession=readPersistentSession();
+let token = recoveredBrowserSession?.token||null;
+let sessionExpires = recoveredBrowserSession?.expires||0;
 const {request, view} = createApiClient(() => token);
 const post = (path, body) => request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 let cases = [], caseRequest = 0;
@@ -297,30 +299,36 @@ const brandMark=document.querySelector('.brand svg').cloneNode(true);
 brandMark.classList.add('statement-mark');
 document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
-let account = null;
+let account = recoveredBrowserSession?.account||null;
 let wallet = null;
 let walletId = null;
 let renewalTimer = null;
+let activeDraftContext=null;
+
+function currentDraftContext(){return {route:location.hash.slice(1).split('/')[0]||'overview',account:account||'anonymous',caseId:byId('case')?.value||'none'};}
+const workspaceRoot=byId('workspace');
+workspaceRoot.addEventListener('input',()=>activeDraftContext&&saveWorkspaceDraft(workspaceRoot,activeDraftContext));
+workspaceRoot.addEventListener('change',()=>activeDraftContext&&saveWorkspaceDraft(workspaceRoot,activeDraftContext));
+const draftObserver=new MutationObserver(()=>{if(activeDraftContext)queueMicrotask(()=>restoreWorkspaceDraft(workspaceRoot,activeDraftContext));});
+draftObserver.observe(workspaceRoot,{childList:true,subtree:true});
 
 function persistSession(session) {
  token=session.token;
  account=session.account;
  sessionExpires=Number(session.expires)||0;
- sessionStorage.setItem('contra-session',token);
- if(sessionExpires)sessionStorage.setItem('contra-session-expires',String(sessionExpires));
+ writePersistentSession({token,account,expires:sessionExpires});
  scheduleSessionRenewal();
 }
 function clearSession() {
  token=null;account=null;sessionExpires=0;
- sessionStorage.removeItem('contra-session');
- sessionStorage.removeItem('contra-session-expires');
+ clearPersistentSession();
  clearTimeout(renewalTimer);
  renewalTimer=null;
 }
 function scheduleSessionRenewal() {
  clearTimeout(renewalTimer);
  if(!token||!sessionExpires)return;
- const delay=Math.max(1000,sessionExpires-Date.now()-5*60*1000);
+ const delay=Math.max(1000,sessionExpires-Date.now()-24*60*60*1000);
  renewalTimer=setTimeout(()=>void renewSessionProactively(),delay);
 }
 async function renewSessionProactively() {
@@ -488,7 +496,7 @@ async function evaluationTools(panel, config) {
   const list=element('ul','');
   for(const job of jobs){
    if(caseId && job.case_id!==caseId)continue;
-   const item=element('li',`${job.provider} · ${job.status} · Response digest: ${job.response_digest ?? 'Unavailable'}`);
+   const item=element('li',`${job.provider} · ${job.status} · Response digest: ${job.response_digest ?? 'Unavailable'}${job.error?` · ${job.error}`:''}`);
    const inspect=element('button','Inspect evaluation result');
    const result=element('div','');
    result.setAttribute('role','status');
@@ -538,11 +546,11 @@ async function evaluationTools(panel, config) {
  }
  if(caseId&&config.providers?.meta?.status==='READY'){
   const form=element('form',''),roleLabel=element('label','Evaluation role'),role=element('select','');role.name='role';for(const value of ['primary','adversarial','fresh'])role.append(new Option(readable(value),value));roleLabel.append(role);const roundLabel=element('label','Round'),round=element('select','');round.name='round_id';round.append(new Option('Primary','0'),new Option('Fresh','1'));roundLabel.append(round);const submit=element('button','Run bounded Meta evaluation'),result=element('div','');result.setAttribute('role','status');form.append(roleLabel,roundLabel,submit,result);panel.append(form);
-  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const job=await post('evaluate',{case_id:caseId,round_id:Number(round.value),role:role.value,idempotency_key:`browser-meta:${caseId}:${round.value}:${role.value}`});result.textContent=`Meta job: ${job.status}. ${job.response_digest ?? 'No response digest.'}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const selected=cases.find(item=>item.case_id===caseId),executionMode=['Resolved','Unresolved','Settled'].includes(selected?.state)?'retrospective':undefined,attempt=crypto.randomUUID(),job=await post('evaluate',{case_id:caseId,round_id:Number(round.value),role:role.value,...(executionMode?{execution_mode:executionMode}:{}),idempotency_key:`browser-meta:${caseId}:${round.value}:${role.value}:${attempt}`});result.textContent=`Meta job: ${job.status}. ${job.response_digest ?? 'No response digest.'}${executionMode?' Retrospective closed-case analysis only.':''}`;await refreshJobs();}catch(error){result.textContent=error.message;await refreshJobs().catch(()=>{});}finally{submit.disabled=false;}});
  }
  if(caseId&&config.providers?.modal?.status==='READY'){
   const form=element('form',''),label=element('label','Meta proposal digest'),input=element('input','');input.name='proposal_digest';input.required=true;input.pattern='[0-9a-f]{64}';label.append(input);const submit=element('button','Verify proposal with Modal'),result=element('div','');result.setAttribute('role','status');form.append(label,submit,result);panel.append(form);
-  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const roundId=Number(byId('round').value),job=await post('provider/jobs',{mode:'live',kind:'verification',case_id:caseId,round_id:roundId,proposal_digest:input.value,idempotency_key:`browser-modal:${caseId}:${roundId}:${input.value}`});result.textContent=`Modal job: ${job.status}. ${job.response_digest ?? 'No response digest.'}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const roundId=Number(byId('round').value),selected=cases.find(item=>item.case_id===caseId),executionMode=['Resolved','Unresolved','Settled'].includes(selected?.state)?'retrospective':undefined,job=await post('provider/jobs',{mode:'live',kind:'verification',case_id:caseId,round_id:roundId,proposal_digest:input.value,...(executionMode?{execution_mode:executionMode}:{}),idempotency_key:`browser-modal:${caseId}:${roundId}:${input.value}:${executionMode||'live'}:${crypto.randomUUID()}`});result.textContent=`Modal job: ${job.status}. ${job.response_digest ?? 'No response digest.'}${executionMode?' Retrospective closed-case verification only.':''}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
  }
  try{await refreshJobs();}catch(error){feedback.textContent=error.message;}
 }
@@ -723,7 +731,7 @@ function caseExplorer(panel,records){
 }
 function mountCaseDetails(panel,record){
  panel.querySelector('[data-case-details]')?.remove();const section=element('section','');section.dataset.caseDetails='true';section.append(element('h3',`Case ${record.case_id}`),element('p',`State: ${readable(record.state)}. Creator: ${record.creator_id}. Beneficiary: ${record.terms?.beneficiary_id ?? 'Unavailable'}.`),element('p',`Terms digest: ${record.terms_digest}. Evidence: ${record.evidence_digest ?? 'Not submitted'}.`));
- const actions=eligibleCaseActions(record.case_id,record,account),feedback=element('div','');feedback.setAttribute('role','status');for(const [method,args,deposit,label] of actions){const button=element('button',label);button.type='button';button.addEventListener('click',async()=>{button.disabled=true;try{const sent=await signWorkspaceCall(method,args,deposit);feedback.textContent=`${label}: ${sent.operation?.status ?? 'Unavailable'}. Transaction: ${sent.transaction_hash ?? 'Unavailable'}.`;}catch(error){feedback.textContent=error.message;}finally{button.disabled=false;}});section.append(button);}if(!actions.length)section.append(element('p','No case action is available for this account and state.'));section.append(feedback);panel.append(section);
+ const actions=eligibleCaseActions(record.case_id,record,account),feedback=element('div','');feedback.setAttribute('role','status');for(const [method,args,deposit,label] of actions){const button=element('button',label);button.type='button';button.addEventListener('click',async()=>{button.disabled=true;try{const operationId=method==='advance_round'?`contra-advance_round-${record.case_id}-${record.round_id ?? 0}-${String(record.phase ?? record.state).toLowerCase()}-${account.replaceAll('.','-')}`:null,sdk=await import('./wallet.bundle.js'),operations=createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk}),operation=await operations.prepareCall(method,args,deposit,operationId),config=await request('config');if(!config.external_wallet_signing_authorized){feedback.textContent=`${label}: ${operation.status}. Operation ${operation.operation_id} is persisted and signing remains disabled.`;return;}const sent=await operations.signCall(method,args,deposit,operation);feedback.textContent=`${label}: ${sent.operation?.status ?? 'Unavailable'}. Transaction: ${sent.transaction_hash ?? 'Unavailable'}.`;}catch(error){feedback.textContent=error.message;}finally{button.disabled=false;}});section.append(button);}if(!actions.length)section.append(element('p','No case action is available for this account and state.'));section.append(feedback);panel.append(section);
 }
 function evidenceInspector(panel,caseId,records){
  const section=element('section','');section.append(element('h3','Authorised evidence records'));if(!records.length)section.append(element('p','No evidence or counterexample records are available.'));
@@ -773,7 +781,34 @@ function settlementTools(panel) {
   const operation = await inspectOperation(request,id);
   const state = operationRecoveryState(operation);
   result.textContent = `Operation status: ${operation.status ?? 'Unavailable'}`;
+  const identity=element('dl','');
+  identity.className='operation-identity';
+  for(const [label,value] of [
+   ['Operation ID',operation.operation_id ?? operation.id],
+   ['Account',operation.account ?? operation.payload?.signerId],
+   ['Payload hash',operation.payload_hash],
+   ['Contract',operation.contract_account ?? operation.payload?.receiverId],
+   ['Transaction hash',operation.tx_hash],
+  ])if(value){identity.append(element('dt',label),element('dd',String(value)));}
+  result.append(identity);
   if (state.locked) result.append(element('p','The transaction hash is unknown. This operation remains locked.'));
+  if(operation.status==='PREPARED'){
+   const sign=element('button','Sign authorised operation');
+   sign.type='button';
+   result.append(sign);
+   sign.addEventListener('click',async()=>{
+    sign.disabled=true;
+    try{
+     if(!wallet||!token||operation.account!==account)throw Error('Reconnect and authenticate the operation account before signing.');
+     const sdk=await import('./wallet.bundle.js');
+     const prepared={...operation,operation_id:operation.operation_id||operation.id,payload:operation.payload||(operation.payload_json?JSON.parse(operation.payload_json):null)};
+     const sent=await sdk.sendPreparedWalletTransaction(wallet,{token,operation:prepared});
+     const updated=await sdk.reconcileWalletTransaction({token,accountId:account,operationId:id});
+     const txHash=sent?.transaction?.hash||sent?.transaction_outcome?.id||sent?.transactionHash||updated.tx_hash;
+     result.textContent=`Operation status: ${updated.status ?? 'Unavailable'}. Transaction: ${txHash ?? 'Unavailable'}.`;
+    }catch(error){result.append(element('p',error.message));sign.disabled=false;}
+   });
+  }
   if (!state.canReconcile) return;
   const reconcile = element('button','Reconcile with chain');
   reconcile.type = 'button';
@@ -791,8 +826,10 @@ function settlementTools(panel) {
  });
 }
 async function updateNavigation() {
+ if(activeDraftContext)saveWorkspaceDraft(workspaceRoot,activeDraftContext);
  const generation = ++routeRequest;
  const route = location.hash.slice(1).split('/')[0] || 'overview';
+ activeDraftContext={route,account:account||'anonymous',caseId:byId('case')?.value||'none'};
  [...byId('navigation').children].forEach(link => {
   if (link.hash === '#' + route) link.setAttribute('aria-current','page');
   else link.removeAttribute('aria-current');
@@ -807,6 +844,7 @@ async function updateNavigation() {
  const panel = element('article', '');
  panel.append(element('h2', routes[route] ?? 'Destination unavailable'), element('p','Loading…'));
  workspace.replaceChildren(panel);
+ restoreWorkspaceDraft(workspace,activeDraftContext);
  if(visualFixtureMode){
   panel.lastElementChild.remove();
   const intro=element('section','');intro.className='workspace-intro';intro.append(element('div','Simulated data'),element('h3',`${routes[route]} demonstration`),element('p','Explore the workflow with records isolated from contract, provider and financial operations.'));panel.append(intro);
@@ -907,12 +945,12 @@ async function openWalletPicker() {
    const copy=element('span','');copy.append(element('strong',option.name),element('small','Testnet · NEP-413'));
    choice.append(image,copy,element('span','Connect'));
    choice.addEventListener('click',async()=>{
-    [...options.querySelectorAll('button')].forEach(item=>item.disabled=true);feedback.textContent=`Connecting to ${option.name}…`;
+    [...options.querySelectorAll('button')].forEach(item=>item.disabled=true);feedback.textContent=`Connecting to ${option.name}…`;dialog.close();
     try{
      const connected=await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,walletId:option.id,connector:listed.connector,...sdk});
      wallet=connected.wallet;walletId=option.id;persistSession(connected.session);sdk.rememberWalletIdentity({walletId,accountId:account});
-     feedback.textContent=`Authenticated as ${account}.`;await refreshAccountControl();setTimeout(()=>dialog.close(),350);await selectCase();if(!byId('workspace').hidden)void updateNavigation();
-    }catch(error){feedback.textContent=error.message;[...options.querySelectorAll('button')].forEach(item=>item.disabled=false);}
+     feedback.textContent=`Authenticated as ${account}.`;await refreshAccountControl();await selectCase();if(!byId('workspace').hidden)void updateNavigation();
+    }catch(error){feedback.textContent=error.message;[...options.querySelectorAll('button')].forEach(item=>item.disabled=false);dialog.showModal();}
    });
    options.append(choice);
   }
@@ -969,7 +1007,7 @@ table('events', activity.status === 'fulfilled' ? activity.value.items.map(event
 if (token) {
  try {
   const sdk=await import('./wallet.bundle.js'),session=await recoverWallet({token,...sdk});
-  account=session.account;sessionExpires=Number(session.expires)||sessionExpires;scheduleSessionRenewal();
+  persistSession({token,account:session.account,expires:Number(session.expires)||sessionExpires});
   const restored=await sdk.restoreConnectedWallet({network:'testnet'}).catch(()=>null);
   if(restored&&restored.account.accountId===account){wallet=restored.wallet;walletId=restored.walletId;}
   await refreshAccountControl();await updateNavigation();

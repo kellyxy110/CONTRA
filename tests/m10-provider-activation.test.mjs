@@ -1,6 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {cloudflareProviderReadiness} from '../services/cloudflare/provider-readiness.mjs';
+import {providerOutput,providerRequest} from '../services/cloudflare/provider-schema.mjs';
+
+test('Meta structured output accepts current text blocks and parsed envelopes',()=>{
+ const finding={schema:'CONTRA_PROVIDER_FINDING_V2'};
+ assert.deepEqual(providerOutput('meta',{choices:[{message:{content:[{type:'text',text:JSON.stringify(finding)}]}}]}),finding);
+ assert.deepEqual(providerOutput('meta',{choices:[{message:{parsed:finding}}]}),finding);
+ assert.throws(()=>providerOutput('meta',{choices:[{message:{refusal:'Request rejected'}}]}),/refused/);
+ assert.throws(()=>providerOutput('meta',{choices:[{finish_reason:'length',message:{content:null}}]}),/completion allowance/);
+ const request=providerRequest('meta',{model:'muse-spark-1.3'},[{role:'user',content:'bounded'}]);
+ assert.equal(request.reasoning_effort,'minimal');
+ assert.equal(request.max_completion_tokens,4096);
+ assert.equal('max_tokens' in request,false);
+});
 
 test('Cloudflare provider credentials remain independently gated',()=>{
  const report=cloudflareProviderReadiness({

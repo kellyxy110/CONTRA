@@ -1,5 +1,9 @@
 # CONTRA session log
 
+## 2026-11-14 | Live settlement and provider verification
+
+Operation `wallet-f77abf56-380f-43e6-9a59-2e10208943e3` was released through its exact owner-approved digest and signed by `appeal3.testnet`. Official final RPC verified `finalize_case`, payout dispatch, the native transfer to `contra-creator.testnet`, callback application and final `Settled` read-back with one attempt. The gate was then disabled. Live Meta evaluation initially exposed reasoning-token exhaustion; the corrected bounded request produced immutable proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d`. Modal logs exposed and then verified a strict payload-allowlist correction, producing digest `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427`. Both artifacts are retrospective and non-binding. The challenged journey remains separate.
+
 ## 2026-11-13 | Phase 3 committee reconciliation
 
 The owner reported six reviewer confirmations complete. Inspection found that the account names sort into the reverse committee grouping from their invitation labels. Implementation now preserves prior consent while requiring six new wallet-signed acknowledgements of the actual registry-selected roles. Cloudflare tests passed 22 of 22 and focused browser-operation tests passed 8 of 8 before deployment preparation.

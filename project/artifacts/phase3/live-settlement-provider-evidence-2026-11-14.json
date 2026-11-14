@@ -1,0 +1,46 @@
+{
+  "checkpoint": "CONTRA-2026-11-14-LIVE-SETTLEMENT-PROVIDER-VERIFIED",
+  "network": "testnet",
+  "contract_account": "contra-contestation.testnet",
+  "case_id": "e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278",
+  "settlement": {
+    "transaction_hash": "GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk",
+    "final_execution_status": "FINAL",
+    "state": "Settled",
+    "reason": "CALLBACK_SUCCESS",
+    "resolution_basis": "BASE_REFUND",
+    "final_disposition": "REJECT",
+    "payout_intent_id": "567122cb7dcce9ba009d573334790aec29edf73b590127e08f97d85b88a1f2c0",
+    "recipient_id": "contra-creator.testnet",
+    "amount_yocto": "100000000000000000000000",
+    "result": "SUCCESS_VERIFIED",
+    "attempt": 1,
+    "case_revision": "12"
+  },
+  "provider_execution": {
+    "mode": "retrospective-closed-case",
+    "binding_authority": false,
+    "meta": {
+      "provider": "meta",
+      "model": "muse-spark-1.3",
+      "status": "PROPOSED",
+      "proposal_digest": "f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d",
+      "worker_http_status": 201
+    },
+    "modal": {
+      "provider": "modal",
+      "function": "contra-deterministic-verifier-v1",
+      "status": "PROPOSED",
+      "verification_digest": "0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427",
+      "checked_proposal_digest": "f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d",
+      "worker_http_status": 201
+    }
+  },
+  "boundaries": {
+    "provider_outputs_changed_contract_state": false,
+    "provider_outputs_created_reviewer_votes": false,
+    "provider_outputs_authorised_settlement": false,
+    "live_signing_authorised_after_settlement": false,
+    "challenged_journey_proven": false
+  }
+}
