@@ -13,7 +13,7 @@ Start with the [project README](../README.md) for the product, current verified 
 | Settlement guarantees | [Settlement recovery](SETTLEMENT_RECOVERY_V1.md), [commitment test vectors](COMMITMENT_TEST_VECTORS.md) |
 | Security | [Threat model](THREAT_MODEL_V1.md), [dependency audit](security/DEPENDENCY_AUDIT.md) |
 | Operations | [Cloudflare deployment](operations/CLOUDFLARE_DEPLOYMENT.md), [runtime service](operations/RUNTIME_SERVICE.md), [environment setup](operations/ENVIRONMENT_SETUP.md) |
-| External participant controls | [Reviewer onboarding](operations/REVIEWER_ONBOARDING.md), [live validation packet](operations/M10_LIVE_VALIDATION_PACKET.md) |
+| External participant controls | [Reviewer onboarding](operations/REVIEWER_ONBOARDING.md), [reviewer invitation template](operations/REVIEWER_INVITATION_TEMPLATE.md) |
 | Tests and reproducibility | [Reproducibility](testing/REPRODUCIBILITY.md), [judge guide](judges/JUDGE_GUIDE.md), [acceptance matrix](judges/ACCEPTANCE_MATRIX.md) |
 
 ## Historic records

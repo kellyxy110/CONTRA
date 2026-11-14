@@ -6,7 +6,7 @@ Checkpoint: `CONTRA-2026-11-13-PHASE2-FUNCTIONAL-WORKFLOWS`
 
 Evidence cut-off: merged `main` commit `98621162d5d8cefea5922e0ba46a23a8657c4c7f`. Criteria are upgraded only from evidence of the required class. Production deployment of this exact commit remains pending.
 
-This is a fresh criterion-by-criterion review of [the frozen acceptance specification](../UX3B_ENGINEERING_ACCEPTANCE.md). PASS means the criterion is supported by current retained evidence at the stated environment boundary. PARTIAL means a material part is proven but one or more required observations are absent. BLOCKED means the required live external evidence cannot exist without an owner-controlled resource or authorisation.
+This is a criterion-by-criterion review of the implemented protocol and [current functional acceptance matrix](../testing/FUNCTIONAL_ACCEPTANCE_MATRIX.md). PASS means the criterion is supported by current retained evidence at the stated environment boundary. PARTIAL means a material part is proven but one or more required observations are absent. BLOCKED means the required live external evidence cannot exist without an externally controlled resource or signature.
 
 The current comprehensive gate passed in [GitHub Actions run 43360379415](https://github.com/kellyxy110/CONTRA/actions/runs/43360379415). It includes the corrected nine-test Sandbox baseline, both complete Contestation journeys and the credential-free judge quick-start. Core passed in [43360379499](https://github.com/kellyxy110/CONTRA/actions/runs/43360379499) and Security passed in [43360379395](https://github.com/kellyxy110/CONTRA/actions/runs/43360379395).
 
