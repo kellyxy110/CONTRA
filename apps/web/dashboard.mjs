@@ -13,6 +13,7 @@ import {createReviewRecoveryPackage,recoverReviewReveal,reviewPackageBody} from 
 const byId = id => document.getElementById(id);
 const routes = {overview:'Overview',cases:'Cases',evidence:'Evidence',lab:'Evaluations',challenges:'Challenges',reviewers:'The Bench',settlement:'Settlement',constellations:'Constellations',activity:'Activity',settings:'Settings'};
 let token = sessionStorage.getItem('contra-session');
+let sessionExpires = Number(sessionStorage.getItem('contra-session-expires')) || 0;
 const {request, view} = createApiClient(() => token);
 const post = (path, body) => request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 let cases = [], caseRequest = 0;
@@ -81,6 +82,8 @@ function icon(name) {
 function element(tag, content) {
  const node = document.createElement(tag);
  node.textContent = content;
+ if(tag==='form')node.noValidate=true;
+ if(tag==='textarea')node.style.resize='none';
  return node;
 }
 
@@ -296,6 +299,54 @@ document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
 let account = null;
 let wallet = null;
+let walletId = null;
+let renewalTimer = null;
+
+function persistSession(session) {
+ token=session.token;
+ account=session.account;
+ sessionExpires=Number(session.expires)||0;
+ sessionStorage.setItem('contra-session',token);
+ if(sessionExpires)sessionStorage.setItem('contra-session-expires',String(sessionExpires));
+ scheduleSessionRenewal();
+}
+function clearSession() {
+ token=null;account=null;sessionExpires=0;
+ sessionStorage.removeItem('contra-session');
+ sessionStorage.removeItem('contra-session-expires');
+ clearTimeout(renewalTimer);
+ renewalTimer=null;
+}
+function scheduleSessionRenewal() {
+ clearTimeout(renewalTimer);
+ if(!token||!sessionExpires)return;
+ const delay=Math.max(1000,sessionExpires-Date.now()-5*60*1000);
+ renewalTimer=setTimeout(()=>void renewSessionProactively(),delay);
+}
+async function renewSessionProactively() {
+ if(!token)return;
+ try{
+  const sdk=await import('./wallet.bundle.js');
+  persistSession(await sdk.renewWalletSession(token));
+ }catch{
+  clearSession();
+  byId('account-menu-feedback').textContent='Your session expired. Reauthenticate to continue.';
+  await refreshAccountControl();
+ }
+}
+function formatWalletBalance(yoctoValue) {
+ const value=BigInt(yoctoValue),whole=value/10n**24n,fraction=(value%10n**24n).toString().padStart(24,'0').slice(0,5).replace(/0+$/,'');
+ return `${whole}${fraction?'.'+fraction:''} NEAR`;
+}
+async function refreshAccountControl() {
+ const button=byId('wallet'),menu=byId('account-menu');
+ if(!account){button.textContent='Connect wallet';button.setAttribute('aria-expanded','false');menu.hidden=true;return;}
+ button.textContent=account;
+ byId('account-menu-id').textContent=account;
+ byId('account-menu-balance').textContent='Loading…';
+ try{const sdk=await import('./wallet.bundle.js'),balance=await sdk.getTestnetAccountBalance(account);byId('account-menu-balance').textContent=formatWalletBalance(balance.availableYocto);}
+ catch{byId('account-menu-balance').textContent='Unavailable';}
+}
 document.querySelector('.brand').addEventListener('click',event=>{event.preventDefault();history.replaceState(null,'',location.pathname+location.search+'#overview');void updateNavigation();scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});if(!visualFixtureMode)void refreshOverview();});
 async function refreshOverview(){
  const [nextCases,nextActivity]=await Promise.allSettled([readPagedCases(view,{maxPages:20}),view('get_events',{case_id:null,after_seq:'0',limit:20})]);
@@ -684,8 +735,8 @@ function activityTools(panel,items){
 async function settingsTools(panel,config){
  panel.append(element('p',`Network: ${config.network ?? 'Unavailable'}`),element('p',`Account: ${account ?? 'Disconnected'}`),element('p',`Contract: ${config.contract_account ?? 'Unavailable'}`));if(!token)return;
  const renew=element('button','Renew session'),disconnect=element('button','Disconnect wallet'),feedback=element('div','');feedback.setAttribute('role','status');panel.append(renew,disconnect,feedback);
- renew.addEventListener('click',async()=>{renew.disabled=true;try{const sdk=await import('./wallet.bundle.js'),session=await sdk.renewWalletSession(token);token=session.token;account=session.account;sessionStorage.setItem('contra-session',token);feedback.textContent=`Session renewed for ${account}.`;}catch(error){feedback.textContent=error.message;}finally{renew.disabled=false;}});
- disconnect.addEventListener('click',async()=>{disconnect.disabled=true;try{const sdk=await import('./wallet.bundle.js');await sdk.disconnectWalletSession({token,wallet});token=null;account=null;wallet=null;sessionStorage.removeItem('contra-session');byId('wallet').textContent='Connect wallet';feedback.textContent='Wallet disconnected and session revoked.';await updateNavigation();}catch(error){feedback.textContent=error.message;disconnect.disabled=false;}});
+ renew.addEventListener('click',async()=>{renew.disabled=true;try{const sdk=await import('./wallet.bundle.js'),session=await sdk.renewWalletSession(token);persistSession(session);feedback.textContent=`Session renewed for ${account}.`;}catch(error){feedback.textContent=error.message;}finally{renew.disabled=false;}});
+ disconnect.addEventListener('click',async()=>{disconnect.disabled=true;try{await disconnectCurrentWallet();feedback.textContent='Wallet disconnected and session revoked.';await updateNavigation();}catch(error){feedback.textContent=error.message;disconnect.disabled=false;}});
 }
 function settlementTools(panel) {
  if (!token) {
@@ -835,23 +886,54 @@ byId('case').addEventListener('change', selectCase);
 byId('round').addEventListener('change', selectCase);
 byId('case-search').addEventListener('change',event=>{const query=event.target.value.trim().toLowerCase();const match=cases.find(item=>item.case_id.toLowerCase()===query||`${item.case_id.slice(0,12)} · ${readable(item.state)}`.toLowerCase()===query||item.case_id.toLowerCase().startsWith(query.split(' ')[0]));byId('case').value=match?.case_id||'';void selectCase();});
 document.querySelectorAll('[data-round]').forEach(button=>button.addEventListener('click',()=>{byId('round').value=button.dataset.round;document.querySelectorAll('[data-round]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));void selectCase();}));
-byId('wallet').addEventListener('click', async () => {
- const button = byId('wallet');
- button.disabled = true;
- try {
+async function disconnectCurrentWallet() {
+ const sdk=await import('./wallet.bundle.js');
+ try{if(token)await sdk.disconnectWalletSession({token,wallet});else await wallet?.signOut?.();}
+ finally{clearSession();wallet=null;walletId=null;sdk.forgetWalletIdentity();await refreshAccountControl();}
+}
+async function openWalletPicker() {
+ const button=byId('wallet');button.disabled=true;
+ try{
   if(visualFixtureMode)throw Error('Wallet connections are disabled in Demo Mode. Switch to Testnet mode to authenticate.');
-  const config = await request('config');
-  const sdk = await import('./wallet.bundle.js');
-  const listed=await sdk.listCompatibleWallets({network:config.network});
+  const config=await request('config');
+  if(config.network!=='testnet'||config.contract_account!=='contra-contestation.testnet')throw Error('Wallet authentication is unavailable because this runtime is not connected to CONTRA Testnet. Start the local server in Testnet mode or use the deployed application.');
+  const sdk=await import('./wallet.bundle.js'),listed=await sdk.listCompatibleWallets({network:config.network});
   const dialog=byId('wallet-dialog'),options=byId('wallet-options'),feedback=byId('wallet-feedback');
   options.replaceChildren();feedback.textContent='';
-  if(!listed.wallets.length)throw Error('No compatible Testnet wallet with NEP-413 support is currently available.');
-  for(const option of listed.wallets){const choice=element('button','');choice.type='button';choice.className='wallet-option';const image=document.createElement('img');image.src=option.icon;image.alt='';const copy=element('span','');copy.append(element('strong',option.name),element('small',`${option.description} ${option.verification}.`));choice.append(image,copy,element('span','Connect'));choice.addEventListener('click',async()=>{[...options.querySelectorAll('button')].forEach(item=>item.disabled=true);feedback.textContent=`Connecting to ${option.name}…`;try{const connected=await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,walletId:option.id,connector:listed.connector,...sdk});wallet=connected.wallet;token=connected.session.token;account=connected.session.account;sessionStorage.setItem('contra-session',token);button.textContent=connected.session.account;feedback.textContent=`Authenticated as ${connected.session.account}.`;setTimeout(()=>dialog.close(),500);await selectCase();if(!byId('workspace').hidden)void updateNavigation();}catch(error){feedback.textContent=error.message;[...options.querySelectorAll('button')].forEach(item=>item.disabled=false);}});options.append(choice);}
+  if(!listed.wallets.length)throw Error('No verified Testnet wallet with NEP-413 support is currently available.');
+  for(const option of listed.wallets){
+   const choice=element('button','');choice.type='button';choice.className='wallet-option';
+   const image=document.createElement('img');image.src=option.icon;image.alt='';
+   const copy=element('span','');copy.append(element('strong',option.name),element('small','Testnet · NEP-413'));
+   choice.append(image,copy,element('span','Connect'));
+   choice.addEventListener('click',async()=>{
+    [...options.querySelectorAll('button')].forEach(item=>item.disabled=true);feedback.textContent=`Connecting to ${option.name}…`;
+    try{
+     const connected=await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,walletId:option.id,connector:listed.connector,...sdk});
+     wallet=connected.wallet;walletId=option.id;persistSession(connected.session);sdk.rememberWalletIdentity({walletId,accountId:account});
+     feedback.textContent=`Authenticated as ${account}.`;await refreshAccountControl();setTimeout(()=>dialog.close(),350);await selectCase();if(!byId('workspace').hidden)void updateNavigation();
+    }catch(error){feedback.textContent=error.message;[...options.querySelectorAll('button')].forEach(item=>item.disabled=false);}
+   });
+   options.append(choice);
+  }
   dialog.showModal();
- } catch (error) {
-  byId('wallet-feedback').textContent=error.message;byId('wallet-dialog').showModal?.();
- } finally {
-  button.disabled = false;
+ }catch(error){byId('wallet-feedback').textContent=error.message;byId('wallet-dialog').showModal?.();}
+ finally{button.disabled=false;}
+}
+byId('wallet').addEventListener('click',async()=>{
+ if(!account){await openWalletPicker();return;}
+ const menu=byId('account-menu'),opening=menu.hidden;menu.hidden=!opening;byId('wallet').setAttribute('aria-expanded',String(opening));if(opening)await refreshAccountControl();
+});
+byId('switch-wallet').addEventListener('click',async()=>{byId('account-menu').hidden=true;try{await disconnectCurrentWallet();await openWalletPicker();}catch(error){byId('wallet-feedback').textContent=error.message;byId('wallet-dialog').showModal?.();}});
+byId('disconnect-wallet').addEventListener('click',async()=>{const feedback=byId('account-menu-feedback');feedback.textContent='Disconnecting…';try{await disconnectCurrentWallet();feedback.textContent='';await updateNavigation();}catch(error){feedback.textContent=error.message;}});
+document.addEventListener('click',event=>{const control=event.target.closest('.account-control');if(!control){byId('account-menu').hidden=true;byId('wallet').setAttribute('aria-expanded','false');}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!byId('account-menu').hidden){byId('account-menu').hidden=true;byId('wallet').setAttribute('aria-expanded','false');byId('wallet').focus();}});
+document.addEventListener('visibilitychange',async()=>{
+ if(document.visibilityState!=='visible'||!account)return;
+ if(sessionExpires&&sessionExpires-Date.now()<10*60*1000)await renewSessionProactively();
+ if(wallet){
+  try{const sdk=await import('./wallet.bundle.js');await sdk.assertWalletAccount(wallet,account);}
+  catch{clearSession();wallet=null;byId('account-menu-feedback').textContent='The wallet account changed. Reauthenticate to continue.';await refreshAccountControl();}
  }
 });
 
@@ -886,13 +968,20 @@ table('events', activity.status === 'fulfilled' ? activity.value.items.map(event
 }) : [], 3, activity.status === 'fulfilled' ? 'No contract events returned.' : 'Contract activity is unavailable.');
 if (token) {
  try {
-  const sdk = await import('./wallet.bundle.js');
-  const session = await recoverWallet({token,...sdk});
-  account = session.account;
-  byId('wallet').textContent = session.account;
-  await updateNavigation();
- } catch {
-  token = null;
-  sessionStorage.removeItem('contra-session');
- }
+  const sdk=await import('./wallet.bundle.js'),session=await recoverWallet({token,...sdk});
+  account=session.account;sessionExpires=Number(session.expires)||sessionExpires;scheduleSessionRenewal();
+  const restored=await sdk.restoreConnectedWallet({network:'testnet'}).catch(()=>null);
+  if(restored&&restored.account.accountId===account){wallet=restored.wallet;walletId=restored.walletId;}
+  await refreshAccountControl();await updateNavigation();
+ } catch {clearSession();}
+}
+if(!token&&!visualFixtureMode){
+ try{
+  const sdk=await import('./wallet.bundle.js'),restored=await sdk.restoreConnectedWallet({network:'testnet'});
+  if(restored){
+   const session=await sdk.authenticateWallet(restored.wallet,restored.account.accountId);
+   wallet=restored.wallet;walletId=restored.walletId;persistSession({...session,account:session.account||restored.account.accountId});
+   await refreshAccountControl();await updateNavigation();
+  }
+ }catch{clearSession();}
 }

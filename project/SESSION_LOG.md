@@ -544,6 +544,14 @@ UX3A final correction: replaced sidebar library approximations with source-deriv
 - Remaining: execution gates (ABI compilation, worst-case gas/storage, sandbox invariants, independent operator evidence, credits, deployment/key control). No unresolved G01-G07 specification alternatives; unknown-outcome lock is an explicit residual limitation.
 - Next: first November 1 fresh Rust escrow/accounting/payout sandbox milestone, then reviewer protocol/services and approved frontend.
 
+## 2026-11-14 | Wallet, Constellations and workspace completion pass
+
+- Preserved current PR #118 and its Phase 3 reviewer work while leaving three untracked reviewer-authority artifacts untouched.
+- Added expiry-aware wallet-session renewal, provider-backed signer restoration, account-change reauthentication, a compact account menu, final Testnet wallet balance, Switch wallet and Disconnect. Session restoration still grants no transaction authority.
+- Rebuilt Constellations around the eight canonical coverage calculations with primary and comparison selection, readable axes, exact values, source inspection and honest gaps for missing or protected data. Both Overview doughnut charts remain unchanged.
+- Refined shared workspace forms, panels, typography, overlays, scrollbars and responsive layouts without changing contract or provider APIs.
+- Passed 184 repository tests, 23 Cloudflare tests, 15 focused wallet tests, documentation links, Cloudflare static build and the complete Chromium and Firefox responsive browser matrix. No transaction, provider call, secret mutation or spending occurred.
+
 # 2026-11-11 | CONTRA-M10.4-PROVIDER-CREDENTIAL-READY
 
 Verified the Judithorluchee Cloudflare OAuth identity and exact configured account. Confirmed `contra-testnet` currently has no installed secrets. Implemented redacted, independent provider readiness in the Worker, added three activation regressions, updated credential procedures and preserved disabled provider execution. Results: repository 154 of 154, Cloudflare 14 of 14, Worker dry run, wallet build, documentation links and source policy passed. No external call, secret mutation, transaction or spend occurred. Next action is owner-side credential acquisition followed by interactive installation and independent non-billable verification.

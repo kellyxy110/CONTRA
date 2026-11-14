@@ -607,3 +607,10 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Preserved historical Baseten fixture and authenticated-probe evidence without treating it as an active integration.
 - Future OpenRouter or other provider support requires a separate explicit owner decision and integration review.
 
+# 2026-11-14 | Three-phase frontend completion
+
+- Restored wallet sessions and provider connections safely, added proactive renewal and explicit reauthentication after expiry or account change.
+- Added a compact account menu with final Testnet wallet balance, Switch wallet and Disconnect, clearly separated from contract funding.
+- Replaced the prior Constellations presentation with a comparative eight-axis graph and exact-value table using the existing coverage calculations.
+- Refined all workspace surfaces through shared layout, form, feedback, responsive and accessibility rules while preserving APIs and financial gates.
+

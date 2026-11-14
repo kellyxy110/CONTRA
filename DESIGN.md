@@ -25,7 +25,9 @@ CONTRA is a serious contestation platform. The interface prioritises evidence, a
 - Case selection uses a searchable picker in each case-bound workspace. Long identifiers are truncated visually but remain inspectable.
 - Review round selection uses the Primary or Appeal segmented control. It does not change protocol identities.
 - Wallet selection is a modal list filtered to Testnet wallets that advertise NEP-413 support. Connecting authenticates only.
+- An authenticated wallet uses a compact account menu with the final Testnet account balance, Switch wallet and Disconnect. Wallet balance is labelled separately from contract funding.
 - Doughnut charts retain their ring in zero-data states and explain whether data is empty, loading, unavailable or denied.
+- Constellations uses the eight canonical coverage calculations in a comparative radar with an exact-value table. Missing, locked and unavailable axes remain gaps rather than zero values.
 
 ## Responsive behaviour
 

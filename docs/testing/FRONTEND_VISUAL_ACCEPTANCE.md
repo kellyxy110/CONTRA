@@ -46,6 +46,7 @@ Core CI uploads the generated screenshots and side-by-side comparisons as run ar
 | Constellations | Separate eight-axis evidence comparison | Missing and protected data remain distinct; no Overview doughnut is replaced |
 | Activity | Event filter and linked case navigation | Empty and unavailable activity are explicit |
 | Settings | Session renew, disconnect and theme preference | Expired sessions and failed disconnects remain visible without granting authority |
+| Account menu | Final Testnet wallet balance, switch and disconnect | Balance is read-only final RPC state and is explicitly separate from contract funding; account changes require reauthentication |
 
 ## Accepted browser scope
 

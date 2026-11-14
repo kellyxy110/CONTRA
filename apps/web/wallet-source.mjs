@@ -2,7 +2,7 @@ import {NearConnector} from '@hot-labs/near-connect';
 export {voteCommitment} from '../../packages/protocol/encoding.mjs';
 const METEOR_EXECUTOR_COMMIT='ef1be35fc3712f2de60a7563aed543d78e73f763';
 export const METEOR_EXECUTOR_SHA256='96210256a89cb382bb7fe95f29d6a2489319da87472fe77018b4cdcbf1672b50';
-const METEOR_EXECUTOR_URL=typeof location==='object'?new URL('/vendor/meteor-near-connect.js',location.origin).href:'https://contra-near.pages.dev/vendor/meteor-near-connect.js';
+const METEOR_EXECUTOR_URL=`https://raw.githubusercontent.com/Meteor-Wallet/meteor_wallet_sdk/${METEOR_EXECUTOR_COMMIT}/storage/meteor-near-connect-latest.js`;
 export const METEOR_MANIFEST={version:'1.0.0',wallets:[{id:'meteor-wallet',name:'Meteor Wallet',icon:'https://raw.githubusercontent.com/Meteor-Wallet/meteor_wallet_sdk/main/assets/meteor-logo-svg.svg',description:'Browser-isolated NEAR wallet authentication.',website:'https://meteorwallet.app/',version:'1.1.1',executor:METEOR_EXECUTOR_URL,type:'sandbox',features:{signMessage:true,signInWithoutAddKey:true,signInAndSignMessage:true,signAndSendTransaction:true,signAndSendTransactions:true,signInWithFunctionCallKey:true,signDelegateActions:true,mainnet:true,testnet:true},platform:{web:'https://wallet.meteorwallet.app',chrome:'https://chromewebstore.google.com/detail/meteor-wallet/pcndjhkinnkaohffealmlmhaepkpmgkb',android:'https://play.google.com/store/apps/details?id=app.meteorwallet.v2',ios:'https://apps.apple.com/us/app/meteor-wallet/id6739558223'},permissions:{storage:true,allowsOpen:['https://chromewebstore.google.com','https://wallet.meteorwallet.app','https://meteorwallet.app','meteorwallet://','meteorwalletdev://'],external:['meteorCom','meteorComV2']}}]};
 let sharedConnector;
 const BROWSER_WALLET_MATRIX={
@@ -12,7 +12,7 @@ const BROWSER_WALLET_MATRIX={
 };
 export async function createWalletConnector({network='testnet',connectorFactory=options=>new NearConnector(options)}={}){
  if(sharedConnector)return sharedConnector;
- const connector=connectorFactory({network,features:{testnet:true,signMessage:true},autoConnect:false,footerBranding:null});
+ const connector=connectorFactory({network,features:{testnet:true,signMessage:true},autoConnect:true,footerBranding:null});
  await connector.whenManifestLoaded?.catch(()=>{});
  if(Array.isArray(connector.wallets))connector.wallets=connector.wallets.filter(value=>value.manifest?.id!=='meteor-wallet');
  if(Array.isArray(connector.manifest?.wallets))connector.manifest.wallets=connector.manifest.wallets.filter(value=>value.id!=='meteor-wallet');
@@ -46,6 +46,34 @@ async function api(path,{token,method='GET',body}={}){const response=await fetch
 export async function recoverWalletSession(token){return api('session',{token});}
 export async function renewWalletSession(token){return api('session/renew',{token,method:'POST',body:{}});}
 export async function disconnectWalletSession({token,wallet}){try{await api('session/disconnect',{token,method:'POST',body:{}});}finally{await wallet?.signOut?.();}}
+const WALLET_IDENTITY_KEY='contra-wallet-identity';
+export function rememberWalletIdentity({walletId,accountId}){
+ if(!walletId||!accountId)return false;
+ try{localStorage.setItem(WALLET_IDENTITY_KEY,JSON.stringify({walletId,accountId}));return true;}catch{return false;}
+}
+export function recalledWalletIdentity(){
+ try{const value=JSON.parse(localStorage.getItem(WALLET_IDENTITY_KEY)||'null');return value&&typeof value.walletId==='string'&&/^[a-z0-9._-]+\.testnet$/.test(value.accountId||'')?value:null;}catch{return null;}
+}
+export function forgetWalletIdentity(){try{localStorage.removeItem(WALLET_IDENTITY_KEY);}catch{}}
+export async function restoreConnectedWallet({network='testnet',connectorFactory}={}){
+ const identity=recalledWalletIdentity();
+ if(!identity)return null;
+ const connector=await createWalletConnector({network,connectorFactory});
+ let wallet;
+ try{wallet=await connector.wallet?.(identity.walletId);}catch{return null;}
+ if(!wallet)return null;
+ const selected=selectWalletAccount(await getWalletAccounts(wallet),identity.accountId);
+ return {connector,wallet,account:selected,walletId:identity.walletId};
+}
+export async function getTestnetAccountBalance(accountId,{transport=fetch,rpcUrl='https://rpc.testnet.near.org'}={}){
+ if(!/^[a-z0-9._-]+\.testnet$/.test(accountId||''))throw Error('A valid Testnet account is required.');
+ const response=await transport(rpcUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:'contra-wallet-balance',method:'query',params:{request_type:'view_account',finality:'final',account_id:accountId}})});
+ const body=await response.json();
+ if(!response.ok||body.error)throw Error(body.error?.cause?.name==='UNKNOWN_ACCOUNT'?'The Testnet account does not exist.':'Wallet balance is unavailable.');
+ const amount=String(body.result?.amount||'');
+ if(!/^\d+$/.test(amount))throw Error('Wallet balance is unavailable.');
+ return {accountId,availableYocto:amount,blockHeight:body.result.block_height??null,blockHash:body.result.block_hash??null};
+}
 export function createWalletOperationId(){return 'wallet-'+crypto.randomUUID();}
 function readOperations(){try{const value=JSON.parse(localStorage.getItem('contra-wallet-operations')||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}catch{return {};}}
 function writeOperations(items){try{localStorage.setItem('contra-wallet-operations',JSON.stringify(items));return true;}catch{return false;}}

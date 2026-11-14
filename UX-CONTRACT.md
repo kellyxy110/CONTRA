@@ -16,7 +16,7 @@ Testnet is truthful live or empty data. Demo is explicit simulated data and caus
 
 ## Wallet
 
-Connect opens a wallet picker. Only wallets advertising Testnet and message-signing compatibility appear. Selection leads to account discovery, NEP-413 signing and server verification. Error and retry feedback remain inside the dialog. A session is not transaction authority. A transaction still requires an exact persisted operation and server authority gate.
+Connect opens a compact wallet picker. Only wallets advertising Testnet and message-signing compatibility appear. Selection leads to account discovery, NEP-413 signing and server verification. Error and retry feedback remain inside the dialog. The authenticated account menu shows a read-only final Testnet balance, Switch wallet and Disconnect. Session renewal occurs before expiry when possible. Expiry or an account change requires NEP-413 reauthentication. A session is not transaction authority. A transaction still requires an exact persisted operation and server authority gate.
 
 ## Cases and rounds
 

@@ -26,7 +26,16 @@
     <label id="period-control">Case period <select id="period"><option value="0">All time</option><option value="30">Last 30 days</option><option value="7">Last 7 days</option></select></label>
     <div class="mode-control" role="group" aria-label="Data mode"><button type="button" data-mode-choice="live" aria-pressed="true">Testnet</button><button type="button" data-mode-choice="demo" aria-pressed="false">Demo</button></div>
     <div id="theme" class="theme-control" role="group" aria-label="Theme preference"><button type="button" data-theme-choice="light" aria-label="Use light theme" title="Light">☀</button><button type="button" data-theme-choice="dark" aria-label="Use dark theme" title="Dark">☾</button><button type="button" data-theme-choice="system" aria-label="Use system theme" title="System">◐</button></div>
-    <button id="wallet" type="button">Connect wallet</button>
+    <div class="account-control">
+     <button id="wallet" type="button" aria-haspopup="menu" aria-expanded="false">Connect wallet</button>
+     <div id="account-menu" class="account-menu" role="menu" hidden>
+      <div class="account-menu__identity"><strong id="account-menu-id">Not connected</strong><span>NEAR Testnet wallet</span></div>
+      <div class="account-menu__balance"><span>Available wallet balance</span><strong id="account-menu-balance">Unavailable</strong><small>Separate from funds held by the CONTRA contract</small></div>
+      <button id="switch-wallet" type="button" role="menuitem">Switch wallet</button>
+      <button id="disconnect-wallet" type="button" role="menuitem">Disconnect</button>
+      <p id="account-menu-feedback" role="status"></p>
+     </div>
+    </div>
    </div>
   </header>
   <p id="status" role="status">Loading contract data…</p>
@@ -52,6 +61,6 @@
   </section>
   </div>
  </main>
- <dialog id="wallet-dialog" aria-labelledby="wallet-dialog-title"><form method="dialog" class="dialog-shell"><div class="dialog-heading"><div><h2 id="wallet-dialog-title">Connect a Testnet wallet</h2><p>Choose a wallet that supports NEP-413 message signing. Connecting does not authorise transactions.</p></div><button value="cancel" aria-label="Close wallet picker">×</button></div><div id="wallet-options" class="wallet-options" role="list"></div><p id="wallet-feedback" role="status"></p></form></dialog>
+ <dialog id="wallet-dialog" aria-labelledby="wallet-dialog-title"><form method="dialog" class="dialog-shell" novalidate><div class="dialog-heading"><div><h2 id="wallet-dialog-title">Connect a Testnet wallet</h2><p>Authenticate with NEP-413. Every transaction still needs its own approval.</p></div><button value="cancel" aria-label="Close wallet picker">×</button></div><div id="wallet-options" class="wallet-options" role="list"></div><p id="wallet-feedback" role="status"></p></form></dialog>
 </body>
 </html>
