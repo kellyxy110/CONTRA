@@ -25,10 +25,12 @@ export function cloudflareProviderReadiness(env){
    credits_verified:enabled(env[`${prefix}_CREDITS_VERIFIED`]),
    pricing_verified:enabled(env[`${prefix}_PRICING_VERIFIED`]),
    billing_limit_verified:enabled(env[`${prefix}_BILLING_LIMIT_VERIFIED`]),
+   server_budget_verified:enabled(env[`${prefix}_SERVER_BUDGET_VERIFIED`]),
    owner_spend_authorised:enabled(env[`${prefix}_SPEND_AUTHORISED`]),
    live_enabled:enabled(env[`${prefix}_LIVE_ENABLED`])
   };
-  const ready=Object.values(gates).every(Boolean);
+  const spendControl=gates.billing_limit_verified||gates.server_budget_verified;
+  const ready=Object.entries(gates).every(([name,value])=>name==='billing_limit_verified'||name==='server_budget_verified'?true:Boolean(value))&&spendControl;
   return [provider,{status:ready?'READY':secretPresent?'GATED':'CREDENTIALS_PENDING',model:model||null,endpoint_configured:Boolean(endpoint),programme_ceiling_usd:cap,gates}];
  }));
 }

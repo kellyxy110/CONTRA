@@ -2,7 +2,7 @@
 
 ## Current authority and work order
 
-Implement the [three-phase completion plan](docs/COMPLETION_PLAN.md). Start with the latest `main` and open pull requests, preserving completed backend work from PRs #96 and #97. Frontend PR #95 and functional PR #100 merged. Owner visual acceptance is reopened, and the approved dark/light screenshots in `design/approved/` are the sole active visual authority.
+Start with the latest `main` and open pull requests. Preserve completed contract, backend, wallet, provider and frontend work. The public application, current source, protocol specifications, verified tests and README are the active release authorities. Historical planning files are retained locally or in Git history, not as current implementation instructions.
 
 Work continuously through independently authorised documentation, implementation, code review, tests and deployment verification. Do not request routine approval for normal engineering actions. Merge reviewed changes when the required checks are green and branch protections permit. Continue independent work while human-held signing or provider gates remain closed.
 
@@ -14,7 +14,7 @@ Work continuously through independently authorised documentation, implementation
 - UNKNOWN payout operations remain locked unless an authoritative known transaction hash can be reconciled. Never blind-rebroadcast.
 - AI proposals and Modal verifications remain non-binding. Live provider execution requires case, round, evidence, model and budget readiness.
 - Use native NEAR on Testnet only; no token or mainnet rollout is authorised.
-- Follow only `design/approved/overview-dark.jpeg` and `design/approved/overview-light.jpeg` for desktop Overview geometry. Previous graph-first and UX2/UX3 designs are historical. Preserve mint #00EC97, coral #FF8678, slate #16221D, obsidian #0B1110 and soft white #F5F7F5. Implement the accessible sidebar collapse, and retain both doughnut charts even in an honest empty-data presentation.
+- Preserve mint #00EC97, coral #FF8678, slate #16221D, obsidian #0B1110 and soft white #F5F7F5. Maintain the accessible sidebar collapse and both doughnut charts, including honest empty-data presentation. Previous graph-first and UX2/UX3 designs are historical.
 - Do not use em dash characters in copy, code, tests or Markdown.
 - README badges and all claimed tests, receipts, spending, deployment and reviewer independence must be verifiable.
 

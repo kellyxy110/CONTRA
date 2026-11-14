@@ -6,13 +6,16 @@ import {storeCounterexample, challengeEligibility, fileChallenge} from './challe
 import {deadlineFields, previewCase, yocto} from './case-operations.mjs';
 import {submitDevelopmentFixture} from './evaluation-operations.mjs';
 import {mountConstellations} from './constellations.mjs';
-import {commitReviewerVote,revealReviewerVote,respondToInvitation,signCommitteeAssignment,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
+import {commitmentTransactionArgs,commitReviewerVote,revealReviewerVote,respondToInvitation,signCommitteeAssignment,signReviewerConsent,storeReviewerDisclosure,storeReviewerFinding} from './reviewer-operations.mjs';
 import {inspectReceipt, inspectOperation, operationRecoveryState, reconcileKnownOperation} from './settlement-operations.mjs';
 import {createReviewRecoveryPackage,recoverReviewReveal,reviewPackageBody} from './review-package.mjs';
+import {readPersistentSession,writePersistentSession,clearPersistentSession,saveWorkspaceDraft,restoreWorkspaceDraft} from './browser-state.mjs';
 
 const byId = id => document.getElementById(id);
 const routes = {overview:'Overview',cases:'Cases',evidence:'Evidence',lab:'Evaluations',challenges:'Challenges',reviewers:'The Bench',settlement:'Settlement',constellations:'Constellations',activity:'Activity',settings:'Settings'};
-let token = sessionStorage.getItem('contra-session');
+const recoveredBrowserSession=readPersistentSession();
+let token = recoveredBrowserSession?.token||null;
+let sessionExpires = recoveredBrowserSession?.expires||0;
 const {request, view} = createApiClient(() => token);
 const post = (path, body) => request(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 let cases = [], caseRequest = 0;
@@ -81,6 +84,8 @@ function icon(name) {
 function element(tag, content) {
  const node = document.createElement(tag);
  node.textContent = content;
+ if(tag==='form')node.noValidate=true;
+ if(tag==='textarea')node.style.resize='none';
  return node;
 }
 
@@ -294,8 +299,62 @@ const brandMark=document.querySelector('.brand svg').cloneNode(true);
 brandMark.classList.add('statement-mark');
 document.querySelector('.message').prepend(brandMark);
 let routeRequest = 0;
-let account = null;
+let account = recoveredBrowserSession?.account||null;
 let wallet = null;
+let walletId = null;
+let renewalTimer = null;
+let activeDraftContext=null;
+
+function currentDraftContext(){return {route:location.hash.slice(1).split('/')[0]||'overview',account:account||'anonymous',caseId:byId('case')?.value||'none'};}
+const workspaceRoot=byId('workspace');
+workspaceRoot.addEventListener('input',()=>activeDraftContext&&saveWorkspaceDraft(workspaceRoot,activeDraftContext));
+workspaceRoot.addEventListener('change',()=>activeDraftContext&&saveWorkspaceDraft(workspaceRoot,activeDraftContext));
+const draftObserver=new MutationObserver(()=>{if(activeDraftContext)queueMicrotask(()=>restoreWorkspaceDraft(workspaceRoot,activeDraftContext));});
+draftObserver.observe(workspaceRoot,{childList:true,subtree:true});
+
+function persistSession(session) {
+ token=session.token;
+ account=session.account;
+ sessionExpires=Number(session.expires)||0;
+ writePersistentSession({token,account,expires:sessionExpires});
+ scheduleSessionRenewal();
+}
+function clearSession() {
+ token=null;account=null;sessionExpires=0;
+ clearPersistentSession();
+ clearTimeout(renewalTimer);
+ renewalTimer=null;
+}
+function scheduleSessionRenewal() {
+ clearTimeout(renewalTimer);
+ if(!token||!sessionExpires)return;
+ const delay=Math.max(1000,sessionExpires-Date.now()-24*60*60*1000);
+ renewalTimer=setTimeout(()=>void renewSessionProactively(),delay);
+}
+async function renewSessionProactively() {
+ if(!token)return;
+ try{
+  const sdk=await import('./wallet.bundle.js');
+  persistSession(await sdk.renewWalletSession(token));
+ }catch{
+  clearSession();
+  byId('account-menu-feedback').textContent='Your session expired. Reauthenticate to continue.';
+  await refreshAccountControl();
+ }
+}
+function formatWalletBalance(yoctoValue) {
+ const value=BigInt(yoctoValue),whole=value/10n**24n,fraction=(value%10n**24n).toString().padStart(24,'0').slice(0,5).replace(/0+$/,'');
+ return `${whole}${fraction?'.'+fraction:''} NEAR`;
+}
+async function refreshAccountControl() {
+ const button=byId('wallet'),menu=byId('account-menu');
+ if(!account){button.textContent='Connect wallet';button.setAttribute('aria-expanded','false');menu.hidden=true;return;}
+ button.textContent=account;
+ byId('account-menu-id').textContent=account;
+ byId('account-menu-balance').textContent='Loading…';
+ try{const sdk=await import('./wallet.bundle.js'),balance=await sdk.getTestnetAccountBalance(account);byId('account-menu-balance').textContent=formatWalletBalance(balance.availableYocto);}
+ catch{byId('account-menu-balance').textContent='Unavailable';}
+}
 document.querySelector('.brand').addEventListener('click',event=>{event.preventDefault();history.replaceState(null,'',location.pathname+location.search+'#overview');void updateNavigation();scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});if(!visualFixtureMode)void refreshOverview();});
 async function refreshOverview(){
  const [nextCases,nextActivity]=await Promise.allSettled([readPagedCases(view,{maxPages:20}),view('get_events',{case_id:null,after_seq:'0',limit:20})]);
@@ -416,7 +475,7 @@ async function reviewerWorkspace(panel) {
  function mountCommit(findingDigest,selectedDisposition){
   if(section.querySelector('[data-review-commit]'))return;
   const form=element('form','');form.dataset.reviewCommit='true';const passLabel=element('label','Recovery passphrase'),passphrase=element('input','');passphrase.type='password';passphrase.name='passphrase';passphrase.required=true;passphrase.minLength=12;passLabel.append(passphrase);const submit=element('button','Encrypt recovery package and commit'),result=element('div','');result.setAttribute('role','status');form.append(element('h4','Commit reviewer vote'),passLabel,submit,result);section.append(form);
-  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{if(!wallet)throw Error('Reconnect the appointed reviewer wallet before committing.');const sdk=await import('./wallet.bundle.js');let built;try{built=reviewPackageBody(await request('reviewer/package?'+new URLSearchParams({case_id:caseId,round_id:roundId})));await recoverReviewReveal({stored:built,caseRecord:record,account,passphrase:passphrase.value,voteCommitment:sdk.voteCommitment});}catch(error){if(!/Reviewer package not found/.test(error.message))throw error;built=await createReviewRecoveryPackage({caseRecord:record,round,account,findingDigest,disposition:selectedDisposition,passphrase:passphrase.value,voteCommitment:sdk.voteCommitment});await post('reviewer/package',built);}const sent=await commitReviewerVote(signWorkspaceCall,caseId,roundId,built.commitment);result.textContent=`Commit operation: ${sent.operation?.status ?? 'Unavailable'}. The nonce is encrypted in the durable recovery package.`;}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{if(!wallet)throw Error('Reconnect the appointed reviewer wallet before committing.');const sdk=await import('./wallet.bundle.js');let built;try{built=reviewPackageBody(await request('reviewer/package?'+new URLSearchParams({case_id:caseId,round_id:roundId})));await recoverReviewReveal({stored:built,caseRecord:record,account,passphrase:passphrase.value,voteCommitment:sdk.voteCommitment});}catch(error){if(!/Reviewer package not found/.test(error.message))throw error;built=await createReviewRecoveryPackage({caseRecord:record,round,account,findingDigest,disposition:selectedDisposition,passphrase:passphrase.value,voteCommitment:sdk.voteCommitment});await post('reviewer/package',built);}const args=commitmentTransactionArgs(caseId,roundId,built.commitment),operationId=`contra-commit_vote-${caseId}-${account.replaceAll('.','-')}-r${roundId}`,operation=await prepareWorkspaceCall('commit_vote',args,'0',operationId),config=await request('config');if(!config.external_wallet_signing_authorized){result.textContent=`Commit operation ${operation.operation_id} is ${operation.status}. Payload hash: ${operation.payload_hash}. Signing remains disabled until exact server authorisation. The nonce remains encrypted in the durable recovery package.`;return;}const sent=await signWorkspaceCall('commit_vote',args,'0',operation);result.textContent=`Commit operation: ${sent.operation?.status ?? 'Unavailable'}. The nonce is encrypted in the durable recovery package.`;}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
  }
  const recoverForm=element('form',''),recoverLabel=element('label','Recovery passphrase'),recoverPass=element('input','');recoverPass.type='password';recoverPass.required=true;recoverLabel.append(recoverPass);const recover=element('button','Recover and reveal vote'),recoverResult=element('div','');recoverResult.setAttribute('role','status');recoverForm.append(element('h4','Reveal committed vote'),recoverLabel,recover,recoverResult);section.append(recoverForm);
  recoverForm.addEventListener('submit',async event=>{event.preventDefault();recover.disabled=true;try{if(!wallet)throw Error('Reconnect the appointed reviewer wallet before revealing.');const stored=await request('reviewer/package?'+new URLSearchParams({case_id:caseId,round_id:roundId})),sdk=await import('./wallet.bundle.js'),args=await recoverReviewReveal({stored,caseRecord:record,account,passphrase:recoverPass.value,voteCommitment:sdk.voteCommitment}),sent=await revealReviewerVote(signWorkspaceCall,args);recoverResult.textContent=`Reveal operation: ${sent.operation?.status ?? 'Unavailable'}.`;}catch(error){recoverResult.textContent=error.message;}finally{recover.disabled=false;}});
@@ -437,7 +496,7 @@ async function evaluationTools(panel, config) {
   const list=element('ul','');
   for(const job of jobs){
    if(caseId && job.case_id!==caseId)continue;
-   const item=element('li',`${job.provider} · ${job.status} · Response digest: ${job.response_digest ?? 'Unavailable'}`);
+   const item=element('li',`${job.provider} · ${job.status} · Response digest: ${job.response_digest ?? 'Unavailable'}${job.error?` · ${job.error}`:''}`);
    const inspect=element('button','Inspect evaluation result');
    const result=element('div','');
    result.setAttribute('role','status');
@@ -487,17 +546,21 @@ async function evaluationTools(panel, config) {
  }
  if(caseId&&config.providers?.meta?.status==='READY'){
   const form=element('form',''),roleLabel=element('label','Evaluation role'),role=element('select','');role.name='role';for(const value of ['primary','adversarial','fresh'])role.append(new Option(readable(value),value));roleLabel.append(role);const roundLabel=element('label','Round'),round=element('select','');round.name='round_id';round.append(new Option('Primary','0'),new Option('Fresh','1'));roundLabel.append(round);const submit=element('button','Run bounded Meta evaluation'),result=element('div','');result.setAttribute('role','status');form.append(roleLabel,roundLabel,submit,result);panel.append(form);
-  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const job=await post('evaluate',{case_id:caseId,round_id:Number(round.value),role:role.value,idempotency_key:`browser-meta:${caseId}:${round.value}:${role.value}`});result.textContent=`Meta job: ${job.status}. ${job.response_digest ?? 'No response digest.'}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const selected=cases.find(item=>item.case_id===caseId),executionMode=['Resolved','Unresolved','Settled'].includes(selected?.state)?'retrospective':undefined,attempt=crypto.randomUUID(),job=await post('evaluate',{case_id:caseId,round_id:Number(round.value),role:role.value,...(executionMode?{execution_mode:executionMode}:{}),idempotency_key:`browser-meta:${caseId}:${round.value}:${role.value}:${attempt}`});result.textContent=`Meta job: ${job.status}. ${job.response_digest ?? 'No response digest.'}${executionMode?' Retrospective closed-case analysis only.':''}`;await refreshJobs();}catch(error){result.textContent=error.message;await refreshJobs().catch(()=>{});}finally{submit.disabled=false;}});
  }
  if(caseId&&config.providers?.modal?.status==='READY'){
   const form=element('form',''),label=element('label','Meta proposal digest'),input=element('input','');input.name='proposal_digest';input.required=true;input.pattern='[0-9a-f]{64}';label.append(input);const submit=element('button','Verify proposal with Modal'),result=element('div','');result.setAttribute('role','status');form.append(label,submit,result);panel.append(form);
-  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const roundId=Number(byId('round').value),job=await post('provider/jobs',{mode:'live',kind:'verification',case_id:caseId,round_id:roundId,proposal_digest:input.value,idempotency_key:`browser-modal:${caseId}:${roundId}:${input.value}`});result.textContent=`Modal job: ${job.status}. ${job.response_digest ?? 'No response digest.'}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
+  form.addEventListener('submit',async event=>{event.preventDefault();submit.disabled=true;try{const roundId=Number(byId('round').value),selected=cases.find(item=>item.case_id===caseId),executionMode=['Resolved','Unresolved','Settled'].includes(selected?.state)?'retrospective':undefined,job=await post('provider/jobs',{mode:'live',kind:'verification',case_id:caseId,round_id:roundId,proposal_digest:input.value,...(executionMode?{execution_mode:executionMode}:{}),idempotency_key:`browser-modal:${caseId}:${roundId}:${input.value}:${executionMode||'live'}:${crypto.randomUUID()}`});result.textContent=`Modal job: ${job.status}. ${job.response_digest ?? 'No response digest.'}${executionMode?' Retrospective closed-case verification only.':''}`;await refreshJobs();}catch(error){result.textContent=error.message;}finally{submit.disabled=false;}});
  }
  try{await refreshJobs();}catch(error){feedback.textContent=error.message;}
 }
 async function signWorkspaceCall(...args) {
  const sdk = await import('./wallet.bundle.js');
  return createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk}).signCall(...args);
+}
+async function prepareWorkspaceCall(...args) {
+ const sdk = await import('./wallet.bundle.js');
+ return createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk}).prepareCall(...args);
 }
 
 function caseCreation(panel, config) {
@@ -608,8 +671,13 @@ function caseArtifactTools(panel, record, isChallenge) {
   input.type=type;
   input.name=name;
   input.required=true;
+  if(type==='datetime-local'){
+   const now=new Date(),local=new Date(now.getTime()-now.getTimezoneOffset()*60000);
+   input.value=local.toISOString().slice(0,16);
+  }
   label.append(input);
   form.append(label);
+  return input;
  }
  const criteria=record.terms?.criteria ?? [];
  if(isChallenge){
@@ -642,24 +710,27 @@ function caseArtifactTools(panel, record, isChallenge) {
    const saved=isChallenge ? await storeCounterexample(post,caseId,data) :
     await storeEvidence({post,caseId,manifest:buildEvidenceManifest(data,record)});
    result.textContent=`Stored off-chain: ${saved.digest}`;
-   const config=await request('config');
-   const enabled=Boolean(wallet && config.network==='testnet' && config.external_wallet_signing_authorized===true);
-   const eligible=isChallenge ? challengeEligibility(record,account,enabled) :
-    enabled && account===record.terms?.beneficiary_id && record.state==='Funded';
+   const eligible=isChallenge ? challengeEligibility(record,account,true) :
+    account===record.terms?.beneficiary_id && record.state==='Funded';
    if(!eligible){
-    result.append(element('p','On-chain submission requires an eligible case, connected wallet and server signing authorisation.'));
+    result.append(element('p','On-chain submission requires an eligible case and the authorised participant account.'));
     return;
    }
-   const submit=element('button',isChallenge?'Sign challenge':'Sign evidence submission');
-   submit.type='button';
-   result.append(submit);
-   submit.addEventListener('click',async()=>{
-    submit.disabled=true;
+   const prepare=element('button',isChallenge?'Submit challenge on-chain':'Submit evidence on-chain');
+   prepare.type='button';
+   result.append(prepare);
+   prepare.addEventListener('click',async()=>{
+    prepare.disabled=true;
     try{
-     const receipt=isChallenge ? await fileChallenge(signWorkspaceCall,caseId,Number(data.get('criterion_id')),saved.digest) :
-      await signWorkspaceCall('submit_evidence',evidenceSubmissionArgs(caseId,record,saved.digest),'1');
-     result.textContent=`Operation status: ${receipt.operation?.status ?? 'Unavailable'}. Transaction: ${receipt.transaction_hash ?? 'Unavailable'}`;
+     const method=isChallenge?'file_challenge':'submit_evidence';
+     const args=isChallenge?{case_id:caseId,criterion_id:Number(data.get('criterion_id')),counterexample_digest:saved.digest}:evidenceSubmissionArgs(caseId,record,saved.digest);
+     const operation=await prepareWorkspaceCall(method,args,'1');
+     const config=await request('config');
+     if(!config.external_wallet_signing_authorized){result.textContent=`Prepared operation: ${operation.operation_id}. Payload hash: ${operation.payload_hash}. Signing is unavailable.`;return;}
+     const sent=await signWorkspaceCall(method,args,'1',operation);
+     result.textContent=`Operation status: ${sent.operation?.status ?? 'Unavailable'}. Transaction: ${sent.transaction_hash ?? 'Unavailable'}.`;
     }catch(error){result.append(element('p',error.message));}
+    finally{prepare.disabled=false;}
    });
   }catch(error){result.textContent=error.message;}
   finally{save.disabled=false;}
@@ -672,11 +743,23 @@ function caseExplorer(panel,records){
 }
 function mountCaseDetails(panel,record){
  panel.querySelector('[data-case-details]')?.remove();const section=element('section','');section.dataset.caseDetails='true';section.append(element('h3',`Case ${record.case_id}`),element('p',`State: ${readable(record.state)}. Creator: ${record.creator_id}. Beneficiary: ${record.terms?.beneficiary_id ?? 'Unavailable'}.`),element('p',`Terms digest: ${record.terms_digest}. Evidence: ${record.evidence_digest ?? 'Not submitted'}.`));
- const actions=eligibleCaseActions(record.case_id,record,account),feedback=element('div','');feedback.setAttribute('role','status');for(const [method,args,deposit,label] of actions){const button=element('button',label);button.type='button';button.addEventListener('click',async()=>{button.disabled=true;try{const sent=await signWorkspaceCall(method,args,deposit);feedback.textContent=`${label}: ${sent.operation?.status ?? 'Unavailable'}. Transaction: ${sent.transaction_hash ?? 'Unavailable'}.`;}catch(error){feedback.textContent=error.message;}finally{button.disabled=false;}});section.append(button);}if(!actions.length)section.append(element('p','No case action is available for this account and state.'));section.append(feedback);panel.append(section);
+ const actions=eligibleCaseActions(record.case_id,record,account),feedback=element('div','');feedback.setAttribute('role','status');for(const [method,args,deposit,label] of actions){const button=element('button',label);button.type='button';button.addEventListener('click',async()=>{button.disabled=true;try{const operationId=method==='advance_round'?`contra-advance_round-${record.case_id}-${record.round_id ?? 0}-${String(record.phase ?? record.state).toLowerCase()}-${account.replaceAll('.','-')}`:null,sdk=await import('./wallet.bundle.js'),operations=createWalletOperations({request,getToken:()=>token,getAccount:()=>account,getWallet:()=>wallet,...sdk}),operation=await operations.prepareCall(method,args,deposit,operationId),config=await request('config');if(!config.external_wallet_signing_authorized){feedback.textContent=`${label}: ${operation.status}. Operation ${operation.operation_id} is persisted and signing remains disabled.`;return;}const sent=await operations.signCall(method,args,deposit,operation);feedback.textContent=`${label}: ${sent.operation?.status ?? 'Unavailable'}. Transaction: ${sent.transaction_hash ?? 'Unavailable'}.`;}catch(error){feedback.textContent=error.message;}finally{button.disabled=false;}});section.append(button);}if(!actions.length)section.append(element('p','No case action is available for this account and state.'));section.append(feedback);panel.append(section);
 }
-function evidenceInspector(panel,caseId,records){
+function evidenceInspector(panel,caseId,records,caseRecord){
  const section=element('section','');section.append(element('h3','Authorised evidence records'));if(!records.length)section.append(element('p','No evidence or counterexample records are available.'));
- for(const record of records){const item=element('div',''),button=element('button',`${record.kind ?? 'Record'} · ${record.digest}`),result=element('div','');button.type='button';result.setAttribute('role','status');button.addEventListener('click',async()=>{button.disabled=true;try{const artifact=await request('artifact?'+new URLSearchParams({case_id:caseId,digest:record.digest}));result.replaceChildren(element('p',`${artifact.media_type} · ${artifact.digest}`),element('pre',artifact.text));}catch(error){result.textContent=error.message;}finally{button.disabled=false;}});item.append(button,result);section.append(item);}panel.append(section);
+ for(const record of records){const item=element('div',''),button=element('button',`${record.kind ?? 'Record'} · ${record.digest}`),result=element('div','');button.type='button';result.setAttribute('role','status');button.addEventListener('click',async()=>{button.disabled=true;try{const artifact=await request('artifact?'+new URLSearchParams({case_id:caseId,digest:record.digest}));result.replaceChildren(element('p',`${artifact.media_type} · ${artifact.digest}`),element('pre',artifact.text));}catch(error){result.textContent=error.message;}finally{button.disabled=false;}});item.append(button);if(caseRecord?.state==='Funded'&&!caseRecord.evidence_digest&&account===caseRecord.terms?.beneficiary_id&&record.kind!=='counterexample'){const prepare=element('button','Submit evidence on-chain');prepare.type='button';prepare.addEventListener('click',async()=>{prepare.disabled=true;try{const args=evidenceSubmissionArgs(caseId,caseRecord,record.digest),operation=await prepareWorkspaceCall('submit_evidence',args,'1'),config=await request('config');if(!config.external_wallet_signing_authorized){result.textContent=`Prepared operation: ${operation.operation_id}. Payload hash: ${operation.payload_hash}. Signing is unavailable.`;return;}const sent=await signWorkspaceCall('submit_evidence',args,'1',operation);result.textContent=`Operation status: ${sent.operation?.status ?? 'Unavailable'}. Transaction: ${sent.transaction_hash ?? 'Unavailable'}.`;}catch(error){result.textContent=error.message;}finally{prepare.disabled=false;}});item.append(prepare);}item.append(result);section.append(item);}panel.append(section);
+}
+
+function workspaceCaseSelector(panel,records,currentCaseId){
+ const label=element('label','Case');
+ const selector=element('select','');
+ selector.dataset.workspaceCase='true';
+ selector.append(new Option('Select a case',''),...records.map(record=>new Option(`${record.case_id.slice(0,12)} · ${readable(record.state)}`,record.case_id)));
+ selector.value=records.some(record=>record.case_id===currentCaseId)?currentCaseId:'';
+ label.append(selector);
+ panel.append(label);
+ selector.addEventListener('change',()=>{byId('case').value=selector.value;void selectCase();void updateNavigation();});
+ return selector;
 }
 function activityTools(panel,items){
  const label=element('label','Filter activity'),input=element('input','');input.type='search';label.append(input);const output=element('ul','');panel.append(label,output);const render=()=>{const query=input.value.toLowerCase(),filtered=items.filter(event=>JSON.stringify(event).toLowerCase().includes(query));output.replaceChildren(...filtered.map(event=>{const data=event.data?.[0]??{},item=element('li',`${data.seq ?? '?'} · ${event.event} · ${data.case_id ?? 'Global'}`);if(data.case_id){const link=element('button','Open case');link.type='button';link.addEventListener('click',()=>{byId('case').value=data.case_id;location.hash='cases';});item.append(' ',link);}return item;}));if(!filtered.length)output.append(element('li','No matching activity.'));};input.addEventListener('input',render);render();
@@ -684,8 +767,8 @@ function activityTools(panel,items){
 async function settingsTools(panel,config){
  panel.append(element('p',`Network: ${config.network ?? 'Unavailable'}`),element('p',`Account: ${account ?? 'Disconnected'}`),element('p',`Contract: ${config.contract_account ?? 'Unavailable'}`));if(!token)return;
  const renew=element('button','Renew session'),disconnect=element('button','Disconnect wallet'),feedback=element('div','');feedback.setAttribute('role','status');panel.append(renew,disconnect,feedback);
- renew.addEventListener('click',async()=>{renew.disabled=true;try{const sdk=await import('./wallet.bundle.js'),session=await sdk.renewWalletSession(token);token=session.token;account=session.account;sessionStorage.setItem('contra-session',token);feedback.textContent=`Session renewed for ${account}.`;}catch(error){feedback.textContent=error.message;}finally{renew.disabled=false;}});
- disconnect.addEventListener('click',async()=>{disconnect.disabled=true;try{const sdk=await import('./wallet.bundle.js');await sdk.disconnectWalletSession({token,wallet});token=null;account=null;wallet=null;sessionStorage.removeItem('contra-session');byId('wallet').textContent='Connect wallet';feedback.textContent='Wallet disconnected and session revoked.';await updateNavigation();}catch(error){feedback.textContent=error.message;disconnect.disabled=false;}});
+ renew.addEventListener('click',async()=>{renew.disabled=true;try{const sdk=await import('./wallet.bundle.js'),session=await sdk.renewWalletSession(token);persistSession(session);feedback.textContent=`Session renewed for ${account}.`;}catch(error){feedback.textContent=error.message;}finally{renew.disabled=false;}});
+ disconnect.addEventListener('click',async()=>{disconnect.disabled=true;try{await disconnectCurrentWallet();feedback.textContent='Wallet disconnected and session revoked.';await updateNavigation();}catch(error){feedback.textContent=error.message;disconnect.disabled=false;}});
 }
 function settlementTools(panel) {
  if (!token) {
@@ -722,7 +805,34 @@ function settlementTools(panel) {
   const operation = await inspectOperation(request,id);
   const state = operationRecoveryState(operation);
   result.textContent = `Operation status: ${operation.status ?? 'Unavailable'}`;
+  const identity=element('dl','');
+  identity.className='operation-identity';
+  for(const [label,value] of [
+   ['Operation ID',operation.operation_id ?? operation.id],
+   ['Account',operation.account ?? operation.payload?.signerId],
+   ['Payload hash',operation.payload_hash],
+   ['Contract',operation.contract_account ?? operation.payload?.receiverId],
+   ['Transaction hash',operation.tx_hash],
+  ])if(value){identity.append(element('dt',label),element('dd',String(value)));}
+  result.append(identity);
   if (state.locked) result.append(element('p','The transaction hash is unknown. This operation remains locked.'));
+  if(operation.status==='PREPARED'){
+   const sign=element('button','Sign authorised operation');
+   sign.type='button';
+   result.append(sign);
+   sign.addEventListener('click',async()=>{
+    sign.disabled=true;
+    try{
+     if(!wallet||!token||operation.account!==account)throw Error('Reconnect and authenticate the operation account before signing.');
+     const sdk=await import('./wallet.bundle.js');
+     const prepared={...operation,operation_id:operation.operation_id||operation.id,payload:operation.payload||(operation.payload_json?JSON.parse(operation.payload_json):null)};
+     const sent=await sdk.sendPreparedWalletTransaction(wallet,{token,operation:prepared});
+     const updated=await sdk.reconcileWalletTransaction({token,accountId:account,operationId:id});
+     const txHash=sent?.transaction?.hash||sent?.transaction_outcome?.id||sent?.transactionHash||updated.tx_hash;
+     result.textContent=`Operation status: ${updated.status ?? 'Unavailable'}. Transaction: ${txHash ?? 'Unavailable'}.`;
+    }catch(error){result.append(element('p',error.message));sign.disabled=false;}
+   });
+  }
   if (!state.canReconcile) return;
   const reconcile = element('button','Reconcile with chain');
   reconcile.type = 'button';
@@ -740,8 +850,10 @@ function settlementTools(panel) {
  });
 }
 async function updateNavigation() {
+ if(activeDraftContext)saveWorkspaceDraft(workspaceRoot,activeDraftContext);
  const generation = ++routeRequest;
  const route = location.hash.slice(1).split('/')[0] || 'overview';
+ activeDraftContext={route,account:account||'anonymous',caseId:byId('case')?.value||'none'};
  [...byId('navigation').children].forEach(link => {
   if (link.hash === '#' + route) link.setAttribute('aria-current','page');
   else link.removeAttribute('aria-current');
@@ -756,6 +868,7 @@ async function updateNavigation() {
  const panel = element('article', '');
  panel.append(element('h2', routes[route] ?? 'Destination unavailable'), element('p','Loading…'));
  workspace.replaceChildren(panel);
+ restoreWorkspaceDraft(workspace,activeDraftContext);
  if(visualFixtureMode){
   panel.lastElementChild.remove();
   const intro=element('section','');intro.className='workspace-intro';intro.append(element('div','Simulated data'),element('h3',`${routes[route]} demonstration`),element('p','Explore the workflow with records isolated from contract, provider and financial operations.'));panel.append(intro);
@@ -817,12 +930,13 @@ async function updateNavigation() {
    mountConstellations(panel,{cases:records,selectedCase:byId('case').value,request,view});
   } else if (route === 'evidence') {
    const caseId = byId('case').value;
-   if (!caseId) return show(['Select a case on the Overview to inspect its evidence.']);
+   panel.lastElementChild.remove();
+   workspaceCaseSelector(panel,cases,caseId);
+   if (!caseId){panel.append(element('p','Select a case to inspect or submit evidence.'));return;}
    const [, records] = await readProtectedCaseRecords(request,caseId);
-   show((records?.items ?? []).map(item=>`${item.kind ?? 'Manifest'} · ${item.digest ?? 'Digest unavailable'}`));
    if(route==='evidence'&&generation===routeRequest){
     const selected=cases.find(record=>record.case_id===caseId);
-    if(selected){evidenceInspector(panel,caseId,records?.items??[]);caseArtifactTools(panel,selected,false);}
+    if(selected){evidenceInspector(panel,caseId,records?.items??[],selected);caseArtifactTools(panel,selected,false);}
    }
   } else show(['Choose a destination from the navigation.']);
  } catch {
@@ -835,23 +949,54 @@ byId('case').addEventListener('change', selectCase);
 byId('round').addEventListener('change', selectCase);
 byId('case-search').addEventListener('change',event=>{const query=event.target.value.trim().toLowerCase();const match=cases.find(item=>item.case_id.toLowerCase()===query||`${item.case_id.slice(0,12)} · ${readable(item.state)}`.toLowerCase()===query||item.case_id.toLowerCase().startsWith(query.split(' ')[0]));byId('case').value=match?.case_id||'';void selectCase();});
 document.querySelectorAll('[data-round]').forEach(button=>button.addEventListener('click',()=>{byId('round').value=button.dataset.round;document.querySelectorAll('[data-round]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));void selectCase();}));
-byId('wallet').addEventListener('click', async () => {
- const button = byId('wallet');
- button.disabled = true;
- try {
+async function disconnectCurrentWallet() {
+ const sdk=await import('./wallet.bundle.js');
+ try{if(token)await sdk.disconnectWalletSession({token,wallet});else await wallet?.signOut?.();}
+ finally{clearSession();wallet=null;walletId=null;sdk.forgetWalletIdentity();await refreshAccountControl();}
+}
+async function openWalletPicker() {
+ const button=byId('wallet');button.disabled=true;
+ try{
   if(visualFixtureMode)throw Error('Wallet connections are disabled in Demo Mode. Switch to Testnet mode to authenticate.');
-  const config = await request('config');
-  const sdk = await import('./wallet.bundle.js');
-  const listed=await sdk.listCompatibleWallets({network:config.network});
+  const config=await request('config');
+  if(config.network!=='testnet'||config.contract_account!=='contra-contestation.testnet')throw Error('Wallet authentication is unavailable because this runtime is not connected to CONTRA Testnet. Start the local server in Testnet mode or use the deployed application.');
+  const sdk=await import('./wallet.bundle.js'),listed=await sdk.listCompatibleWallets({network:config.network});
   const dialog=byId('wallet-dialog'),options=byId('wallet-options'),feedback=byId('wallet-feedback');
   options.replaceChildren();feedback.textContent='';
-  if(!listed.wallets.length)throw Error('No compatible Testnet wallet with NEP-413 support is currently available.');
-  for(const option of listed.wallets){const choice=element('button','');choice.type='button';choice.className='wallet-option';const image=document.createElement('img');image.src=option.icon;image.alt='';const copy=element('span','');copy.append(element('strong',option.name),element('small',`${option.description} ${option.verification}.`));choice.append(image,copy,element('span','Connect'));choice.addEventListener('click',async()=>{[...options.querySelectorAll('button')].forEach(item=>item.disabled=true);feedback.textContent=`Connecting to ${option.name}…`;try{const connected=await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,walletId:option.id,connector:listed.connector,...sdk});wallet=connected.wallet;token=connected.session.token;account=connected.session.account;sessionStorage.setItem('contra-session',token);button.textContent=connected.session.account;feedback.textContent=`Authenticated as ${connected.session.account}.`;setTimeout(()=>dialog.close(),500);await selectCase();if(!byId('workspace').hidden)void updateNavigation();}catch(error){feedback.textContent=error.message;[...options.querySelectorAll('button')].forEach(item=>item.disabled=false);}});options.append(choice);}
+  if(!listed.wallets.length)throw Error('No verified Testnet wallet with NEP-413 support is currently available.');
+  for(const option of listed.wallets){
+   const choice=element('button','');choice.type='button';choice.className='wallet-option';
+   const image=document.createElement('img');image.src=option.icon;image.alt='';
+   const copy=element('span','');copy.append(element('strong',option.name),element('small','Testnet · NEP-413'));
+   choice.append(image,copy,element('span','Connect'));
+   choice.addEventListener('click',async()=>{
+    [...options.querySelectorAll('button')].forEach(item=>item.disabled=true);feedback.textContent=`Connecting to ${option.name}…`;dialog.close();
+    try{
+     const connected=await openAuthenticatedWallet({network:config.network,contractAccount:config.contract_account,walletId:option.id,connector:listed.connector,...sdk});
+     wallet=connected.wallet;walletId=option.id;persistSession(connected.session);sdk.rememberWalletIdentity({walletId,accountId:account});
+     feedback.textContent=`Authenticated as ${account}.`;await refreshAccountControl();await selectCase();if(!byId('workspace').hidden)void updateNavigation();
+    }catch(error){feedback.textContent=error.message;[...options.querySelectorAll('button')].forEach(item=>item.disabled=false);dialog.showModal();}
+   });
+   options.append(choice);
+  }
   dialog.showModal();
- } catch (error) {
-  byId('wallet-feedback').textContent=error.message;byId('wallet-dialog').showModal?.();
- } finally {
-  button.disabled = false;
+ }catch(error){byId('wallet-feedback').textContent=error.message;byId('wallet-dialog').showModal?.();}
+ finally{button.disabled=false;}
+}
+byId('wallet').addEventListener('click',async()=>{
+ if(!account){await openWalletPicker();return;}
+ const menu=byId('account-menu'),opening=menu.hidden;menu.hidden=!opening;byId('wallet').setAttribute('aria-expanded',String(opening));if(opening)await refreshAccountControl();
+});
+byId('switch-wallet').addEventListener('click',async()=>{byId('account-menu').hidden=true;try{await disconnectCurrentWallet();await openWalletPicker();}catch(error){byId('wallet-feedback').textContent=error.message;byId('wallet-dialog').showModal?.();}});
+byId('disconnect-wallet').addEventListener('click',async()=>{const feedback=byId('account-menu-feedback');feedback.textContent='Disconnecting…';try{await disconnectCurrentWallet();feedback.textContent='';await updateNavigation();}catch(error){feedback.textContent=error.message;}});
+document.addEventListener('click',event=>{const control=event.target.closest('.account-control');if(!control){byId('account-menu').hidden=true;byId('wallet').setAttribute('aria-expanded','false');}});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!byId('account-menu').hidden){byId('account-menu').hidden=true;byId('wallet').setAttribute('aria-expanded','false');byId('wallet').focus();}});
+document.addEventListener('visibilitychange',async()=>{
+ if(document.visibilityState!=='visible'||!account)return;
+ if(sessionExpires&&sessionExpires-Date.now()<10*60*1000)await renewSessionProactively();
+ if(wallet){
+  try{const sdk=await import('./wallet.bundle.js');await sdk.assertWalletAccount(wallet,account);}
+  catch{clearSession();wallet=null;byId('account-menu-feedback').textContent='The wallet account changed. Reauthenticate to continue.';await refreshAccountControl();}
  }
 });
 
@@ -886,13 +1031,20 @@ table('events', activity.status === 'fulfilled' ? activity.value.items.map(event
 }) : [], 3, activity.status === 'fulfilled' ? 'No contract events returned.' : 'Contract activity is unavailable.');
 if (token) {
  try {
-  const sdk = await import('./wallet.bundle.js');
-  const session = await recoverWallet({token,...sdk});
-  account = session.account;
-  byId('wallet').textContent = session.account;
-  await updateNavigation();
- } catch {
-  token = null;
-  sessionStorage.removeItem('contra-session');
- }
+  const sdk=await import('./wallet.bundle.js'),session=await recoverWallet({token,...sdk});
+  persistSession({token,account:session.account,expires:Number(session.expires)||sessionExpires});
+  const restored=await sdk.restoreConnectedWallet({network:'testnet'}).catch(()=>null);
+  if(restored&&restored.account.accountId===account){wallet=restored.wallet;walletId=restored.walletId;}
+  await refreshAccountControl();await updateNavigation();
+ } catch {clearSession();}
+}
+if(!token&&!visualFixtureMode){
+ try{
+  const sdk=await import('./wallet.bundle.js'),restored=await sdk.restoreConnectedWallet({network:'testnet'});
+  if(restored){
+   const session=await sdk.authenticateWallet(restored.wallet,restored.account.accountId);
+   wallet=restored.wallet;walletId=restored.walletId;persistSession({...session,account:session.account||restored.account.accountId});
+   await refreshAccountControl();await updateNavigation();
+  }
+ }catch{clearSession();}
 }

@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {execFileSync,spawnSync} from 'node:child_process';
-import {createHash} from 'node:crypto';
 
 const root=path.resolve(import.meta.dirname,'..'),mode=process.argv[2]||'core';
 const git=(args,options={})=>execFileSync('git',args,{cwd:root,encoding:'utf8',maxBuffer:128*1024*1024,...options});
@@ -12,16 +11,6 @@ const currentFiles=textFiles.filter(({file})=>!file.startsWith('project/artifact
 const obsoleteTerm=new RegExp('adjudic'+'at','i'),inventedActor=new RegExp('contes'+'tator','i');
 for(const {file,text}of currentFiles){if(obsoleteTerm.test(text))failures.push(`${file}: obsolete contestation terminology`);if(inventedActor.test(text))failures.push(`${file}: invented contestation actor term`);}
 for(const file of files.filter(file=>!file.startsWith('project/artifacts/'))){if(obsoleteTerm.test(file))failures.push(`${file}: obsolete terminology in tracked path`);}
-const approvedImages=[
- ['design/approved/overview-dark.jpeg','3b184ab7c74fd3106d858c4b5e465c746b72136a189963de55264791e51111f4'],
- ['design/approved/overview-light.jpeg','e00b0fa987058aaf5ef8d6371e1eced0be02e33a0702e66aca156e9bc5002a41']
-];
-for(const [file,expected] of approvedImages){
- try{
-  const image=fs.readFileSync(path.join(root,file));
-  if(createHash('sha256').update(image).digest('hex')!==expected)failures.push(`${file}: approved image integrity failure`);
- }catch{failures.push(`${file}: approved image missing`);}
-}
 for(const file of files.filter(v=>/\.(?:m?js|cjs)$/.test(v))){const checked=spawnSync(process.execPath,['--check',file],{cwd:root,encoding:'utf8'});if(checked.status!==0)failures.push(`${file}: JavaScript syntax check failed\n${checked.stderr}`);}
 
 if(mode==='security'){

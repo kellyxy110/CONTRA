@@ -1,5 +1,6 @@
 node_modules/
 .data/
+.data-browser-stability/
 .tools/
 **/target/
 .env
@@ -18,6 +19,28 @@ apps/web/wallet.bundle.js
 .idea/
 .DS_Store
 Thumbs.db
+
+# Locally retained historical planning and superseded visual references
+/HACKATHON.md
+/DESIGN.md
+/UX-CONTRACT.md
+/design/approved/
+/docs/COMPLETION_PLAN.md
+/docs/IMPLEMENTATION_OCT28.md
+/docs/UX3B_ENGINEERING_ACCEPTANCE.md
+/docs/UX3B_FUNCTIONAL_INTEGRATION_MAP.md
+/docs/M04_ACCEPTANCE.md
+/docs/M041_ACCEPTANCE.md
+/docs/M042_ACCEPTANCE.md
+/docs/M042_COMPONENT_AUDIT.md
+/docs/M043_ACCEPTANCE.md
+/docs/M05_1_CI_RECOVERY.md
+/docs/M05_AC_REVIEW.md
+/docs/M05_RUNTIME_BACKEND.md
+/docs/M06_PROVIDER_INTEROPERABILITY.md
+/docs/testing/FRONTEND_VISUAL_ACCEPTANCE.md
+/docs/operations/M10_LIVE_VALIDATION_PACKET.md
+/pages/wrangler.toml
 *.log
 coverage/
 dist/

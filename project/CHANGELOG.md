@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-11-14 | Live settlement and provider verification
+
+- Verified final Testnet settlement transaction `GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk`, callback success and exact 0.1 NEAR BASE_REFUND recipient.
+- Disabled the operation-specific signing gate immediately after confirmation.
+- Corrected Muse Spark reasoning-token exhaustion, accepted its current structured response envelope and retained strict finding validation.
+- Corrected the Modal request allowlist and retry identity without weakening UNKNOWN job locks.
+- Retained Meta proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d` and Modal verification `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427` as non-binding retrospective artifacts.
+- Repository tests passed 185 of 185 and Cloudflare tests passed 22 of 22.
+
 ## 2026-11-13 | Signed committee-assignment acknowledgement
 
 - Added a finalised-registry committee readiness route.
@@ -606,4 +615,11 @@ Future entries must include date, changes, files touched, acceptance status, unr
 - Removed Baseten from Cloudflare secrets, runtime readiness, provider probes, durable job admission and active credential templates by owner decision.
 - Preserved historical Baseten fixture and authenticated-probe evidence without treating it as an active integration.
 - Future OpenRouter or other provider support requires a separate explicit owner decision and integration review.
+
+# 2026-11-14 | Three-phase frontend completion
+
+- Restored wallet sessions and provider connections safely, added proactive renewal and explicit reauthentication after expiry or account change.
+- Added a compact account menu with final Testnet wallet balance, Switch wallet and Disconnect, clearly separated from contract funding.
+- Replaced the prior Constellations presentation with a comparative eight-axis graph and exact-value table using the existing coverage calculations.
+- Refined all workspace surfaces through shared layout, form, feedback, responsive and accessibility rules while preserving APIs and financial gates.
 

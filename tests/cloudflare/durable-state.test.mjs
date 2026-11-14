@@ -1,7 +1,8 @@
 import {env} from 'cloudflare:workers';
 import {evictDurableObject,runInDurableObject,SELF} from 'cloudflare:test';
 import {describe,it,expect,vi} from 'vitest';
-import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords,reviewerConfirmationAuthorised,deterministicCommitteeSelection} from '../../services/cloudflare/worker.mjs';
+import {nep413Bytes,verifyEd25519,storeEvidence,storeFinding,storeReviewPackage,executeCaseProvider,ownedCriterionEvaluations,reviewerWorkspaceRecords,reviewerConfirmationAuthorised,walletConfirmationAuthorised,deterministicCommitteeSelection} from '../../services/cloudflare/worker.mjs';
+import {validateWalletCall} from '../../services/wallet/lifecycle.mjs';
 
 const digest=async bytes=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(value=>value.toString(16).padStart(2,'0')).join('');
 const canonical=value=>Array.isArray(value)?`[${value.map(canonical).join(',')}]`:value&&typeof value==='object'?`{${Object.keys(value).sort().map(key=>`${JSON.stringify(key)}:${canonical(value[key])}`).join(',')}}`:JSON.stringify(value);
@@ -124,6 +125,19 @@ describe('Cloudflare durable financial state',()=>{
   const handoff=await SELF.fetch(publicOrigin+'/api/wallet/handoff',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:'{}'});expect(handoff.status).toBe(401);expect((await handoff.json()).error).toMatch(/Authentication required/i);
  });
 
+ it('revalidates an exact persisted payload before wallet-confirmed handoff',async()=>{
+  const caseId='4'.repeat(64),termsDigest='5'.repeat(64),record={case_id:caseId,creator_id:'creator.testnet',terms_digest:termsDigest,terms:{beneficiary_id:'beneficiary.testnet',amount_yocto:'100000000000000000000000',primary_committee:[],fresh_committee:[]}};
+  const config={owner_id:'owner.testnet',creator_allowlist:['creator.testnet']},adapter={view:async(method,args)=>method==='get_config'?config:method==='get_case'&&args.case_id===caseId?record:null};
+  const call={method:'fund_case',receiverId:'contra-contestation.testnet',args:{case_id:caseId,terms_digest:termsDigest},deposit:record.terms.amount_yocto};
+  const payload=validateWalletCall({network:'testnet',contractAccount:'contra-contestation.testnet',signerId:'creator.testnet',call,caseRecord:record,configRecord:config});
+  const runtime={CONTRA_WALLET_CONFIRMATION_AUTHORISED:'true'};
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'creator.testnet',payload})).toBe(true);
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'other.testnet',payload})).toBe(false);
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'creator.testnet',payload:{...payload,payload_hash:'6'.repeat(64)}})).toBe(false);
+  expect(await walletConfirmationAuthorised({env:runtime,adapter,account:'creator.testnet',payload:{...payload,methodName:'retry_payout'}})).toBe(false);
+  expect(await walletConfirmationAuthorised({env:{CONTRA_WALLET_CONFIRMATION_AUTHORISED:'false'},adapter,account:'creator.testnet',payload})).toBe(false);
+ });
+
  it('keeps provider credential probes closed without operator activation authentication',async()=>{
   const response=await SELF.fetch(publicOrigin+'/api/operator/provider-probe',{method:'POST',headers:{Origin:publicOrigin,'Content-Type':'application/json'},body:JSON.stringify({provider:'modal'})});
   expect(response.status).toBe(401);expect(await response.json()).toEqual({error:'Provider activation authentication required'});
@@ -201,9 +215,10 @@ describe('Cloudflare durable financial state',()=>{
   await rejection(()=>executeCaseProvider({store:state,env:runtime,record:{...record,state:'Draft'},round,actor:'creator.testnet',input:{kind:'evaluation',role:'primary',round_id:0,idempotency_key:'wrong-state-meta-01'}}),/current case state/);
   vi.stubGlobal('fetch',vi.fn(async()=>Response.json({model:'muse-spark-1.3',choices:[{message:{content:JSON.stringify(finding)}}],usage:{prompt_tokens:10,completion_tokens:10,total_tokens:20}})));
   const meta=await executeCaseProvider({store:state,env:runtime,record,round,actor:'creator.testnet',input:{kind:'evaluation',role:'primary',round_id:0,idempotency_key:'case-bound-meta-0001'}});expect(meta.status).toBe('PROPOSED');const proposal=await state.readArtifact(meta.response_digest),proposalBody=JSON.parse(new TextDecoder().decode(proposal.bytes));expect(proposalBody.binding_authority).toBe(false);expect(proposalBody.case_id).toBe(caseId);expect(await state.isProviderResult(proposalBody.provider_response_digest)).toBe(true);expect((await state.providerJobResult(meta.id,'creator.testnet',caseId)).output.schema).toBe('CONTRA_PROVIDER_FINDING_V2');
-  const verification={schema:'CONTRA_PROVIDER_VERIFICATION_V1',valid:true,checked_finding_digest:meta.response_digest,citations:[meta.response_digest],issues:[]};vi.stubGlobal('fetch',vi.fn(async()=>Response.json({result:verification})));
+  const verification={schema:'CONTRA_PROVIDER_VERIFICATION_V1',valid:true,checked_finding_digest:meta.response_digest,citations:[meta.response_digest],issues:[]};let modalRequest;vi.stubGlobal('fetch',vi.fn(async(_url,options)=>{modalRequest=JSON.parse(options.body);return Response.json({result:verification});}));
   const modal=await executeCaseProvider({store:state,env:runtime,record,round,actor:'creator.testnet',input:{kind:'verification',round_id:0,proposal_digest:meta.response_digest,idempotency_key:'case-bound-modal-001'}});expect(modal.status).toBe('PROPOSED');expect(await state.isProviderResult(modal.response_digest)).toBe(true);
   const verificationRecord=JSON.parse(new TextDecoder().decode((await state.readArtifact(modal.response_digest)).bytes));expect(verificationRecord.binding_authority).toBe(false);expect(verificationRecord.checked_finding_digest).toBe(meta.response_digest);expect(verificationRecord.case_id).toBe(caseId);expect(verificationRecord.terms_digest).toBe(termsDigest);expect(verificationRecord.round_id).toBe(0);
+  const modalPayload=JSON.parse(modalRequest.input.messages[1].content);expect(Object.keys(modalPayload).sort()).toEqual(['allowed_citations','case_id','evidence_digest','model','policy_version','prompt_version','proposal','proposal_digest','provider','role','round_id','schema','terms_digest']);expect(modalPayload.criteria).toBeUndefined();expect(modalPayload.evidence_sources).toBeUndefined();
   expect((await state.providerJobResult(modal.id,'creator.testnet',caseId)).output.schema).toBe('CONTRA_PROVIDER_VERIFICATION_V1');expect((await state.providerState('creator.testnet')).jobs).toHaveLength(2);vi.unstubAllGlobals();
  });
 });

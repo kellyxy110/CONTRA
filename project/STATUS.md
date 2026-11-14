@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-14-LIVE-SETTLEMENT-PROVIDER-VERIFIED
+
+Testnet case `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` reached `Settled` through final transaction `GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk`. Final RPC read-back reports callback-authenticated `SUCCESS_VERIFIED`, one payout attempt, `BASE_REFUND`, and an exact 0.1 NEAR return to `contra-creator.testnet`. The one-use signing gate was disabled immediately afterwards. Meta `muse-spark-1.3` produced non-binding retrospective proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d`; Modal produced deterministic verification `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427` bound to that exact proposal. These provider artifacts did not create votes, alter the verdict or authorise settlement. Repository tests pass 185 of 185 and Cloudflare tests pass 22 of 22. A genuine challenged Testnet journey remains outstanding.
+
 ## Current checkpoint | CONTRA-2026-11-13-PHASE3-COMMITTEE-ACKNOWLEDGEMENT
 
 The owner reports that all six independently controlled reviewer accounts completed their own onchain confirmation. Before case preparation, the deterministic registry policy exposed a role mismatch: ASCII account ordering selects `appeal.testnet`, `appeal2.testnet` and `appeal3.testnet` as primary, followed by `primary1.testnet`, `primary2.testnet` and `primary3.testnet` as fresh appeal. The original signed invitations named the opposite roles. The application now derives the exact registry order from finalised contract reads and requires each reviewer to sign an immutable NEP-413 committee-assignment acknowledgement. No invitation, disclosure or prior consent is rewritten. Case preparation remains blocked until all six assignment acknowledgements are recorded.

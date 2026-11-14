@@ -1,5 +1,6 @@
-// Presentation-free wallet orchestration. Server-authorised handoff and wallet
-// custody are mandatory; recovered session tokens are never signing authority.
+// Presentation-free wallet orchestration. The server revalidates the exact
+// persisted payload and the wallet confirms every handoff. A recovered session
+// token is never transaction signing authority.
 export function createWalletOperations({
  request, getToken, getAccount, getWallet, prepareWalletTransaction,
  sendPreparedWalletTransaction, reconcileWalletTransaction, refresh=async()=>{}
@@ -13,7 +14,14 @@ export function createWalletOperations({
    method:'create_case',args,deposit:'1',receiverId:config.contract_account
   }})).operation;
  }
- async function signCall(method,args,deposit='0',preparedOperation=null) {
+ async function prepareCall(method,args,deposit='0',operationId=null) {
+  const token=getToken(),accountId=getAccount();
+  if(!token||!accountId)throw Error('Connect and authenticate a Testnet wallet before preparing a transaction.');
+  const config=await request('config');
+  if(config.network!=='testnet'||config.external_wallet_preparation_enabled!==true)throw Error('Testnet transaction preparation is unavailable.');
+  return (await prepareWalletTransaction({token,accountId,...(operationId?{operationId}:{}),call:{method,args,deposit,receiverId:config.contract_account}})).operation;
+ }
+ async function signCall(method,args,deposit='0',preparedOperation=null,operationId=null) {
   const token=getToken(),accountId=getAccount(),wallet=getWallet();
   if(!token||!accountId)throw Error('Connect and authenticate a Testnet wallet before signing.');
   if(!wallet)throw Error('Reconnect the signing wallet. Session recovery alone cannot sign transactions.');
@@ -21,7 +29,7 @@ export function createWalletOperations({
   const scopedReviewerConfirmation=method==='confirm_reviewer'&&config.reviewer_confirmation_signing_authorized===true;
   if(config.network!=='testnet'||(!config.external_wallet_signing_authorized&&!scopedReviewerConfirmation))
    throw Error('Live Testnet wallet signing is disabled by the server authority gate.');
-  const operation=preparedOperation||(await prepareWalletTransaction({token,accountId,call:{
+  const operation=preparedOperation||(await prepareWalletTransaction({token,accountId,...(operationId?{operationId}:{}),call:{
    method,args,deposit,receiverId:config.contract_account
   }})).operation;
   try {
@@ -33,7 +41,7 @@ export function createWalletOperations({
    throw Error(`${error.message} Operation ${operation.operation_id} is persisted. Inspect it in Settlement recovery before any retry.`);
   }
  }
- return {prepareCase,signCall};
+ return {prepareCase,prepareCall,signCall};
 }
 
 export async function openAuthenticatedWallet({

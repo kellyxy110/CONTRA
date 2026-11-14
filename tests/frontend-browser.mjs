@@ -128,9 +128,10 @@ try {
      cases[0].creator_id='browser-fixture.testnet';
      cases[0].terms={...cases[0].terms,criteria:[{criterion_id:1,kind:'KEYBOARD',requirement_digest:'8'.repeat(64)}]};
      cases[1].creator_id='browser-fixture.testnet';cases[1].state='Provisional';
-     await page.addInitScript(()=>sessionStorage.setItem('contra-session','browser-fixture'));
-     await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet'}}));
+     await page.addInitScript(()=>localStorage.setItem('contra-auth-session-v1',JSON.stringify({token:'browser-fixture',account:'browser-fixture.testnet',expires:Date.now()+7*24*60*60*1000})));
+     await page.route('**/api/session',route=>route.fulfill({json:{account:'browser-fixture.testnet',expires:Date.now()+7*24*60*60*1000}}));
      await page.route('**/api/session/renew',route=>route.fulfill({json:{token:'browser-fixture-renewed',account:'browser-fixture.testnet',expires:Date.now()+3600000}}));
+     await page.route('**rpc.testnet.near.org**',route=>route.fulfill({headers:{'Access-Control-Allow-Origin':'*'},json:{jsonrpc:'2.0',result:{amount:'2750000000000000000000000',block_height:42,block_hash:'BLOCK42'}}}));
      await page.route('**/api/config',route=>route.fulfill({json:{network:'testnet',contract_account:'contra-contestation.testnet',external_wallet_signing_authorized:false}}));
      await page.route('**/api/terms',route=>route.fulfill({json:{digest:'f'.repeat(64)}}));
      await page.route('**/api/wallet/prepare',route=>{
@@ -153,6 +154,10 @@ try {
      await page.reload();
      await page.locator('#case').selectOption(cases[0].case_id);
      await page.getByRole('button',{name:'browser-fixture.testnet'}).waitFor();
+     await page.getByRole('button',{name:'browser-fixture.testnet'}).click();
+     await page.locator('#account-menu-balance').waitFor();
+     await page.getByText('Separate from funds held by the CONTRA contract',{exact:true}).waitFor();
+     await page.keyboard.press('Escape');
      await navigate('#evidence');
      await page.getByRole('button',{name:/Manifest · a{64}/}).click();
      await page.getByText('CONTRA_EVIDENCE_V1',{exact:false}).waitFor();
@@ -162,6 +167,7 @@ try {
      await page.getByLabel('Claim for criterion 1').fill('Fixture claim');
      await page.getByRole('button',{name:'Store evidence'}).click();
      await page.getByText('Stored off-chain:',{exact:false}).waitFor();
+     assert.equal(await page.locator('[data-workspace-case="true"]').count(),1);
      assert.equal(await page.getByRole('button',{name:'Sign evidence submission'}).count(),0);
      await navigate('#cases');
      await page.getByLabel('Search cases').fill(cases[0].case_id.slice(0,16));
@@ -258,13 +264,14 @@ try {
        const radar=page.getByRole('img',{name:/Eight-axis evidence/});
        await radar.waitFor();
        assert.equal(await radar.locator('line').count(),8);
-       await radar.locator('polygon').waitFor();
-       assert.equal(await radar.locator('polygon').count(),1);
+       await radar.locator('polygon[stroke="var(--mint)"]').waitFor();
+       assert.equal(await radar.locator('polygon[stroke="var(--mint)"]').count(),1);
        await page.unroute('**/api/availability?*');
        await page.route('**/api/availability?*',route=>new URL(route.request().url()).searchParams.get('case_id')===cases[1].case_id?route.fulfill({status:403,json:{error:'Account is not authorised for this case'}}):route.fulfill({json:{observed_at:'2026-11-13T00:00:00.000Z',items:{['4'.repeat(64)]:true},manifest:{schema:'CONTRA_EVIDENCE_V1',sources:[{source_id:'source-1',digest:'4'.repeat(64),provenance:{origin:'Fixture',captured_at:'2026-11-12T00:00:00.000Z',submitted_by:'creator.testnet'}}],criteria:[{criterion_id:1,source_ids:['source-1']}]},criterion_evaluations:[{criterion_id:1,result:'FULFILLED',recorded:true,verified:true}]}}));
        await page.getByLabel('Comparison case').selectOption(cases[1].case_id);
-       await page.getByRole('heading',{name:`Comparison · ${cases[1].case_id}`,exact:true}).waitFor();
-       await page.getByText(/Evidence: inaccessible/).waitFor();
+       await page.locator(`.constellation-legend [title="${cases[1].case_id}"]`).waitFor();
+       await page.locator('.constellation-table').getByText('Locked',{exact:true}).first().waitFor();
+       if(name==='chromium'&&width===1440)await page.screenshot({path:'artifacts/frontend/workspace-constellations-comparative.png',fullPage:true});
        await page.getByLabel('Primary case').selectOption('');
        await page.getByText('Select a case to compare evidence coverage.',{exact:true}).waitFor();
       }
