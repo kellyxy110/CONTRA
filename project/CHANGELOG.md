@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-11-14 | Primary review recovery
+
+- Restored the reviewer commitment control from durable human-finding or encrypted-package records after navigation and reload recovery.
+- Showed the reveal control only after a recovery package exists, removing the misleading reveal-only state observed during the live primary review.
+- Verified the behaviour across the complete Chromium and Firefox browser matrix.
+
 ## 2026-11-14 | Exact evidence submission
 
 - Reconciled final success for the beneficiary-signed `submit_evidence` transaction.

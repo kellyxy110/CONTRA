@@ -151,7 +151,7 @@ try {
      await page.route('**/api/operation?*',route=>{const id=new URL(route.request().url()).searchParams.get('id');return route.fulfill({json:id==='pending-operation'?{operation_id:id,status:'PENDING',tx_hash:'11111111111111111111111111111111'}:{operation_id:id,status:'UNKNOWN',tx_hash:null}});});
      await page.route('**/api/wallet/reconcile',route=>route.fulfill({json:{operation_id:'pending-operation',status:'CONFIRMED',tx_hash:'11111111111111111111111111111111'}}));
      await page.reload();
-     await page.locator('#case').selectOption(cases[0].case_id);
+     await page.locator('#case').selectOption(cases[0].case_id,{force:true});
      await page.getByRole('button',{name:'browser-fixture.testnet'}).waitFor();
      await navigate('#evidence');
      await page.getByRole('button',{name:/Manifest · a{64}/}).click();
@@ -217,7 +217,8 @@ try {
      const invite={reviewer_id:'browser-fixture.testnet',digest:'7'.repeat(64),committee:'PRIMARY',slot:1,status:'INVITED',expires:Date.now()+3600000};
      const invitationEvents=[];
      await page.route('**/api/reviewer/invitations',route=>route.fulfill({json:{invitations:[invite],events:invitationEvents}}));
-     await page.route('**/api/reviewer/workspace?*',route=>route.fulfill({json:{case:cases[0],round_id:0,round:{round_id:0,phase:'COMMIT',evidence_digest:cases[0].evidence_digest},records:[]}}));
+     const workspaceRecords=[];
+     await page.route('**/api/reviewer/workspace?*',route=>route.fulfill({json:{case:cases[0],round_id:0,round:{round_id:0,phase:'COMMIT',evidence_digest:cases[0].evidence_digest},records:workspaceRecords}}));
      await page.route('**/api/finding',route=>route.fulfill({status:201,json:{digest:'6'.repeat(64)}}));
      await page.route('**/api/reviewer/respond',route=>{
       const response=route.request().postDataJSON();
@@ -233,12 +234,16 @@ try {
      await page.getByLabel('Explanation').fill('Human fixture finding');
      await page.getByRole('button',{name:'Store human finding'}).click();
      await page.getByText('Finding stored:',{exact:false}).waitFor();
+     workspaceRecords.push({kind:'finding',digest:'6'.repeat(64),body:{round_id:0,disposition:'ACCEPT'}});
      await page.getByLabel('Recovery passphrase').first().fill('browser fixture recovery');
      assert.equal(await page.getByRole('button',{name:'Encrypt recovery package and commit'}).count(),1);
      await page.getByRole('button',{name:'Decline',exact:true}).click();
      await page.getByText('Invitation response: WITHDRAWN.',{exact:true}).waitFor();
-     await page.reload();
      assert.equal(await page.getByRole('button',{name:'Consent',exact:true}).count(),0);
+     await navigate('#overview');
+     await navigate('#reviewers');
+     await page.getByRole('button',{name:'Encrypt recovery package and commit'}).waitFor();
+     assert.equal(await page.getByRole('button',{name:'Encrypt recovery package and commit'}).count(),1);
      await navigate('#overview');
      await page.locator('#case').selectOption(cases[0].case_id);
      for(const link of await page.locator('#navigation a').all()){
