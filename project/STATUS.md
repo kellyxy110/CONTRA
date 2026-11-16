@@ -1,5 +1,9 @@
 # CONTRA status checkpoint
 
+## Current checkpoint | CONTRA-2026-11-16-JUDGE-GUIDE-CURRENT
+
+The judge guide now reflects the public Cloudflare application, deployed Testnet contract, live readiness endpoints, funded Testnet case, callback-confirmed 0.1 NEAR `BASE_REFUND` settlement and retrospective non-binding Meta and Modal artifacts. Route C provides a safe NEP-413 wallet exploration path without suggesting that authentication grants transaction authority. The verification and acceptance matrices distinguish this genuine evidence from the still-outstanding challenged Testnet appeal journey. No contract, runtime, wallet authority, provider configuration, transaction or secret changed.
+
 ## Current checkpoint | CONTRA-2026-11-14-LIVE-SETTLEMENT-PROVIDER-VERIFIED
 
 Testnet case `e6bb304c52aeb9b0251b052c05c8796913e7246280a3300dd7b8badc6ada7278` reached `Settled` through final transaction `GJDsDsQwssCGxjmYMh1d3ee3LkyHzamx887k1CVyBEfk`. Final RPC read-back reports callback-authenticated `SUCCESS_VERIFIED`, one payout attempt, `BASE_REFUND`, and an exact 0.1 NEAR return to `contra-creator.testnet`. The one-use signing gate was disabled immediately afterwards. Meta `muse-spark-1.3` produced non-binding retrospective proposal `f12b39612edc53c4c3fb2b280890497d6cb409c87f5a36ecb7e6152a9ea3ff3d`; Modal produced deterministic verification `0e4981b481b080a0c95a0346091e7ba590509cb09f2b0db4e696729c83a0a427` bound to that exact proposal. These provider artifacts did not create votes, alter the verdict or authorise settlement. Repository tests pass 185 of 185 and Cloudflare tests pass 22 of 22. A genuine challenged Testnet journey remains outstanding.
